@@ -7,13 +7,14 @@
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <link href="recursos/bootstrap-icons-1.10.5/font/bootstrap-icons.min.css" rel="stylesheet" />
 </head>
 
 <!-- CUERPO -->
 <body>
     <form id="form1" runat="server">
         <div>
-            <h1>Hola mundo</h1>
+            <h1><i class="bi bi-0-square">Hola mundo</i></h1>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
