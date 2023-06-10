@@ -8,6 +8,8 @@
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <link href="recursos/bootstrap-icons-1.10.5/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="fonts/bootstrap.min.css" rel="stylesheet" />
+    <script src="scripts/bootstrap.min.js"></script>
 </head>
 
 <!-- CUERPO -->

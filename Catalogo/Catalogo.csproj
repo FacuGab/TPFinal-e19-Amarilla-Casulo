@@ -65,6 +65,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
+    <Content Include="fonts\bootstrap-grid.css" />
+    <Content Include="fonts\bootstrap-grid.min.css" />
+    <Content Include="fonts\bootstrap-grid.rtl.css" />
+    <Content Include="fonts\bootstrap-grid.rtl.min.css" />
+    <Content Include="fonts\bootstrap-reboot.css" />
+    <Content Include="fonts\bootstrap-reboot.min.css" />
+    <Content Include="fonts\bootstrap-reboot.rtl.css" />
+    <Content Include="fonts\bootstrap-reboot.rtl.min.css" />
+    <Content Include="fonts\bootstrap-utilities.css" />
+    <Content Include="fonts\bootstrap-utilities.min.css" />
+    <Content Include="fonts\bootstrap-utilities.rtl.css" />
+    <Content Include="fonts\bootstrap-utilities.rtl.min.css" />
+    <Content Include="fonts\bootstrap.css" />
+    <Content Include="fonts\bootstrap.min.css" />
+    <Content Include="fonts\bootstrap.rtl.css" />
+    <Content Include="fonts\bootstrap.rtl.min.css" />
     <Content Include="Global.asax" />
     <Content Include="recursos\bootstrap-icons-1.10.5\0-circle-fill.svg" />
     <Content Include="recursos\bootstrap-icons-1.10.5\0-circle.svg" />
@@ -2022,6 +2038,12 @@
     <Content Include="recursos\bootstrap-icons-1.10.5\youtube.svg" />
     <Content Include="recursos\bootstrap-icons-1.10.5\zoom-in.svg" />
     <Content Include="recursos\bootstrap-icons-1.10.5\zoom-out.svg" />
+    <Content Include="scripts\bootstrap.bundle.js" />
+    <Content Include="scripts\bootstrap.bundle.min.js" />
+    <Content Include="scripts\bootstrap.esm.js" />
+    <Content Include="scripts\bootstrap.esm.min.js" />
+    <Content Include="scripts\bootstrap.js" />
+    <Content Include="scripts\bootstrap.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -2050,7 +2072,29 @@
     <Content Include="recursos\bootstrap-icons-1.10.5\font\bootstrap-icons.scss" />
     <Content Include="recursos\bootstrap-icons-1.10.5\font\fonts\bootstrap-icons.woff" />
     <Content Include="recursos\bootstrap-icons-1.10.5\font\fonts\bootstrap-icons.woff2" />
+    <Content Include="fonts\bootstrap-grid.css.map" />
+    <Content Include="fonts\bootstrap-grid.min.css.map" />
+    <Content Include="fonts\bootstrap-grid.rtl.css.map" />
+    <Content Include="fonts\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="fonts\bootstrap-reboot.css.map" />
+    <Content Include="fonts\bootstrap-reboot.min.css.map" />
+    <Content Include="fonts\bootstrap-reboot.rtl.css.map" />
+    <Content Include="fonts\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="fonts\bootstrap-utilities.css.map" />
+    <Content Include="fonts\bootstrap-utilities.min.css.map" />
+    <Content Include="fonts\bootstrap-utilities.rtl.css.map" />
+    <Content Include="fonts\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="fonts\bootstrap.css.map" />
+    <Content Include="fonts\bootstrap.min.css.map" />
+    <Content Include="fonts\bootstrap.rtl.css.map" />
+    <Content Include="fonts\bootstrap.rtl.min.css.map" />
     <None Include="packages.config" />
+    <Content Include="scripts\bootstrap.bundle.js.map" />
+    <Content Include="scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="scripts\bootstrap.esm.js.map" />
+    <Content Include="scripts\bootstrap.esm.min.js.map" />
+    <Content Include="scripts\bootstrap.js.map" />
+    <Content Include="scripts\bootstrap.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2061,7 +2105,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="scripts\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
