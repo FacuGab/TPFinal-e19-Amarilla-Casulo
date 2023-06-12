@@ -4,23 +4,137 @@
 
 <html>
 <head runat="server">
-    <title></title>
+    <title>TIENDA HARD</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <link href="recursos/bootstrap-icons-1.10.5/font/bootstrap-icons.min.css" rel="stylesheet" />
     <link href="fonts/bootstrap.min.css" rel="stylesheet" />
     <script src="scripts/bootstrap.min.js"></script>
+    <script src="fonts/script.js"></script>
+    <link href="fonts/styles.css" rel="stylesheet" />
 </head>
 
 <!-- CUERPO -->
 <body>
     <form id="form1" runat="server">
-        <div>
-            <h1><i class="bi bi-0-square">Hola mundo</i></h1>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
-        </div>
-    </form>
+                <!-- BARRA NAVEGACIÓN -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary bg-gradient fixed-top"> <%--fixed-top--%>
+            <div class="container-fluid ">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand img-fluid text-light" href="Default.aspx">
+                    <img src="Recursos/hellfish.png" class="img-fluid" alt="LOGO-MARCA" id="navBarIcon" /></a>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto d-flex">
+                        <li class="nav-item">
+                            <a class="btn btn-warning fs-5" href="ListaCarrito.aspx" onclick="btnCargarCarrito_Click1">🛒 Carrito
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active text-black " aria-current="page" runat="server" href="~/"></a>
+                        </li>
 
+                        <li class="nav-item me-2 ">
+                            <button type="button" class="btn btn-success fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal" >Login modal</button>
+                        </li>
+                        <li class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Buscar artículo" aria-label="Search">
+                            <button class="btn btn-outline-dark" type="submit">Buscar</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- FIN BARRA NAV -->
+
+        <%--modal login--%>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">Inicio de sesión</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Ingrese nueva contraseña" value="" required>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" name="remember_me" id="remember_me">
+                                <label class="form-check-label text-secondary" for="remember_me">
+                                    Mantenerme logeado
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end m-2">
+                        <a href="Registro.aspx" class="link-secondary text-decoration-none">Crear cuenta</a>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="d-grid">
+                            <button class="btn btn-primary " type="submit">Ingresar</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+         <%--fin modal login--%>
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+
+                <!-- FOOTER -->
+        <footer class="text-center text-lg-start text-light pt-5 bg-black">
+            <section id="contacto" class="foot">
+                <div class="container text-center text-md-start">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4 text-light">
+                            <h6 class="text-uppercase fw-bold mb-4 text-center" id="repositorio-foot">
+                                Repositorio
+                            </h6>
+                            <p class="text-center ">
+                                <a href="https://github.com/FacuGab/tp3-equipo19/tree/main/CarritoWeb" class="me-4 link-grayish text-decoration-none text-light">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+                                    </svg>
+                                    Github
+                                </a>
+                            </p>
+                        </div>
+                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                            <h6 class="text-uppercase fw-bold mb-4 text-center" id="redes-foot">Redes sociales
+                            </h6>
+                            <p class="">
+                                <a href="https://www.frgp.utn.edu.ar/" class="me-4 link-grayish text-decoration-none text-light">🎓 UTN FRGP 🎓
+                                </a>
+                            </p>
+                        </div>
+                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                            <h6 class="text-uppercase fw-bold mb-4 text-center" id="contacto-foot">Materia</h6>
+                            <p class="text-center">
+                                <i class="fas fa-home me-3 text-light text-decoration-none"></i>
+                                🎓Programación III 🎓
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center p-1 bg-warning text-black pb-1"  font-size: 12px;" id="pie">
+                    &copy;Emanuel F. Casulo - Facundo Amarilla - 2023
+                </div>
+            </section>
+        </footer>
+        <!-- fin footer -->
+        <!-- jQuery full con ajax -->
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    </form>
 </body>
 </html>
