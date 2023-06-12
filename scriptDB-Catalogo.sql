@@ -60,9 +60,10 @@ CREATE TABLE PEDIDOS(
 	IdUsuarios INT NOT NULL,
 	IdArticulos INT NOT NULL,
 	Fecha DATE NOT NULL,
-	Estado VARCHAR(1) NOT NULL,
+	Estado VARCHAR(20) NOT NULL,
 	DireccionEntrega VARCHAR(100) NOT NULL,
-	Descuento INT NULL
+	Descuento DECIMAL NULL,
+	PrecioTotal DECIMAL NOT NULL
 )
 
 GO
@@ -75,7 +76,7 @@ CREATE TABLE USUARIOS(
 	Mail VARCHAR(30) NOT NULL,
 	Clave VARCHAR(30) NOT NULL,
 	Direccion VARCHAR(100) NOT NULL,
-	Nivel CHAR NOT NULL, -- 0 admin 1 empleado 2 cliente ¿?
+	Nivel CHAR NOT NULL, -- 0 admin 1 empleado 2 cliente ï¿½?
 	UrlImagen VARCHAR (MAX) NOT NULL
 )
 

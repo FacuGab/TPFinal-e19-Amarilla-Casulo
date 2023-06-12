@@ -81,6 +81,8 @@
     <Content Include="fonts\bootstrap.min.css" />
     <Content Include="fonts\bootstrap.rtl.css" />
     <Content Include="fonts\bootstrap.rtl.min.css" />
+    <Content Include="fonts\script.js" />
+    <Content Include="fonts\styles.css" />
     <Content Include="Global.asax" />
     <Content Include="recursos\bootstrap-icons-1.10.5\0-circle-fill.svg" />
     <Content Include="recursos\bootstrap-icons-1.10.5\0-circle.svg" />
@@ -2038,6 +2040,36 @@
     <Content Include="recursos\bootstrap-icons-1.10.5\youtube.svg" />
     <Content Include="recursos\bootstrap-icons-1.10.5\zoom-in.svg" />
     <Content Include="recursos\bootstrap-icons-1.10.5\zoom-out.svg" />
+    <Content Include="recursos\img\actualizar.png" />
+    <Content Include="recursos\img\agregar-img.png" />
+    <Content Include="recursos\img\agregar-paquete.png" />
+    <Content Include="recursos\img\agregar.png" />
+    <Content Include="recursos\img\bart.jpg" />
+    <Content Include="recursos\img\boton-eliminar.png" />
+    <Content Include="recursos\img\Carrito.png" />
+    <Content Include="recursos\img\Cerrar ventana.png" />
+    <Content Include="recursos\img\Check.png" />
+    <Content Include="recursos\img\editar.png" />
+    <Content Include="recursos\img\Eliminar.png" />
+    <Content Include="recursos\img\fondo.png" />
+    <Content Include="recursos\img\hellfish.png" />
+    <Content Include="recursos\img\iconoPP.ico" />
+    <Content Include="recursos\img\icons8-auricular-64.png" />
+    <Content Include="recursos\img\icons8-hdd-50.png" />
+    <Content Include="recursos\img\icons8-monitor-64.png" />
+    <Content Include="recursos\img\icons8-placa-base-62.png" />
+    <Content Include="recursos\img\icons8-procesador-64.png" />
+    <Content Include="recursos\img\icons8-ram-60.png" />
+    <Content Include="recursos\img\icons8-ratón-64.png" />
+    <Content Include="recursos\img\icons8-ssd-card-64.png" />
+    <Content Include="recursos\img\icons8-tarjeta-de-video-50.png" />
+    <Content Include="recursos\img\icons8-teclado-50.png" />
+    <Content Include="recursos\img\image-not-found.png" />
+    <Content Include="recursos\img\maximizar.png" />
+    <Content Include="recursos\img\minimizar.png" />
+    <Content Include="recursos\img\minimizar1.png" />
+    <Content Include="recursos\img\miss.png" />
+    <Content Include="recursos\img\the-simpsons-beatles.jpg" />
     <Content Include="scripts\bootstrap.bundle.js" />
     <Content Include="scripts\bootstrap.bundle.min.js" />
     <Content Include="scripts\bootstrap.esm.js" />
@@ -2045,6 +2077,8 @@
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="Web.config" />
+    <Content Include="Registro.aspx" />
+    <Content Include="ListaCarrito.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Default.aspx.cs">
@@ -2064,6 +2098,20 @@
     </Compile>
     <Compile Include="SiteMaster.Master.designer.cs">
       <DependentUpon>SiteMaster.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Registro.aspx.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Registro.aspx.designer.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListaCarrito.aspx.cs">
+      <DependentUpon>ListaCarrito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListaCarrito.aspx.designer.cs">
+      <DependentUpon>ListaCarrito.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
