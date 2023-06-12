@@ -4,7 +4,7 @@
 
 <html>
 <head runat="server">
-    <title>TIENDA HARD</title>
+    <title>TIENDA HARDFISH</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <link href="recursos/bootstrap-icons-1.10.5/font/bootstrap-icons.min.css" rel="stylesheet" />
@@ -17,18 +17,22 @@
 <!-- CUERPO -->
 <body>
     <form id="form1" runat="server">
-                <!-- BARRA NAVEGACIÓN -->
+        <!-- BARRA NAVEGACIÓN -->
         <nav class="navbar navbar-expand-lg navbar-light bg-primary bg-gradient fixed-top"> <%--fixed-top--%>
             <div class="container-fluid ">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand img-fluid text-light" href="Default.aspx">
-                    <img src="Recursos/hellfish.png" class="img-fluid" alt="LOGO-MARCA" id="navBarIcon" /></a>
+                    <%--<img src="~/recursos/img/hellfish.png" class="img-fluid" alt="LOGO-MARCA" id="navBarIcon" />--%>
+                    <asp:Image ImageUrl="~/recursos/img/hellfish.png" Height="50px" Width="50px" CssClass="img-fluid" AlternateText="LOGO-MARCA" ID="navIcon" runat="server" ImageAlign="Middle" />
+                    <span>HARDFISH</span>
+                </a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto d-flex">
                         <li class="nav-item">
-                            <a class="btn btn-warning fs-5" href="ListaCarrito.aspx" onclick="btnCargarCarrito_Click1">🛒 Carrito
+                            <a class="btn btn-warning fs-5" href="ListaCarrito.aspx" <%--onclick="btnCargarCarrito_Click1"--%>>
+                                🛒 Carrito
                             </a>
                         </li>
                         <li class="nav-item">
@@ -92,7 +96,7 @@
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
 
-                <!-- FOOTER -->
+        <!-- FOOTER -->
         <footer class="text-center text-lg-start text-light pt-5 bg-black">
             <section id="contacto" class="foot">
                 <div class="container text-center text-md-start">
@@ -137,4 +141,5 @@
         <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     </form>
 </body>
+
 </html>

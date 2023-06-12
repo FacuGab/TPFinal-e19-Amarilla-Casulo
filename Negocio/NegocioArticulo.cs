@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dominio;
 using Data;
+using System.Globalization;
 
 namespace Negocio
 {
@@ -12,13 +13,14 @@ namespace Negocio
     {
         DataAccess datos = null;
         List<Articulo> Articulos = null;
+        List<string> imagenes = null;
 
-        //TODO: Leer Datos
-        public List<Articulo> ReadData()
+        //TODO: Listar Articulos
+        public List<Articulo> ListarArticulos()
         {
             datos = new DataAccess();
             Articulos = new List<Articulo>();
-            Articulo articulo = new Articulo();
+            Articulo articulo;
 
             try
             {
@@ -47,6 +49,35 @@ namespace Negocio
                     Articulos.Add(articulo);
                 }
                 return Articulos;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        //TODO: Listar Imagenes Articulos x Id
+        public List<string> ListarImagenesArticulos(int idArticulo)
+        {
+            datos = new DataAccess();
+            try
+            {
+                imagenes = new List<string>();
+                datos.AbrirConexion();
+                datos.SetQuery("SELECT UrlImagen FROM IMAGENES WHERE @id = IdArticulo", "query");
+                datos.SetParameters("@id", idArticulo);
+                datos.ReadQuery();
+
+                var aux = datos.Lector;
+                while(aux.Read())
+                {
+                    imagenes.Add(aux["UrlImagen"].ToString());
+                }
+                return imagenes;
             }
             catch (Exception ex)
             {
