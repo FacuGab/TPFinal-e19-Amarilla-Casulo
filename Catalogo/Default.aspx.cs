@@ -1,4 +1,6 @@
 ﻿using System;
+using Negocio;
+using Dominio;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;

@@ -15,10 +15,9 @@ namespace Data
         public SqlDataReader Lector { get { return reader; } }
 
         //TODO: Abrir Conexion
-        public void AbrirConexion(string path, string server = ".")
+        public void AbrirConexion(string server = ".")
         {
-            // cambiar 'database' al nombre de la bd a crear
-            path = $"server={server}; database = CATALOGO_TPFinal; integrated security = true";
+            string path = $"server={server}; database = CATALOGO_E19; integrated security = true";
             try
             {
                 connection = new SqlConnection(path);

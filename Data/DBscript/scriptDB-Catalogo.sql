@@ -17,21 +17,22 @@ SET ANSI_PADDING ON
 GO
 
 CREATE TABLE MARCAS (
-	Id INT IDENTITY(1,1) not null PRIMARY KEY,
+	Id INT not null PRIMARY KEY,
 	Descripcion varchar(50) not null
 )
 
 GO
 
 CREATE TABLE CATEGORIAS (
-	Id INT IDENTITY(1,1) not null PRIMARY KEY,
+	Id INT not null PRIMARY KEY,
 	Descripcion varchar(50) not null
 )
 
 GO
 
-CREATE TABLE ARTICULOS(
+CREATE TABLE ARTICULOS (
 	Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	IdArticulo INT NOT NULL, -- verr
 	Codigo VARCHAR(50) NULL,
 	Nombre VARCHAR(50) NULL,
 	Descripcion VARCHAR(150) NULL,
@@ -74,9 +75,10 @@ CREATE TABLE PEDIDOS(
 	IdPedido INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	IdUsuarios INT NOT NULL,
 	Fecha DATE NOT NULL,
-	Estado VARCHAR(1) NOT NULL,
+	Estado VARCHAR(20) NOT NULL,
 	DireccionEntrega VARCHAR(100) NOT NULL,
-	Descuento INT NULL
+	Descuento decimal NULL,
+	Total DECIMAL NOT NULL
 )
 
 GO
@@ -90,8 +92,47 @@ CREATE TABLE ARTICULOS_X_PEDIDO(
 
 -- #### CAMBIOS POST CREACION DB #### --
 
+-- DATOS DE TESTEO:
+/*
+-- orden de los imputs de Articulos: codigo, nombre, descripcion, idMarca, idCategoria, precio, estado, stock (con mayuscula inicial)
+INSERT INTO ARTICULOS VALUES ('AAA', 'XXX', 'ajajaj ajajaj ajajaja ajajaja', 0, 0, 0.1, 1, 100)
+INSERT INTO ARTICULOS VALUES ('AAA', 'XXX', 'ajajaj ajajaj ajajaja ajajaja', 1, 1, 0.1, 1, 100)
+-- orden de los imputs de Marcas y Categorias: id, descripcion
+INSERT INTO MARCAS VALUES (1, 'MARCAS MARCAS')
+INSERT INTO CATEGORIAS VALUES (1, 'CATEGORIA CATEGORIA')
+-- Primera consulta:
+SELECT A.Codigo, A.Nombre, A.Descripcion, M.Descripcion, C.Descripcion, A.Precio, A.Estado, A.Stock 
+FROM ARTICULOS AS A 
+INNER JOIN MARCAS AS M ON A.IdMarca = M.Id 
+INNER JOIN CATEGORIAS AS C ON A.IdCategoria = C.Id
+*/
+
+-- Primer Stored Procedure
+ALTER PROCEDURE spListarArticulos AS 
+BEGIN
+SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, A.IdMarca, M.Descripcion AS 'Marca', A.IdCategoria, C.Descripcion AS 'Categoria', A.Precio, A.Estado, A.Stock 
+FROM ARTICULOS AS A 
+INNER JOIN MARCAS AS M ON A.IdMarca = M.Id 
+INNER JOIN CATEGORIAS AS C ON A.IdCategoria = C.Id
+END;
+
+EXEC spListarArticulos
+
+--SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, A.IdMarca, M.Descripcion AS 'Marca', A.IdCategoria, C.Descripcion AS 'Categoria', A.Precio, A.Estado, A.Stock FROM ARTICULOS AS A INNER JOIN MARCAS AS M ON A.IdMarca = M.Id INNER JOIN CATEGORIAS AS C ON A.IdCategoria = C.Id
+/*Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	Codigo VARCHAR(50) NULL,
+	Nombre VARCHAR(50) NULL,
+	Descripcion VARCHAR(150) NULL,
+	IdMarca INT NULL,
+	IdCategoria INT NULL,
+	Precio DECIMAL NULL,
+	Estado BIT NOT NULL,
+	Stock INT NOT NULL*/
+
 -- Sentencias utilez para modificar tablas:
---DROP TABLE PEDIDO_ARTICULO
+--DROP TABLE MARCAS, CATEGORIAS
+--ALTER TABLE PEDIDOS ALTER COLUMN Estado VARCHAR(20)
+--ALTER TABLE PEDIDOS ADD Total DECIMAL NOT NULL
 --ALTER TABLE IMAGENES ADD  Descripcion VARCHAR(MAX) NULL
 --ALTER TABLE nombre_tabla DROP CONSTRAINT nombre_clave_primaria
 --ALTER TABLE nombre_tabla ADD CONSTRAINT nombre_clave_primaria PRIMARY KEY (nombre_campo)
