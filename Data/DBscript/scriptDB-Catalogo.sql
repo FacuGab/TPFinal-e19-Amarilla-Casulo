@@ -107,6 +107,10 @@ INNER JOIN MARCAS AS M ON A.IdMarca = M.Id
 INNER JOIN CATEGORIAS AS C ON A.IdCategoria = C.Id
 */
 
+INSERT INTO ARTICULOS VALUES ('AS', 'DAs', 'aSD sda asd ddas', 1, 1, 0.1, 1, 100)
+INSERT INTO ARTICULOS VALUES ('AJAJJAKLSJL', 'DAs', 'aSD sda asd ddas', 1, 1, 0.1, 1, 100)
+INSERT INTO ARTICULOS VALUES ('xxxxxxxxxx', 'DAs', 'aSD sda asd ddas', 1, 1, 0.1, 1, 100)
+
 -- Primer Stored Procedure
 ALTER PROCEDURE spListarArticulos AS 
 BEGIN
@@ -117,6 +121,8 @@ INNER JOIN CATEGORIAS AS C ON A.IdCategoria = C.Id
 END;
 
 EXEC spListarArticulos
+
+SELECT Id, Descripcion FROM MARCAS
 
 --SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, A.IdMarca, M.Descripcion AS 'Marca', A.IdCategoria, C.Descripcion AS 'Categoria', A.Precio, A.Estado, A.Stock FROM ARTICULOS AS A INNER JOIN MARCAS AS M ON A.IdMarca = M.Id INNER JOIN CATEGORIAS AS C ON A.IdCategoria = C.Id
 /*Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,

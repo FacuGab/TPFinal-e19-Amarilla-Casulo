@@ -47,8 +47,8 @@
             </div>
         </section>
             <%-- FIN CAROUSEL --%>
-        <div class="container">
 
+        <div class="container">
                      <%--categoria--%>
             <div class="col-6 mt-5">
                 <h3 class="mb-3">Los mejores hardware</h3>

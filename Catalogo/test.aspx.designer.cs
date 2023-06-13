@@ -11,43 +11,43 @@ namespace Catalogo
 {
 
 
-    public partial class SiteMaster
+    public partial class test
     {
 
         /// <summary>
-        /// head control.
+        /// dgvGridTest1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.GridView dgvGridTest1;
 
         /// <summary>
-        /// form1 control.
+        /// dgvGridTest2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.GridView dgvGridTest2;
 
         /// <summary>
-        /// navIcon control.
+        /// dgvGridTest3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image navIcon;
+        protected global::System.Web.UI.WebControls.GridView dgvGridTest3;
 
         /// <summary>
-        /// ContentPlaceHolder1 control.
+        /// dgvGridTest4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::System.Web.UI.WebControls.GridView dgvGridTest4;
     }
 }
