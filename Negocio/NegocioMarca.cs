@@ -46,32 +46,32 @@ namespace Negocio
         }
 
         //TODO: Listar Fotos Marcas x Id
-        public List<string> ListarImagenesMarcas(int idMarca)
-        {
-            datos = new DataAccess();
-            try
-            {
-                imagenes = new List<string>();
-                datos.AbrirConexion();
-                datos.SetQuery("SELECT UrlImagen FROM IMAGENES WHERE IdMarca = @id", "query");
-                datos.SetParameters("@id", idMarca);
-                datos.ReadQuery();
+        //public List<string> ListarImagenesMarcas(int idMarca)
+        //{
+        //    datos = new DataAccess();
+        //    try
+        //    {
+        //        imagenes = new List<string>();
+        //        datos.AbrirConexion();
+        //        datos.SetQuery("SELECT UrlImagen FROM IMAGENES WHERE IdMarca = @id", "query");
+        //        datos.SetParameters("@id", idMarca);
+        //        datos.ReadQuery();
 
-                var aux = datos.Lector;
-                while(aux.Read())
-                {
-                    imagenes.Add( aux["UrlImagen"].ToString() );
-                }
-                return imagenes;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.CerrarConexion();
-            }
-        }
+        //        var aux = datos.Lector;
+        //        while(aux.Read())
+        //        {
+        //            imagenes.Add( aux["UrlImagen"].ToString() );
+        //        }
+        //        return imagenes;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        datos.CerrarConexion();
+        //    }
+        //}
     }
 }

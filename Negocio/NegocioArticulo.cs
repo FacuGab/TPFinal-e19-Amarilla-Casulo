@@ -26,14 +26,14 @@ namespace Negocio
             {
                 datos.AbrirConexion();
                 //Cambiar por un sp
-                datos.SetQuery("SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, A.IdMarca, M.Descripcion AS 'Marca', A.IdCategoria, C.Descripcion AS 'Categoria', A.Precio, A.Estado, A.Stock FROM ARTICULOS AS A INNER JOIN MARCAS AS M ON A.IdMarca = M.Id INNER JOIN CATEGORIAS AS C ON A.IdCategoria = C.Id", "query"); // query para una consulta normal, sp para un stored procedure
+                datos.SetQuery("SELECT A.Id, A.Nombre, A.Descripcion, A.IdMarca, M.Descripcion AS 'Marca', A.IdCategoria, C.Descripcion AS 'Categoria', A.Precio, A.Estado, A.Stock FROM ARTICULOS AS A INNER JOIN MARCAS AS M ON A.IdMarca = M.Id INNER JOIN CATEGORIAS AS C ON A.IdCategoria = C.Id", "query"); // query para una consulta normal, sp para un stored procedure
                 datos.ReadQuery();
                 var aux = datos.Lector;
                 while(datos.Lector.Read())
                 {
                     articulo = new Articulo();
                     articulo.Id = (int)aux["Id"];
-                    articulo.Cod = aux["Codigo"].ToString();
+                    //articulo.Cod = aux["Codigo"].ToString();
                     articulo.Nombre = aux["Nombre"].ToString();
                     articulo.Descripcion = aux["Descripcion"].ToString();
 

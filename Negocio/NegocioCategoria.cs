@@ -48,32 +48,32 @@ namespace Negocio
         }
 
         //TODO: Listar Imagenes Categorias x Id
-        public List<string> ListarImagenesCategorias(int idCategoria)
-        {
-            datos = new DataAccess();
-            try
-            {
-                imagenes = new List<string>();
-                datos.AbrirConexion();
-                datos.SetQuery("SELECT UrlImagen FROM IMAGENES WHERE IdCategoria = @id", "query");
-                datos.SetParameters("@id", idCategoria);
-                datos.ReadQuery();
+        //public List<string> ListarImagenesCategorias(int idCategoria)
+        //{
+        //    datos = new DataAccess();
+        //    try
+        //    {
+        //        imagenes = new List<string>();
+        //        datos.AbrirConexion();
+        //        datos.SetQuery("SELECT UrlImagen FROM IMAGENES WHERE IdCategoria = @id", "query");
+        //        datos.SetParameters("@id", idCategoria);
+        //        datos.ReadQuery();
 
-                var aux = datos.Lector;
-                while (aux.Read())
-                {
-                    imagenes.Add(aux["UrlImagen"].ToString());
-                }
-                return imagenes;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.CerrarConexion();
-            }
-        }
+        //        var aux = datos.Lector;
+        //        while (aux.Read())
+        //        {
+        //            imagenes.Add(aux["UrlImagen"].ToString());
+        //        }
+        //        return imagenes;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        datos.CerrarConexion();
+        //    }
+        //}
     }
 }

@@ -106,6 +106,8 @@ FROM ARTICULOS AS A
 INNER JOIN MARCAS AS M ON A.IdMarca = M.Id 
 INNER JOIN CATEGORIAS AS C ON A.IdCategoria = C.Id
 */
+SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen FROM USUARIOS
+INSERT INTO USUARIOS VALUES ('Facu', 'Admin', 111, 'mail@mail.com', '1', 'calle falsa 1234', 'a', 'sin img')
 
 INSERT INTO ARTICULOS VALUES ('AS', 'DAs', 'aSD sda asd ddas', 1, 1, 0.1, 1, 100)
 INSERT INTO ARTICULOS VALUES ('AJAJJAKLSJL', 'DAs', 'aSD sda asd ddas', 1, 1, 0.1, 1, 100)
