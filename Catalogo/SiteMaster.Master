@@ -39,7 +39,6 @@
                         <li class="nav-item">
                             <a class="nav-link active text-black " aria-current="page" runat="server" href="~/"></a>
                         </li>
-
                         <li class="nav-item me-2 ">
                             <button type="button" class="btn btn-success fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal" >Login modal</button>
                         </li>
