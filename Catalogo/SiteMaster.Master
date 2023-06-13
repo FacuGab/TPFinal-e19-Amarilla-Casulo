@@ -1,5 +1,4 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="SiteMaster.master.cs" Inherits="Catalogo.SiteMaster" %>
-
 <!DOCTYPE html>
 
 <html>
@@ -24,9 +23,9 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand img-fluid text-light" href="Default.aspx">
-                    <%--<img src="~/recursos/img/hellfish.png" class="img-fluid" alt="LOGO-MARCA" id="navBarIcon" />--%>
+                    <img src="~/recursos/hellfish.png" class="img-fluid" alt="LOGO-MARCA" id="navBarIcon" />
                     <!-- mande el icono para ver como quedaba -->
-                    <asp:Image ImageUrl="~/recursos/img/hellfish.png" Height="30px" Width="30px" CssClass="img-fluid" AlternateText="LOGO-MARCA" ID="navIcon" runat="server" ImageAlign="Middle" />
+                    <%--<asp:Image ImageUrl="~/recursos/img/hellfish.png" Height="30px" Width="30px" CssClass="img-fluid" AlternateText="LOGO-MARCA" ID="navIcon" runat="server" ImageAlign="Middle" />--%>
                     <span>HARDFISH</span>
                 </a>
                 <div class="collapse navbar-collapse" id="navbarNav">
@@ -40,7 +39,7 @@
                             <a class="nav-link active text-black " aria-current="page" runat="server" href="~/"></a>
                         </li>
                         <li class="nav-item me-2 ">
-                            <button type="button" class="btn btn-success fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal" >Login modal</button>
+                            <button type="button" class="btn btn-success fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal" >Login</button>
                         </li>
                         <li class="d-flex">
                             <input class="form-control me-2" type="search" placeholder="Buscar artículo" aria-label="Search">
@@ -64,11 +63,11 @@
                     <div class="modal-body">
                         <div class="col-12">
                             <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                            <asp:TextBox CssClass="form-control" ID="btnMailLogin" TextMode="Email" ToolTip="name@example.com" runat="server" />
                         </div>
                         <div class="col-12 mt-3">
                             <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Ingrese contraseña" value="" required>
+                            <asp:TextBox CssClass="form-control" ID="btnClaveLogin" TextMode="Password" ToolTip="Ingrese contraseña" runat="server" />
                         </div>
                         <div class="col-12 mt-2">
                             <div class="form-check">

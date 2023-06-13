@@ -3,6 +3,10 @@ DROP TABLE MARCAS
 ALTER TABLE ARTICULOS
 DROP COLUMN CODIGO;
 
+--- #### AGREGADO DE DATOS ####
+--insert usuarios
+INSERT INTO USUARIOS VALUES ('a', 'a', 1, 'mail@mail.com', '1', 'calle falsa 123', 'a', 'no tiene img');
+
 --insert categorias
 INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('1', 'Monitores', 'https://cdn-icons-png.flaticon.com/256/81/81793.png');
 INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('2', 'Placa de video', 'https://w7.pngwing.com/pngs/388/581/png-transparent-graphics-cards-video-adapters-computer-icons-computer-hardware-electronics-handheld-devices-computer-electronics-text-rectangle-thumbnail.png');

@@ -18,6 +18,7 @@ namespace Dominio
         public string Precio { get { return string.Format("{0:C2}", precio); } }
         public bool Estado { get; set; } // si esta activo o no para mostrar, baja/alta logica
         public int Stock { get; set; }
+        public string ImagenUrl { get; set; }
 
         //CONSTRUCTORES:
         public Articulo() 

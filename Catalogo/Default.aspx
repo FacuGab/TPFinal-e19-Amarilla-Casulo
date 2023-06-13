@@ -49,7 +49,7 @@
             <%-- FIN CAROUSEL --%>
 
         <div class="container">
-                     <%--categoria--%>
+                     <%--CATEGORIAS--%>
             <div class="col-6 mt-5">
                 <h3 class="mb-3">Los mejores hardware</h3>
             </div>
@@ -64,7 +64,8 @@
                      <img src="recursos/img/icons8-hdd-50.png" class="card-img-top"/>
                  </div>
                  <div class="col-3 p-0">
-                     <img src="recursos/img/icons8-monitor-64.png" class="card-img-top"/>
+                     <%--<img src="recursos/img/icons8-monitor-64.png" class="card-img-top"/>--%>
+                     <asp:ImageButton ImageUrl="recursos/img/icons8-monitor-64.png" class="card-img-top" ID="btnImgTest" OnClick="btnImgTest_Click" CommandArgument="1" runat="server" /> <!-- 1, id de monitores -->
                  </div>
                  <div class="col-3 p-0">
                     <img src="recursos/img/icons8-placa-base-62.png" class="card-img-top"/>
@@ -74,7 +75,7 @@
                  </div>
              </div>
 
-         <%--fin categoria--%>
+         <%--fin categorias--%>
         </div>
         <%--CARD SLIDER--%>
         <section class="pt-5 pb-5">
@@ -129,12 +130,11 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
+
                                 <div class="carousel-item">
                                     <div class="row">
-
                                         <div class="col-md-4 mb-3">
                                             <div class="card">
                                                 <img class="img-fluid" alt="100%x280" src="https://www.mundodeportivo.com/alfabeta/hero/2022/06/mejores-procesadores-gaming.jpg?width=1200">
@@ -166,8 +166,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                                 <%--<div class="carousel-item">

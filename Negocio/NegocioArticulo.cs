@@ -26,7 +26,7 @@ namespace Negocio
             {
                 datos.AbrirConexion();
                 //Cambiar por un sp
-                datos.SetQuery("SELECT A.Id, A.Nombre, A.Descripcion, A.IdMarca, M.Descripcion AS 'Marca', A.IdCategoria, C.Descripcion AS 'Categoria', A.Precio, A.Estado, A.Stock FROM ARTICULOS AS A INNER JOIN MARCAS AS M ON A.IdMarca = M.Id INNER JOIN CATEGORIAS AS C ON A.IdCategoria = C.Id", "query"); // query para una consulta normal, sp para un stored procedure
+                datos.SetQuery("SELECT A.Id, A.Nombre, A.Descripcion, A.IdMarca, M.Descripcion AS 'Marca', A.IdCategoria, C.Descripcion AS 'Categoria', A.Precio, A.Estado, A.Stock, A.ImagenUrl FROM ARTICULOS AS A INNER JOIN MARCAS AS M ON A.IdMarca = M.Id INNER JOIN CATEGORIAS AS C ON A.IdCategoria = C.Id", "query");
                 datos.ReadQuery();
                 var aux = datos.Lector;
                 while(datos.Lector.Read())
@@ -46,6 +46,8 @@ namespace Negocio
                     articulo.precio = (decimal)aux["Precio"];
                     articulo.Estado = (bool)aux["Estado"];
                     articulo.Stock = (int)aux["Stock"];
+                    articulo.ImagenUrl = aux["ImagenUrl"].ToString();
+
                     Articulos.Add(articulo);
                 }
                 return Articulos;

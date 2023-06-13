@@ -24,14 +24,13 @@ namespace Negocio
                 marcas = new List<Marca>();
 
                 datos.AbrirConexion();
-                datos.SetQuery("SELECT Id, Descripcion FROM MARCAS", "query");
+                datos.SetQuery("SELECT Id, Descripcion, UrlImagen FROM MARCAS", "query");
                 datos.ReadQuery();
 
                 var aux = datos.Lector;
                 while(aux.Read())
                 {
-                    //marca = new Marca( (int)aux["Id"], aux["Descripcion"].ToString() );
-                    marcas.Add( new Marca( (int)aux["Id"], aux["Descripcion"].ToString()) );
+                    marcas.Add( new Marca( (int)aux["Id"], aux["Descripcion"].ToString(), aux["UrlImagen"].ToString() ));
                 }
                 return marcas;
             }

@@ -10,13 +10,15 @@ namespace Dominio
     {
         //CONSTRUCTORES:
         public Categoria() { }
-        public Categoria(int id, string descripcion)
+        public Categoria(int id, string descripcion, string img)
         {
             Id = id;
             Descripcion = descripcion;
+            UrlImagen = img;
         }
         public int Id { get; set; }
         public string Descripcion { get; set; }
+        public string UrlImagen { get; set; }
 
         public override string ToString()
         {

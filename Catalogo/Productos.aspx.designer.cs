@@ -11,16 +11,16 @@ namespace Catalogo
 {
 
 
-    public partial class Default
+    public partial class Productos
     {
 
         /// <summary>
-        /// btnImgTest control.
+        /// repArticulos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnImgTest;
+        protected global::System.Web.UI.WebControls.Repeater repArticulos;
     }
 }

@@ -26,14 +26,13 @@ namespace Negocio
                 categorias = new List<Categoria>();
 
                 datos.AbrirConexion();
-                datos.SetQuery("SELECT Id, Descripcion FROM CATEGORIAS", "query");
+                datos.SetQuery("SELECT Id, Descripcion, UrlImagen FROM CATEGORIAS", "query");
                 datos.ReadQuery();
 
                 var aux = datos.Lector;
                 while (aux.Read())
                 {
-                    //marca = new Marca( (int)aux["Id"], aux["Descripcion"].ToString() );
-                    categorias.Add(new Categoria((int)aux["Id"], aux["Descripcion"].ToString()));
+                    categorias.Add(new Categoria( (int)aux["Id"], aux["Descripcion"].ToString(), aux["UrlImagen"].ToString() ));
                 }
                 return categorias;
             }

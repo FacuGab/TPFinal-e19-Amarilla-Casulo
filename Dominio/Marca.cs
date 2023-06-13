@@ -10,13 +10,15 @@ namespace Dominio
     {
         //CONSTRUCTORES:
         public Marca() { }
-        public Marca(int id, string descripcion) 
+        public Marca(int id, string descripcion, string img) 
         {
             Id = id;
             Descripcion = descripcion;
+            UrlImagen = img;
         }
         public int Id { get; set; }
         public string Descripcion { get; set; }
+        public string UrlImagen { get; set; }
         public override string ToString()
         {
             return Descripcion;

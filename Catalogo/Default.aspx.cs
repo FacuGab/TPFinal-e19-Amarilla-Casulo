@@ -15,5 +15,12 @@ namespace Catalogo
         {
 
         }
+
+        protected void btnImgTest_Click(object sender, ImageClickEventArgs e)
+        {
+            var id = ((ImageButton)sender).CommandArgument;
+
+            Response.Redirect("Productos.aspx?id="+id, false);
+        }
     }
 }
