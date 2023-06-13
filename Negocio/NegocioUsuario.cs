@@ -55,14 +55,15 @@ namespace Negocio
         }
 
         //TODO: Buscar Usuario
-        public Usuario BuscarUsuario(int dniUsuario)
+        public Usuario BuscarUsuario(string mail) // se puede buscar por otros campos que tienen qeu ser unicos, DNI, MAIL tienen que ser campos unicos
+
         {
             Data = new DataAccess();
             try
             {
                 Data.AbrirConexion();
-                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen FROM USUARIOS WHERE DNI = @dni", "query");
-                Data.SetParameters("@dni", dniUsuario);
+                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen FROM USUARIOS WHERE Mail = @mail", "query");
+                Data.SetParameters("@mail", mail);
                 Data.ReadQuery();
 
                 var aux = Data.Lector;
