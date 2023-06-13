@@ -17,22 +17,23 @@ SET ANSI_PADDING ON
 GO
 
 CREATE TABLE MARCAS (
-	Id INT IDENTITY(1,1) not null PRIMARY KEY,
-	Descripcion varchar(50) not null
+	Id INT not null PRIMARY KEY,
+	Descripcion varchar(50) not null,
+	UrlImagen VARCHAR(1000)NOT NULL
 )
 
 GO
 
 CREATE TABLE CATEGORIAS (
-	Id INT IDENTITY(1,1) not null PRIMARY KEY,
-	Descripcion varchar(50) not null
+	Id INT not null PRIMARY KEY,
+	Descripcion varchar(50) not null,
+	UrlImagen VARCHAR(1000)NOT NULL
 )
 
 GO
 
 CREATE TABLE ARTICULOS(
 	Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	Codigo VARCHAR(50) NULL,
 	Nombre VARCHAR(50) NULL,
 	Descripcion VARCHAR(150) NULL,
 	IdMarca INT NULL,
@@ -48,9 +49,7 @@ GO
 CREATE TABLE IMAGENES(
 	Id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	IdArticulo INT NULL,
-	IdMarca INT NULL,
-	IdCategoria INT NULL,
-	UrlImagen VARCHAR(1000)NOT NULL
+	UrlImagen VARCHAR(1000)NOT NULL,
 )
 
 GO
@@ -89,4 +88,156 @@ CREATE TABLE PEDIDO_ARTICULO(
 	Cantidad INT NOT NULL
 )
 
---DROP TABLE PEDIDO_ARTICULO
+
+--post creación bd
+DROP TABLE MARCAS
+ALTER TABLE ARTICULOS
+DROP COLUMN CODIGO;
+
+--insert categorias
+INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('1', 'Monitores', 'https://cdn-icons-png.flaticon.com/256/81/81793.png');
+INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('2', 'Placa de video', 'https://w7.pngwing.com/pngs/388/581/png-transparent-graphics-cards-video-adapters-computer-icons-computer-hardware-electronics-handheld-devices-computer-electronics-text-rectangle-thumbnail.png');
+INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('3', 'Disco Solido', 'https://cdn-icons-png.flaticon.com/256/4400/4400889.png');
+INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('4', 'Disco rígido', 'https://e7.pngegg.com/pngimages/605/607/png-clipart-logo-brand-data-font-hard-disc-icon-text-rectangle-thumbnail.png');
+INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('5', 'Memoria Ram', 'https://cdn-icons-png.flaticon.com/256/882/882566.png');
+INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('6', 'Teclado', 'https://cdn-icons-png.flaticon.com/256/5740/5740915.png');
+INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('7', 'Mouse', 'https://i.pinimg.com/originals/e9/09/ea/e909ea4f8dff04c13c36d9856a977ebd.png');
+INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('8', 'Auriculares', 'https://cdn-icons-png.flaticon.com/256/260/260315.png');
+INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('9', 'Placa madre', 'https://cdn-icons-png.flaticon.com/256/2004/2004686.png');
+INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('10', 'Procesador', 'https://cdn-icons-png.flaticon.com/256/1086/1086611.png');
+
+select * from categorias;
+
+--Insert marcas
+INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('1', 'Asus', 'https://images.freeimages.com/fic/images/icons/2796/metro_uinvert_dock/256/asus.png');
+INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('2', 'MSI', 'https://pbs.twimg.com/profile_images/674660612547432448/-mac6Il7_400x400.jpg');
+INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('3', 'Amd', 'https://compragamer.net/imagenes_marcas/imagen_marca_320_9_411.jpg');
+INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('4', 'Intel', 'https://compragamer.net/imagenes_marcas/imagen_marca_364_9_203.jpg');
+INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('5', 'Logitech', 'https://static.macupdate.com/products/62352/l/logitech-g-hub-logo.webp?v=1671137096');
+INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('6', 'Redragon', 'https://styles.redditmedia.com/t5_42nhxk/styles/communityIcon_vb8305k77xo61.png?width=256&s=7a4a763b7f929dd1ee7fe6ea04f9a27d71c581e0');
+INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('7', 'HyperX', 'https://compragamer.net/imagenes_marcas/imagen_marca_365_9_441.jpg');
+INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('8', 'Genius', 'https://www.lacasadelacomputadora.com.uy/imgs/representaciones/foto31_71.jpg');
+INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('9', 'Western Digital', 'https://compragamer.net/imagenes_marcas/imagen_marca_322_9_619.jpg');
+INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('10', 'ViewSonic', 'https://e7.pngegg.com/pngimages/466/107/png-clipart-hewlett-packard-viewsonic-computer-monitors-logo-computer-software-hewlett-packard-text-logo.png');
+INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('11', 'Asrock', 'https://cdn.shopify.com/s/files/1/0331/2789/1082/products/ASRock_grande.jpg?v=1582152086');
+INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('12', 'Adata', 'https://2.bp.blogspot.com/-yTiEnencHOA/T08JEEqNlKI/AAAAAAAABts/luVxNynFvW8/s1600/a6.jpg');
+	
+		
+select * from MARCAS;
+
+--insert imagenes
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('5','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33359_Monitor_Gamer_Viewsonic_24__VX2468-PC-MHD_Curvo_165hz_46d27d6d-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('5','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33360_Monitor_Gamer_Viewsonic_24__VX2468-PC-MHD_Curvo_165hz_a6deb2ae-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('5','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33362_Monitor_Gamer_Viewsonic_24__VX2468-PC-MHD_Curvo_165hz_ac523dc3-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('6','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_23821_Monitor_Gamer_Viewsonic_27__VX2768_Curvo_2K_144Hz_1ms_FreeSync_HDMI_DP_af5acee2-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('6','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_23823_Monitor_Gamer_Viewsonic_27__VX2768_Curvo_2K_144Hz_1ms_FreeSync_HDMI_DP_428c53c0-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('2','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_20991_Monitor_Gamer_MSI_24__Optix_G241_144Hz_IPS_1ms_204c32c9-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('2','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_20992_Monitor_Gamer_MSI_24__Optix_G241_144Hz_IPS_1ms_4be4b651-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('2','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_20993_Monitor_Gamer_MSI_24__Optix_G241_144Hz_IPS_1ms_3a4c4094-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('1','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_27036_Monitor_ASUS_21.5__VP228HE-J_Full_HD_1ms_HDMI_VGA_29ad25c0-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('1','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_27037_Monitor_ASUS_21.5__VP228HE-J_Full_HD_1ms_HDMI_VGA_313cf0e0-med.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('1','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_27036_Monitor_ASUS_21.5__VP228HE-J_Full_HD_1ms_HDMI_VGA_29ad25c0-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('3','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33878_Monitor_ASUS_24__VA24EHE-J_Full_HD_ac877e59-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('3','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33879_Monitor_ASUS_24__VA24EHE-J_Full_HD_e5e827ed-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('3','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33881_Monitor_ASUS_24__VA24EHE-J_Full_HD_699389e6-med.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('4','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33822_Monitor_ASUS_27__Full_HD_HDMI_VGA_VA27EHE-J_8b229ce8-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('4','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33823_Monitor_ASUS_27__Full_HD_HDMI_VGA_VA27EHE-J_45efe665-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('4','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33824_Monitor_ASUS_27__Full_HD_HDMI_VGA_VA27EHE-J_e7f15015-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('7','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_36639_Placa_de_Video_MSI_GeForce_RTX_3090_24GB_GDDR6X_VENTUS_3X_OC_58618d16-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('7','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_21085_Placa_de_Video_MSI_GeForce_RTX_3090_24GB_GDDR6X_VENTUS_3X_OC_8ab3b437-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('7','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_21087_Placa_de_Video_MSI_GeForce_RTX_3090_24GB_GDDR6X_VENTUS_3X_OC_4842e14d-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('8','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_36550_Placa_de_Video_ASUS_Phoenix_GeForce_GTX_1630_4GB_GDDR6_b0a0edd2-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('8','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_36551_Placa_de_Video_ASUS_Phoenix_GeForce_GTX_1630_4GB_GDDR6_0aa6ea72-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('9','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_35211_Placa_de_Video_ASUS_GeForce_GTX_1660_SUPER_6GB_GDDR6_OC_TUF_91e6cd72-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('9','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_17243_Placa_de_Video_ASUS_GeForce_GTX_1660_SUPER_6GB_GDDR6_OC_TUF_9b71c1cd-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('9','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_17244_Placa_de_Video_ASUS_GeForce_GTX_1660_SUPER_6GB_GDDR6_OC_TUF_04cc5a64-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('10','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_27548_Placa_de_Video_ASUS_GeForce_GTX_1650_4GB_GDDR6_TUF_GAMING_71e82ff4-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('10','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_16562_Placa_de_Video_ASUS_GeForce_GTX_1650_4GB_GDDR6_TUF_GAMING_25c172c8-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('11','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_19289_Placa_de_Video_Asrock_Radeon_RX_550_2GB_GDDR5_Phantom_Gaming_99528ce8-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('11','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_19290_Placa_de_Video_Asrock_Radeon_RX_550_2GB_GDDR5_Phantom_Gaming_1e8baa4a-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('12','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_29154_Placa_de_Video_Asrock_Radeon_RX_6800_XT_16GB_GDDR6_Phantom_Gaming_D_OC_b76349fe-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('12','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_29155_Placa_de_Video_Asrock_Radeon_RX_6800_XT_16GB_GDDR6_Phantom_Gaming_D_OC_f28765e9-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('12','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_29157_Placa_de_Video_Asrock_Radeon_RX_6800_XT_16GB_GDDR6_Phantom_Gaming_D_OC_b3f0fc37-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('13','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_32107_Disco_Solido_SSD_M.2_WD_500GB_Blue_SN570_3500MB_s_NVMe_PCI-E_Gen3_x4_TLC_3135e1e9-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('13','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_32108_Disco_Solido_SSD_M.2_WD_500GB_Blue_SN570_3500MB_s_NVMe_PCI-E_Gen3_x4_TLC_9a9da7d5-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('14','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_28600_Disco_Solido_SSD_M.2_WD_500GB_Black_SN750_SE_3600MB_s_PCI-E_X4_NVMe_GEN4_b815bec0-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('14','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_28602_Disco_Solido_SSD_M.2_WD_500GB_Black_SN750_SE_3600MB_s_PCI-E_X4_NVMe_GEN4_654966d5-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('15','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33159_Disco_Solido_SSD_M.2_WD_500GB_WD_Black_SN770_5000MB_s_NVMe_PCI-E_x4_Gen_4_7a4a307b-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('15','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33160_Disco_Solido_SSD_M.2_WD_500GB_WD_Black_SN770_5000MB_s_NVMe_PCI-E_x4_Gen_4_2aff08dd-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('16','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_35589_Disco_Solido_SSD_M.2_WD_1TB_WD_Black_SN770_5150MB_s_NVMe_PCI-E_x4_Gen_4_7a4a307b-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('16','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33622_Disco_Solido_SSD_M.2_WD_1TB_WD_Black_SN770_5150MB_s_NVMe_PCI-E_x4_Gen_4_60cef2e6-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('17','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_29777_Disco_Solido_SSD_Adata_240GB_SU650SS_520MB_s__8b455937-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('17','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_29778_Disco_Solido_SSD_Adata_240GB_SU650SS_520MB_s__c1c34d0c-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('18','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_9018_Disco_R__gido_WD_1TB_BLUE_64MB_SATA_6.0GB_s__ca74d162-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('18','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_1196_Disco_R__gido_WD_1TB_BLUE_64MB_SATA_6.0GB_s__1545a4f9-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('19','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_21014_Disco_Rigido_WD_2TB_BLUE_256MB_SATA_6.0GB_s_44f766ac-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('20','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_21015_Disco_Rigido_WD_2TB_BLUE_256MB_SATA_6.0GB_s_d1e138ed-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('21','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_35996_Disco_Rigido_WD_2TB_BLUE_256MB_SATA_6.0GB_s_7200RPM_dc36f8f5-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('22','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_26480_Disco_Rigido_WD_12TB_Red_Pro_7.2K_RPM_256MB_c66a3fa3-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('23','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_26484_Disco_Rigido_WD_12TB_Gold_7.2K_RPM_256MB_856fe552-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('24','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_13221_Memoria_Adata_DDR4_4GB_2666MHz_Value__aa6df289-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('25','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_16184_Memoria_Adata_DDR4_8GB_2666MHz_Value_Sodimm_Notebook_38c2e2af-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('26','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_18814_Memoria_Adata_DDR4_8GB_3200MHz_Premier_c6036c27-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('27','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_25890_Memoria_Adata_DDR4_16GB_3200MHz_CL16_XPG_GAMMIX_D20_Black_6b1582d3-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('28','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_28924_Memoria_Adata_DDR4_8GB_3200MHz_XPG_Spectrix_D60G_RGB_Titanium_88f51e0f-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('29','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_28926_Memoria_Adata_DDR4_8GB_3200MHz_XPG_Spectrix_D50_RGB_Titanium_446ebe28-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('30','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_29885_Memoria_Adata_DDR4__2x8GB__16GB_5000MHz_XPG_Spectrix_D50_Xtreme_RGB_CL19_18133a6d-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('31','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33275_Teclado_Mecanico_Logitech_PRO_TKL_LOL_2_Switch_Brown_30e10b48-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('32','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_19865_Teclado_Mecanico_Logitech_G513_Carbon_RGB_Switch_GX_Brown_Espa__ol_9ccf7c47-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('33','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_33269_Teclado_Mecanico_Logitech_POP_Blast_Yellow_Wireless_725996a0-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('34','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_36665_Teclado_Mecanico_Logitech_POP_Coral_Rose_Wireless_065ab138-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('35','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_16207_Teclado_Logitech_G815_Mechanical_RGB_Lightsync_5ab9b8b1-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('36','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_19373_Teclado_Mecanico_Logitech_G915_TKL_RGB_Lightspeed_Inalambrico_065f0cec-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('38','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_28612_Mouse_Redragon_Centrophorus_M601_RGB_e00743a5-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('38','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_28614_Mouse_Redragon_Centrophorus_M601_RGB_9e2363c4-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('39','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_8760_Mouse_Redragon_Mirage_M690_2.5GHz_Wireless_1739dc55-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('39','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_8759_Mouse_Redragon_Mirage_M690_2.5GHz_Wireless_13e59d69-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('40','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_20297_Mouse_Redragon_Storm_Elite_M988_RGB_Black_f25e5643-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('40','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_20299_Mouse_Redragon_Storm_Elite_M988_RGB_Black_da0b8b96-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('41','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_18989_Mouse_Logitech_M110S_Negro_Blue_USB_9ecef8f4-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('41','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_18992_Mouse_Logitech_M110S_Negro_Blue_USB_f0eff56d-med.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('42','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_24397_Mouse_Logitech_M110S_Red_520ace37-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('42','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_24400_Mouse_Logitech_M110S_Red_572df13e-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('43','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_21243_Mouse_Logitech_G305_Lightspeed_Wireless_Blue_9c250057-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('43','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_21245_Mouse_Logitech_G305_Lightspeed_Wireless_Blue_44244ac2-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('43','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_21248_Mouse_Logitech_G305_Lightspeed_Wireless_Blue_d27a8d95-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('44','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_36399_Auriculares_Redragon_Zeus_X_H510-RGB_7.1_Surround__a5046a9f-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('44','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_36400_Auriculares_Redragon_Zeus_X_H510-RGB_7.1_Surround__a6d2f307-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('45','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_29699_Auriculares_Redragon_Icon_H520_PC_PS4_42412af1-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('45','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_29700_Auriculares_Redragon_Icon_H520_PC_PS4_99b94941-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('46','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_9612_Auriculares_HP_HyperX_Cloud_Stinger_Gaming_Negro__PC___PS4___Switch___XBOX_27f1808e-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('46','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_9613_Auriculares_HP_HyperX_Cloud_Stinger_Gaming_Negro__PC___PS4___Switch___XBOX_c8b462ee-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('47','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_35919_Auriculares_HP_HyperX_Cloud_Black_Blue_PS4_PS5_bdb54c92-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('47','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_35920_Auriculares_HP_HyperX_Cloud_Black_Blue_PS4_PS5_e80b9f85-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('48','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_31171_Auriculares_Genius_GX_Gaming_HS-G710V_91b68c27-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('48','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_31170_Auriculares_Genius_GX_Gaming_HS-G710V_e7832ba5-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('49','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_27936_Auriculares_Logitech_G335_White_32282a6d-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('49','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_27937_Auriculares_Logitech_G335_White_5d46d2e5-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('50','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_21848_Mother_MSI_A520M-A_PRO_AM4_29d05f8c-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('50','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_21849_Mother_MSI_A520M-A_PRO_AM4_8baafa01-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('51','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_20551_Mother_ASUS_PRIME_A520M-K_AM4_f5d89e00-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('51','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_20553_Mother_ASUS_PRIME_A520M-K_AM4_9216f824-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('52','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_25784_Mother_MSI_B450_Gaming_Plus_Max_AM4_5dd0dc29-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('52','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_25785_Mother_MSI_B450_Gaming_Plus_Max_AM4_d5692b77-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('53','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_15692_Mother_MSI_X570-A_PRO_AM4_bbf981bd-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('53','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_15693_Mother_MSI_X570-A_PRO_AM4_b29443fe-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('54','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_30440_Mother_ASUS_PRIME_H610M-E_D4_S1700_3402c168-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('54','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_30441_Mother_ASUS_PRIME_H610M-E_D4_S1700_b1b07b46-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('55','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_34006_Mother_Asrock_H610M-HVS_LGA_1700_486791bd-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('55','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_34007_Mother_Asrock_H610M-HVS_LGA_1700_7eedfce1-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('56','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_24392_Mother_Asrock_A520M-HDV_AM4_5c7ae4d7-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('56','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_24393_Mother_Asrock_A520M-HDV_AM4_affcd72d-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('57','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_16749_Procesador_AMD_RYZEN_5_3600_4.2GHz_Turbo_AM4_Wraith_Stealth_Cooler_f8ab4915-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('57','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_14074_Procesador_AMD_RYZEN_5_3600_4.2GHz_Turbo_AM4_Wraith_Stealth_Cooler_14f3a44e-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('58','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_31696_Procesador_AMD_Ryzen_5_5500_4.2GHz_Turbo___Wraith_Stealth_Cooler_ca9fc7de-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('59','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_22302_Procesador_AMD_Ryzen_9_5950X_4.9GHz_Turbo_AM4_-_No_incluye_Cooler_9d34d3b3-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('60','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_13151_Procesador_Intel_Pentium_G4560_3.5GHz_Socket_1151_Kaby_Lake_OEM_Sin_Cooler_58161f82-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('61','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_19228_Procesador_Intel_Core_i7_10700_4.8GHz_Turbo_Socket_1200_Comet_Lake_e3d7d847-grn.jpg');
+INSERT INTO IMAGENES (idArticulo,  urlImagen) VALUES ('62','https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_25668_Procesador_Intel_Core_i5_11600KF_4.9GHz_Turbo_Socket_1200_Rocket_Lake_7f61810f-grn.jpg');
+
+select * from IMAGENES
+
+--insert Articulos
+INSERT INTO ARTICULOS VALUES ( Monitor ASUS 21.5", VP228HE-J Full HD 1ms HDMI VGA, '1', '1', 'https://compragamer.net/pga/imagenes_publicadas/compragamer_Imganen_general_27034_Monitor_ASUS_21.5__VP228HE-J_Full_HD_1ms_HDMI_VGA_a797ab9e-grn.jpg', '58650', '1', '10');
+
+
