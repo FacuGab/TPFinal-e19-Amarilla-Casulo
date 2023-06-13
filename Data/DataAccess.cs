@@ -15,7 +15,7 @@ namespace Data
         public SqlDataReader Lector { get { return reader; } }
 
         //TODO: Abrir Conexion
-        public void AbrirConexion(string server = ".")
+        public void AbrirConexion(string server = "Manulo-PC\\SQLLABO")
         {
             string path = $"server={server}; database = CATALOGO_E19; integrated security = true";
             try
