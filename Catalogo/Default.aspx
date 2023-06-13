@@ -122,11 +122,10 @@
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <div class="card">
-                                                <img class="img-fluid h-100 w-100" alt="100%x280" src="https://pcboutique.com.ar/content/images/thumbs/0002924_placa-de-video-zotac-rtx2060-ultra-gaming-6gb-ddr6-hdmidvivga_550.jpeg">
+                                                <img class="img-fluid h-100 w-100 mh-100" alt="100%x280" src="https://pcboutique.com.ar/content/images/thumbs/0002924_placa-de-video-zotac-rtx2060-ultra-gaming-6gb-ddr6-hdmidvivga_550.jpeg">
                                                 <div class="card-body">
                                                     <h4 class="card-title">Special title treatment</h4>
                                                     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-
                                                 </div>
                                             </div>
                                         </div>

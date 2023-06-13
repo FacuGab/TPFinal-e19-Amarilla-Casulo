@@ -25,7 +25,8 @@
                 </button>
                 <a class="navbar-brand img-fluid text-light" href="Default.aspx">
                     <%--<img src="~/recursos/img/hellfish.png" class="img-fluid" alt="LOGO-MARCA" id="navBarIcon" />--%>
-                    <asp:Image ImageUrl="~/recursos/img/hellfish.png" Height="50px" Width="50px" CssClass="img-fluid" AlternateText="LOGO-MARCA" ID="navIcon" runat="server" ImageAlign="Middle" />
+                    <!-- mande el icono para ver como quedaba -->
+                    <asp:Image ImageUrl="~/recursos/img/hellfish.png" Height="30px" Width="30px" CssClass="img-fluid" AlternateText="LOGO-MARCA" ID="navIcon" runat="server" ImageAlign="Middle" />
                     <span>HARDFISH</span>
                 </a>
                 <div class="collapse navbar-collapse" id="navbarNav">
@@ -68,7 +69,7 @@
                         </div>
                         <div class="col-12 mt-3">
                             <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Ingrese nueva contraseña" value="" required>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Ingrese contraseña" value="" required>
                         </div>
                         <div class="col-12 mt-2">
                             <div class="form-check">
@@ -115,10 +116,12 @@
                             </p>
                         </div>
                         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                            <h6 class="text-uppercase fw-bold mb-4 text-center" id="redes-foot">Redes sociales
+                            <h6 class="text-uppercase fw-bold mb-4 text-center" id="redes-foot">
+                                Redes sociales
                             </h6>
-                            <p class="">
-                                <a href="https://www.frgp.utn.edu.ar/" class="me-4 link-grayish text-decoration-none text-light">🎓 UTN FRGP 🎓
+                            <p class="text-center">
+                                <a href="https://www.frgp.utn.edu.ar/" class="link-grayish text-decoration-none text-light">
+                                    🎓 UTN FRGP 🎓
                                 </a>
                             </p>
                         </div>
@@ -141,5 +144,4 @@
         <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     </form>
 </body>
-
 </html>

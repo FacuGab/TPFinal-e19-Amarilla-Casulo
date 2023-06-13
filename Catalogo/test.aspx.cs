@@ -38,7 +38,7 @@ namespace Catalogo
             dgvGridTest5.DataBind();
 
             List<Usuario> ls = new List<Usuario>();
-            ls.Add(usuario.BuscarUsuario(111));
+            ls.Add(usuario.BuscarUsuario("111"));
             dgvGridTest6.DataSource = ls;
             dgvGridTest6.DataBind();
 
