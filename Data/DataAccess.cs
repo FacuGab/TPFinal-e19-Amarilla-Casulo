@@ -15,7 +15,7 @@ namespace Data
         public SqlDataReader Lector { get { return reader; } }
 
         //TODO: Abrir Conexion
-        public void AbrirConexion(string server = ".") //  "Manulo-PC\\SQLLABO"
+        public void AbrirConexion(string server = "Manulo-PC\\SQLLABO") //  "Manulo-PC\\SQLLABO"
         {
             string path = $"server={server}; database = CATALOGO_E19; integrated security = true";
             try
@@ -80,7 +80,18 @@ namespace Data
                 throw ex;
             }
         }
-
+        public void setConsulta(string query)
+        {
+            try
+            {
+                cmd = new SqlCommand(query, connection);
+            }
+            catch (Exception ex)
+            {
+                cmd.Dispose();
+                throw ex;
+            }
+        }
         //TODO: Ejecutar Query
         public int ExecuteQuery()
         {

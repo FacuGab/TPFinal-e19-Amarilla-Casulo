@@ -29,7 +29,7 @@ namespace Negocio
                 datos.SetQuery("SELECT A.Id, A.Nombre, A.Descripcion, A.IdMarca, M.Descripcion AS 'Marca', A.IdCategoria, C.Descripcion AS 'Categoria', A.Precio, A.Estado, A.Stock, A.ImagenUrl FROM ARTICULOS AS A INNER JOIN MARCAS AS M ON A.IdMarca = M.Id INNER JOIN CATEGORIAS AS C ON A.IdCategoria = C.Id", "query");
                 datos.ReadQuery();
                 var aux = datos.Lector;
-                while(datos.Lector.Read())
+                while (datos.Lector.Read())
                 {
                     articulo = new Articulo();
                     articulo.Id = (int)aux["Id"];
@@ -75,7 +75,7 @@ namespace Negocio
                 datos.ReadQuery();
 
                 var aux = datos.Lector;
-                while(aux.Read())
+                while (aux.Read())
                 {
                     imagenes.Add(aux["UrlImagen"].ToString());
                 }
@@ -91,5 +91,8 @@ namespace Negocio
             }
         }
 
+
+        //TODO: Listar categorias
+        //TODO: Listar Articulos
     }//Fin NegocioArticulo
 }
