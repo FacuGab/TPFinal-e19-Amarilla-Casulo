@@ -8,6 +8,7 @@
         <div class="row">
 
             <h3>En desarrollo, aca iria detalle de un articulo ¿?....</h3>
+
             <!-- En desarrollo, card solo de testeo -->
             <div class="col align-self-center">
                 <div class="card text-center">

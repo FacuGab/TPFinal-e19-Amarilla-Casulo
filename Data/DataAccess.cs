@@ -80,7 +80,18 @@ namespace Data
                 throw ex;
             }
         }
-
+        public void setConsulta(string query)
+        {
+            try
+            {
+                cmd = new SqlCommand(query, connection);
+            }
+            catch (Exception ex)
+            {
+                cmd.Dispose();
+                throw ex;
+            }
+        }
         //TODO: Ejecutar Query
         public int ExecuteQuery()
         {
