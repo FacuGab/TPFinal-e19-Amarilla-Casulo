@@ -8,6 +8,7 @@
         <div class="row" style="padding-top: 90px">
             <h3>LISTA DE PRODUCTOS</h3>
             <h4>Filtro Seleccionado: <%:Filtro %></h4>
+
             <asp:Repeater ID="repArticulos" runat="server">
                 <ItemTemplate>
                     <div class="col">
