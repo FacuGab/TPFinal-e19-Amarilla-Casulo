@@ -3,6 +3,7 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -19,11 +20,13 @@ namespace Catalogo
         {
             try
             {
+                
                 cargarFiltros();
                 if(Request.Params["idCate"] != null) 
                 {
                     int idMatch = int.Parse(Request.Params["idCate"]);
                     ListaArticulos = new NegocioArticulo();
+                    Session.Add("listaPrincipal", ListaArticulos.ListarArticulos());
 
                     repArticulos.DataSource = ListaArticulos.ListarArticulos().FindAll(art => art.Categoria.Id == idMatch);
                     repArticulos.DataBind();
@@ -67,6 +70,15 @@ namespace Catalogo
             rptCategorias.DataSource = NegocioCategoria.ListarCategorias();
             rptCategorias.DataBind();
 
+        }
+
+
+        protected void btnFiltroCate_Click(object sender, EventArgs e)
+        {
+            int idMatch = int.Parse(((Button)sender).CommandArgument);
+            List<Articulo> listFiltrada = (List<Articulo>)Session["ListaPrincipal"];
+            repArticulos.DataSource = listFiltrada.FindAll(art => art.Categoria.Id == idMatch);
+            repArticulos.DataBind();
         }
     }
 }
