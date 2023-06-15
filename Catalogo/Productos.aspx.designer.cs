@@ -15,6 +15,42 @@ namespace Catalogo
     {
 
         /// <summary>
+        /// rptMarcas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptMarcas;
+
+        /// <summary>
+        /// rptCategorias control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptCategorias;
+
+        /// <summary>
+        /// btnFiltroPrecioAsc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltroPrecioAsc;
+
+        /// <summary>
+        /// btnFiltroPrecioDesc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltroPrecioDesc;
+
+        /// <summary>
         /// ddlFiltroCategoria control.
         /// </summary>
         /// <remarks>
@@ -33,22 +69,13 @@ namespace Catalogo
         protected global::System.Web.UI.WebControls.DropDownList ddlFiltroMarca;
 
         /// <summary>
-        /// rptMarcas control.
+        /// btnFiltro control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptMarcas;
-
-        /// <summary>
-        /// rptCategorias control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptCategorias;
+        protected global::System.Web.UI.WebControls.Button btnFiltro;
 
         /// <summary>
         /// repArticulos control.

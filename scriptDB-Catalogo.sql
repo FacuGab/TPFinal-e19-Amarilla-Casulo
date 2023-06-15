@@ -89,3 +89,7 @@ CREATE TABLE PEDIDO_ARTICULO(
 )
 
 --POST IMPLEMENTACION
+SELECT Id,Descripcion, UrlImagen FROM Categorias
+select * from ARTICULOS
+
+SELECT id,nombre,descripcion,idmarca,idcategoria,precio,estado,stock,imagenurl FROM ARTICULOS WHERE Id = 15

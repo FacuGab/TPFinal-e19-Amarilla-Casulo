@@ -13,5 +13,10 @@ namespace Catalogo
         {
 
         }
+
+        protected void btnFiltroRapido_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Productos.aspx?text=" + tbFiltroRapido.Text.ToString(), false);
+        }
     }
 }

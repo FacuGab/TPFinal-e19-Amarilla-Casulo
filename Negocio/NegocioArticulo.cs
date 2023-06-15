@@ -14,6 +14,7 @@ namespace Negocio
         DataAccess datos = null;
         List<Articulo> Articulos = null;
         List<string> imagenes = null;
+        Articulo articulo;
 
         //TODO: Listar Articulos
         public List<Articulo> ListarArticulos()
@@ -70,7 +71,7 @@ namespace Negocio
             {
                 imagenes = new List<string>();
                 datos.AbrirConexion();
-                datos.SetQuery("SELECT UrlImagen FROM IMAGENES WHERE @id = IdArticulo", "query");
+                datos.SetQuery("SELECT UrlImagen FROM IMAGENES WHERE IdArticulo = @id", "query");
                 datos.SetParameters("@id", idArticulo);
                 datos.ReadQuery();
 
@@ -90,7 +91,40 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+        //TODO: Listar Articulo por id
+        public Articulo ListarArticulo(int idArticulo)
+        {
+            datos = new DataAccess();
+            try
+            {
+                articulo = new Articulo();
+                datos.AbrirConexion();
+                datos.SetQuery("SELECT Id,Nombre,Descripcion,IdMarca,IdCategoria,Precio,Estado,Stock,ImagenUrl FROM ARTICULOS WHERE Id = @id", "query");
+                datos.SetParameters("@id", idArticulo);
+                datos.ReadQuery();
 
+                var aux = datos.Lector;
+                articulo.Id = (int)aux["Id"];
+                articulo.Nombre= aux["Nombre"].ToString();
+                articulo.Descripcion = aux["Descripcion"].ToString();
+                articulo.Marca.Id = (int)aux["IdMarca"];
+                articulo.Categoria.Id = (int)aux["IdCategoria"];
+                articulo.precio = (decimal)aux["Precio"];
+                articulo.Estado = (bool)aux["Estado"];
+                articulo.Stock = (int)aux["Stock"];
+                articulo.ImagenUrl = aux["ImagenUrl"].ToString();
+
+                return articulo;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
 
         //TODO: Listar categorias
         //TODO: Listar Articulos

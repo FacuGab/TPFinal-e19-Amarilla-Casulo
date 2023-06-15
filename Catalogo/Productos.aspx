@@ -9,43 +9,76 @@
         <h4 class="mb-5 text-center fs-3">Filtro Seleccionado: <%:Filtro %></h4>
         <div class="row g-0">
             <div class="col-md-3 bg-light border mb-3 p-5">
-                <asp:DropDownList ID="ddlFiltroCategoria" CssClass="form-select h-1 mb-4" runat="server" AutoPostBack="false"></asp:DropDownList>
-                <asp:DropDownList ID="ddlFiltroMarca" CssClass="form-select h-1 mb-4" runat="server" AutoPostBack="false"></asp:DropDownList>
-                <%--FILTRO DE PRUEBA PARA VER CUAL DEJAMOS--%>
+
+
+                <%--FILTROS AUTOMÁTICOS--%>
+                <h5>Filtro automático</h5>
                 <div class="dropend">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Marcas
                     </button>
                     <ul class="dropdown-menu">
-                        <asp:Repeater runat="server" ID="rptMarcas">
-                            <ItemTemplate>
-                                <li><a class="dropdown-item" href="#"><%#Eval("Descripcion") %></a></li>
-                            </ItemTemplate>
-                        </asp:Repeater>
+                        <asp:UpdatePanel runat="server">
+                            <ContentTemplate>
+                                <asp:Repeater runat="server" ID="rptMarcas">
+                                    <ItemTemplate>
+                                        <li>
+                                            <asp:Button CssClass="btn" Text='<%#Eval("Descripcion") %>' runat="server" ID="btnFiltroMarca" OnClick="btnFiltroMarca_Click" CommandArgument='<%#Eval("Id") %>' /></li>
+                                    </ItemTemplate>
+                                </asp:Repeater>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+
                     </ul>
                 </div>
-
-                <div class="dropend mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="dropend ">
+                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Categorias
                     </button>
-
                     <ul class="dropdown-menu">
                         <asp:UpdatePanel runat="server">
                             <ContentTemplate>
                                 <asp:Repeater runat="server" ID="rptCategorias">
                                     <ItemTemplate>
-                                        <li><a class="dropdown-item" href="#"><%#Eval("Descripcion") %></a></li>
-                                        <asp:Button Text="text" runat="server" ID="btnFiltroCate" OnClick="btnFiltroCate_Click" />
+                                        <li>
+                                            <asp:Button CssClass="btn" Text='<%#Eval("Descripcion") %>' runat="server" ID="btnFiltroCate" OnClick="btnFiltroCate_Click" CommandArgument='<%#Eval("Id") %>' />
+                                        </li>
                                     </ItemTemplate>
                                 </asp:Repeater>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </ul>
                 </div>
+                <div class="dropend mb-4">
+                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ordenar
+                    </button>
+                    <ul class="dropdown-menu">
+                        <asp:UpdatePanel runat="server">
+                            <ContentTemplate>
+                                        <li>
+                                            <asp:Button CssClass="btn" Text="Menor precio" runat="server" ID="btnFiltroPrecioAsc" OnClick="btnFiltroPrecioAsc_Click" />
+                                        </li>
+                                        <li>
+                                            <asp:Button CssClass="btn" Text="Mayor precio" runat="server" ID="btnFiltroPrecioDesc" OnClick="btnFiltroPrecioDesc_Click" />
+                                        </li>
+                                    </ItemTemplate>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </ul>
+                </div>
+                <%--FIN FILTRO AUTOMÁTICO--%>
+
+                <%--filtro manual--%>
+                <h5>Filtro Manual</h5>
+                <asp:DropDownList ID="ddlFiltroCategoria" CssClass="form-select h-1 mb-4" runat="server" AutoPostBack="false"></asp:DropDownList>
+                <asp:DropDownList ID="ddlFiltroMarca" CssClass="form-select h-1 mb-4" runat="server" AutoPostBack="false"></asp:DropDownList>
+                <asp:Button cssClass="btn btn-primary btn-sm mb-5" Text="Aplicar" runat="server" ID="btnFiltro" OnClick="btnFiltro_Click" />
+                <%--fin filtro manual--%>
 
             </div>
             <div class="col-md-1"></div>
+            <%--Lista de articulos--%>
             <div class="col-md-8 ">
                 <asp:UpdatePanel runat="server">
                     <ContentTemplate>
@@ -59,11 +92,11 @@
                                         <div class="col-md-8">
                                             <div class="card-body ">
                                                 <h5 class="card-title fs-3"><%#Eval("Nombre") %></h5>
-                                                <p class="card-text"><%#Eval("Descripcion")%></p>
-                                                <p class="card-text">Categoria: <%#Eval("Categoria")%></p>
-                                                <div class="d-flex justify-content-end">
-                                                    <a href="ListaCarrito.aspx?id=<%# Eval("Id")%>" class="btn btn-primary mt-3"><i class="bi bi-bag-plus-fill">Agregar</i></a>
-                                                </div>
+                                                <%--<p class="card-text"><%#Eval("Descripcion")%></p>
+                                                <p class="card-text">Categoria: <%#Eval("Categoria")%></p>--%>
+                                                <p class="card-text text-primary fs-4 mt-4">$ <%#Eval("Precio")%></p>
+                                                <a href="ListaCarrito.aspx?id=<%# Eval("Id")%>" class="btn btn-warning btn-sm"><i class="bi bi-bag-plus-fill">  Agregar</i></a>
+                                                <asp:Button Text="Detalles" runat="server" ID="btnDetalles" CommandArgument='<%# Eval("Id")%>' OnClick="btnDetalles_Click"/>
                                             </div>
                                         </div>
                                     </div>
@@ -72,7 +105,7 @@
                         </asp:Repeater>
                     </ContentTemplate>
                 </asp:UpdatePanel>
-            </div>
+            </div> <%--fin lista articulos--%>
         </div>
 
     </div>

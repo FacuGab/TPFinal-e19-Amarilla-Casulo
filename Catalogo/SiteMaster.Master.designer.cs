@@ -42,6 +42,24 @@ namespace Catalogo
         protected global::System.Web.UI.WebControls.Image navIcon;
 
         /// <summary>
+        /// tbFiltroRapido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbFiltroRapido;
+
+        /// <summary>
+        /// btnFiltroRapido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltroRapido;
+
+        /// <summary>
         /// btnMailLogin control.
         /// </summary>
         /// <remarks>

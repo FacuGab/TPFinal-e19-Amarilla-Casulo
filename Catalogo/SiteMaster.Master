@@ -42,8 +42,8 @@
                             <button type="button" class="btn btn-success fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal" >Login</button>
                         </li>
                         <li class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Buscar artículo" aria-label="Search">
-                            <button class="btn btn-outline-dark" type="submit">Buscar</button>
+                            <asp:TextBox runat="server" ID="tbFiltroRapido" placeholder="Buscar artículo" CssClass="form-control me-2"/>
+                            <asp:Button Text="Buscar" runat="server" ID="btnFiltroRapido" cssClass="btn btn-outline-dark" OnClick="btnFiltroRapido_Click"/>
                         </li>
                     </ul>
                 </div>
@@ -91,9 +91,10 @@
             </div>
         </div>
          <%--fin modal login--%>
-
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-        </asp:ContentPlaceHolder>
+        <div class="bg-dark-subtle">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
 
         <!-- FOOTER -->
         <footer class="text-center text-lg-start text-light pt-5 bg-black">
