@@ -3,6 +3,7 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -21,26 +22,31 @@ namespace Catalogo
         {
             try
             {
-                cargarFiltros();
-                if (Request.Params["idCate"] != null)
+
+                if (IsPostBack == false)
                 {
-                    int idMatch = int.Parse(Request.Params["idCate"]);
-                    ListaArticulos = new NegocioArticulo();
+                    cargarFiltros();
+                    if (Request.Params["idCate"] != null)
+                    {
+                        int idMatch = int.Parse(Request.Params["idCate"]);
+                        ListaArticulos = new NegocioArticulo();
+                        Session.Add("listaPrincipal", ListaArticulos.ListarArticulos());
 
-                    repArticulos.DataSource = ListaArticulos.ListarArticulos().FindAll(art => art.Categoria.Id == idMatch);
-                    repArticulos.DataBind();
+                        repArticulos.DataSource = ListaArticulos.ListarArticulos().FindAll(art => art.Categoria.Id == idMatch);
+                        repArticulos.DataBind();
 
-                    Filtro = ((List<Articulo>)repArticulos.DataSource)[0].Categoria.Descripcion;
-                }
-                if (Request.Params["idMarca"] != null)
-                {
-                    int idMatch = int.Parse(Request.Params["idMarca"]);
-                    ListaArticulos = new NegocioArticulo();
+                        Filtro = ((List<Articulo>)repArticulos.DataSource)[0].Categoria.Descripcion;
+                    }
+                    if (Request.Params["idMarca"] != null)
+                    {
+                        int idMatch = int.Parse(Request.Params["idMarca"]);
+                        ListaArticulos = new NegocioArticulo();
 
-                    repArticulos.DataSource = ListaArticulos.ListarArticulos().FindAll(art => art.Marca.Id == idMatch);
-                    repArticulos.DataBind();
+                        repArticulos.DataSource = ListaArticulos.ListarArticulos().FindAll(art => art.Marca.Id == idMatch);
+                        repArticulos.DataBind();
 
-                    Filtro = ((List<Articulo>)repArticulos.DataSource)[0].Marca.Descripcion;
+                        Filtro = ((List<Articulo>)repArticulos.DataSource)[0].Marca.Descripcion;
+                    }
                 }
             }
             catch (Exception ex)
@@ -56,7 +62,7 @@ namespace Catalogo
         {
             NegocioMarca = new NegocioMarca();
             NegocioCategoria = new NegocioCategoria();
-            
+
             ddlFiltroMarca.DataSource = NegocioMarca.ListarMarcas();
             ddlFiltroMarca.DataBind();
             ddlFiltroMarca.DataValueField = "Id";
@@ -70,6 +76,12 @@ namespace Catalogo
             rptMarcas.DataBind();
             rptCategorias.DataSource = NegocioCategoria.ListarCategorias();
             rptCategorias.DataBind();
+
+        }
+
+        protected void btnFiltroCate_Click(object sender, EventArgs e)
+        {
+            int idMatch = int.Parse(((Button)sender).CommandArgument);
 
         }
     }
