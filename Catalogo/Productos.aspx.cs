@@ -41,26 +41,25 @@ namespace Catalogo
                     }
                     if (Request.Params["idMarca"] != null)
                     {
-                        int idMatch = int.Parse(Request.Params["idMarca"]);
-                        ListaArticulos = new NegocioArticulo();
-                        Session.Add("listaPrincipal", ListaArticulos.ListarArticulos());
+                        //int idMatch = int.Parse(Request.Params["idMarca"]);
+                        //ListaArticulos = new NegocioArticulo();
+                        //Session.Add("listaPrincipal", ListaArticulos.ListarArticulos());
 
-                        repArticulos.DataSource = ListaArticulos.ListarArticulos().FindAll(art => art.Marca.Id == idMatch);
+                        repArticulos.DataSource = filtrarLista(int.Parse(Request.Params["idMarca"]), "idMarca");
                         repArticulos.DataBind();
-
                         Filtro = ((List<Articulo>)repArticulos.DataSource)[0].Marca.Descripcion;
                     }
                     if (Request.Params["text"] != null)
                     {
-                        string Match = Request.Params["text"];
-                        ListaArticulos = new NegocioArticulo();
-                        List<Articulo> listaFiltrada = new List<Articulo>();
-                        listaFiltrada = ListaArticulos.ListarArticulos().FindAll(
-                        x => (x.Nombre.ToUpperInvariant().Contains(Match.ToUpperInvariant()) ||
-                        x.Marca.Descripcion.ToUpperInvariant().Contains(Match.ToUpperInvariant())));
-                        Session.Add("listaFiltrada", listaFiltrada);
+                        //string Match = Request.Params["text"];
+                        //ListaArticulos = new NegocioArticulo();
+                        //List<Articulo> listaFiltrada = new List<Articulo>();
+                        //listaFiltrada = ListaArticulos.ListarArticulos().FindAll(
+                        //x => (x.Nombre.ToUpperInvariant().Contains(Match.ToUpperInvariant()) ||
+                        //x.Marca.Descripcion.ToUpperInvariant().Contains(Match.ToUpperInvariant())));
+                        //Session.Add("listaFiltrada", listaFiltrada);
 
-                        repArticulos.DataSource = listaFiltrada;
+                        repArticulos.DataSource = filtrarLista(Request.Params["text"]);
                         repArticulos.DataBind();
                     }
                 }
@@ -96,7 +95,7 @@ namespace Catalogo
         }
 
         //TODO: Filtrar Lista
-        private List<Articulo> filtrarLista(object param, string tipoParam)
+        private List<Articulo> filtrarLista(object param, string tipoParam = null)
         {
             List<Articulo> listaFiltrada = null;
             try
