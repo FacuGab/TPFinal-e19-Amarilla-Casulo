@@ -114,14 +114,12 @@ namespace Catalogo
 
             try
             {
-                foreach (var articulo in listaArticulos)
-                {
-                    listaFiltrada.AddRange(listaArticulos.FindAll(x =>
-                    x.Categoria.Descripcion.Contains(ddlFiltroCategoria.Text)
-                    && x.Marca.Descripcion.Contains(ddlFiltroMarca.Text)));
-                }
+                listaFiltrada.AddRange(listaArticulos.FindAll(x =>
+                x.Categoria.Descripcion.Contains(ddlFiltroCategoria.Text)
+                && x.Marca.Descripcion.Contains(ddlFiltroMarca.Text)));
                 repArticulos.DataSource = listaFiltrada;
                 repArticulos.DataBind();
+
             }
             catch (Exception ex)
             {
@@ -134,7 +132,7 @@ namespace Catalogo
         {
             try
             {
-                if(Request.Params["text"] != null)
+                if (Request.Params["text"] != null)
                 {
                     List<Articulo> listaArticulos;
                     listaArticulos = (List<Articulo>)Session["listaFiltrada"];
@@ -160,7 +158,7 @@ namespace Catalogo
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx");
             }
-            
+
         }
 
         protected void btnFiltroPrecioAsc_Click(object sender, EventArgs e)
@@ -192,7 +190,7 @@ namespace Catalogo
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx");
             }
-            
+
         }
 
         protected void btnDetalles_Click(object sender, EventArgs e)

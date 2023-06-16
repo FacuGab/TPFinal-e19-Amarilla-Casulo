@@ -8,73 +8,76 @@
     <div class="container mt-5 pt-5 min-vh-100">
         <h4 class="mb-5 text-center fs-3">Filtro Seleccionado: <%:Filtro %></h4>
         <div class="row g-0">
-            <div class="col-md-3 bg-light border mb-3 p-5">
+            <div class="col-md-3 bg-light border mb-3 p-1">
 
 
                 <%--FILTROS AUTOMÁTICOS--%>
-                <h5>Filtro automático</h5>
-                <div class="dropend">
-                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Marcas
-                    </button>
-                    <ul class="dropdown-menu">
-                        <asp:UpdatePanel runat="server">
-                            <ContentTemplate>
-                                <asp:Repeater runat="server" ID="rptMarcas">
-                                    <ItemTemplate>
-                                        <li>
-                                            <asp:Button CssClass="btn" Text='<%#Eval("Descripcion") %>' runat="server" ID="btnFiltroMarca" OnClick="btnFiltroMarca_Click" CommandArgument='<%#Eval("Id") %>' /></li>
-                                    </ItemTemplate>
-                                </asp:Repeater>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
+                <div class="p-5">
+                    <h5>Filtro automático</h5>
+                    <div class="dropend">
+                        <button class="btn dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Marcas
+                        </button>
+                        <ul class="dropdown-menu ">
+                            <asp:UpdatePanel runat="server">
+                                <ContentTemplate>
+                                    <asp:Repeater runat="server" ID="rptMarcas">
+                                        <ItemTemplate>
+                                            <li>
+                                                <asp:Button CssClass="btn" Text='<%#Eval("Descripcion") %>' runat="server" ID="btnFiltroMarca" OnClick="btnFiltroMarca_Click" CommandArgument='<%#Eval("Id") %>' /></li>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
 
-                    </ul>
-                </div>
-                <div class="dropend ">
-                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Categorias
-                    </button>
-                    <ul class="dropdown-menu">
-                        <asp:UpdatePanel runat="server">
-                            <ContentTemplate>
-                                <asp:Repeater runat="server" ID="rptCategorias">
-                                    <ItemTemplate>
-                                        <li>
-                                            <asp:Button CssClass="btn" Text='<%#Eval("Descripcion") %>' runat="server" ID="btnFiltroCate" OnClick="btnFiltroCate_Click" CommandArgument='<%#Eval("Id") %>' />
-                                        </li>
+                        </ul>
+                    </div>
+                    <div class="dropend ">
+                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categorias
+                        </button>
+                        <ul class="dropdown-menu">
+                            <asp:UpdatePanel runat="server">
+                                <ContentTemplate>
+                                    <asp:Repeater runat="server" ID="rptCategorias">
+                                        <ItemTemplate>
+                                            <li>
+                                                <asp:Button CssClass="btn" Text='<%#Eval("Descripcion") %>' runat="server" ID="btnFiltroCate" OnClick="btnFiltroCate_Click" CommandArgument='<%#Eval("Id") %>' />
+                                            </li>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </ul>
+                    </div>
+                    <div class="dropend mb-4">
+                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Ordenar
+                        </button>
+                        <ul class="dropdown-menu">
+                            <asp:UpdatePanel runat="server">
+                                <ContentTemplate>
+                                    <li>
+                                        <asp:Button CssClass="btn" Text="Menor precio" runat="server" ID="btnFiltroPrecioAsc" OnClick="btnFiltroPrecioAsc_Click" />
+                                    </li>
+                                    <li>
+                                        <asp:Button CssClass="btn" Text="Mayor precio" runat="server" ID="btnFiltroPrecioDesc" OnClick="btnFiltroPrecioDesc_Click" />
+                                    </li>
                                     </ItemTemplate>
-                                </asp:Repeater>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                    </ul>
-                </div>
-                <div class="dropend mb-4">
-                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Ordenar
-                    </button>
-                    <ul class="dropdown-menu">
-                        <asp:UpdatePanel runat="server">
-                            <ContentTemplate>
-                                        <li>
-                                            <asp:Button CssClass="btn" Text="Menor precio" runat="server" ID="btnFiltroPrecioAsc" OnClick="btnFiltroPrecioAsc_Click" />
-                                        </li>
-                                        <li>
-                                            <asp:Button CssClass="btn" Text="Mayor precio" runat="server" ID="btnFiltroPrecioDesc" OnClick="btnFiltroPrecioDesc_Click" />
-                                        </li>
-                                    </ItemTemplate>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                    </ul>
-                </div>
-                <%--FIN FILTRO AUTOMÁTICO--%>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </ul>
+                    </div>
+                    <%--FIN FILTRO AUTOMÁTICO--%>
 
-                <%--filtro manual--%>
-                <h5>Filtro Manual</h5>
-                <asp:DropDownList ID="ddlFiltroCategoria" CssClass="form-select h-1 mb-4" runat="server" AutoPostBack="false"></asp:DropDownList>
-                <asp:DropDownList ID="ddlFiltroMarca" CssClass="form-select h-1 mb-4" runat="server" AutoPostBack="false"></asp:DropDownList>
-                <asp:Button cssClass="btn btn-primary btn-sm mb-5" Text="Aplicar" runat="server" ID="btnFiltro" OnClick="btnFiltro_Click" />
+                    <%--filtro manual--%>
+                    <h5>Filtro Manual</h5>
+                    <asp:DropDownList ID="ddlFiltroCategoria" CssClass="form-select h-1 mb-4" runat="server" AutoPostBack="false"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlFiltroMarca" CssClass="form-select h-1 mb-4" runat="server" AutoPostBack="false"></asp:DropDownList>
+                    <asp:Button CssClass="btn btn-primary btn-sm mb-5" Text="Aplicar" runat="server" ID="btnFiltro" OnClick="btnFiltro_Click" />
+                </div>
                 <%--fin filtro manual--%>
+                <img src="https://imagenes.compragamer.com/espacioWeb/DC_20230609164245_TKUu6ZRC.jpg" alt="Alternate Text" class="img-fluid" />
 
             </div>
             <div class="col-md-1"></div>
@@ -95,8 +98,8 @@
                                                 <%--<p class="card-text"><%#Eval("Descripcion")%></p>
                                                 <p class="card-text">Categoria: <%#Eval("Categoria")%></p>--%>
                                                 <p class="card-text text-primary fs-4 mt-4">$ <%#Eval("Precio")%></p>
-                                                <a href="ListaCarrito.aspx?id=<%# Eval("Id")%>" class="btn btn-warning btn-sm"><i class="bi bi-bag-plus-fill">  Agregar</i></a>
-                                                <asp:Button Text="Detalles" runat="server" ID="btnDetalles" CommandArgument='<%# Eval("Id")%>' OnClick="btnDetalles_Click"/>
+                                                <a href="ListaCarrito.aspx?id=<%# Eval("Id")%>" class="btn btn-warning">🛒  Agregar</a>
+                                                <asp:Button Text="ℹ Detalles" runat="server" ID="btnDetalles" cssClass="btn btn-primary" CommandArgument='<%# Eval("Id")%>' OnClick="btnDetalles_Click"/>
                                             </div>
                                         </div>
                                     </div>
