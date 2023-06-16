@@ -22,19 +22,21 @@ namespace Catalogo
         {
             try
             {
-
                 if (IsPostBack == false)
                 {
                     cargarFiltros();
+
+                    // Fijarse si cargar la lista aca sin los activos
+                    // Esta logica hay que cambiarla mas adelante
                     if (Request.Params["idCate"] != null)
                     {
-                        int idMatch = int.Parse(Request.Params["idCate"]);
-                        ListaArticulos = new NegocioArticulo();
-                        Session.Add("listaPrincipal", ListaArticulos.ListarArticulos());
+                        //int idMatch = int.Parse(Request.Params["idCate"]);
+                        //ListaArticulos = new NegocioArticulo();
+                        //Session.Add("listaPrincipal", ListaArticulos.ListarArticulos());
+                        //repArticulos.DataSource = ListaArticulos.ListarArticulos().FindAll(art => art.Categoria.Id == idMatch);
 
-                        repArticulos.DataSource = ListaArticulos.ListarArticulos().FindAll(art => art.Categoria.Id == idMatch);
+                        repArticulos.DataSource = filtrarLista(int.Parse(Request.Params["idCate"]), "idCate");
                         repArticulos.DataBind();
-
                         Filtro = ((List<Articulo>)repArticulos.DataSource)[0].Categoria.Descripcion;
                     }
                     if (Request.Params["idMarca"] != null)
@@ -70,7 +72,7 @@ namespace Catalogo
             }
         }
 
-        //METODOS
+        // ### METODOS ###
         //TODO: Carga de Filtros
         private void cargarFiltros()
         {
@@ -81,6 +83,7 @@ namespace Catalogo
             ddlFiltroMarca.DataBind();
             ddlFiltroMarca.DataValueField = "Id";
             ddlFiltroMarca.DataTextField = "Descripcion";
+
             ddlFiltroCategoria.DataSource = NegocioCategoria.ListarCategorias();
             ddlFiltroCategoria.DataBind();
             ddlFiltroCategoria.DataValueField = "Id";
@@ -90,22 +93,66 @@ namespace Catalogo
             rptMarcas.DataBind();
             rptCategorias.DataSource = NegocioCategoria.ListarCategorias();
             rptCategorias.DataBind();
-
         }
 
+        //TODO: Filtrar Lista
+        private List<Articulo> filtrarLista(object param, string tipoParam)
+        {
+            List<Articulo> listaFiltrada = null;
+            try
+            {
+                if (param == null)
+                    return null;
+                else
+                    ListaArticulos = new NegocioArticulo();
+
+                if (param is string)
+                {
+                    string match = param as string;
+                    listaFiltrada = ListaArticulos.ListarArticulos().FindAll(
+                        x => (x.Nombre.ToUpperInvariant().Contains(match.ToUpperInvariant()) ||
+                        x.Marca.Descripcion.ToUpperInvariant().Contains(match.ToUpperInvariant()))
+                        );
+                    Session.Add("listaFiltrada", listaFiltrada);
+                }
+                else if(param is int) 
+                {
+                    int match = (int)param;
+                    if(tipoParam == "idCate")
+                    {
+                        listaFiltrada = ListaArticulos.ListarArticulos().FindAll(art => art.Categoria.Id == match);
+                        Session.Add("listaFiltrada", listaFiltrada);
+                    }
+                    else if(tipoParam == "idMarca")
+                    {
+                        listaFiltrada = ListaArticulos.ListarArticulos().FindAll(art => art.Marca.Id == match);
+                        Session.Add("listaFiltrada", listaFiltrada);
+                    }
+                }
+                return listaFiltrada;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        // ### EVENTOS ###
+        //TODO: Filtro Caegorias
         protected void btnFiltroCate_Click(object sender, EventArgs e)
         {
             int idMatch = int.Parse(((Button)sender).CommandArgument);
             Response.Redirect("Productos.aspx?idCate=" + idMatch, false);
-
         }
 
+        //TODO: Filtro Marca
         protected void btnFiltroMarca_Click(object sender, EventArgs e)
         {
             int idMatch = int.Parse(((Button)sender).CommandArgument);
             Response.Redirect("Productos.aspx?idMarca=" + idMatch, false);
         }
-        //Boton accion filtro manual
+
+        //TODO: Boton Filtro
         protected void btnFiltro_Click(object sender, EventArgs e)
         {
             List<Articulo> listaArticulos;
@@ -128,8 +175,9 @@ namespace Catalogo
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx");
             }
-        }//fin
+        }
 
+        //TODO: Boton Filtro Precio dsc
         protected void btnFiltroPrecioDesc_Click(object sender, EventArgs e)
         {
             try
@@ -138,17 +186,21 @@ namespace Catalogo
                 {
                     List<Articulo> listaArticulos;
                     listaArticulos = (List<Articulo>)Session["listaFiltrada"];
+
                     List<Articulo> listaFiltrada = new List<Articulo>();
                     listaFiltrada = listaArticulos.OrderByDescending(producto => producto.precio).ToList();
+
                     repArticulos.DataSource = listaFiltrada;
                     repArticulos.DataBind();
                 }
                 else
-                {
+                {   // porque repite el codigo en el else si no tenemos parametro ¿?
                     List<Articulo> listaArticulos;
                     listaArticulos = (List<Articulo>)Session["listaPrincipal"];
+
                     List<Articulo> listaFiltrada = new List<Articulo>();
                     listaFiltrada = listaArticulos.OrderByDescending(producto => producto.precio).ToList();
+
                     repArticulos.DataSource = listaFiltrada;
                     repArticulos.DataBind();
                 }
@@ -163,6 +215,7 @@ namespace Catalogo
             
         }
 
+        //TODO: Boton Filtro Precio asc
         protected void btnFiltroPrecioAsc_Click(object sender, EventArgs e)
         {
             try
@@ -195,6 +248,7 @@ namespace Catalogo
             
         }
 
+        //TODO: Boton Ir a Detalle Articulo
         protected void btnDetalles_Click(object sender, EventArgs e)
         {
             int id = int.Parse(((Button)sender).CommandArgument);

@@ -20,9 +20,9 @@ namespace Catalogo
             {
                 idMatch = int.Parse(Request.Params["idProd"]);
                 NegocioArticulo ListaArticulos = new NegocioArticulo();
+
                 listImg = new List<string>();
                 listImg = ListaArticulos.ListarImagenesArticulos(idMatch);
-
                 listArt = new List<Articulo>();
                 
                 foreach (var item in ListaArticulos.ListarArticulos())

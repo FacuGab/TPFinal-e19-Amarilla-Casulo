@@ -27,28 +27,24 @@
                 </div>
                 <asp:Repeater runat="server" ID="rptDetalleArt">
                     <ItemTemplate>
-                                <%foreach (var item in listArt)
-                                    {
-                                        if(item.Id == idMatch)
-                                        {%>
-                                        <div class="card-body bg-warning-subtle">
-                                            <h5 class="card-title fs-3"><%=item.Nombre%></h5>
-                                            <p class="card-text"><%=item.Descripcion%></p>
-                                            <p class="card-text">Marca: <%= item.Marca%></p>
-                                            <p class="card-text">Categoria: <%= item.Categoria%></p>
-                                            <p class="card-text text-primary fs-4 mt-4">$ <%=item.precio%></p>
-                                            <a href="#" class="btn btn-warning "><i class="bi bi-cart-plus-fill">  Agregar al carrito</i></a>
-                                        </div>
-                                        <%}
-                                    }%>
-                                <%--<asp:Button Text="Detalles" runat="server" ID="" CommandArgument='' OnClick=""/>--%>
-                            
+                        <%foreach (var item in listArt)
+                            {
+                                if (item.Id == idMatch)
+                                {%>
+                        <div class="card-body bg-warning-subtle">
+                            <h5 class="card-title fs-3"><%=item.Nombre%></h5>
+                            <p class="card-text"><%=item.Descripcion%></p>
+                            <p class="card-text">Marca: <%= item.Marca%></p>
+                            <p class="card-text">Categoria: <%= item.Categoria%></p>
+                            <p class="card-text text-primary fs-4 mt-4">$ <%=item.precio%></p>
+                            <a href="#" class="btn btn-warning "><i class="bi bi-cart-plus-fill">Agregar al carrito</i></a>
+                        </div>
+                        <%}
+                            }%>
+                        <%--<asp:Button Text="Detalles" runat="server" ID="" CommandArgument='' OnClick=""/>--%>
                     </ItemTemplate>
                 </asp:Repeater>
-                
-</div>
-
-
+            </div>
         </div>
     </section>
 

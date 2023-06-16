@@ -11,6 +11,7 @@ namespace Catalogo
 {
     public partial class Default : System.Web.UI.Page
     {
+        //LOAD
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -36,12 +37,15 @@ namespace Catalogo
             }
         }
 
+        //EVENTOS
+        //TODO: Boton img 
         protected void btnImgCate_Click(object sender, ImageClickEventArgs e)
         {
             var cate = ((ImageButton)sender).CommandArgument;
 
             Response.Redirect("Productos.aspx?idCate="+ cate, false);
         }
+        //Boton img
         protected void btnImgMarca_Click(object sender, ImageClickEventArgs e)
         {
             var marca = ((ImageButton)sender).CommandArgument;
