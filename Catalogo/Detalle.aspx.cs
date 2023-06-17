@@ -12,28 +12,42 @@ namespace Catalogo
     public partial class Detalle : System.Web.UI.Page
     {
         protected List<string> listImg;
-        protected List<Articulo> listArt;
+        protected List<Articulo> listArt = null;
         protected int idMatch = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                idMatch = int.Parse(Request.Params["idProd"]);
-                NegocioArticulo ListaArticulos = new NegocioArticulo();
+                List<Articulo> articulos = null;
+                if (Session["listaPrincipal"]  != null)
+                    articulos = (List<Articulo>)Session["listaPrincipal"];
 
-                listImg = new List<string>();
-                listImg = ListaArticulos.ListarImagenesArticulos(idMatch);
-                listArt = new List<Articulo>();
-                
-                foreach (var item in ListaArticulos.ListarArticulos())
-                {
-                    if(item.Id == idMatch)
+                if (Request.Params["idProd"]  != null && articulos != null) 
+                { 
+                    NegocioArticulo listaArticulos = new NegocioArticulo();
+                    idMatch = int.Parse(Request.Params["idProd"]);
+                    listImg = listaArticulos.ListarImagenesArticulos(idMatch);
+                    listArt = new List<Articulo>();
+
+                    foreach (var art in articulos)
                     {
-                        listArt.Add(item);
+                        if(art.Id == idMatch)
+                            listArt.Add(art);
                     }
+                    rptDetalleArt.DataSource = listArt;
+                    rptDetalleArt.DataBind();
                 }
-                rptDetalleArt.DataSource = listArt;
-                rptDetalleArt.DataBind();
+                //listImg = new List<string>();
+                //listImg = ListaArticulos.ListarImagenesArticulos(idMatch);
+                //listArt = new List<Articulo>();
+                
+                //foreach (var item in ListaArticulos.ListarArticulos()) // no se si es bueno listar todos los articulos en BD solo para usarlo en un foreach. Ver
+                //{
+                //    if(item.Id == idMatch)
+                //    {
+                //        listArt.Add(item);
+                //    }
+                //}
 
             }
             catch (Exception ex)

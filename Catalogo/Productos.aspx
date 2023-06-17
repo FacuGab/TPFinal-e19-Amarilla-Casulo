@@ -24,7 +24,8 @@
                                     <asp:Repeater runat="server" ID="rptMarcas">
                                         <ItemTemplate>
                                             <li>
-                                                <asp:Button CssClass="btn" Text='<%#Eval("Descripcion") %>' runat="server" ID="btnFiltroMarca" OnClick="btnFiltroMarca_Click" CommandArgument='<%#Eval("Id") %>' /></li>
+                                                <asp:Button CssClass="btn" Text='<%#Eval("Descripcion") %>' runat="server" ID="btnFiltroMarca" OnClick="btnFiltroMarca_Click" CommandArgument='<%#Eval("Id") %>' />
+                                            </li>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ContentTemplate>
@@ -75,6 +76,7 @@
                     <asp:DropDownList ID="ddlFiltroCategoria" CssClass="form-select h-1 mb-4" runat="server" AutoPostBack="false"></asp:DropDownList>
                     <asp:DropDownList ID="ddlFiltroMarca" CssClass="form-select h-1 mb-4" runat="server" AutoPostBack="false"></asp:DropDownList>
                     <asp:Button CssClass="btn btn-primary btn-sm mb-5" Text="Aplicar" runat="server" ID="btnFiltro" OnClick="btnFiltro_Click" />
+                    <asp:Button CssClass="btn btn-info btn-sm mb-5" Text="Eliminar Filtros" runat="server" ID="btnBorrarFilros" OnClick="btnBorrarFilros_Click" />
                 </div>
                 <%--fin filtro manual--%>
                 <img src="https://imagenes.compragamer.com/espacioWeb/DC_20230609164245_TKUu6ZRC.jpg" alt="Alternate Text" class="img-fluid" />
@@ -95,8 +97,6 @@
                                         <div class="col-md-8">
                                             <div class="card-body ">
                                                 <h5 class="card-title fs-3"><%#Eval("Nombre") %></h5>
-                                                <%--<p class="card-text"><%#Eval("Descripcion")%></p>
-                                                <p class="card-text">Categoria: <%#Eval("Categoria")%></p>--%>
                                                 <p class="card-text text-primary fs-4 mt-4">$ <%#Eval("Precio")%></p>
                                                 <a href="ListaCarrito.aspx?id=<%# Eval("Id")%>" class="btn btn-warning">🛒  Agregar</a>
                                                 <asp:Button Text="ℹ Detalles" runat="server" ID="btnDetalles" cssClass="btn btn-primary" CommandArgument='<%# Eval("Id")%>' OnClick="btnDetalles_Click"/>

@@ -14,7 +14,7 @@ namespace Catalogo
     {
         NegocioCategoria NegocioCategoria;
         NegocioMarca NegocioMarca;
-        NegocioArticulo ListaArticulos = null;
+        NegocioArticulo negocioArticulos = null;
         public string Filtro { get; set; } = string.Empty; // ver si agregar otro o sacar
 
         //TODO: LOAD
@@ -24,44 +24,41 @@ namespace Catalogo
             {
                 if (IsPostBack == false)
                 {
+                    List<Articulo> listaMostrar;
+
+                    //Cargamos Filtros y Creamos Lista Principal si no existe, idem lista filtrada
                     cargarFiltros();
 
-                    // Fijarse si cargar la lista aca sin los activos
-                    // Esta logica hay que cambiarla mas adelante
+                    if (Session["listaPrincipal"] == null)
+                        Session.Add("listaPrincipal", new NegocioArticulo().ListarArticulos());
+
+                    if (Session["listaFiltrada"] == null)
+                        Session.Add("listaFiltrada", new List<Articulo>());
+
+                    //Vemos si hay y que tipo de parametro por querystring tenemos:
                     if (Request.Params["idCate"] != null)
                     {
-                        //int idMatch = int.Parse(Request.Params["idCate"]);
-                        //ListaArticulos = new NegocioArticulo();
-                        //Session.Add("listaPrincipal", ListaArticulos.ListarArticulos());
-                        //repArticulos.DataSource = ListaArticulos.ListarArticulos().FindAll(art => art.Categoria.Id == idMatch);
-
-                        repArticulos.DataSource = filtrarLista(int.Parse(Request.Params["idCate"]), "idCate");
-                        repArticulos.DataBind();
-                        Filtro = ((List<Articulo>)repArticulos.DataSource)[0].Categoria.Descripcion;
+                        listaMostrar = filtrarLista(int.Parse(Request.Params["idCate"]), "idCate");
+                        Filtro = listaMostrar[0]?.Categoria.Descripcion;
                     }
-                    if (Request.Params["idMarca"] != null)
+                    else if (Request.Params["idMarca"] != null)
                     {
-                        //int idMatch = int.Parse(Request.Params["idMarca"]);
-                        //ListaArticulos = new NegocioArticulo();
-                        //Session.Add("listaPrincipal", ListaArticulos.ListarArticulos());
-
-                        repArticulos.DataSource = filtrarLista(int.Parse(Request.Params["idMarca"]), "idMarca");
-                        repArticulos.DataBind();
-                        Filtro = ((List<Articulo>)repArticulos.DataSource)[0].Marca.Descripcion;
+                        listaMostrar = filtrarLista(int.Parse(Request.Params["idMarca"]), "idMarca");
+                        Filtro = listaMostrar[0]?.Marca.Descripcion;
                     }
-                    if (Request.Params["text"] != null)
+                    else if (Request.Params["text"] != null)
                     {
-                        //string Match = Request.Params["text"];
-                        //ListaArticulos = new NegocioArticulo();
-                        //List<Articulo> listaFiltrada = new List<Articulo>();
-                        //listaFiltrada = ListaArticulos.ListarArticulos().FindAll(
-                        //x => (x.Nombre.ToUpperInvariant().Contains(Match.ToUpperInvariant()) ||
-                        //x.Marca.Descripcion.ToUpperInvariant().Contains(Match.ToUpperInvariant())));
-                        //Session.Add("listaFiltrada", listaFiltrada);
-
-                        repArticulos.DataSource = filtrarLista(Request.Params["text"]);
-                        repArticulos.DataBind();
+                        listaMostrar = filtrarLista(Request.Params["text"]);
+                        Filtro = Request.Params["text"].ToString();
                     }
+                    else
+                    {
+                        // Si no hay ningun filtro en query y no es un PostBack, mostramos lista completa
+                        listaMostrar = (List<Articulo>)Session["ListaPrincipal"];
+                        Filtro = "";
+                    }
+                    repArticulos.DataSource = listaMostrar;
+                    repArticulos.DataBind();
                 }
             }
             catch (Exception ex)
@@ -97,36 +94,35 @@ namespace Catalogo
         //TODO: Filtrar Lista
         private List<Articulo> filtrarLista(object param, string tipoParam = null)
         {
-            List<Articulo> listaFiltrada = null;
+            //List<Articulo> listaFiltrada = null;
             try
             {
-                if (param == null)
+                //gatillo de seguridad
+                if (Session["listaPrincipal"] == null)
                     return null;
-                else
-                    ListaArticulos = new NegocioArticulo();
 
+                //Asingnamos lista principal a variables
+                List<Articulo> listaPrincipal = (List<Articulo>)Session["listaPrincipal"];
+                List<Articulo> listaFiltrada = (List<Articulo>)Session["listaFiltrada"];
+
+                // Si es un parametro string, filtramos lista principal y agregamos a session con ese filtro
                 if (param is string)
                 {
                     string match = param as string;
-                    listaFiltrada = ListaArticulos.ListarArticulos().FindAll(
+                    listaFiltrada = listaPrincipal.FindAll(
                         x => (x.Nombre.ToUpperInvariant().Contains(match.ToUpperInvariant()) ||
                         x.Marca.Descripcion.ToUpperInvariant().Contains(match.ToUpperInvariant()))
                         );
-                    Session.Add("listaFiltrada", listaFiltrada);
                 }
-                else if(param is int) 
+                // Si es un parametro entero, filtramos lista principal y agregamos a session con ese filtro
+                else if (param is int)
                 {
                     int match = (int)param;
-                    if(tipoParam == "idCate")
-                    {
-                        listaFiltrada = ListaArticulos.ListarArticulos().FindAll(art => art.Categoria.Id == match);
-                        Session.Add("listaFiltrada", listaFiltrada);
-                    }
-                    else if(tipoParam == "idMarca")
-                    {
-                        listaFiltrada = ListaArticulos.ListarArticulos().FindAll(art => art.Marca.Id == match);
-                        Session.Add("listaFiltrada", listaFiltrada);
-                    }
+
+                    if (tipoParam == "idCate")
+                        listaFiltrada = listaPrincipal.FindAll(art => art.Categoria.Id == match);
+                    else if (tipoParam == "idMarca")
+                        listaFiltrada = listaPrincipal.FindAll(art => art.Marca.Id == match);
                 }
                 return listaFiltrada;
             }
@@ -140,32 +136,43 @@ namespace Catalogo
         //TODO: Filtro Caegorias
         protected void btnFiltroCate_Click(object sender, EventArgs e)
         {
-            int idMatch = int.Parse(((Button)sender).CommandArgument);
-            Response.Redirect("Productos.aspx?idCate=" + idMatch, false);
+            try
+            {
+                repArticulos.DataSource = filtrarLista(int.Parse( ((Button)sender).CommandArgument ), "idCate");
+                repArticulos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
 
         //TODO: Filtro Marca
         protected void btnFiltroMarca_Click(object sender, EventArgs e)
         {
-            int idMatch = int.Parse(((Button)sender).CommandArgument);
-            Response.Redirect("Productos.aspx?idMarca=" + idMatch, false);
+            try
+            {
+                repArticulos.DataSource = filtrarLista(int.Parse(((Button)sender).CommandArgument), "idMarca");
+                repArticulos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
 
         //TODO: Boton Filtro
         protected void btnFiltro_Click(object sender, EventArgs e)
         {
-            List<Articulo> listaArticulos;
-            listaArticulos = (List<Articulo>)Session["listaPrincipal"];
-            List<Articulo> listaFiltrada = new List<Articulo>();
-
+            List<Articulo> listaPrincipal = (List<Articulo>)Session["listaPrincipal"];
             try
             {
-                listaFiltrada.AddRange(listaArticulos.FindAll(x =>
-                x.Categoria.Descripcion.Contains(ddlFiltroCategoria.Text)
-                && x.Marca.Descripcion.Contains(ddlFiltroMarca.Text)));
-                repArticulos.DataSource = listaFiltrada;
+                repArticulos.DataSource = listaPrincipal.FindAll(x =>
+                    x.Categoria.Descripcion.Contains(ddlFiltroCategoria.Text)
+                    && x.Marca.Descripcion.Contains(ddlFiltroMarca.Text));
                 repArticulos.DataBind();
-
             }
             catch (Exception ex)
             {
@@ -191,7 +198,7 @@ namespace Catalogo
                     repArticulos.DataBind();
                 }
                 else
-                {   // porque repite el codigo en el else si no tenemos parametro ¿?
+                {   
                     List<Articulo> listaArticulos;
                     listaArticulos = (List<Articulo>)Session["listaPrincipal"];
 
@@ -201,6 +208,9 @@ namespace Catalogo
                     repArticulos.DataSource = listaFiltrada;
                     repArticulos.DataBind();
                 }
+                //List<Articulo> listaFiltrada = (List<Articulo>)Session["listaPrincipal"];
+                //repArticulos.DataSource = listaFiltrada.OrderByDescending(producto => producto.precio).ToList();
+                //repArticulos.DataBind();
 
             }
             catch (Exception ex)
@@ -251,6 +261,15 @@ namespace Catalogo
             int id = int.Parse(((Button)sender).CommandArgument);
 
             Response.Redirect("Detalle.aspx?idProd=" + id, false);
+        }
+
+        //TODO: Boton Borrar Filtros
+        protected void btnBorrarFilros_Click(object sender, EventArgs e)
+        {
+            //ver si borrar obj listas de art en session o no aca ....
+            Session.Remove("listaFiltrada");
+            Session.Remove("listaPrincipal");
+            Response.Redirect("Productos.aspx", false);
         }
     }
 }
