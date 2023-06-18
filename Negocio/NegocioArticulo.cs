@@ -104,6 +104,7 @@ namespace Negocio
                 datos.ReadQuery();
 
                 var aux = datos.Lector;
+                aux.Read();
                 articulo.Id = (int)aux["Id"];
                 articulo.Nombre= aux["Nombre"].ToString();
                 articulo.Descripcion = aux["Descripcion"].ToString();
@@ -113,8 +114,9 @@ namespace Negocio
                 articulo.Estado = (bool)aux["Estado"];
                 articulo.Stock = (int)aux["Stock"];
                 articulo.ImagenUrl = aux["ImagenUrl"].ToString();
-
                 return articulo;
+
+
             }
             catch (Exception ex)
             {

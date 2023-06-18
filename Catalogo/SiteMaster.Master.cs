@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Dominio;
+using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
 
 namespace Catalogo
 {
@@ -11,6 +14,15 @@ namespace Catalogo
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (!IsPostBack)
+            {
+                // Crear una nueva instancia de Cart si no existe en la sesión
+                if (Session["listaCarrito"] == null)
+                {
+                    Session["listaCarrito"] = new List<CarritoItem>();
+                }
+            }
 
         }
 

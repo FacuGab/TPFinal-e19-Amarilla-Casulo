@@ -12,49 +12,8 @@
                 <h2>Carrito de compras</h2>
                 <p class="lead">Verifique la cantidad y los productos seleccionados para continuar con la compra</p>
             </div>
-            <div class="row g-12">
-                <div class="col-md-5 col-lg-6 order-md-last">
-                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-primary">Tus artículos </span>
-                        <span class="badge bg-primary rounded-pill">3</span>
-                    </h4>
-                    <ul class="list-group mb-3">
-                        <li class="list-group-item d-flex justify-content-between lh-sm">
-                            <div>
-                                <h6 class="my-0">Nombre producto</h6>
-                                <small class="text-body-secondary">Brief description</small>
-                            </div>
-                            <span class="text-body-secondary">$12</span>
-                            <span class="text-body-secondary">$12</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between lh-sm">
-                            <div>
-                                <h6 class="my-0">Segundo producto</h6>
-                                <small class="text-body-secondary">Brief description</small>
-                            </div>
-                            <span class="text-body-secondary">$8</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between lh-sm">
-                            <div>
-                                <h6 class="my-0">tercer producto</h6>
-                                <small class="text-body-secondary">Brief description</small>
-                            </div>
-                            <span class="text-body-secondary">$5</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
-                            <div class="text-success">
-                                <h6 class="my-0">Posible descuento</h6>
-                                <small>EXAMPLECODE</small>
-                            </div>
-                            <span class="text-success">−$5</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Total </span>
-                            <strong>$20</strong>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+
+            <asp:GridView runat="server" ID="dgvCarrito" CssClass="table table-hover"></asp:GridView>
             <h4 class="mb-3">Metodo de pago</h4>
 
             <div class="my-3">

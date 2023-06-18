@@ -2,11 +2,13 @@
 using Negocio;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
 
 namespace Catalogo
 {
@@ -15,6 +17,9 @@ namespace Catalogo
         NegocioCategoria NegocioCategoria;
         NegocioMarca NegocioMarca;
         NegocioArticulo negocioArticulos = null;
+        NegocioArticulo negocioArticulo = new NegocioArticulo();
+        Articulo articulo = new Articulo();
+        CarritoItem item = new CarritoItem();
         public string Filtro { get; set; } = string.Empty; // ver si agregar otro o sacar
 
         //TODO: LOAD
@@ -25,7 +30,13 @@ namespace Catalogo
                 if (IsPostBack == false)
                 {
                     List<Articulo> listaMostrar;
-
+                    //Crear lista de articulos de carrito
+                    NegocioCarrito carrito = Session["listaCarrito"] as NegocioCarrito;
+                    if (carrito == null)
+                    {
+                        carrito = new NegocioCarrito();
+                        Session["listaCarrito"] = carrito;
+                    }
                     //Cargamos Filtros y Creamos Lista Principal si no existe, idem lista filtrada
                     cargarFiltros();
 
@@ -271,5 +282,32 @@ namespace Catalogo
             Session.Remove("listaPrincipal");
             Response.Redirect("Productos.aspx", false);
         }
+        //TODO: Boton para agregar item al carrito
+        protected void btnAgregarArt_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int itemId = int.Parse((sender as Button).CommandArgument);
+                articulo = negocioArticulo.ListarArticulo(itemId);
+                item.Id = itemId;
+                item.Nombre = articulo.Nombre;
+                item.precio = articulo.precio;
+                item.Cantidad = 1;
+
+                // Agregar el artículo al carrito
+                NegocioCarrito carrito = Session["listaCarrito"] as NegocioCarrito;
+                carrito.AgregarItem(item);
+            }
+            catch (Exception ex)
+            {
+
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx");
+            }
+            
+
+            
+        }
+
     }
 }

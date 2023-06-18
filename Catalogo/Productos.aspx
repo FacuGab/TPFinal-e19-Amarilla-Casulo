@@ -98,8 +98,8 @@
                                             <div class="card-body ">
                                                 <h5 class="card-title fs-3"><%#Eval("Nombre") %></h5>
                                                 <p class="card-text text-primary fs-4 mt-4">$ <%#Eval("Precio")%></p>
-                                                <a href="ListaCarrito.aspx?id=<%# Eval("Id")%>" class="btn btn-warning">🛒  Agregar</a>
-                                                <asp:Button Text="ℹ Detalles" runat="server" ID="btnDetalles" cssClass="btn btn-primary" CommandArgument='<%# Eval("Id")%>' OnClick="btnDetalles_Click"/>
+                                                <asp:Button Text="🛒  Agregar" runat="server" ID="btnAgregar" cssClass="btn btn-warning mt-4" CommandArgument='<%# Eval("Id")%>' OnClick="btnAgregarArt_Click"/>
+                                                <asp:Button Text="ℹ Detalles" runat="server" ID="btnDetalles" cssClass="btn btn-primary mt-4" CommandArgument='<%# Eval("Id")%>' OnClick="btnDetalles_Click"/>
                                             </div>
                                         </div>
                                     </div>
