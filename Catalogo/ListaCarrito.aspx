@@ -14,7 +14,7 @@
                         <img src="https://www.pngkey.com/png/full/411-4119504_el-carrito-de-la-compra-est-vaco-shopping.png" width="200px" height="200px" class="img-fluid mb-4 mr-3">
                         <h3 ><strong class="fs-1">Tu carrito esta vacío</strong></h3>
                         <h4 class="fs-3">Añade artículos nuevos para visualizarlos acá</h4>
-                        <a href="#" class="btn btn-warning fs-5 m-3 mt-5" data-abc="true">Ver artículos</a>
+                        <a href="Productos.aspx" class="btn btn-warning fs-5 m-3 mt-5" data-abc="true">Ver artículos</a>
                     </div>
                 </div>
             </div>
@@ -60,16 +60,16 @@
                                     </Columns>
                                 </asp:GridView>--%>
                             <%-- test--%>
-                            <div class="container py-5">
+                            <div class="container py-5 mt-5">
                                 <div class="row d-flex justify-content-center my-4">
                                     <div class="col-md-8">
                                         <div class="card mb-4">
-                                            <div class="card-header py-3">
-                                                <h5 class="mb-0">Carrito de compras</h5>
+                                            <div class="card-header py-3 bg-primary text-light">
+                                                <h5 class="mb-0 ">Carrito de compras</h5>
                                             </div>
-                                            <asp:Repeater runat="server" ID="dgvCarrito">
+                                            <asp:Repeater runat="server" ID="dgvCarrito" OnItemDataBound="dgvCarrito_ItemDataBound">
                                                 <ItemTemplate>
-                                                    <div class="card-body">
+                                                    <div class="card-body mt-4">
                                                         <div class="row">
                                                             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                                                 <img src="<%# Eval("ImagenUrl") %>"
@@ -78,18 +78,22 @@
 
                                                             <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                                                                 <p><strong><%# Eval("Nombre") %></strong></p>
-                                                                <p>Cantidad: <%# Eval("Cantidad") %></p>
-                                                                <asp:ImageButton ID="btnEliminar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="btnEliminarFila" OnClick="btnEliminar_Click" Height="29px" ImageUrl="~/recursos/img/Eliminar.png" Width="29px" />
+                                                                <p class="text-start ">
+                                                                   <strong><%# string.Format("{0:C2}", Eval("precio")) %></strong>
+                                                                </p>
+                                                                <asp:ImageButton ID="btnEliminar" CssClass="btn btn-outline-danger mt-5" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="btnEliminarFila" OnClick="btnEliminar_Click" ImageUrl="~/recursos/bootstrap-icons-1.10.5/trash-fill.svg"  />
+                                                                <asp:ImageButton ID="btnDetalles" cssClass="btn btn-outline-info mt-5" runat="server"   CommandArgument='<%# Eval("Id")%>' OnClick="btnDetalles_Click" ImageUrl="~/recursos/bootstrap-icons-1.10.5/info-circle-fill.svg"/>
                                                             </div>
 
                                                             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                                                 <div class="d-flex mb-4 justify-content-around" style="max-width: 300px">
+                                                                     <label for="lblCantidad" class="m-2">Cantidad: </label>
                                                                     <asp:ImageButton ID="btnSumar" CssClass="mt-2" runat="server" CommandArgument='<%#Eval("Id")%>' OnClick="btnSumar_Click" CommandName="btnSumar" Height="19px" ImageUrl="~/recursos/img/agregar.png" Width="19px" />
-                                                                    <asp:Label runat="server" Text='<%# Eval("Cantidad") %>' CssClass="ms-3 me-3 mt-1 fs-5"></asp:Label>
+                                                                    <asp:Label runat="server" ID="lblCantidad" Text='<%# Eval("Cantidad") %>' CssClass="ms-3 me-3 mt-1 fs-5"></asp:Label>
                                                                     <asp:ImageButton ID="btnRestar" CssClass="mt-2 " runat="server" CommandArgument='<%#Eval("Id")%>' OnClick="btnRestar_Click" CommandName="btnRestar" Height="19px" ImageUrl="~/recursos/img/minimizar.png" Width="19px" />
                                                                 </div>
-                                                                <p class="text-start text-md-center">
-                                                                    <strong><%# string.Format("{0:C2}", Eval("Precio")) %></strong>
+                                                                <p class="m-5 fs-5 text-center">Total
+                                                                    <asp:Label runat="server" ID="lblPrecioTotalPorArticulo" Text='<%# string.Format("{0:C2}", Convert.ToDecimal(Eval("Precio")) * Convert.ToDecimal(Eval("Cantidad"))) %>' CssClass=" fs-5 text-primary"></asp:Label>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -101,13 +105,13 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="card mb-4">
-                                            <div class="card-header py-3">
+                                            <div class="card-header py-3 bg-primary text-light">
                                                 <h5 class="mb-0">Resumen</h5>
                                             </div>
                                             <div class="card-body">
                                                 <ul class="list-group list-group-flush">
                                                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">Total artículos
-                                                            <span>$54</span>
+                                                         <asp:Label runat="server" ID="lblPrecioTotal" CssClass=" text-primary"></asp:Label>
                                                     </li>
                                                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">Envío
                                                          <span>Gratis</span>
@@ -126,7 +130,6 @@
                                                         <span><strong>$54</strong></span>
                                                     </li>
                                                 </ul>
-
                                                 <button type="button" class="btn btn-primary btn-lg btn-block">
                                                     Ir al pago
                                                 </button>

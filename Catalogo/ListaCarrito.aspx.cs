@@ -2,6 +2,7 @@
 using Negocio;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -13,6 +14,12 @@ namespace Catalogo
     public partial class WebForm2 : System.Web.UI.Page
     {
         NegocioCarrito carrito;
+        protected decimal totalAcumulado = 0;
+        public decimal TotalAcumulado
+        {
+            get { return totalAcumulado; }
+            set { totalAcumulado = value; }
+        }
         //LOAD
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,6 +32,7 @@ namespace Catalogo
                     divCarritoConItems.Visible = true;
                     dgvCarrito.DataSource = carrito.Items;
                     dgvCarrito.DataBind();
+
                 }
                 else
                 {
@@ -105,7 +113,23 @@ namespace Catalogo
                 throw ex;
             }
         }
-
         //TODO: METODOS
+        protected void btnDetalles_Click(object sender, EventArgs e)
+        {
+            int id = int.Parse(((Button)sender).CommandArgument);
+
+            Response.Redirect("Detalle.aspx?idProd=" + id, false);
+        }
+        protected void dgvCarrito_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Label lblPrecioTotalPorArticulo = (Label)e.Item.FindControl("lblPrecioTotalPorArticulo");
+                decimal precioTotalPorArticulo = Convert.ToDecimal(lblPrecioTotalPorArticulo.Text);
+                TotalAcumulado += precioTotalPorArticulo;
+                
+            }
+        }
+
     }
 }
