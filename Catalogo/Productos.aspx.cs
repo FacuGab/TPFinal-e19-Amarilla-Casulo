@@ -294,7 +294,7 @@ namespace Catalogo
                 List<Articulo> list = Session["listaPrincipal"] as List<Articulo>;
                 NegocioCarrito carrito = Session["listaCarrito"] as NegocioCarrito;
                 
-                articulo = list.Find(art => art.Id == itemId);
+                articulo = list.Find(art => art.Id == itemId); // posible bug si las listas no existen ... aunq dificil que pase
                 if(articulo != null) 
                 {
                     item.Id = itemId;
