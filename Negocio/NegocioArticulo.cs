@@ -115,8 +115,6 @@ namespace Negocio
                 articulo.Stock = (int)aux["Stock"];
                 articulo.ImagenUrl = aux["ImagenUrl"].ToString();
                 return articulo;
-
-
             }
             catch (Exception ex)
             {

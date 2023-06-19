@@ -17,9 +17,8 @@ namespace Catalogo
         NegocioCategoria NegocioCategoria;
         NegocioMarca NegocioMarca;
         NegocioArticulo negocioArticulos = null;
-        NegocioArticulo negocioArticulo = new NegocioArticulo();
-        Articulo articulo = new Articulo();
-        CarritoItem item = new CarritoItem();
+        Articulo articulo;
+        CarritoItem item;
         public string Filtro { get; set; } = string.Empty; // ver si agregar otro o sacar
 
         //TODO: LOAD
@@ -30,16 +29,13 @@ namespace Catalogo
                 if (IsPostBack == false)
                 {
                     List<Articulo> listaMostrar;
-                    //Crear lista de articulos de carrito
-                    NegocioCarrito carrito = Session["listaCarrito"] as NegocioCarrito;
-                    if (carrito == null)
-                    {
-                        carrito = new NegocioCarrito();
-                        Session["listaCarrito"] = carrito;
-                    }
-                    //Cargamos Filtros y Creamos Lista Principal si no existe, idem lista filtrada
                     cargarFiltros();
 
+                    //Crear lista de articulos de carrito
+                    if (Session["listaCarrito"] == null)
+                        Session.Add("listaCarrito", new NegocioCarrito());
+
+                    //Cargamos Filtros y Creamos Lista Principal si no existe, idem lista filtrada
                     if (Session["listaPrincipal"] == null)
                         Session.Add("listaPrincipal", new NegocioArticulo().ListarArticulos());
 
@@ -282,32 +278,39 @@ namespace Catalogo
             Session.Remove("listaPrincipal");
             Response.Redirect("Productos.aspx", false);
         }
+
         //TODO: Boton para agregar item al carrito
         protected void btnAgregarArt_Click(object sender, EventArgs e)
         {
             try
             {
                 int itemId = int.Parse((sender as Button).CommandArgument);
-                articulo = negocioArticulo.ListarArticulo(itemId);
-                item.Id = itemId;
-                item.Nombre = articulo.Nombre;
-                item.precio = articulo.precio;
-                item.Cantidad = 1;
+                // Es mejor crear los obj cuando se dispara el metodo que sean creados constantemente (¿?)
+                negocioArticulos = new NegocioArticulo();
+                item = new CarritoItem();
 
-                // Agregar el artículo al carrito
+                // Buscamos en lista principal (si usamos el metodo de negocio, vamos a hacer una llamada a la bd por cada vuelta que el cliente use el boton agregar,
+                // re-utilizamos la lista que ya existe para sacar la info).
+                List<Articulo> list = Session["listaPrincipal"] as List<Articulo>;
                 NegocioCarrito carrito = Session["listaCarrito"] as NegocioCarrito;
+                
+                articulo = list.Find(art => art.Id == itemId);
+                if(articulo != null) 
+                {
+                    item.Id = itemId;
+                    item.Nombre = articulo.Nombre;
+                    item.precio = articulo.precio;
+                    item.Cantidad = 1;
+                }
+                // Agregar el artículo al carrito
                 carrito.AgregarItem(item);
             }
             catch (Exception ex)
             {
-
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx");
-            }
-            
-
-            
+            }        
         }
 
-    }
+    }//fin
 }

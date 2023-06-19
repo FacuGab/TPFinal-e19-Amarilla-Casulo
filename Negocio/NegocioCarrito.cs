@@ -16,6 +16,7 @@ namespace Negocio
             Items = new List<CarritoItem>();
         }
 
+        //TODO: Agregar Item
         public void AgregarItem(CarritoItem item)//Ya debería validar que si hay otro articulo igual solo lo incremente
         {
             CarritoItem itemExistente = Items.FirstOrDefault(it => it.Id == item.Id);
@@ -31,21 +32,23 @@ namespace Negocio
             }
         }
 
+        //TODO: Borrar Item Carrito
         public void BorrarItem(int itemId)
         {
-            CarritoItem id = Items.FirstOrDefault(item => item.Id == itemId);
-            if (id != null)
+            CarritoItem itemMatch = Items.FirstOrDefault(item => item.Id == itemId);
+            if (itemMatch != null)
             {
-                Items.Remove(id);
+                Items.Remove(itemMatch);
             }
         }
 
+        //TODO: Modificar Cantidad
         public void ModificarCantidad(int itemId, int cantidad)//si hay algun articulo repetido le suma la cantidad
         {
-            CarritoItem item = Items.FirstOrDefault(it => it.Id == itemId);
-            if (item != null)
+            CarritoItem itemMatch = Items.FirstOrDefault(it => it.Id == itemId);
+            if (itemMatch != null)
             {
-                item.Cantidad = cantidad;
+                itemMatch.Cantidad = cantidad;
             }
         }
     }

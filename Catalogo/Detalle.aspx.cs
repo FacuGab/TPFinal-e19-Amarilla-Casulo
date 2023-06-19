@@ -37,18 +37,6 @@ namespace Catalogo
                     rptDetalleArt.DataSource = listArt;
                     rptDetalleArt.DataBind();
                 }
-                //listImg = new List<string>();
-                //listImg = ListaArticulos.ListarImagenesArticulos(idMatch);
-                //listArt = new List<Articulo>();
-                
-                //foreach (var item in ListaArticulos.ListarArticulos()) // no se si es bueno listar todos los articulos en BD solo para usarlo en un foreach. Ver
-                //{
-                //    if(item.Id == idMatch)
-                //    {
-                //        listArt.Add(item);
-                //    }
-                //}
-
             }
             catch (Exception ex)
             {
