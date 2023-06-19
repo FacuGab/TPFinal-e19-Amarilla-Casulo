@@ -2,6 +2,7 @@
 using Negocio;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -13,16 +14,31 @@ namespace Catalogo
     public partial class WebForm2 : System.Web.UI.Page
     {
         NegocioCarrito carrito;
+        protected decimal totalAcumulado = 0;
+        public decimal TotalAcumulado
+        {
+            get { return totalAcumulado; }
+            set { totalAcumulado = value; }
+        }
         //LOAD
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
             {
                 carrito = Session["listaCarrito"] as NegocioCarrito;
-                if(carrito != null )
+                if (carrito != null && carrito.Items.Count > 0)
                 {
+                    divCarritoVacio.Visible = false;
+                    divCarritoConItems.Visible = true;
                     dgvCarrito.DataSource = carrito.Items;
                     dgvCarrito.DataBind();
+
+                }
+                else
+                {
+                    divCarritoConItems.Visible=false;
+                    divCarritoVacio.Visible = true;
+
                 }
             }
         }
@@ -97,7 +113,23 @@ namespace Catalogo
                 throw ex;
             }
         }
-
         //TODO: METODOS
+        protected void btnDetalles_Click(object sender, EventArgs e)
+        {
+            int id = int.Parse(((Button)sender).CommandArgument);
+
+            Response.Redirect("Detalle.aspx?idProd=" + id, false);
+        }
+        protected void dgvCarrito_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Label lblPrecioTotalPorArticulo = (Label)e.Item.FindControl("lblPrecioTotalPorArticulo");
+                decimal precioTotalPorArticulo = Convert.ToDecimal(lblPrecioTotalPorArticulo.Text);
+                TotalAcumulado += precioTotalPorArticulo;
+                
+            }
+        }
+
     }
 }

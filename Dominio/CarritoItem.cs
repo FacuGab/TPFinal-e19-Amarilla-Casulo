@@ -13,5 +13,6 @@ namespace Dominio
         public decimal precio { get; set; }
         public string Precio { get { return string.Format("{0:C2}", precio); } }
         public int Cantidad { get; set; }//Agrege esta propiedad para la cantidad de items iguales en el carrito
+        public string ImagenUrl { get; set; }
     }
 }

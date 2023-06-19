@@ -15,21 +15,39 @@ namespace Catalogo
     {
 
         /// <summary>
+        /// divCarritoVacio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCarritoVacio;
+
+        /// <summary>
+        /// divCarritoConItems control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCarritoConItems;
+
+        /// <summary>
         /// dgvCarrito control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvCarrito;
+        protected global::System.Web.UI.WebControls.Repeater dgvCarrito;
 
         /// <summary>
-        /// btnEliminarListaCompleta control.
+        /// lblPrecioTotal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminarListaCompleta;
+        protected global::System.Web.UI.WebControls.Label lblPrecioTotal;
     }
 }

@@ -300,10 +300,11 @@ namespace Catalogo
                     item.Id = itemId;
                     item.Nombre = articulo.Nombre;
                     item.precio = articulo.precio;
+                    item.ImagenUrl = articulo.ImagenUrl;
                     item.Cantidad = 1;
+                    carrito.AgregarItem(item);
                 }
                 // Agregar el artículo al carrito
-                carrito.AgregarItem(item);
             }
             catch (Exception ex)
             {

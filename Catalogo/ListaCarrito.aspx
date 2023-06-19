@@ -5,20 +5,27 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager runat="server" />
 
-    <main aria-labelledby="title">
-        <div class="container">
-            <div class="py-5 text-center">
-                <img class="d-block mx-auto mb-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUuaXz7MXhpP9p6e9Je_QK3yDFW5H7f5k8GQlkeUsdmyYQ4Xpf_BJiKPp6wB6hSPhsG58&usqp=CAU" alt="" width="172" height="157">
-                <h2>Carrito de compras</h2>
-                <p class="lead">Verifique la cantidad y los productos seleccionados para continuar con la compra</p>
-            </div>
-
+    <main aria-labelledby="title" class="min-vh-100">
+        <%--carrito vacio--%>
+        <div class="container-fluid mt-100 min-vh-100 d-flex justify-content-center align-items-center" id="divCarritoVacio" runat="server">
             <div class="row">
-                <div class="row">
-                    <div class="col">
-                        <asp:UpdatePanel runat="server">
-                            <ContentTemplate>
-                                <asp:GridView runat="server" ID="dgvCarrito" CssClass="table table-hover" AutoGenerateColumns="false">
+                <div class="col-md-12">
+                    <div class="col-sm-12 text-center">
+                        <img src="https://www.pngkey.com/png/full/411-4119504_el-carrito-de-la-compra-est-vaco-shopping.png" width="200px" height="200px" class="img-fluid mb-4 mr-3">
+                        <h3 ><strong class="fs-1">Tu carrito esta vacío</strong></h3>
+                        <h4 class="fs-3">Añade artículos nuevos para visualizarlos acá</h4>
+                        <a href="Productos.aspx" class="btn btn-warning fs-5 m-3 mt-5" data-abc="true">Ver artículos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--fin carrito vacio--%>
+        <div class="container" runat="server" id="divCarritoConItems">
+            <div class="row">
+                <div class="col">
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            <%--<asp:GridView runat="server" ID="dgvCarrito" CssClass="table table-hover" AutoGenerateColumns="false">
                                     <Columns>
                                         <asp:TemplateField HeaderText="Eliminar">
                                             <ItemTemplate>
@@ -32,7 +39,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Precio">
                                             <ItemTemplate>
-                                                <asp:Label runat="server" Text='<%# Eval("Precio") %>' CssClass="mt-3"></asp:Label>
+                                                <asp:Label runat="server" Text='<%# string.Format("{0:C2}", Eval("Precio")) %>' CssClass="mt-3"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Cantidad">
@@ -51,35 +58,95 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
-                                </asp:GridView>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <asp:Button Text="Quitar Todo" ID="btnEliminarListaCompleta" runat="server" />
-                    </div>
-                </div>
-            </div>
+                                </asp:GridView>--%>
+                            <%-- test--%>
+                            <div class="container py-5 mt-5">
+                                <div class="row d-flex justify-content-center my-4">
+                                    <div class="col-md-8">
+                                        <div class="card mb-4">
+                                            <div class="card-header py-3 bg-primary text-light">
+                                                <h5 class="mb-0 ">Carrito de compras</h5>
+                                            </div>
+                                            <asp:Repeater runat="server" ID="dgvCarrito" OnItemDataBound="dgvCarrito_ItemDataBound">
+                                                <ItemTemplate>
+                                                    <div class="card-body mt-4">
+                                                        <div class="row">
+                                                            <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                                                                <img src="<%# Eval("ImagenUrl") %>"
+                                                                    class="w-100" alt="Blue Jeans Jacket" />
+                                                            </div>
 
-            <h4 class="mb-3">Metodo de pago</h4>
-            <div class="my-3">
-                <div class="form-check">
-                    <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                    <label class="form-check-label" for="credit">Tarjeta de crédito</label>
-                </div>
-                <div class="form-check">
-                    <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-                    <label class="form-check-label" for="debit">Tarjeta de débito</label>
-                </div>
-                <div class="form-check">
-                    <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-                    <label class="form-check-label" for="paypal">MercadoPago</label>
+                                                            <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                                                <p><strong><%# Eval("Nombre") %></strong></p>
+                                                                <p class="text-start ">
+                                                                   <strong><%# string.Format("{0:C2}", Eval("precio")) %></strong>
+                                                                </p>
+                                                                <asp:ImageButton ID="btnEliminar" CssClass="btn btn-outline-danger mt-5" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="btnEliminarFila" OnClick="btnEliminar_Click" ImageUrl="~/recursos/bootstrap-icons-1.10.5/trash-fill.svg"  />
+                                                                <asp:ImageButton ID="btnDetalles" cssClass="btn btn-outline-info mt-5" runat="server"   CommandArgument='<%# Eval("Id")%>' OnClick="btnDetalles_Click" ImageUrl="~/recursos/bootstrap-icons-1.10.5/info-circle-fill.svg"/>
+                                                            </div>
+
+                                                            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                                                <div class="d-flex mb-4 justify-content-around" style="max-width: 300px">
+                                                                     <label for="lblCantidad" class="m-2">Cantidad: </label>
+                                                                    <asp:ImageButton ID="btnSumar" CssClass="mt-2" runat="server" CommandArgument='<%#Eval("Id")%>' OnClick="btnSumar_Click" CommandName="btnSumar" Height="19px" ImageUrl="~/recursos/img/agregar.png" Width="19px" />
+                                                                    <asp:Label runat="server" ID="lblCantidad" Text='<%# Eval("Cantidad") %>' CssClass="ms-3 me-3 mt-1 fs-5"></asp:Label>
+                                                                    <asp:ImageButton ID="btnRestar" CssClass="mt-2 " runat="server" CommandArgument='<%#Eval("Id")%>' OnClick="btnRestar_Click" CommandName="btnRestar" Height="19px" ImageUrl="~/recursos/img/minimizar.png" Width="19px" />
+                                                                </div>
+                                                                <p class="m-5 fs-5 text-center">Total
+                                                                    <asp:Label runat="server" ID="lblPrecioTotalPorArticulo" Text='<%# string.Format("{0:C2}", Convert.ToDecimal(Eval("Precio")) * Convert.ToDecimal(Eval("Cantidad"))) %>' CssClass=" fs-5 text-primary"></asp:Label>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr class="" />
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card mb-4">
+                                            <div class="card-header py-3 bg-primary text-light">
+                                                <h5 class="mb-0">Resumen</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">Total artículos
+                                                         <asp:Label runat="server" ID="lblPrecioTotal" CssClass=" text-primary"></asp:Label>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">Envío
+                                                         <span>Gratis</span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">Descuentos
+                                                         <span>10%</span>
+                                                    </li>
+                                                    <li
+                                                        class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                                        <div>
+                                                            <strong>Monto total</strong>
+                                                            <strong>
+                                                                <p class="mb-0">(IVA Incluido)</p>
+                                                            </strong>
+                                                        </div>
+                                                        <span><strong>$54</strong></span>
+                                                    </li>
+                                                </ul>
+                                                <button type="button" class="btn btn-primary btn-lg btn-block">
+                                                    Ir al pago
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <%--fin test--%>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                 </div>
             </div>
-            <button class="col-6 btn btn-primary btn-lg mb-5" type="submit">Ir al pago</button>
         </div>
+
+
     </main>
 
 </asp:Content>
