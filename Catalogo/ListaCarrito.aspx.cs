@@ -19,10 +19,18 @@ namespace Catalogo
             if(!IsPostBack)
             {
                 carrito = Session["listaCarrito"] as NegocioCarrito;
-                if(carrito != null )
+                if (carrito != null && carrito.Items.Count > 0)
                 {
+                    divCarritoVacio.Visible = false;
+                    divCarritoConItems.Visible = true;
                     dgvCarrito.DataSource = carrito.Items;
                     dgvCarrito.DataBind();
+                }
+                else
+                {
+                    divCarritoConItems.Visible=false;
+                    divCarritoVacio.Visible = true;
+
                 }
             }
         }
