@@ -12,7 +12,6 @@ namespace Negocio
     {
         DataAccess datos = null;
         List<Marca> marcas = null;
-        List<string> imagenes = null;
 
         //TODO: Listar Marcas
         public List<Marca> ListarMarcas()

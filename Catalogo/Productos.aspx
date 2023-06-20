@@ -6,7 +6,12 @@
 
     <asp:ScriptManager runat="server" />
     <div class="container mt-5 pt-5 min-vh-100">
-        <h4 class="mb-5 text-center fs-3">Filtro Seleccionado: <%:Filtro %></h4>
+        <h4 class="mb-5 text-center fs-3">Filtro Seleccionado: <%:Filtro%></h4>
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+                <h5 class="mb-5 text-center fs-3">Productos en Carrito: <%:CountCarrito%></h5>
+            </ContentTemplate>
+        </asp:UpdatePanel>
         <div class="row g-0">
             <div class="col-md-3 bg-light border mb-3 p-1">
 
@@ -30,7 +35,6 @@
                                     </asp:Repeater>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
-
                         </ul>
                     </div>
                     <div class="dropend ">
@@ -98,8 +102,8 @@
                                             <div class="card-body ">
                                                 <h5 class="card-title fs-3"><%#Eval("Nombre") %></h5>
                                                 <p class="card-text text-primary fs-4 mt-4">$ <%#Eval("Precio")%></p>
-                                                <asp:Button Text="🛒  Agregar" runat="server" ID="btnAgregar" cssClass="btn btn-warning mt-4" CommandArgument='<%# Eval("Id")%>' OnClick="btnAgregarArt_Click"/>
-                                                <asp:Button Text="ℹ Detalles" runat="server" ID="btnDetalles" cssClass="btn btn-primary mt-4" CommandArgument='<%# Eval("Id")%>' OnClick="btnDetalles_Click"/>
+                                                <asp:Button Text="🛒  Agregar" runat="server" ID="btnAgregar" CssClass="btn btn-warning mt-4" CommandArgument='<%# Eval("Id")%>' OnClick="btnAgregarArt_Click" />
+                                                <asp:Button Text="ℹ Detalles" runat="server" ID="btnDetalles" CssClass="btn btn-primary mt-4" CommandArgument='<%# Eval("Id")%>' OnClick="btnDetalles_Click" />
                                             </div>
                                         </div>
                                     </div>
@@ -108,7 +112,8 @@
                         </asp:Repeater>
                     </ContentTemplate>
                 </asp:UpdatePanel>
-            </div> <%--fin lista articulos--%>
+            </div>
+            <%--fin lista articulos--%>
         </div>
 
     </div>

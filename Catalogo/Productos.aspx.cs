@@ -19,7 +19,8 @@ namespace Catalogo
         NegocioArticulo negocioArticulos = null;
         Articulo articulo;
         CarritoItem item;
-        public string Filtro { get; set; } = string.Empty; // ver si agregar otro o sacar
+        public int CountCarrito { get; set; } = 0;
+        public string Filtro { get; set; } = string.Empty;
 
         //TODO: LOAD
         protected void Page_Load(object sender, EventArgs e)
@@ -30,6 +31,10 @@ namespace Catalogo
                 {
                     List<Articulo> listaMostrar;
                     cargarFiltros();
+
+                    // Mostramos si existen el numero de articulos en carrito (para poder tener un feedback de que se agrego el articulo al carrito, cambiar si hay algo mejor)
+                    if (Session["countCarrito"] != null)
+                        CountCarrito = (int)Session["countCarrito"];
 
                     //Crear lista de articulos de carrito
                     if (Session["listaCarrito"] == null)
@@ -145,7 +150,7 @@ namespace Catalogo
         {
             try
             {
-                repArticulos.DataSource = filtrarLista(int.Parse( ((Button)sender).CommandArgument ), "idCate");
+                repArticulos.DataSource = filtrarLista(int.Parse(((Button)sender).CommandArgument), "idCate");
                 repArticulos.DataBind();
             }
             catch (Exception ex)
@@ -205,7 +210,7 @@ namespace Catalogo
                     repArticulos.DataBind();
                 }
                 else
-                {   
+                {
                     List<Articulo> listaArticulos;
                     listaArticulos = (List<Articulo>)Session["listaPrincipal"];
 
@@ -215,14 +220,9 @@ namespace Catalogo
                     repArticulos.DataSource = listaFiltrada;
                     repArticulos.DataBind();
                 }
-                //List<Articulo> listaFiltrada = (List<Articulo>)Session["listaPrincipal"];
-                //repArticulos.DataSource = listaFiltrada.OrderByDescending(producto => producto.precio).ToList();
-                //repArticulos.DataBind();
-
             }
             catch (Exception ex)
             {
-
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx");
             }
@@ -255,7 +255,6 @@ namespace Catalogo
             }
             catch (Exception ex)
             {
-
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx");
             }
@@ -289,16 +288,13 @@ namespace Catalogo
                 negocioArticulos = new NegocioArticulo();
                 item = new CarritoItem();
 
-                // Buscamos en lista principal (si usamos el metodo de negocio, vamos a hacer una llamada a la bd por cada vuelta que el cliente use el boton agregar,
-                // re-utilizamos la lista que ya existe para sacar la info).
-
                 // Apuntamos
                 List<Articulo> list = Session["listaPrincipal"] as List<Articulo>;
                 NegocioCarrito carrito = Session["listaCarrito"] as NegocioCarrito;
-                
+
                 // Agregar el artículo al carrito
                 articulo = list.Find(art => art.Id == itemId); // posible bug si las listas no existen ... aunq dificil que pase
-                if(articulo != null) 
+                if (articulo != null)
                 {
                     item.Id = itemId;
                     item.Nombre = articulo.Nombre;
@@ -307,12 +303,22 @@ namespace Catalogo
                     item.Cantidad = 1;
                     carrito.AgregarItem(item);
                 }
+
+                // Total de items en carrito
+                if (Session["countCarrito"] == null)
+                    Session.Add("countCarrito", 0);
+
+                int count = (int)Session["countCarrito"];
+                count++;
+                Session["countCarrito"] = count;
+                CountCarrito = count;
+
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx");
-            }        
+            }
         }
 
     }//fin
