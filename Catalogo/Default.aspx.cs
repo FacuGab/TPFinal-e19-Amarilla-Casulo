@@ -27,30 +27,43 @@ namespace Catalogo
                     List<Marca> marcas = marca.ListarMarcas();
                     rptMarcas.DataSource = marcas;
                     rptMarcas.DataBind();
-
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
             }
         }
 
         //EVENTOS
-        //TODO: Boton img 
+        //TODO: Boton img Categorias
         protected void btnImgCate_Click(object sender, ImageClickEventArgs e)
         {
-            var cate = ((ImageButton)sender).CommandArgument;
-
-            Response.Redirect("Productos.aspx?idCate="+ cate, false);
+            try
+            {
+                var cate = ((ImageButton)sender).CommandArgument;
+                Response.Redirect("Productos.aspx?idCate=" + cate, false);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
-        //Boton img
+        //Boton img Marcas
         protected void btnImgMarca_Click(object sender, ImageClickEventArgs e)
         {
-            var marca = ((ImageButton)sender).CommandArgument;
-
-            Response.Redirect("Productos.aspx?idMarca=" + marca, false);
+            try
+            {
+                var marca = ((ImageButton)sender).CommandArgument;
+                Response.Redirect("Productos.aspx?idMarca=" + marca, false);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
     }
 }

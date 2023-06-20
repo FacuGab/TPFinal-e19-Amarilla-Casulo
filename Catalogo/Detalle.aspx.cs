@@ -13,6 +13,7 @@ namespace Catalogo
     {
         protected List<string> listImg;
         protected List<Articulo> listArt = null;
+        protected Articulo art = null;
         protected int idMatch = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -28,6 +29,9 @@ namespace Catalogo
                     idMatch = int.Parse(Request.Params["idProd"]);
                     listImg = listaArticulos.ListarImagenesArticulos(idMatch);
                     listArt = new List<Articulo>();
+
+                    //art = articulos.Find(itm => itm.Id == idMatch);
+                    //listArt.Add(art);
 
                     foreach (var art in articulos)
                     {

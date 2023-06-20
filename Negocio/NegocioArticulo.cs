@@ -126,7 +126,5 @@ namespace Negocio
             }
         }
 
-        //TODO: Listar categorias
-        //TODO: Listar Articulos
     }//Fin NegocioArticulo
 }

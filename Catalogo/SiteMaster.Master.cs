@@ -12,24 +12,26 @@ namespace Catalogo
 {
     public partial class SiteMaster : System.Web.UI.MasterPage
     {
-
+        //LOAD
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (!IsPostBack)
-            {
-                // Crear una nueva instancia de Cart si no existe en la sesión
-                if (Session["listaCarrito"] == null)
-                {
-                    Session["listaCarrito"] = new List<CarritoItem>();
-                }
-            }
-
+            // rompian el codigo estas lineas, las saque. Igual si eran para otra parte vemos como arreglarlo
         }
 
+        //Filtro Rapido
         protected void btnFiltroRapido_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Productos.aspx?text=" + tbFiltroRapido.Text.ToString(), false);
+            try
+            {
+                string str = tbFiltroRapido.Text;
+                if (!string.IsNullOrWhiteSpace(str))
+                    Response.Redirect("Productos.aspx?text=" + str, false);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
     }
 }

@@ -275,7 +275,7 @@ namespace Catalogo
         {
             //ver si borrar obj listas de art en session o no aca ....
             Session.Remove("listaFiltrada");
-            Session.Remove("listaPrincipal");
+            //Session.Remove("listaPrincipal"); //mmm ver si hace falta esta linea o no
             Response.Redirect("Productos.aspx", false);
         }
 
@@ -284,16 +284,19 @@ namespace Catalogo
         {
             try
             {
+                // Creamos obj a utilizar
                 int itemId = int.Parse((sender as Button).CommandArgument);
-                // Es mejor crear los obj cuando se dispara el metodo que sean creados constantemente (¿?)
                 negocioArticulos = new NegocioArticulo();
                 item = new CarritoItem();
 
                 // Buscamos en lista principal (si usamos el metodo de negocio, vamos a hacer una llamada a la bd por cada vuelta que el cliente use el boton agregar,
                 // re-utilizamos la lista que ya existe para sacar la info).
+
+                // Apuntamos
                 List<Articulo> list = Session["listaPrincipal"] as List<Articulo>;
                 NegocioCarrito carrito = Session["listaCarrito"] as NegocioCarrito;
                 
+                // Agregar el artículo al carrito
                 articulo = list.Find(art => art.Id == itemId); // posible bug si las listas no existen ... aunq dificil que pase
                 if(articulo != null) 
                 {
@@ -304,7 +307,6 @@ namespace Catalogo
                     item.Cantidad = 1;
                     carrito.AgregarItem(item);
                 }
-                // Agregar el artículo al carrito
             }
             catch (Exception ex)
             {
