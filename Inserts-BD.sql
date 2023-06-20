@@ -5,7 +5,10 @@ DROP COLUMN CODIGO;
 
 --- #### AGREGADO DE DATOS ####
 --insert usuarios
-INSERT INTO USUARIOS VALUES ('a', 'a', 1, 'mail@mail.com', '1', 'calle falsa 123', 'a', 'no tiene img');
+INSERT INTO USUARIOS VALUES ('Admin', 'Perez', 16240658, 'mail@mail.com', '1', 'calle falsa 123', 'A', 'no tiene img1');
+INSERT INTO USUARIOS VALUES ('Manu', 'cas', 47240658, 'email@mail.com', '1', 'calle falsa 1234', 'C', 'no tiene img2');
+INSERT INTO USUARIOS VALUES ('Facu', 'azul', 89240658, 'email1@mail.com', '1', 'calle falsa 12345', 'E', 'no tiene img3');
+INSERT INTO USUARIOS VALUES ('Lucho', 'apu', 56245658, 'email2@mail.com', '1', 'calle falsa 12356', 'E', 'no tiene img4');
 
 --insert categorias
 INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('1', 'Monitores', 'https://cdn-icons-png.flaticon.com/256/81/81793.png');
