@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SiteMaster.Master" AutoEventWireup="true" CodeBehind="Productos.aspx.cs" Inherits="Catalogo.Productos" %>
+<%@ MasterType VirtualPath="~/SiteMaster.Master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -6,11 +7,6 @@
 
     <div class="container mt-5 pt-5 min-vh-100">
         <h4 class="mb-5 text-center fs-3">Filtro Seleccionado: <%:Filtro%></h4>
-        <asp:UpdatePanel runat="server">
-            <ContentTemplate>
-                <h5 class="mb-5 text-center fs-3">Productos en Carrito: <%:CountCarrito%></h5>
-            </ContentTemplate>
-        </asp:UpdatePanel>
         <div class="row g-0">
             <div class="col-md-3 bg-light border mb-3 p-1">
 

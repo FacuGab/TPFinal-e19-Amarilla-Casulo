@@ -18,7 +18,7 @@ namespace Dominio
         public string Precio { get { return string.Format("{0:C2}", precio); } }
         public bool Estado { get; set; } // si esta activo o no para mostrar, baja/alta logica
         public int Stock { get; set; }
-        //public int Cantidad { get; set; }//Agrege esta propiedad para la cantidad de items iguales en el carrito
+        public int Cantidad { get; set; }//Agrege esta propiedad para la cantidad de items iguales en el carrito
         public string ImagenUrl { get; set; }
 
         //CONSTRUCTORES:

@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
+using static Catalogo.SiteMaster;
 
 namespace Catalogo
 {
@@ -31,10 +32,6 @@ namespace Catalogo
                 {
                     List<Articulo> listaMostrar;
                     cargarFiltros();
-
-                    // Mostramos si existen el numero de articulos en carrito (para poder tener un feedback de que se agrego el articulo al carrito, cambiar si hay algo mejor)
-                    if (Session["countCarrito"] != null)
-                        CountCarrito = (int)Session["countCarrito"];
 
                     //Crear lista de articulos de carrito
                     if (Session["listaCarrito"] == null)
@@ -141,6 +138,24 @@ namespace Catalogo
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        //TODO: Cantidad de Articulos en Carrito
+        public void totalArticulosCarrito()
+        {
+            if (Session["countCarrito"] == null)
+                Session.Add("countCarrito", 0);
+
+            int count = (int)Session["countCarrito"];
+            count++; // ver si tener el valor en session tiene sentido o no
+            Session["countCarrito"] = count;
+
+            Label lblcantidad = (Label)Master.FindControl("lblTotalArticulos");
+            if (lblcantidad != null)
+            {
+                lblcantidad.Text = count.ToString();
+                Master.Flag = true;
             }
         }
 
@@ -305,14 +320,7 @@ namespace Catalogo
                 }
 
                 // Total de items en carrito
-                if (Session["countCarrito"] == null)
-                    Session.Add("countCarrito", 0);
-
-                int count = (int)Session["countCarrito"];
-                count++;
-                Session["countCarrito"] = count;
-                CountCarrito = count;
-
+                totalArticulosCarrito();
             }
             catch (Exception ex)
             {

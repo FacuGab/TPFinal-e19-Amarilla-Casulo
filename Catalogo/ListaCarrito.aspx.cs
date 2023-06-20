@@ -70,6 +70,9 @@ namespace Catalogo
 
                 //Calculamos el total de nuevo
                 totalAcumulado = totalCarrito(carrito.Items);
+
+                //Calculamos la cantidad de art total
+                TotalArticulosCarrito("eliminar", idMatch);
             }
             catch (Exception ex)
             {
@@ -96,8 +99,11 @@ namespace Catalogo
                 dgvCarrito.DataSource = carrito.Items;
                 dgvCarrito.DataBind();
 
-                //Calculamos el total de nuevo
+                //Calculamos el total $ de nuevo
                 totalAcumulado = totalCarrito(carrito.Items);
+
+                //Calculamos el total # art en carrito
+                TotalArticulosCarrito("suma");
             }
             catch (Exception ex)
             {
@@ -126,6 +132,9 @@ namespace Catalogo
 
                 //Calculamos el total de nuevo
                 totalAcumulado = totalCarrito(carrito.Items);
+
+                //Calculamos el total # art en carrito
+                TotalArticulosCarrito("resta");
             }
             catch (Exception ex)
             {
@@ -139,7 +148,7 @@ namespace Catalogo
         {
             try
             {
-                int id = int.Parse(((Button)sender).CommandArgument);
+                int id = int.Parse(((ImageButton)sender).CommandArgument);
                 Response.Redirect("Detalle.aspx?idProd=" + id, false);
             }
             catch (Exception ex)
@@ -148,6 +157,15 @@ namespace Catalogo
                 Response.Redirect("Error.aspx", false);
             }
         }
+
+        //TODO: Boton Eliminar Toda la lista del Carrito
+        protected void btnEliminarListaCarrito_Click(object sender, EventArgs e)
+        {
+            Session.Remove("listaCarrito");
+            Session.Remove("countCarrito");
+            Response.Redirect("ListaCarrito.aspx", false);
+        }
+
         //TODO: METODOS
         // Calcular Totales
         public decimal totalCarrito(List<CarritoItem> lista)
@@ -171,6 +189,44 @@ namespace Catalogo
             // re-guardamos el valor (mepa que un tipo decimal no puede funcionar como puntero)
             Session["totalCarrito"] = total;
             return total;
+        }
+
+        // Calcular total articulos en carrito
+        public void TotalArticulosCarrito(string modo, int idMath = 0)
+        {
+            if (Session["countCarrito"] == null)
+                Session.Add("countCarrito", 0);
+
+            //Operamos cantidad: suma, resta, eliminar y guardamos
+            int count = (int)Session["countCarrito"];
+            if(modo == "suma")
+            {
+                count++;
+            }
+            else if(modo == "resta")
+            {
+                if(count > 0)
+                    count--;
+            }
+            else if(modo == "eliminar")
+            {
+                if(count > 0)
+                {
+                    count = 0;
+                    var itemList = ((NegocioCarrito)Session["listaCarrito"]).Items;
+                    foreach (var item in itemList)
+                        count += item.Cantidad;
+                }
+            }
+            Session["countCarrito"] = count;
+
+            //Mostramos valor en nav Master
+            Label lblcantidad = (Label)Master.FindControl("lblTotalArticulos");
+            if (lblcantidad != null)
+            {
+                lblcantidad.Text = count.ToString();
+                Master.Flag = true;
+            }
         }
     }
 }

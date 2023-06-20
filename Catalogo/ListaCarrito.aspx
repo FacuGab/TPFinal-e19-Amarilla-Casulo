@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SiteMaster.Master" AutoEventWireup="true" CodeBehind="ListaCarrito.aspx.cs" Inherits="Catalogo.WebForm2" %>
+<%@ MasterType VirtualPath="~/SiteMaster.Master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -99,6 +100,10 @@
                                                 <button type="button" class="btn btn-primary btn-lg btn-block">
                                                     Ir al pago
                                                 </button>
+                                            </div>
+                                            <div class="col">
+                                                <!-- Cambiar diseño de boton, texto, etc... a gusto manu -->
+                                                <asp:Button Text="Eliminar Todo" ID="btnEliminarListaCarrito" CssClass="btn btn-warning" OnClick="btnEliminarListaCarrito_Click" runat="server" />
                                             </div>
                                         </div>
                                     </div>

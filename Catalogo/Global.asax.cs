@@ -12,7 +12,7 @@ namespace Catalogo
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            string Host = System.Web.Hosting.HostingEnvironment.ApplicationHost.GetSiteName().ToLower();
+            string Host = System.Web.Hosting.HostingEnvironment.ApplicationHost.GetSiteName();
         }
     }
 }

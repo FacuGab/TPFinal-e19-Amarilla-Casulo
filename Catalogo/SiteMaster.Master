@@ -35,10 +35,14 @@
                                 <li class="nav-item">
                                     <a type="button" class="btn btn-warning fs-5 position-relative" href="ListaCarrito.aspx">
                                       🛒
+                                        <%if (Flag) {%>  
+                                        
                                       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                        <%=itemsCarrito %>
+                                          <asp:Label ID="lblTotalArticulos" runat="server" />
                                         <span class="visually-hidden">Items en carrito</span>
                                       </span>
+                                        
+                                        <%}%>
                                     </a>
                                 </li>
                             </ContentTemplate>

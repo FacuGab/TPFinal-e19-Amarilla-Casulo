@@ -94,5 +94,19 @@ namespace Catalogo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater repArticulos;
+
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new Catalogo.SiteMaster Master
+        {
+            get
+            {
+                return ((Catalogo.SiteMaster)(base.Master));
+            }
+        }
     }
 }

@@ -14,14 +14,27 @@ namespace Catalogo
     {
         NegocioCarrito carrito;
         public int itemsCarrito { get; set; }
+        public bool Flag { get; set; }
+
         //LOAD
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            carrito = Session["listaCarrito"] as NegocioCarrito;
-            if (carrito != null)
+            try
             {
-                itemsCarrito = carrito.Items.Count;
+                if (Session["countCarrito"] != null)
+                {
+                    lblTotalArticulos.Text = Session["countCarrito"].ToString();
+                    Flag = true;
+                }
+                else
+                {
+                    Flag = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
             }
         }
 
