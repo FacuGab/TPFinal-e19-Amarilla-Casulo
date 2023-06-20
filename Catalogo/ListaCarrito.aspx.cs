@@ -148,29 +148,6 @@ namespace Catalogo
                 Response.Redirect("Error.aspx", false);
             }
         }
-
-        //TODO: Evento GrdiView (calculo totales)
-        // no encontre forma de utilizarlo y que muestre bien los datos, siempre o se crasheaba o se pisaban los valores entre si
-        //protected void dgvCarrito_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        //{
-        //    //try
-        //    //{
-        //    //    if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-        //    //    {
-        //    //        Label lblPrecioTotalPorArticulo = (Label)e.Item.FindControl("lblPrecioTotalPorArticulo");
-        //    //        Label lblTotalPorArticulo = (Label)e.Item.FindControl("lblCantidad");
-        //    //        decimal precioTotalPorArticulo = Convert.ToDecimal(lblPrecioTotalPorArticulo.Text);
-        //    //        decimal cantidadPorArticulo = Convert.ToDecimal(lblTotalPorArticulo.Text);
-        //    //        Total_x_Item = precioTotalPorArticulo * cantidadPorArticulo;
-        //    //    }
-        //    //}
-        //    //catch (Exception ex)
-        //    //{
-        //    //    Session.Add("error", ex);
-        //    //    Response.Redirect("Error.aspx", false);
-        //    //}
-        //}
-
         //TODO: METODOS
         // Calcular Totales
         public decimal totalCarrito(List<CarritoItem> lista)

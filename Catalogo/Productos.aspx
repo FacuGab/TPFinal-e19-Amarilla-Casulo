@@ -4,7 +4,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <asp:ScriptManager runat="server" />
     <div class="container mt-5 pt-5 min-vh-100">
         <h4 class="mb-5 text-center fs-3">Filtro Seleccionado: <%:Filtro%></h4>
         <asp:UpdatePanel runat="server">
