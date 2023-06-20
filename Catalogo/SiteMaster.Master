@@ -13,12 +13,12 @@
     <link href="fonts/styles.css" rel="stylesheet" />
     <link href="fonts/CSS.css" rel="stylesheet" />
 </head>
-
 <!-- CUERPO -->
 <body>
     <form id="form1" runat="server">
+    <asp:ScriptManager runat="server" />
         <!-- BARRA NAVEGACIÓN -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-primary bg-gradient fixed-top"> <%--fixed-top--%>
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary bg-gradient fixed-top p-3"> <%--fixed-top--%>
             <div class="container-fluid ">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -30,16 +30,25 @@
                 </a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto d-flex">
+                        <asp:UpdatePanel runat="server">
+                            <ContentTemplate>
+                                <li class="nav-item">
+                                    <a type="button" class="btn btn-warning fs-5 position-relative" href="ListaCarrito.aspx">
+                                      🛒
+                                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        <%=itemsCarrito %>
+                                        <span class="visually-hidden">Items en carrito</span>
+                                      </span>
+                                    </a>
+                                </li>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
                         <li class="nav-item">
-                            <a class="btn btn-warning fs-5" href="ListaCarrito.aspx" <%--onclick="btnCargarCarrito_Click1"--%>>
-                                🛒 Carrito
+                            <a class="nav-link active text-black " aria-current="page" runat="server" href="~/">
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active text-black " aria-current="page" runat="server" href="~/"></a>
-                        </li>
                         <li class="nav-item me-2 ">
-                            <button type="button" class="btn btn-success fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal" >Login</button>
+                            <button type="button" class="btn btn-success fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</button>
                         </li>
                         <li class="d-flex">
                             <asp:TextBox runat="server" ID="tbFiltroRapido" placeholder="Buscar artículo" CssClass="form-control me-2"/>

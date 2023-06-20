@@ -12,10 +12,17 @@ namespace Catalogo
 {
     public partial class SiteMaster : System.Web.UI.MasterPage
     {
+        NegocioCarrito carrito;
+        public int itemsCarrito { get; set; }
         //LOAD
         protected void Page_Load(object sender, EventArgs e)
         {
-            // rompian el codigo estas lineas, las saque. Igual si eran para otra parte vemos como arreglarlo
+
+            carrito = Session["listaCarrito"] as NegocioCarrito;
+            if (carrito != null)
+            {
+                itemsCarrito = carrito.Items.Count;
+            }
         }
 
         //Filtro Rapido

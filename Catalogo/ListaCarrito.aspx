@@ -3,7 +3,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:ScriptManager runat="server" />
 
     <main aria-labelledby="title" class="min-vh-100">
         <%--carrito vacio--%>
@@ -78,7 +77,7 @@
                                             <div class="card-body">
                                                 <ul class="list-group list-group-flush">
                                                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">Total artículos
-                                                         <asp:Label runat="server" ID="lblPrecioTotal" CssClass=" text-primary"></asp:Label>
+                                                          <span><strong class="">$<%:TotalAcumulado.ToString() %></strong></span>
                                                     </li>
                                                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">Envío
                                                          <span>Gratis</span>
@@ -94,7 +93,7 @@
                                                                 <p class="mb-0">(IVA Incluido)</p>
                                                             </strong>
                                                         </div>
-                                                        <span><strong>$<%:TotalAcumulado.ToString() %></strong></span>
+                                                        <span><strong class="fs-5">$<%:TotalAcumulado.ToString() %></strong></span>
                                                     </li>
                                                 </ul>
                                                 <button type="button" class="btn btn-primary btn-lg btn-block">
