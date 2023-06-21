@@ -30,7 +30,7 @@
                                 <div class="row d-flex justify-content-center my-4">
                                     <div class="col-md-8">
                                         <div class="card mb-4">
-                                            <div class="card-header py-3 bg-primary text-light">
+                                            <div class="card-header py-3 bg-primary text-light d-flex">
                                                 <h5 class="mb-0 ">Carrito de compras</h5>
                                             </div>
                                             <asp:Repeater runat="server" ID="dgvCarrito">
@@ -54,9 +54,9 @@
                                                             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                                                 <div class="d-flex mb-4 justify-content-around" style="max-width: 300px">
                                                                     <label for="lblCantidad" class="m-2">Cantidad: </label>
-                                                                    <asp:ImageButton ID="btnSumar" CssClass="mt-2" runat="server" CommandArgument='<%#Eval("Id")%>' OnClick="btnSumar_Click" CommandName="btnSumar" Height="19px" ImageUrl="~/recursos/img/agregar.png" Width="19px" />
-                                                                    <asp:Label runat="server" ID="lblCantidad" Text='<%# Eval("Cantidad") %>' CssClass="ms-3 me-3 mt-1 fs-5"></asp:Label>
                                                                     <asp:ImageButton ID="btnRestar" CssClass="mt-2 " runat="server" CommandArgument='<%#Eval("Id")%>' OnClick="btnRestar_Click" CommandName="btnRestar" Height="19px" ImageUrl="~/recursos/img/minimizar.png" Width="19px" />
+                                                                    <asp:Label runat="server" ID="lblCantidad" Text='<%# Eval("Cantidad") %>' CssClass="ms-3 me-3 mt-1 fs-5"></asp:Label>
+                                                                    <asp:ImageButton ID="btnSumar" CssClass="mt-2" runat="server" CommandArgument='<%#Eval("Id")%>' OnClick="btnSumar_Click" CommandName="btnSumar" Height="19px" ImageUrl="~/recursos/img/agregar.png" Width="19px" />
                                                                 </div>
                                                                 <p class="m-5 fs-5 text-center">
                                                                     Total
@@ -97,13 +97,12 @@
                                                         <span><strong class="fs-5">$<%:TotalAcumulado.ToString() %></strong></span>
                                                     </li>
                                                 </ul>
-                                                <button type="button" class="btn btn-primary btn-lg btn-block">
-                                                    Ir al pago
-                                                </button>
-                                            </div>
-                                            <div class="col">
-                                                <!-- Cambiar diseño de boton, texto, etc... a gusto manu -->
-                                                <asp:Button Text="Eliminar Todo" ID="btnEliminarListaCarrito" CssClass="btn btn-warning" OnClick="btnEliminarListaCarrito_Click" runat="server" />
+                                                <div class="d-flex justify-content-end">
+                                                    <asp:Button Text="❌ Cancelar" ID="btnEliminarListaCarrito" CssClass="btn btn-warning ms-2" OnClick="btnEliminarListaCarrito_Click" runat="server" />
+                                                    <button type="button" class="btn btn-primary btn-block ms-2">
+                                                        <i class="bi bi-cart-check-fill "> Ir al pago</i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

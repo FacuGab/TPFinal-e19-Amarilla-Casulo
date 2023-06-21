@@ -51,24 +51,6 @@ namespace Catalogo
         protected global::System.Web.UI.WebControls.Label lblTotalArticulos;
 
         /// <summary>
-        /// tbFiltroRapido control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbFiltroRapido;
-
-        /// <summary>
-        /// btnFiltroRapido control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFiltroRapido;
-
-        /// <summary>
         /// btnMailLogin control.
         /// </summary>
         /// <remarks>
@@ -85,6 +67,24 @@ namespace Catalogo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox btnClaveLogin;
+
+        /// <summary>
+        /// tbFiltroRapido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbFiltroRapido;
+
+        /// <summary>
+        /// btnFiltroRapido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltroRapido;
 
         /// <summary>
         /// ContentPlaceHolder1 control.

@@ -29,12 +29,19 @@
                     <span>HARDFISH</span>
                 </a>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto d-flex">
+                    <ul class="navbar-nav ms-auto d-flex ">
+                        <li class="nav-item">
+                            <a class="nav-link active text-black " aria-current="page" runat="server" href="~/">
+                            </a>
+                        </li>
+                        <li class="nav-item me-2 ">
+                            <button type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#modalBusqueda"><i class="bi bi-search text-light"> Buscar</i></button>
+                        </li>
                         <asp:UpdatePanel runat="server">
                             <ContentTemplate>
-                                <li class="nav-item">
-                                    <a type="button" class="btn btn-warning fs-5 position-relative" href="ListaCarrito.aspx">
-                                      🛒
+                                <li class="nav-item ms-2 me-2">
+                                    <a type="button" class="btn  fs-5 position-relative" href="ListaCarrito.aspx">
+                                      <i class="bi bi-cart4 text-light" style="height:26px; width:26px;"></i>
                                         <%if (Flag) {%>  
                                         
                                       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -47,17 +54,9 @@
                                 </li>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-                        <li class="nav-item">
-                            <a class="nav-link active text-black " aria-current="page" runat="server" href="~/">
-                            </a>
-                        </li>
                         <li class="nav-item me-2 ">
-                            <button type="button" class="btn btn-success fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</button>
-                        </li>
-                        <li class="d-flex">
-                            <asp:TextBox runat="server" ID="tbFiltroRapido" placeholder="Buscar artículo" CssClass="form-control me-2"/>
-                            <asp:Button Text="Buscar" runat="server" ID="btnFiltroRapido" cssClass="btn btn-outline-dark" OnClick="btnFiltroRapido_Click"/>
-                        </li>
+                            <button type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-box-arrow-in-right text-light"> Login</i></button>
+                        </li> 
                     </ul>
                 </div>
             </div>
@@ -104,6 +103,27 @@
             </div>
         </div>
          <%--fin modal login--%>
+
+        <%--modal busqueda articulo--%>
+        <!-- Modal -->
+        <div class="modal fade" id="modalBusqueda" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalBusquedaLabel"><i class="bi bi-search"> Busqueda de artículos</i></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <asp:TextBox runat="server" ID="tbFiltroRapido" placeholder="Ingrese el nombre del artículo" CssClass="form-control mt-3 mb-3" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <asp:Button Text="Buscar" runat="server" ID="btnFiltroRapido" CssClass="btn btn-primary" OnClick="btnFiltroRapido_Click" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--fin modal busqueda articulo--%>
         <div class="bg-dark-subtle">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
