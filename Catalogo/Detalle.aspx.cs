@@ -30,21 +30,15 @@ namespace Catalogo
                     listImg = listaArticulos.ListarImagenesArticulos(idMatch);
                     listArt = new List<Articulo>();
 
-                    //art = articulos.Find(itm => itm.Id == idMatch);
-                    //listArt.Add(art);
+                    art = articulos.Find(itm => itm.Id == idMatch);
+                    listArt.Add(art);
 
-                    foreach (var art in articulos)
-                    {
-                        if(art.Id == idMatch)
-                            listArt.Add(art);
-                    }
                     rptDetalleArt.DataSource = listArt;
                     rptDetalleArt.DataBind();
                 }
             }
             catch (Exception ex)
             {
-
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx");
             }

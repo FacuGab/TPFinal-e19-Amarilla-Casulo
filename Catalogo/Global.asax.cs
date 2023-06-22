@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Permissions;
 using System.Web;
@@ -13,6 +14,11 @@ namespace Catalogo
         protected void Application_Start(object sender, EventArgs e)
         {
             string Host = System.Web.Hosting.HostingEnvironment.ApplicationHost.GetSiteName();
+        }
+
+        protected void Application_End(object sender, EventArgs e)
+        {
+            Session.Clear();
         }
     }
 }

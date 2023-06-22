@@ -9,12 +9,17 @@
             <div class="card mb-3 w-75 mt-5">
                 <div id="carouselExample" class="carousel slide">
                     <div class="carousel-inner">
+                        <%if (listImg != null)
+                        {%> 
+                        
                         <% foreach (var item in listImg)
                             { %>
                         <div class="carousel-item active">
                             <img src="<%= item %>" class="d-block w-100 mt-5" alt="...">
                         </div>
                         <% } %>
+                        
+                        <%}%>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon bg-black" aria-hidden="true"></span>
@@ -41,7 +46,7 @@
                         </div>
                         <%}
                             }%>
-                        <%--<asp:Button Text="Detalles" runat="server" ID="" CommandArgument='' OnClick=""/>--%>
+                        <!-- Tiene sentido tener un foreach dentro de un repeater?  -->
                     </ItemTemplate>
                 </asp:Repeater>
             </div>

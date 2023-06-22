@@ -49,7 +49,7 @@
                                         <span class="visually-hidden">Items en carrito</span>
                                       </span>
                                         
-                                        <%}%>
+                                        <%}%> <!--  <--Badges de icono carrito -->
                                     </a>
                                 </li>
                             </ContentTemplate>
