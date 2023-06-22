@@ -60,5 +60,125 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+        public List<Pedido> editarPedido(int id)
+        {
+            datos = new DataAccess();
+            pedidos = new List<Pedido>();
+
+            try
+            {
+                datos.AbrirConexion();
+                //Cambiar por un sp
+                datos.SetQuery("SELECT P.IdPedido as 'ID_Pedido',U.Id as 'ID_usuario',A.Id as 'ID_Articulo', U.Nombre + ' '+ U.Apellido as 'Usuario', A.Nombre as 'Nombre_Articulo', P.Cantidad as 'Cantidad_Solicitada', P.Fecha as 'Fecha', P.Estado as 'Estado', P.DireccionEntrega as 'Direccion', P.Descuento as 'Descuento', P.PrecioTotal as 'Precio_Total_Articulo' FROM PEDIDOS P JOIN USUARIOS U ON P.IdUsuarios = U.Id JOIN ARTICULOS A ON P.IdArticulos = A.Id WHERE P.IdPedido = " + id, "query");
+                datos.ReadQuery();
+                var aux = datos.Lector;
+                while (datos.Lector.Read())
+                {
+                    pedido = new Pedido();
+                    pedido.IdPedido = (int)aux["ID_Pedido"];
+                    pedido.IdUsuario = (int)aux["ID_usuario"];
+                    pedido.IdArticulo = (int)aux["ID_Articulo"];
+                    pedido.NombreArt = aux["Nombre_Articulo"].ToString();
+                    pedido.Cantidad = (int)aux["Cantidad_Solicitada"];
+                    pedido.Usuario = aux["Usuario"].ToString();
+                    pedido.fecha = (DateTime)aux["Fecha"];
+                    pedido.Estado = aux["Estado"].ToString();
+                    pedido.DireccionEntrega = aux["Direccion"].ToString();
+                    pedido.Descuento = (decimal)aux["Descuento"];
+                    pedido.precioTotal = (decimal)aux["Precio_Total_Articulo"];
+
+                    pedidos.Add(pedido);
+                }
+                return pedidos;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public List<Pedido> eliminarPedido(int id)
+        {
+            datos = new DataAccess();
+            pedidos = new List<Pedido>();
+
+            try
+            {
+                datos.AbrirConexion();
+                //Cambiar por un sp
+                datos.SetQuery("DELETE FROM PEDIDOS WHERE IdPedido = " + id, "query");
+                datos.ReadQuery();
+                var aux = datos.Lector;
+                while (datos.Lector.Read())
+                {
+                    pedido = new Pedido();
+                    pedido.IdPedido = (int)aux["ID_Pedido"];
+                    pedido.IdUsuario = (int)aux["ID_usuario"];
+                    pedido.IdArticulo = (int)aux["ID_Articulo"];
+                    pedido.NombreArt = aux["Nombre_Articulo"].ToString();
+                    pedido.Cantidad = (int)aux["Cantidad_Solicitada"];
+                    pedido.Usuario = aux["Usuario"].ToString();
+                    pedido.fecha = (DateTime)aux["Fecha"];
+                    pedido.Estado = aux["Estado"].ToString();
+                    pedido.DireccionEntrega = aux["Direccion"].ToString();
+                    pedido.Descuento = (decimal)aux["Descuento"];
+                    pedido.precioTotal = (decimal)aux["Precio_Total_Articulo"];
+
+                    pedidos.Add(pedido);
+                }
+                return pedidos;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public List<Pedido> cancelarPedido(int id)
+        {
+            datos = new DataAccess();
+            pedidos = new List<Pedido>();
+
+            try
+            {
+                datos.AbrirConexion();
+                //Cambiar por un sp
+                datos.SetQuery("UPDATE PEDIDOS SET Estado = 'Cancelado' WHERE IdPedido = " + id, "query");
+                datos.ReadQuery();
+                var aux = datos.Lector;
+                while (datos.Lector.Read())
+                {
+                    pedido = new Pedido();
+                    pedido.IdPedido = (int)aux["ID_Pedido"];
+                    pedido.IdUsuario = (int)aux["ID_usuario"];
+                    pedido.IdArticulo = (int)aux["ID_Articulo"];
+                    pedido.NombreArt = aux["Nombre_Articulo"].ToString();
+                    pedido.Cantidad = (int)aux["Cantidad_Solicitada"];
+                    pedido.Usuario = aux["Usuario"].ToString();
+                    pedido.fecha = (DateTime)aux["Fecha"];
+                    pedido.Estado = aux["Estado"].ToString();
+                    pedido.DireccionEntrega = aux["Direccion"].ToString();
+                    pedido.Descuento = (decimal)aux["Descuento"];
+                    pedido.precioTotal = (decimal)aux["Precio_Total_Articulo"];
+
+                    pedidos.Add(pedido);
+                }
+                return pedidos;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }

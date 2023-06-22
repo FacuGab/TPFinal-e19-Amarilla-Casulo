@@ -44,6 +44,7 @@ namespace Catalogo
                             CargarArticulos();
                             break;
                         case 6:
+                            
                             break;
                         case 7:
 
@@ -58,7 +59,6 @@ namespace Catalogo
                 }
             }
         }
-
         private void CargarArticulos()
         {
             articuloList = new List<Articulo>();
@@ -120,5 +120,7 @@ namespace Catalogo
         {
 
         }
+
+        
     }
 }
