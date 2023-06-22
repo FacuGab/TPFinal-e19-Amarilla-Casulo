@@ -19,8 +19,8 @@
 
                                             <div class="d-flex flex-row align-items-center mb-4">
                                                 <div class="input-group mb-3">
-                                                    <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                                                    <div class="form-floating flex-fill mb-0">
+                                                    <span class="input-group-text mb-1"><i class="bi bi-person-fill"></i></span>
+                                                    <div class="form-floating flex-fill mb-1">
                                                         <input type="text" class="form-control" id="floatingInputNombre" placeholder="">
                                                         <label for="floatingInputNombre">Nombre/s</label>
                                                     </div>
@@ -28,8 +28,8 @@
                                             </div>
                                             <div class="d-flex flex-row align-items-center mb-4">
                                                 <div class="input-group mb-3">
-                                                    <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                                                    <div class="form-floating flex-fill mb-0">
+                                                    <span class="input-group-text mb-1"><i class="bi bi-person-fill"></i></span>
+                                                    <div class="form-floating flex-fill mb-1">
                                                         <input type="text" class="form-control" id="floatingInputApellido" placeholder="">
                                                         <label for="floatingInputApellido">Apellido/s</label>
                                                     </div>
@@ -38,33 +38,51 @@
 
                                             <div class="d-flex flex-row align-items-center mb-4">
                                                 <div class="input-group mb-3">
-                                                    <span class="input-group-text"><i class="bi bi-envelope-at-fill"></i></span>
-                                                    <div class="form-floating flex-fill mb-0">
-                                                        <input type="email" class="form-control" id="floatingInputEmail" placeholder="">
-                                                        <label for="floatingInputEmail">Correo electrónico</label>
+                                                    <span class="input-group-text mb-1"><i class="bi bi-123"></i></span>
+                                                    <div class="form-floating flex-fill mb-1">
+                                                        <input type="text" class="form-control" id="floatingInputDocumento" placeholder="">
+                                                        <label for="floatingInputDocumento">Documento Nacional de identidad</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-row align-items-center mb-4">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text mb-1"><i class="bi bi-envelope-at-fill"></i></span>
+                                                    <div class="form-floating flex-fill mb-1">
+                                                        <input type="email" class="form-control" id="floatingInputEmail" >
+                                                        <label for="floatingInputEmail" >Correo electrónico</label>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="d-flex flex-row align-items-center mb-4">
                                                 <div class="input-group mb-3">
-                                                    <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
-                                                    <div class="form-floating flex-fill mb-0">
+                                                    <span class="input-group-text mb-1"><i class="bi bi-key-fill"></i></span>
+                                                    <div class="form-floating flex-fill mb-1">
+                                                        <input type="text" class="form-control" id="floatingInputDireccion" placeholder="">
+                                                        <label for="floatingInputDireccion">Domicilio</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-row align-items-center mb-4">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text mb-1"><i class="bi bi-person-fill "></i></span>
+                                                    <div class="form-floating flex-fill mb-1" >
+                                                        <input type="text" class="form-control" id="floatingInputTipoUsuario" disabled placeholder="" value="C - Cliente" >
+                                                        <label for="floatingInputTipoUsuario" class="">Tipo de usuario</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-row align-items-center mb-4">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text mb-1"><i class="bi bi-key-fill"></i></span>
+                                                    <div class="form-floating flex-fill mb-1">
                                                         <input type="password" class="form-control" id="floatingInputPassword" placeholder="">
                                                         <label for="floatingInputPassword">Contraseña</label>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="d-flex flex-row align-items-center mb-4">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
-                                                    <div class="form-floating flex-fill mb-0">
-                                                        <input type="password" class="form-control" id="floatingInputPassword1" placeholder="">
-                                                        <label for="floatingInputPassword1">Reingrese su contraseña</label>
-                                                    </div>
-                                                </div>
-                                            </div>
 
 
                                             <div class="d-flex justify-content-center ">

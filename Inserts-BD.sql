@@ -10,6 +10,9 @@ INSERT INTO USUARIOS VALUES ('Manu', 'cas', 47240658, 'email@mail.com', '1', 'ca
 INSERT INTO USUARIOS VALUES ('Facu', 'azul', 89240658, 'email1@mail.com', '1', 'calle falsa 12345', 'E', 'no tiene img3');
 INSERT INTO USUARIOS VALUES ('Lucho', 'apu', 56245658, 'email2@mail.com', '1', 'calle falsa 12356', 'E', 'no tiene img4');
 
+--insert pedidos
+INSERT INTO PEDIDOS VALUES(2, 5,10, '2023-06-22', 'OK', 'luis 123', 0, 15000);
+
 --insert categorias
 INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('1', 'Monitores', 'https://cdn-icons-png.flaticon.com/256/81/81793.png');
 INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('2', 'Placa de video', 'https://w7.pngwing.com/pngs/388/581/png-transparent-graphics-cards-video-adapters-computer-icons-computer-hardware-electronics-handheld-devices-computer-electronics-text-rectangle-thumbnail.png');

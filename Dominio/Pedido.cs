@@ -10,13 +10,17 @@ namespace Dominio
     {
         public int IdPedido { get; set; }
         public int IdUsuario { get; set; }
+        public int IdArticulo { get; set; }
+        public string Usuario { get; set; }
+        public string NombreArt { get; set; }
+        public int Cantidad { get; set; }
         public DateTime fecha { get; set; } //ver si este formato es util
         public string Fecha { get { return string.Format(" {0:dd/MM/yyyy}.", Fecha); } } // ver si anda correctamente
         public string Estado { get; set; }
         public string DireccionEntrega { get; set; }
         public decimal Descuento { get; set; }
-        public decimal total { get; set; }
-        public string Total { get { return string.Format( "{0:C2}", total); } } // ver si anda correctamente
+        public decimal precioTotal { get; set; }
+        public string PrecioTotal { get { return string.Format( "{0:C2}", precioTotal); } } // ver si anda correctamente
 
         //CONSTRUCTORES:
         public Pedido() { }
@@ -28,7 +32,7 @@ namespace Dominio
             Estado = estado;
             DireccionEntrega = direccionEntrega;
             Descuento = descuento;
-            this.total = total;
+            this.precioTotal = total;
         }
     }
 }

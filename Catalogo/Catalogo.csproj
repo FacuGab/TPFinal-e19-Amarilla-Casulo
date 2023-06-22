@@ -2191,13 +2191,13 @@
     <Content Include="fonts\bootstrap.min.css.map" />
     <Content Include="fonts\bootstrap.rtl.css.map" />
     <Content Include="fonts\bootstrap.rtl.min.css.map" />
-    <None Include="packages.config" />
     <Content Include="scripts\bootstrap.bundle.js.map" />
     <Content Include="scripts\bootstrap.bundle.min.js.map" />
     <Content Include="scripts\bootstrap.esm.js.map" />
     <Content Include="scripts\bootstrap.esm.min.js.map" />
     <Content Include="scripts\bootstrap.js.map" />
     <Content Include="scripts\bootstrap.min.js.map" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
