@@ -35,13 +35,16 @@
                             </a>
                         </li>
                         <li class="nav-item me-2 ">
+                            <a type="button" class="btn  fs-5 position-relative" href="Admin.aspx">👨‍💻</a>
+                        </li>
+                        <li class="nav-item me-2 ">
                             <button type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#modalBusqueda"><i class="bi bi-search text-light"> Buscar</i></button>
                         </li>
                         <asp:UpdatePanel runat="server">
                             <ContentTemplate>
                                 <li class="nav-item ms-2 me-2">
                                     <a type="button" class="btn  fs-5 position-relative" href="ListaCarrito.aspx">
-                                      <i class="bi bi-cart4 text-light" style="height:26px; width:26px;"></i>
+                                      <i class="fs-4 bi bi-cart4 text-light"></i>
                                         <%if (Flag) {%>  
                                         
                                       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">

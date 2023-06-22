@@ -58,12 +58,14 @@ CREATE TABLE PEDIDOS(
 	IdPedido INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	IdUsuarios INT NOT NULL,
 	IdArticulos INT NOT NULL,
+	Cantidad INT NOT NULL,
 	Fecha DATE NOT NULL,
 	Estado VARCHAR(20) NOT NULL,
 	DireccionEntrega VARCHAR(100) NOT NULL,
 	Descuento DECIMAL NULL,
 	PrecioTotal DECIMAL NOT NULL
 )
+INSERT INTO PEDIDOS VALUES(3, 15,10, '2023-06-02', 'OK', 'luis 123', 0, 30000);
 
 GO
 
@@ -91,5 +93,10 @@ CREATE TABLE PEDIDO_ARTICULO(
 --POST IMPLEMENTACION
 SELECT Id,Descripcion, UrlImagen FROM Categorias
 select * from CATEGORIAS
+SELECT Id,Nombre,Descripcion,IdMarca,IdCategoria,Precio,Estado,Stock,ImagenUrl FROM ARTICULOS WHERE Id = 1
 
-SELECT id,nombre,descripcion,idmarca,idcategoria,precio,estado,stock,imagenurl FROM ARTICULOS WHERE Id = 15
+--consulta listar pedido
+SELECT P.IdPedido as 'ID_Pedido',U.Id as 'ID_usuario',A.Id as 'ID_Articulo', U.Nombre + ' '+ U.Apellido as 'Usuario', A.Nombre as 'Nombre_Articulo', P.Cantidad as 'Cantidad_Solicitada', P.Fecha as 'Fecha', P.Estado as 'Estado', P.DireccionEntrega as 'Dirección', P.Descuento as 'Descuento', P.PrecioTotal as 'Precio_Total_Unidad'
+FROM PEDIDOS P
+JOIN USUARIOS U ON P.IdUsuarios = U.Id
+JOIN ARTICULOS A ON P.IdArticulos = A.Id

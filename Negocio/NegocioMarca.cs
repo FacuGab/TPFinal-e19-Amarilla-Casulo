@@ -42,5 +42,52 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+        private Marca EditarMarca(Marca marca)
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("SELECT Id, Descripcion, UrlImagen FROM MARCAS WHERE Id = @id", "query");
+                datos.SetParameters("@id", marca.Id);
+                datos.ReadQuery();
+
+                var aux = datos.Lector;
+                while (aux.Read())
+                {
+                    marca.Id = (int)aux["Id"];
+                    marca.Descripcion = aux["Descripcion"].ToString();
+                    marca.UrlImagen = aux["UrlImagen"].ToString();
+                }
+                return marca;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        private void borrarMarca(int id)
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("DELETE FROM MARCAS WHERE Id = @id", "query");
+                datos.SetParameters("@id", id);
+                datos.ExecuteQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }
