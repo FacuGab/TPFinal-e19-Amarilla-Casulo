@@ -8,6 +8,6 @@ namespace Helper
 {
     static public class HelperUsuario
     {
-
+        // en desarrollo ....
     }
 }

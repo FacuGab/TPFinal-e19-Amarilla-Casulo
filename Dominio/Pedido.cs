@@ -21,6 +21,7 @@ namespace Dominio
         public decimal Descuento { get; set; }
         public decimal precioTotal { get; set; }
         public string PrecioTotal { get { return string.Format( "{0:C2}", precioTotal); } } // ver si anda correctamente
+        public List<CarritoItem> totalItems { get; set; } // por ahora de testeo, ver si tiene funcionalidad
 
         //CONSTRUCTORES:
         public Pedido() { }

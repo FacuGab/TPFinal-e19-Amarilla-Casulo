@@ -65,7 +65,6 @@ CREATE TABLE PEDIDOS(
 	Descuento DECIMAL NULL,
 	PrecioTotal DECIMAL NOT NULL
 )
-INSERT INTO PEDIDOS VALUES(3, 15,10, '2023-06-02', 'OK', 'luis 123', 0, 30000);
 
 GO
 
@@ -95,8 +94,28 @@ SELECT Id,Descripcion, UrlImagen FROM Categorias
 select * from CATEGORIAS
 SELECT Id,Nombre,Descripcion,IdMarca,IdCategoria,Precio,Estado,Stock,ImagenUrl FROM ARTICULOS WHERE Id = 1
 
+-- #### Consultas en Tabla PEDIDOS #####:
 --consulta listar pedido
 SELECT P.IdPedido as 'ID_Pedido',U.Id as 'ID_usuario',A.Id as 'ID_Articulo', U.Nombre + ' '+ U.Apellido as 'Usuario', A.Nombre as 'Nombre_Articulo', P.Cantidad as 'Cantidad_Solicitada', P.Fecha as 'Fecha', P.Estado as 'Estado', P.DireccionEntrega as 'Dirección', P.Descuento as 'Descuento', P.PrecioTotal as 'Precio_Total_Unidad'
 FROM PEDIDOS P
 JOIN USUARIOS U ON P.IdUsuarios = U.Id
 JOIN ARTICULOS A ON P.IdArticulos = A.Id
+
+--consulta Update Pedido
+UPDATE PEDIDOS SET IdUsuarios = 1, IdArticulos = 1, Cantidad = 2, Fecha = GETDATE(), Estado = 'TEST', DireccionEntrega = 'luis 123', Descuento = 0, PrecioTotal = 3000
+
+-- OTRAS VARIAS:
+DROP TABLE PEDIDO_ARTICULO
+DROP TABLE PEDIDOS
+DELETE FROM PEDIDOS
+
+SELECT * FROM PEDIDOS
+SELECT * FROM PEDIDO_ARTICULO
+ALTER TABLE PEDIDOS ADD Cantidad INT NOT NULL
+ALTER TABLE PEDIDOS DROP COLUMN Cantidad
+
+INSERT INTO PEDIDOS VALUES(1, 15, 1, '2023-06-02', 'OK', 'luis 123', 0, 30000)
+INSERT INTO PEDIDO_ARTICULO VALUES (1, 15, 2)
+INSERT INTO PEDIDO_ARTICULO VALUES (1, 14, 1)
+
+--

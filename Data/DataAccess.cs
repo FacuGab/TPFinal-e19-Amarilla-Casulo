@@ -81,18 +81,18 @@ namespace Data
             }
         }
 
-        //TODO: ???
-        public void setConsulta(string query)
-        {
-            try
-            {   //funcionara con un sp sin configurar que sea sp ??
-                cmd = new SqlCommand(query, connection);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        ////TODO: ???
+        //public void setConsulta(string query)
+        //{
+        //    try
+        //    {   //funcionara con un sp sin configurar que sea sp ??
+        //        cmd = new SqlCommand(query, connection);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
         //TODO: Ejecutar Query
         public int ExecuteQuery()

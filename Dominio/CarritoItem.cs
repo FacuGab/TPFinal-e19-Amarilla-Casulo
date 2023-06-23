@@ -8,12 +8,13 @@ namespace Dominio
 {
     public class CarritoItem
     {
-        public int Id { get; set; }
+        public int Id { get; set; } // IdArticulo seria
         public string Nombre { get; set; }
         public decimal precio { get; set; }
         public string Precio { get { return string.Format("{0:C2}", precio); } }
-        public int Cantidad { get; set; }//Agrege esta propiedad para la cantidad de items iguales en el carrito
+        public int Cantidad { get; set; }
         public string ImagenUrl { get; set; }
         public string TotalParcial { get { return string.Format( "{0:C2}", precio * Cantidad); } }
+        public int IdPedido { get; set; } //para usar en pedido
     }
 }

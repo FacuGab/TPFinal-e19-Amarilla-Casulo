@@ -19,6 +19,9 @@ namespace Catalogo
         NegocioMarca NegocioMarca;
         List<Pedido> PedidoList;
         NegocioPedido NegocioPedido;
+        List<CarritoItem> Pedido_articulos;
+        
+        //LOAD
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -59,6 +62,8 @@ namespace Catalogo
                 }
             }
         }
+        
+        //METODOS
         private void CargarArticulos()
         {
             articuloList = new List<Articulo>();
@@ -90,7 +95,29 @@ namespace Catalogo
             PedidoList = NegocioPedido.ListarPedidos();
             dgvAdminPedidos.DataSource = PedidoList;
             dgvAdminPedidos.DataBind();
+
+            var pedido_articulo = NegocioPedido.ListarPerdido_articulos(); //se puede buscar por ID de Pedido
+            dgvPedido_Articulos.DataSource = pedido_articulo;
+            dgvPedido_Articulos.DataBind();
         }
+
+        private void CargarPedido_Articulos() //ver si usar
+        {
+            try
+            {
+                Pedido_articulos = new List<CarritoItem>();
+                NegocioPedido = new NegocioPedido();
+                var pedido_articulo = NegocioPedido.ListarPerdido_articulos();
+                dgvPedido_Articulos.DataSource = pedido_articulo;
+                dgvPedido_Articulos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        //EVENTOS (agregar los eventos cuando se estan por ingresar su logica, sino despues es complicado buscar en front)
         protected void ibtEliminar_Click(object sender, ImageClickEventArgs e)
         {
 
