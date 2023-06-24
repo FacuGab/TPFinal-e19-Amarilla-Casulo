@@ -23,6 +23,7 @@
                                                     <div class="form-floating flex-fill mb-1">
                                                         <input type="text" class="form-control" id="floatingInputNombre" placeholder="">
                                                         <label for="floatingInputNombre">Nombre/s</label>
+                                                        <%--<asp:Label Text="" runat="server" ID="txtNombre"/>--%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -32,6 +33,7 @@
                                                     <div class="form-floating flex-fill mb-1">
                                                         <input type="text" class="form-control" id="floatingInputApellido" placeholder="">
                                                         <label for="floatingInputApellido">Apellido/s</label>
+                                                        <%--<asp:Label Text="text" runat="server" />--%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -42,6 +44,7 @@
                                                     <div class="form-floating flex-fill mb-1">
                                                         <input type="text" class="form-control" id="floatingInputDocumento" placeholder="">
                                                         <label for="floatingInputDocumento">Documento Nacional de identidad</label>
+                                                        <%--<asp:Label Text="text" runat="server" />--%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -51,6 +54,7 @@
                                                     <div class="form-floating flex-fill mb-1">
                                                         <input type="email" class="form-control" id="floatingInputEmail" >
                                                         <label for="floatingInputEmail" >Correo electrónico</label>
+                                                        <%--<asp:Label Text="text" runat="server" />--%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -61,6 +65,7 @@
                                                     <div class="form-floating flex-fill mb-1">
                                                         <input type="text" class="form-control" id="floatingInputDireccion" placeholder="">
                                                         <label for="floatingInputDireccion">Domicilio</label>
+                                                        <%--<asp:Label Text="text" runat="server" />--%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -70,6 +75,7 @@
                                                     <div class="form-floating flex-fill mb-1" >
                                                         <input type="text" class="form-control" id="floatingInputTipoUsuario" disabled placeholder="" value="C - Cliente" >
                                                         <label for="floatingInputTipoUsuario" class="">Tipo de usuario</label>
+                                                        <%--<asp:Label Text="text" runat="server" />--%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -79,6 +85,7 @@
                                                     <div class="form-floating flex-fill mb-1">
                                                         <input type="password" class="form-control" id="floatingInputPassword" placeholder="">
                                                         <label for="floatingInputPassword">Contraseña</label>
+                                                        <%--<asp:Label Text="text" runat="server" />--%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -86,7 +93,11 @@
 
 
                                             <div class="d-flex justify-content-center ">
-                                                <button type="button" class="btn btn-warning btn-lg flex-fill"><i class="bi bi-person-fill-add"> Registrarse</i></button>
+                                                <button runat="server" id="btnRegistro" type="button" class="btn btn-warning btn-lg flex-fill"><i class="bi bi-person-fill-add"> Registrarse</i></button>
+                                                <a href="ListaCarrito.aspx?text=ok&reg=ok">
+                                                    <button runat="server" id="btnRegistroParaCompra" type="button" class="btn btn-success btn-lg flex-fill" onclick="mostrarAlerta('Registrado con éxito!')"><i class="bi bi-person-fill-add"> Registrarse y continuar</i></button>
+                                                <a>
+                                                    <%--ver si podemos pasar el estado del registro por otro lado que no sea la url para que no se pueda manipular: reg=ok--%>
                                             </div>
 
                                         </div>

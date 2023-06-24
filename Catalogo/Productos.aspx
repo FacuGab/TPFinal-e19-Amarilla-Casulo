@@ -99,6 +99,7 @@
                                                 <p class="card-text text-primary fs-4 mt-4">$ <%#Eval("Precio")%></p>
                                                 <asp:Button Text="🛒  Agregar" runat="server" ID="btnAgregar" CssClass="btn btn-warning mt-4" CommandArgument='<%# Eval("Id")%>' OnClick="btnAgregarArt_Click" />
                                                 <asp:Button Text="ℹ Detalles" runat="server" ID="btnDetalles" CssClass="btn btn-primary mt-4" CommandArgument='<%# Eval("Id")%>' OnClick="btnDetalles_Click" />
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -110,6 +111,6 @@
             </div>
             <%--fin lista articulos--%>
         </div>
-
+        
     </div>
 </asp:Content>

@@ -16,6 +16,34 @@ namespace Negocio
         List<Usuario> Usuarios;
         Usuario Usuario;
 
+        //TODO: Agregar Usuario
+        public void AgregarUsuario(Usuario usuario)
+        {
+            Data = new DataAccess();
+            try
+            {
+                Data.AbrirConexion();
+                Data.SetQuery("INSERT INTO USUARIOS (Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen) VALUES (@Nombre, @Apellido, @DNI, @Mail, @Clave, @Direccion, @Nivel, @UrlImagen)", "nonquery");
+                Data.SetParameters("@Nombre", usuario.Nombre);
+                Data.SetParameters("@Apellido", usuario.Apellido);
+                Data.SetParameters("@DNI", usuario.Dni);
+                Data.SetParameters("@Mail", usuario.Mail);
+                Data.SetParameters("@Clave", usuario.Clave);
+                Data.SetParameters("@Direccion", usuario.Direccion);
+                Data.SetParameters("@Nivel", usuario.Nivel);
+                Data.SetParameters("@UrlImagen", usuario.UrlImgUsuario);
+                Data.ExecuteQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Data.CerrarConexion();
+            }
+        }
+
         //TODO: Listar Usuarios
         public List<Usuario> ListarUsuarios()
         {

@@ -28,20 +28,70 @@ namespace Catalogo
             {
                 if(!IsPostBack)
                 {
-                    carrito = Session["listaCarrito"] as NegocioCarrito;
-                    if (carrito != null && carrito.Items.Count > 0)
+                    if (Request.QueryString["text"] == "ok")
                     {
-                        divCarritoVacio.Visible = false;
-                        divCarritoConItems.Visible = true;
-                        dgvCarrito.DataSource = carrito.Items;
-                        dgvCarrito.DataBind();
-                        totalAcumulado = totalCarrito(carrito.Items);
+                        carrito = Session["listaCarrito"] as NegocioCarrito;
+                        if (carrito != null && carrito.Items.Count > 0)
+                        {
+                            if (Request.QueryString["reg"] == "ok")
+                            {
+                                divRegistroOLoginNecesario.Visible = false;
+                                datosDePago.Visible = false;
+                                divCarritoVacio.Visible = false;
+                                divCarritoConItems.Visible = false;
+                                divConfirmarPedido.Visible = true;
+                                rptCarrito.DataSource = carrito.Items;
+                                rptCarrito.DataBind();
+                                totalAcumulado = totalCarrito(carrito.Items);
+                            }
+                            else
+                            {
+                                divBtnConfirmarReserva.Visible = false;
+                                divCarritoVacio.Visible = false;
+                                divCarritoConItems.Visible = false;
+                                divConfirmarPedido.Visible = true;
+                                datosDePago.Visible = false;
+                                rptCarrito.DataSource = carrito.Items;
+                                rptCarrito.DataBind();
+                                totalAcumulado = totalCarrito(carrito.Items);
+                            }
+                            
+                        }
+                        else
+                        {
+                            divConfirmarPedido.Visible = false;
+                            divCarritoConItems.Visible = false;
+                            datosDePago.Visible = false;
+                            divCarritoVacio.Visible = true;
+                        }                       
                     }
                     else
                     {
-                        divCarritoConItems.Visible = false;
-                        divCarritoVacio.Visible = true;
+                        carrito = Session["listaCarrito"] as NegocioCarrito;
+                        if (carrito != null && carrito.Items.Count > 0)
+                        {
+                            divConfirmarPedido.Visible = false;
+                            divCarritoVacio.Visible = false;
+                            divCarritoConItems.Visible = true;
+                            datosDePago.Visible = false;
+                            dgvCarrito.DataSource = carrito.Items;
+                            dgvCarrito.DataBind();
+                            totalAcumulado = totalCarrito(carrito.Items);
+                        }
+                        else
+                        {
+                            divConfirmarPedido.Visible = false;
+                            divCarritoConItems.Visible = false;
+                            datosDePago.Visible = false;
+                            divCarritoVacio.Visible = true;
+                        }
                     }
+
+                    if (Request.QueryString["est"] == "success")
+                    {
+                        datosDePago.Visible = true;
+                    }
+                    
                 }
             }
             catch (Exception ex)

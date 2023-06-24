@@ -51,6 +51,51 @@ namespace Catalogo
         protected global::System.Web.UI.WebControls.Button btnEliminarListaCarrito;
 
         /// <summary>
+        /// divConfirmarPedido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divConfirmarPedido;
+
+        /// <summary>
+        /// rptCarrito control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptCarrito;
+
+        /// <summary>
+        /// divBtnConfirmarReserva control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBtnConfirmarReserva;
+
+        /// <summary>
+        /// divRegistroOLoginNecesario control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divRegistroOLoginNecesario;
+
+        /// <summary>
+        /// datosDePago control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl datosDePago;
+
+        /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>
