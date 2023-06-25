@@ -26,72 +26,26 @@ namespace Catalogo
         {
             try
             {
-                if(!IsPostBack)
+                if (!IsPostBack)
                 {
+                    carrito = Session["listaCarrito"] as NegocioCarrito;
+                    var listaItems = carrito?.Items;
+
                     if (Request.QueryString["text"] == "ok")
                     {
-                        carrito = Session["listaCarrito"] as NegocioCarrito;
-                        if (carrito != null && carrito.Items.Count > 0)
-                        {
-                            if (Request.QueryString["reg"] == "ok")
-                            {
-                                divRegistroOLoginNecesario.Visible = false;
-                                datosDePago.Visible = false;
-                                divCarritoVacio.Visible = false;
-                                divCarritoConItems.Visible = false;
-                                divConfirmarPedido.Visible = true;
-                                rptCarrito.DataSource = carrito.Items;
-                                rptCarrito.DataBind();
-                                totalAcumulado = totalCarrito(carrito.Items);
-                            }
-                            else
-                            {
-                                divBtnConfirmarReserva.Visible = false;
-                                divCarritoVacio.Visible = false;
-                                divCarritoConItems.Visible = false;
-                                divConfirmarPedido.Visible = true;
-                                datosDePago.Visible = false;
-                                rptCarrito.DataSource = carrito.Items;
-                                rptCarrito.DataBind();
-                                totalAcumulado = totalCarrito(carrito.Items);
-                            }
-                            
-                        }
-                        else
-                        {
-                            divConfirmarPedido.Visible = false;
-                            divCarritoConItems.Visible = false;
-                            datosDePago.Visible = false;
-                            divCarritoVacio.Visible = true;
-                        }                       
+                        CargarPantallaFinalizarCompra(Request.QueryString["reg"], listaItems);
                     }
                     else
                     {
-                        carrito = Session["listaCarrito"] as NegocioCarrito;
-                        if (carrito != null && carrito.Items.Count > 0)
-                        {
-                            divConfirmarPedido.Visible = false;
-                            divCarritoVacio.Visible = false;
-                            divCarritoConItems.Visible = true;
-                            datosDePago.Visible = false;
-                            dgvCarrito.DataSource = carrito.Items;
-                            dgvCarrito.DataBind();
-                            totalAcumulado = totalCarrito(carrito.Items);
-                        }
-                        else
-                        {
-                            divConfirmarPedido.Visible = false;
-                            divCarritoConItems.Visible = false;
-                            datosDePago.Visible = false;
-                            divCarritoVacio.Visible = true;
-                        }
+                        CargarPantallaCarrito(listaItems);
                     }
 
-                    if (Request.QueryString["est"] == "success")
-                    {
-                        datosDePago.Visible = true;
-                    }
-                    
+                }
+
+                // asignamos si exsite un valor total
+                if (Session["totalCarrito"] != null)
+                {
+                    totalAcumulado = (decimal)Session["totalCarrito"];
                 }
             }
             catch (Exception ex)
@@ -110,7 +64,7 @@ namespace Catalogo
                 //Apuntamos y capturamos
                 int idMatch = int.Parse(((ImageButton)sender).CommandArgument);
                 carrito = Session["listaCarrito"] as NegocioCarrito;
-                
+
                 //Eliminamos Item del Carrito
                 carrito.BorrarItem(idMatch);
 
@@ -142,7 +96,7 @@ namespace Catalogo
                 CarritoItem itemMatch = carrito.Items.Find(itm => itm.Id == idMatch);
 
                 //Sumamos a la cantidad anteror
-                if(itemMatch != null && itemMatch.Cantidad >= 0) // ver si .Find() no encuentra item, puede que el T defualt de retorno rompa el codigo
+                if (itemMatch != null && itemMatch.Cantidad >= 0) // ver si .Find() no encuentra item, puede que el T defualt de retorno rompa el codigo
                     carrito.ModificarCantidad(idMatch, ++itemMatch.Cantidad);
 
                 //Rendereamos nuevamente la lista
@@ -216,7 +170,26 @@ namespace Catalogo
             Response.Redirect("ListaCarrito.aspx", false);
         }
 
-        //TODO: METODOS
+        // Boton Confirmar Pedido
+        protected void btnConfirmarPedido_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // control si es true ....
+                datosDePago.Visible = true;
+                // var res = Helper.HelperUsario(Session["user"]);
+                // sino, pedido no realizado
+                // Llamar a metodos pedido y listarlo.
+                // Ver si crear el pedido aca, o hacerlo luego de 'efectuar el pago'...
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //METODOS
         // Calcular Totales
         public decimal totalCarrito(List<CarritoItem> lista)
         {
@@ -230,7 +203,7 @@ namespace Catalogo
                 Session.Add("totalCarrito", 0.00M);
 
             //Acumular el valor
-            foreach (CarritoItem item in lista) 
+            foreach (CarritoItem item in lista)
             {
                 if (total >= 0)
                     total += (item.precio * item.Cantidad);
@@ -249,18 +222,18 @@ namespace Catalogo
 
             //Operamos cantidad: suma, resta, eliminar y guardamos
             int count = (int)Session["countCarrito"];
-            if(modo == "suma")
+            if (modo == "suma")
             {
                 count++;
             }
-            else if(modo == "resta")
+            else if (modo == "resta")
             {
-                if(count > 0)
+                if (count > 0)
                     count--;
             }
-            else if(modo == "eliminar")
+            else if (modo == "eliminar")
             {
-                if(count > 0)
+                if (count > 0)
                 {
                     count = 0;
                     var itemList = ((NegocioCarrito)Session["listaCarrito"]).Items;
@@ -278,5 +251,61 @@ namespace Catalogo
                 Master.Flag = true;
             }
         }
+
+        // Cargar Pantalla ("reg == ok", ver de cuales y como cambiar inputs de QueryStrings a metodos de back)
+        public void CargarPantallaFinalizarCompra(string param, List<CarritoItem> lista)
+        {
+            if (lista != null && lista.Count > 0)
+            {
+
+                //Cambiamos visibilidad de los tags
+                divCarritoVacio.Visible = false;
+                divCarritoConItems.Visible = false;
+                datosDePago.Visible = false;
+                divConfirmarPedido.Visible = true;
+
+                if (param == "ok")
+                    divRegistroOLoginNecesario.Visible = false;
+                else
+                    divBtnConfirmarReserva.Visible = false;
+
+                //Rendereamos y calculamos total
+                rptCarrito.DataSource = lista;
+                rptCarrito.DataBind();
+                totalAcumulado = totalCarrito(lista);
+            }
+            else
+            {
+                //Cambiamos visibilidad de los tags
+                divCarritoVacio.Visible = true;
+                divCarritoConItems.Visible = false;
+                datosDePago.Visible = false;
+                divConfirmarPedido.Visible = false;
+            }
+        }
+
+        // Cargar Pantalla (Carrito default, text == null)
+        public void CargarPantallaCarrito(List<CarritoItem> lista)
+        {
+            if (lista != null && lista.Count > 0)
+            {
+                divConfirmarPedido.Visible = false;
+                divCarritoVacio.Visible = false;
+                divCarritoConItems.Visible = true;
+                datosDePago.Visible = false;
+
+                dgvCarrito.DataSource = lista;
+                dgvCarrito.DataBind();
+                totalAcumulado = totalCarrito(lista);
+            }
+            else
+            {
+                divConfirmarPedido.Visible = false;
+                divCarritoConItems.Visible = false;
+                datosDePago.Visible = false;
+                divCarritoVacio.Visible = true;
+            }
+        }
+
     }
 }

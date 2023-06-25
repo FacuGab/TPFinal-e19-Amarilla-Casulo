@@ -8,6 +8,10 @@ namespace Helper
 {
     static public class HelperUsuario
     {
-        // en desarrollo ....
+        static public bool IsLogged()
+        {
+            // seguir haciendo ... 
+            return false;
+        }
     }
 }

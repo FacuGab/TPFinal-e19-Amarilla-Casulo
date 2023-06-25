@@ -96,7 +96,7 @@ namespace Catalogo
             dgvAdminPedidos.DataSource = PedidoList;
             dgvAdminPedidos.DataBind();
 
-            var pedido_articulo = NegocioPedido.ListarPerdido_articulos(); //se puede buscar por ID de Pedido
+            var pedido_articulo = NegocioPedido.ListarPerdido_articulos(); //se puede buscar por ID de Pedido pasando por parametro
             dgvPedido_Articulos.DataSource = pedido_articulo;
             dgvPedido_Articulos.DataBind();
         }
@@ -117,7 +117,7 @@ namespace Catalogo
             }
         }
 
-        //EVENTOS (agregar los eventos cuando se estan por ingresar su logica, sino despues es complicado buscar en front)
+        //EVENTOS (obs: mejor agregar los eventos cuando se estan por ingresar su logica, sino despues se puede complicar buscar en front)
         protected void ibtEliminar_Click(object sender, ImageClickEventArgs e)
         {
 

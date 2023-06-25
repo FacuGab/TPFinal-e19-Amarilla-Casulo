@@ -120,7 +120,9 @@ namespace Negocio
                 Data.CerrarConexion();
             }
         }
-        public Usuario EliminarUsuario(int match)
+
+        //TODO: Eliminar Usuario
+        public int EliminarUsuario(int match)
         {
             // se puede buscar por otros campos que tienen qeu ser unicos, DNI, MAIL tienen que ser campos unicos. Por ahora buscar por Id, cambiar despues a distintos metodos de busqueda
             Data = new DataAccess();
@@ -129,24 +131,7 @@ namespace Negocio
                 Data.AbrirConexion();
                 Data.SetQuery("DELETE FROM USUARIOS WHERE Id = @id", "query");
                 Data.SetParameters("@id", match);
-                Data.ReadQuery();
-
-                var aux = Data.Lector;
-                if (aux.Read())
-                {
-                    Usuario = new Usuario();
-                    Usuario.Id = (int)aux["Id"];
-                    Usuario.Nombre = aux["Nombre"].ToString();
-                    Usuario.Apellido = aux["Apellido"].ToString();
-                    Usuario.Dni = (int)aux["DNI"];
-                    Usuario.Mail = aux["Mail"].ToString();
-                    Usuario.Clave = aux["Clave"].ToString();
-                    Usuario.Direccion = aux["Direccion"].ToString();
-                    Usuario.Nivel = Convert.ToChar(aux["Nivel"]);
-                    Usuario.UrlImgUsuario = aux["UrlImagen"].ToString();
-                    return Usuario;
-                }
-                return null;
+                return Data.ExecuteQuery();
             }
             catch (Exception ex)
             {
@@ -157,7 +142,9 @@ namespace Negocio
                 Data.CerrarConexion();
             }
         }
-        public Usuario editarUsuario(int match)
+
+        //TODO: Editar Usuario
+        public int editarUsuario(int match, Usuario user)
         {
             // se puede buscar por otros campos que tienen qeu ser unicos, DNI, MAIL tienen que ser campos unicos. Por ahora buscar por Id, cambiar despues a distintos metodos de busqueda
             Data = new DataAccess();
@@ -166,24 +153,7 @@ namespace Negocio
                 Data.AbrirConexion();
                 Data.SetQuery("UPDATE USUARIOS SET Nombre = @nombre, Apellido = @apellido, DNI = @dni, Mail = @mail, Clave = @clave, Direccion = @direccion, Nivel = @nivel, UrlImagen = @urlimagen WHERE Id = @id", "query");
                 Data.SetParameters("@id", match);
-                Data.ReadQuery();
-
-                var aux = Data.Lector;
-                if (aux.Read())
-                {
-                    Usuario = new Usuario();
-                    Usuario.Id = (int)aux["Id"];
-                    Usuario.Nombre = aux["Nombre"].ToString();
-                    Usuario.Apellido = aux["Apellido"].ToString();
-                    Usuario.Dni = (int)aux["DNI"];
-                    Usuario.Mail = aux["Mail"].ToString();
-                    Usuario.Clave = aux["Clave"].ToString();
-                    Usuario.Direccion = aux["Direccion"].ToString();
-                    Usuario.Nivel = Convert.ToChar(aux["Nivel"]);
-                    Usuario.UrlImgUsuario = aux["UrlImagen"].ToString();
-                    return Usuario;
-                }
-                return null;
+                return Data.ExecuteQuery();
             }
             catch (Exception ex)
             {

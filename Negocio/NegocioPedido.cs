@@ -18,7 +18,8 @@ namespace Negocio
         public List<Pedido> PedidoItems { get { return pedidos; } }
         public List<CarritoItem> Pedido_Articulos { get; set; }
 
-        //TABLA PEDIDOS
+        //TABLA #### PEDIDOS ####
+        #region PEDIDOS
         //TODO: Listar Pedidos
         public List<Pedido> ListarPedidos()
         {
@@ -172,8 +173,10 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+        #endregion PEDIDOS
 
-        //TABLA PEDIDO_ARTICULO
+        // #### TABLA PEDIDO_ARTICULO ####
+        #region PEDIDO_ARTICULO
         //TODO: Listar Todos Pedidos_articulo
         public List<CarritoItem> ListarPerdido_articulos()
         {
@@ -308,5 +311,6 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+        #endregion PEDIDO_ARTICULO
     }
 }
