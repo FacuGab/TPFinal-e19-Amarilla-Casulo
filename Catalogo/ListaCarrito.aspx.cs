@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Helper;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,6 @@ namespace Catalogo
                     {
                         CargarPantallaCarrito(listaItems);
                     }
-
                 }
 
                 // asignamos si exsite un valor total
@@ -175,12 +175,23 @@ namespace Catalogo
         {
             try
             {
-                // control si es true ....
-                datosDePago.Visible = true;
-                // var res = Helper.HelperUsario(Session["user"]);
-                // sino, pedido no realizado
-                // Llamar a metodos pedido y listarlo.
-                // Ver si crear el pedido aca, o hacerlo luego de 'efectuar el pago'...
+                NegocioPedido pedidoNegocio = new NegocioPedido();
+                Usuario usuarioActual = (Usuario)Session["usuarioActual"];
+                usuarioActual = new Usuario();
+                usuarioActual.Mail = "mail@mail.com";
+                usuarioActual.Clave = "1";
+
+                if ( HelperUsuario.IsLogged(usuarioActual) )
+                {
+                    //List<CarritoItem> lista = carrito?.Items;
+                    //Pedido pedido = pedidoNegocio.CargarPedido(lista, usuarioActual);
+                    //pedidoNegocio.AgregarPedido(pedido);
+                    datosDePago.Visible = true;
+                }
+                else
+                {
+
+                }
             }
             catch (Exception ex)
             {

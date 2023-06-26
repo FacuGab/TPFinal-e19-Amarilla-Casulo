@@ -311,6 +311,12 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+
         #endregion PEDIDO_ARTICULO
+        //TODO: Cargar Pedido
+        public Pedido CargarPedido(List<CarritoItem> lista, Usuario usuarioActual)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

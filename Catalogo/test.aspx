@@ -96,6 +96,10 @@
                         <asp:GridView ID="dgvGridTest6" runat="server" CssClass="table"></asp:GridView>
                     </div>
                 </div>
+
+                <!-- Intentos de pop up -->
+                <!-- En el archivo .aspx -->
+
             </div>
         </div>
     </div>

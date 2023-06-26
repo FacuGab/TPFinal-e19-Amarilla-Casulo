@@ -15,12 +15,12 @@ namespace Dominio
         public string Mail { get; set; }
         public string Clave { get; set; }
         public string Direccion { get; set; }
-        public char Nivel { get; set; }
+        public string Nivel { get; set; }
         public string UrlImgUsuario { get; set; }
 
         //CONSTRUCTORES
         public Usuario() { }
-        public Usuario(int id, string nombre, string apellido, int dni, string mail, string clave, string direccion, char nivel, string urlImgUsuario)
+        public Usuario(int id, string nombre, string apellido, int dni, string mail, string clave, string direccion, string nivel, string urlImgUsuario)
         {
             Id = id;
             Nombre = nombre;

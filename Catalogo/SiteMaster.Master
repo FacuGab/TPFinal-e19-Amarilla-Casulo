@@ -73,16 +73,16 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">Inicio de sesión</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button id="btnCerrarModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" runat="server" onServerClick="btnCerrarModal_Click"></button>
                     </div>
                     <div class="modal-body">
                         <div class="col-12">
                             <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                            <asp:TextBox CssClass="form-control" ID="btnMailLogin" TextMode="Email" ToolTip="name@example.com" runat="server" />
+                            <asp:TextBox CssClass="form-control" ID="txtMailLogin" TextMode="Email" ToolTip="name@example.com" runat="server" />
                         </div>
                         <div class="col-12 mt-3">
                             <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
-                            <asp:TextBox CssClass="form-control" ID="btnClaveLogin" TextMode="Password" ToolTip="Ingrese contraseña" runat="server" />
+                            <asp:TextBox CssClass="form-control" ID="txtClaveLogin" TextMode="Password" ToolTip="Ingrese contraseña" runat="server" />
                         </div>
                         <div class="col-12 mt-2">
                             <div class="form-check">
@@ -93,15 +93,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end m-2">
-                        <a href="Registro.aspx" class="link-secondary text-decoration-none">Crear cuenta</a>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="d-grid">
-                            <button class="btn btn-primary " type="submit">Ingresar</button>
-                        </div>
-
-                    </div>
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end m-2">
+                                <a href="Registro.aspx" class="link-secondary text-decoration-none">Crear cuenta</a>
+                                <p id="lblUsuarioNoExiste" visible="false" runat="server">
+                                    <span class="badge text-bg-warning">
+                                        <asp:Label ID="lblRespuestaLoggin" runat="server" />
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="d-grid">
+                                    <asp:Button Text="Ingresar" CssClass="btn btn-primary" ID="btnIngresar" OnClick="btnIngresar_Click" runat="server" />
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                 </div>
             </div>
         </div>

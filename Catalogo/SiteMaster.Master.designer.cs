@@ -51,22 +51,58 @@ namespace Catalogo
         protected global::System.Web.UI.WebControls.Label lblTotalArticulos;
 
         /// <summary>
-        /// btnMailLogin control.
+        /// btnCerrarModal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox btnMailLogin;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnCerrarModal;
 
         /// <summary>
-        /// btnClaveLogin control.
+        /// txtMailLogin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox btnClaveLogin;
+        protected global::System.Web.UI.WebControls.TextBox txtMailLogin;
+
+        /// <summary>
+        /// txtClaveLogin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtClaveLogin;
+
+        /// <summary>
+        /// lblUsuarioNoExiste control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUsuarioNoExiste;
+
+        /// <summary>
+        /// lblRespuestaLoggin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRespuestaLoggin;
+
+        /// <summary>
+        /// btnIngresar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnIngresar;
 
         /// <summary>
         /// tbFiltroRapido control.

@@ -44,8 +44,10 @@ namespace Catalogo
             dgvGridTest5.DataSource = usuario.ListarUsuarios();
             dgvGridTest5.DataBind();
 
-            List<Usuario> ls = new List<Usuario>();
-            ls.Add(usuario.BuscarUsuario(1)); // busca por DNI == 1
+            List<Usuario> ls = new List<Usuario>
+            {
+                usuario.BuscarUsuario("mail@mail.com", "1") // busca por DNI == 1
+            };
             dgvGridTest6.DataSource = ls;
             dgvGridTest6.DataBind();
 

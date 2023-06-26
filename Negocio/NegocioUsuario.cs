@@ -1,9 +1,11 @@
 ﻿using Data;
 using Dominio;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Messaging;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,7 +68,7 @@ namespace Negocio
                     Usuario.Mail = aux["Mail"].ToString();
                     Usuario.Clave = aux["Clave"].ToString();
                     Usuario.Direccion = aux["Direccion"].ToString();
-                    Usuario.Nivel = Convert.ToChar(aux["Nivel"]);
+                    Usuario.Nivel = aux["Nivel"].ToString();
                     Usuario.UrlImgUsuario = aux["UrlImagen"].ToString();
                     Usuarios.Add(Usuario);
                 }
@@ -82,20 +84,20 @@ namespace Negocio
             }
         }
 
-        //TODO: Buscar Usuario
-        public Usuario BuscarUsuario(int match)
+        //TODO: Buscar Usuario (busca por Id, usar para loggins existUser, este solo para buscar por Id)
+        public Usuario BuscarUsuario(string mail, string clave)
         {
-            // se puede buscar por otros campos que tienen qeu ser unicos, DNI, MAIL tienen que ser campos unicos. Por ahora buscar por Id, cambiar despues a distintos metodos de busqueda
             Data = new DataAccess();
             try
             {
                 Data.AbrirConexion();
-                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen FROM USUARIOS WHERE Id = @id", "query");
-                Data.SetParameters("@id", match);
+                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen FROM USUARIOS WHERE Mail = @Mail AND Clave = @Clave", "query");
+                Data.SetParameters("@Mail", mail);
+                Data.SetParameters("@Clave", clave);
                 Data.ReadQuery();
 
                 var aux = Data.Lector;
-                if(aux.Read())
+                while(aux.Read())
                 {
                     Usuario = new Usuario();
                     Usuario.Id = (int)aux["Id"];
@@ -105,11 +107,10 @@ namespace Negocio
                     Usuario.Mail = aux["Mail"].ToString();
                     Usuario.Clave = aux["Clave"].ToString();
                     Usuario.Direccion = aux["Direccion"].ToString();
-                    Usuario.Nivel = Convert.ToChar(aux["Nivel"]);
+                    Usuario.Nivel = aux["Nivel"].ToString();
                     Usuario.UrlImgUsuario = aux["UrlImagen"].ToString();
-                    return Usuario;
                 }
-                return null;
+                return Usuario;
             }   
             catch (Exception ex)
             {
@@ -154,6 +155,72 @@ namespace Negocio
                 Data.SetQuery("UPDATE USUARIOS SET Nombre = @nombre, Apellido = @apellido, DNI = @dni, Mail = @mail, Clave = @clave, Direccion = @direccion, Nivel = @nivel, UrlImagen = @urlimagen WHERE Id = @id", "query");
                 Data.SetParameters("@id", match);
                 return Data.ExecuteQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Data.CerrarConexion();
+            }
+        }
+
+        //TODO: Existe Usuario (con sobrecarga)
+        //Busca si existe y ademas carga un ojb User con los datos
+        public bool existUser(string mail, string clave, Usuario user)
+        {
+            // usamos clave y mail para buscar, se pueden usar mas campos unicos como DNI, pero no me parecio pedir el DNI como input en el loggin
+            Data = new DataAccess();
+            bool flag = false;
+            try
+            {
+                // Ver que query hacer para comprobar si el usuario existe, nos traemos la data por su posible uso
+                Data.AbrirConexion();
+                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen FROM USUARIOS WHERE Mail = @Mail AND Clave = @Clave ", "query");
+                Data.SetParameters("@Mail", mail);
+                Data.SetParameters("@Clave", clave);
+                Data.ReadQuery();
+
+                var aux = Data.Lector;
+                while(aux.Read())
+                {
+                    user.Id = (int)aux["Id"];
+                    user.Nombre = aux["Nombre"].ToString();
+                    user.Apellido = aux["Apellido"].ToString();
+                    user.Dni = (int)aux["DNI"];
+                    user.Mail = mail;
+                    user.Clave = clave;
+                    user.Direccion = aux["Direccion"].ToString();
+                    user.Nivel = aux["Nivel"].ToString();
+                    user.UrlImgUsuario = aux["UrlImagen"]?.ToString();
+                    flag = true;
+                }
+                return flag;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            { 
+                Data.CerrarConexion();
+            }
+        }
+        //Solo busca si existe
+        public bool existUser(string mail, string clave)
+        {
+            Data = new DataAccess();
+            try
+            {
+                Data.AbrirConexion();
+                Data.SetQuery("SELECT Id FROM USUARIOS WHERE Mail = @Mail AND Clave = @Clave ", "query");
+                Data.SetParameters("@Mail", mail);
+                Data.SetParameters("@Clave", clave);
+                Data.ReadQuery();
+
+                bool res = Data.Lector.HasRows;
+                return res;
             }
             catch (Exception ex)
             {
