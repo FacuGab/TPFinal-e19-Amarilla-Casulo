@@ -100,18 +100,23 @@
                                                 </ul>
                                                 <div class="d-flex justify-content-end">
                                                     <asp:Button Text="❌ Cancelar" ID="btnEliminarListaCarrito" CssClass="btn btn-warning ms-2" OnClick="btnEliminarListaCarrito_Click" runat="server" />
-                                                    <a href="ListaCarrito.aspx?text=ok">
-                                                        <button type="button" class="btn btn-primary btn-block ms-2">
-                                                            <i class="bi bi-cart-check-fill "> Continuar compra</i>
-                                                        </button>
-                                                    </a>
-                                                    <asp:Button Text="Continuar Compra test" ID="btnContinuarCompra" runat="server" />
+
+                                                    <%--<a href="ListaCarrito.aspx?text=ok">
+                                                    </a>--%>
+
+                                                    <button type="button" class="btn btn-primary btn-block ms-2" id="btnContinuarCompra" onServerClick="btnContinuarCompra_Click" runat="server">
+                                                        <i class="bi bi-cart-check-fill "> Continuar compra</i>
+                                                    </button>
+
+                                                    <%--<i class="bi bi-cart-check-fill">
+                                                        <asp:Button Text="Continuar compra test" ID="btnContinuarCompra" CssClass="btn btn-primary btn-block ms-2 " OnClick="btnContinuarCompra_Click" runat="server"/>
+                                                    </i>--%>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div
+                            </div>
                         </ContentTemplate>
                     </asp:UpdatePanel>
                     <!-- FIN CARRITO -->
@@ -122,7 +127,6 @@
         <div class="container" runat="server" id="divConfirmarPedido">
             <div class="row">
                 <div class="col">
-
                     <!-- CONTROL ITEMS PRE COMPRA -->
                     <asp:UpdatePanel runat="server">
                         <ContentTemplate>

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -15,6 +16,7 @@ namespace Catalogo
     public partial class WebForm2 : System.Web.UI.Page
     {
         NegocioCarrito carrito;
+        public bool logged = false;
         protected decimal totalAcumulado = 0;
         public decimal TotalAcumulado
         {
@@ -26,7 +28,8 @@ namespace Catalogo
         protected void Page_Load(object sender, EventArgs e)
         {
             try
-            {
+            {   
+
                 if (!IsPostBack)
                 {
                     carrito = Session["listaCarrito"] as NegocioCarrito;
@@ -34,7 +37,7 @@ namespace Catalogo
 
                     if (Request.QueryString["text"] == "ok")
                     {
-                        CargarPantallaFinalizarCompra(Request.QueryString["reg"], listaItems);
+                        CargarPantallaFinalizarCompra(HelperUsuario.IsLogged(Session["usuarioActual"] as Usuario), listaItems);
                     }
                     else
                     {
@@ -170,7 +173,7 @@ namespace Catalogo
             Response.Redirect("ListaCarrito.aspx", false);
         }
 
-        // Boton Confirmar Pedido
+        // Boton Confirmar Pedido (en desarrollo....)
         protected void btnConfirmarPedido_Click(object sender, EventArgs e)
         {
             try
@@ -195,6 +198,12 @@ namespace Catalogo
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx", false);
             }
+        }
+
+        // Boton Continuar Compra
+        protected void btnContinuarCompra_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ListaCarrito.aspx?text=ok", false);
         }
 
         //METODOS
@@ -261,18 +270,17 @@ namespace Catalogo
         }
 
         // Cargar Pantalla ("reg == ok", ver de cuales y como cambiar inputs de QueryStrings a metodos de back)
-        public void CargarPantallaFinalizarCompra(string param, List<CarritoItem> lista)
+        public void CargarPantallaFinalizarCompra(bool logged, List<CarritoItem> lista)
         {
             if (lista != null && lista.Count > 0)
             {
-
                 //Cambiamos visibilidad de los tags
                 divCarritoVacio.Visible = false;
                 divCarritoConItems.Visible = false;
                 datosDePago.Visible = false;
                 divConfirmarPedido.Visible = true;
 
-                if (param == "ok")
+                if (logged)
                     divRegistroOLoginNecesario.Visible = false;
                 else
                     divBtnConfirmarReserva.Visible = false;

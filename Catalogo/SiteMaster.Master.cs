@@ -81,6 +81,7 @@ namespace Catalogo
             {
                 string pass = txtClaveLogin.Text;
                 string mail = txtMailLogin.Text;
+                string paginaActual = Page.Request.Url.ToString();
 
                 if( !string.IsNullOrWhiteSpace(pass) && !string.IsNullOrWhiteSpace(mail))
                 {
@@ -89,7 +90,7 @@ namespace Catalogo
                     if (userControl != null)
                     {
                         Session.Add("usuarioActual", userControl);
-                        Response.Redirect("Default.aspx", false);
+                        Response.Redirect(paginaActual, false);
                         btnLoggin.Visible = false;
                         btnDisloggin.Visible = true;
                     }
@@ -118,6 +119,8 @@ namespace Catalogo
             try
             {
                 Session.Remove("usuarioActual");
+                Session.Remove("listaCarrito");
+                Session.Remove("countCarrito");
                 Response.Redirect("Default.aspx", false);
             }
             catch (Exception ex)

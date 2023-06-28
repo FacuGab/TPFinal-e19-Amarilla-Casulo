@@ -57,7 +57,7 @@ namespace Catalogo
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnContinuarCompra;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnContinuarCompra;
 
         /// <summary>
         /// divConfirmarPedido control.
