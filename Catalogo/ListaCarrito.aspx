@@ -105,6 +105,7 @@
                                                             <i class="bi bi-cart-check-fill "> Continuar compra</i>
                                                         </button>
                                                     </a>
+                                                    <asp:Button Text="Continuar Compra test" ID="btnContinuarCompra" runat="server" />
                                                 </div>
                                             </div>
                                         </div>

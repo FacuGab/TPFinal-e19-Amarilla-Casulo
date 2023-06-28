@@ -58,13 +58,13 @@
                             </ContentTemplate>
                         </asp:UpdatePanel>
                         <li class="nav-item me-2 ">
-                            <button type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-box-arrow-in-right text-light"> Login</i></button>
+                            <button id="btnLoggin" type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal" runat="server"><i class="bi bi-box-arrow-in-right text-light"> Login</i></button>
+                            <asp:Button Text="Cerrar Sesion" CssClass="btn fs-5 bi bi-box-arrow-in-right text-light" ID="btnDisloggin" OnClick="btnDisloggin_Click" runat="server" />
                         </li> 
                     </ul>
                 </div>
             </div>
         </nav>
-
         <!-- FIN BARRA NAV -->
 
         <%--modal login--%>
@@ -115,8 +115,7 @@
         </div>
          <%--fin modal login--%>
 
-        <%--modal busqueda articulo--%>
-        <!-- Modal -->
+        <!-- Modal busqueda articulo -->
         <div class="modal fade" id="modalBusqueda" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered ">
                 <div class="modal-content">
@@ -135,6 +134,8 @@
             </div>
         </div>
         <%--fin modal busqueda articulo--%>
+
+        <!-- CONTENIDO -->
         <div class="bg-dark-subtle">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
@@ -183,6 +184,7 @@
             </section>
         </footer>
         <!-- fin footer -->
+
         <!-- jQuery full con ajax -->
         <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
         <!--Boostrap js (no borrar, sino no andan los dropdowns)-->

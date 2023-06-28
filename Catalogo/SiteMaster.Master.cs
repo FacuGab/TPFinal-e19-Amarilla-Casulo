@@ -33,6 +33,17 @@ namespace Catalogo
                 {
                     Flag = false;
                 }
+
+                if (Session["usuarioActual"] != null)
+                {
+                    btnLoggin.Visible = false;
+                    btnDisloggin.Visible = true;
+                }
+                else
+                {
+                    btnLoggin.Visible = true;
+                    btnDisloggin.Visible = false;
+                }
             }
             catch (Exception ex)
             {
@@ -78,6 +89,9 @@ namespace Catalogo
                     if (userControl != null)
                     {
                         Session.Add("usuarioActual", userControl);
+                        Response.Redirect("Default.aspx", false);
+                        btnLoggin.Visible = false;
+                        btnDisloggin.Visible = true;
                     }
                     else
                     {
@@ -90,6 +104,21 @@ namespace Catalogo
                     lblUsuarioNoExiste.Visible = true;
                     lblRespuestaLoggin.Text = "Campos Incorrectos";
                 }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        // Boton Cerrar Sesion (en nav)
+        protected void btnDisloggin_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Session.Remove("usuarioActual");
+                Response.Redirect("Default.aspx", false);
             }
             catch (Exception ex)
             {

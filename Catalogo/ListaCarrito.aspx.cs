@@ -177,9 +177,6 @@ namespace Catalogo
             {
                 NegocioPedido pedidoNegocio = new NegocioPedido();
                 Usuario usuarioActual = (Usuario)Session["usuarioActual"];
-                usuarioActual = new Usuario();
-                usuarioActual.Mail = "mail@mail.com";
-                usuarioActual.Clave = "1";
 
                 if ( HelperUsuario.IsLogged(usuarioActual) )
                 {
