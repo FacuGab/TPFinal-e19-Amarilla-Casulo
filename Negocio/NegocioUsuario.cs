@@ -45,6 +45,34 @@ namespace Negocio
                 Data.CerrarConexion();
             }
         }
+        //TODO: Editar Usuario
+        public void ActualizarUsuario(Usuario usuario)
+        {
+            Data = new DataAccess();
+            try
+            {
+                Data.AbrirConexion();
+                Data.SetQuery("UPDATE USUARIOS SET Nombre = @Nombre, Apellido = @Apellido, DNI = @DNI, Mail = @Mail, Clave = @Clave, Direccion = @Direccion, Nivel = @Nivel, UrlImagen = @UrlImagen WHERE ID=@Id" , "nonquery");
+                Data.SetParameters("@Id", usuario.Id);
+                Data.SetParameters("@Nombre", usuario.Nombre);
+                Data.SetParameters("@Apellido", usuario.Apellido);
+                Data.SetParameters("@DNI", usuario.Dni);
+                Data.SetParameters("@Mail", usuario.Mail);
+                Data.SetParameters("@Clave", usuario.Clave);
+                Data.SetParameters("@Direccion", usuario.Direccion);
+                Data.SetParameters("@Nivel", usuario.Nivel);
+                Data.SetParameters("@UrlImagen", usuario.UrlImgUsuario);
+                Data.ExecuteQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Data.CerrarConexion();
+            }
+        }
 
         //TODO: Listar Usuarios
         public List<Usuario> ListarUsuarios()
@@ -83,7 +111,42 @@ namespace Negocio
                 Data.CerrarConexion();
             }
         }
+        //TODO: Buscar usuario para editar datos
+        public Usuario BuscarUsuarioPorId(int id)
+        {
+            Data = new DataAccess();
+            try
+            {
+                Data.AbrirConexion();
+                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen FROM USUARIOS WHERE Id = @Id", "query");
+                Data.SetParameters("@Id", id);
+                Data.ReadQuery();
 
+                var aux = Data.Lector;
+                while (aux.Read())
+                {
+                    Usuario = new Usuario();
+                    Usuario.Id = (int)aux["Id"];
+                    Usuario.Nombre = aux["Nombre"].ToString();
+                    Usuario.Apellido = aux["Apellido"].ToString();
+                    Usuario.Dni = (int)aux["DNI"];
+                    Usuario.Mail = aux["Mail"].ToString();
+                    Usuario.Clave = aux["Clave"].ToString();
+                    Usuario.Direccion = aux["Direccion"].ToString();
+                    Usuario.Nivel = aux["Nivel"].ToString();
+                    Usuario.UrlImgUsuario = aux["UrlImagen"].ToString();
+                }
+                return Usuario;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Data.CerrarConexion();
+            }
+        }   
         //TODO: Buscar Usuario (busca por Id, usar para loggins existUser, este solo para buscar por Id)
         public Usuario BuscarUsuario(string mail, string clave)
         {
