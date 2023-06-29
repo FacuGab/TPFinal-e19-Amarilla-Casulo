@@ -2,10 +2,12 @@
 using Negocio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Catalogo
 {
@@ -29,29 +31,27 @@ namespace Catalogo
                 }
             }
         }
-        //crear usuario
-        //protected void btnRegistro_Click(object sender, EventArgs e)
-        //{
+        //TODO: Crear usuario
+        protected void btnRegistro_Click(object sender, EventArgs e)
+        {
+            NuevoUsuario = new NegocioUsuario();
+            if (txtNombre.Text != "" && txtApellido.Text != "" && txtDni.Text != "" && txtMail.Text != "" && txtPassword.Text != "" && txtDomicilio.Text != "")
+            {
+                Usuario usuario = new Usuario();
+                usuario.Nombre = txtNombre.Text;
+                usuario.Apellido = txtApellido.Text;
+                usuario.Dni = int.Parse(txtDni.Text);
+                usuario.Mail = txtMail.Text;
+                usuario.Clave = txtPassword.Text;
+                usuario.Direccion = txtDomicilio.Text;
+                usuario.Nivel = "C";
+                usuario.UrlImgUsuario = "img/usuarios/default.png";
+                NuevoUsuario.AgregarUsuario(usuario);
+            }
+            else
+            {
 
-        //    NuevoUsuario = new NegocioUsuario();
-        //    if (txtNombre.Text != "" && txtApellido.Text != "" && txtDni.Text != "" && txtMail.Text != "" && txtClave.Text != "" && txtDireccion.Text != "")
-        //    {
-        //        Usuario usuario = new Usuario();
-        //        usuario.Nombre = txtNombre.Text;
-        //        usuario.Apellido = txtApellido.Text;
-        //        usuario.Dni = int.Parse(txtDni.Text);
-        //        usuario.Mail = txtMail.Text;
-        //        usuario.Clave = txtClave.Text;
-        //        usuario.Direccion = txtDireccion.Text;
-        //        usuario.Nivel = 'C';
-        //        usuario.UrlImgUsuario = "img/usuarios/default.png";
-        //        NuevoUsuario.AgregarUsuario(usuario);
-        //        Response.Redirect("Login.aspx");
-        //    }
-        //    else
-        //    {
-                
-        //    }
-        //}
+            }
+        }
     }
 }

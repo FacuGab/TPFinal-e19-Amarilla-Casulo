@@ -11,6 +11,8 @@ namespace Catalogo
 {
     public partial class WebForm3 : System.Web.UI.Page
     {
+        List<Usuario> usuarioList;
+        NegocioUsuario NegocioUsuario;
         List<Articulo> articuloList;
         NegocioArticulo NegocioArticulo;
         List<Categoria> categoriaList;
@@ -47,7 +49,7 @@ namespace Catalogo
                             CargarArticulos();
                             break;
                         case 6:
-                            
+                            CargarUsuario();
                             break;
                         case 7:
 
@@ -62,8 +64,16 @@ namespace Catalogo
                 }
             }
         }
-        
+
         //METODOS
+        private void CargarUsuario()
+        {
+            usuarioList = new List<Usuario>();
+            NegocioUsuario = new NegocioUsuario();
+            usuarioList = NegocioUsuario.ListarUsuarios();
+            dgvAdminUsuario.DataSource = usuarioList;
+            dgvAdminUsuario.DataBind();
+        }
         private void CargarArticulos()
         {
             articuloList = new List<Articulo>();

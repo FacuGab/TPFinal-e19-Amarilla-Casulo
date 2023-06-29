@@ -12,6 +12,7 @@ INSERT INTO USUARIOS VALUES ('Lucho', 'apu', 56245658, 'email2@mail.com', '1', '
 
 --insert pedidos
 INSERT INTO PEDIDOS VALUES(2, 5,10, '2023-06-22', 'OK', 'luis 123', 0, 15000);
+INSERT INTO PEDIDOS VALUES(3, 15,10, '2023-06-02', 'OK', 'luis 123', 0, 30000);
 
 --insert categorias
 INSERT INTO CATEGORIAS (id, descripcion, urlImagen) VALUES ('1', 'Monitores', 'https://cdn-icons-png.flaticon.com/256/81/81793.png');
