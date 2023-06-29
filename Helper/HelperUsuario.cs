@@ -16,7 +16,7 @@ namespace Helper
         // Mensaje Pop Up
         static public void MensajePopUp(Page page, string mensaje)
         {
-            
+            ScriptManager.RegisterStartupScript(page, page.GetType(), "alertMenssage", $"alert('{mensaje}');", true);
         }
 
         // IsLogged(), si el usuario esta logeado (si este existe en session, y registrado)
