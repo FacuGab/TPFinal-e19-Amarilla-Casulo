@@ -19,7 +19,7 @@ namespace Negocio
         Usuario Usuario;
 
         //TODO: Agregar Usuario
-        public void AgregarUsuario(Usuario usuario)
+        public int AgregarUsuario(Usuario usuario)
         {
             Data = new DataAccess();
             try
@@ -34,7 +34,7 @@ namespace Negocio
                 Data.SetParameters("@Direccion", usuario.Direccion);
                 Data.SetParameters("@Nivel", usuario.Nivel);
                 Data.SetParameters("@UrlImagen", usuario.UrlImgUsuario);
-                Data.ExecuteQuery();
+                return Data.ExecuteQuery();
             }
             catch (Exception ex)
             {

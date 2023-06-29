@@ -412,6 +412,45 @@
                             </div>
                         </div>
                         <%--Fin Carga nuevo usuario--%>
+
+                        <%--Lista de usuarios--%>
+                        <asp:GridView ID="dgvAdminUsuario" runat="server" CssClass="table table-striped mt-5 " AutoGenerateColumns="False">
+                            <Columns>
+                                <asp:TemplateField HeaderText="ID">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Id") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Nombre">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Nombre") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Apellido">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Apellido") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="DNI">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("DNI") %>' CssClass="mt-3"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="E-Mail">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Mail") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Acción">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="ibtEliminar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEliminar_Click" Height="29px" ImageUrl="~/recursos/img/Eliminar.png" Width="29px" />
+                                        <asp:ImageButton ID="ibtEditar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEditar_Click" Height="29px" ImageUrl="~/recursos/img/editar.png" Width="29px" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                        <%--fin Lista de usuarios--%>
+
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
