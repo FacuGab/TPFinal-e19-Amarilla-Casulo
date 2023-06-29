@@ -78,7 +78,7 @@
                     <div class="modal-body">
                         <div class="col-12">
                             <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                            <asp:TextBox CssClass="form-control" ID="txtMailLogin" TextMode="Email" ToolTip="name@example.com" runat="server" />
+                            <asp:TextBox CssClass="form-control" ID="txtMailLogin" ToolTip="name@example.com" runat="server" />
                         </div>
                         <div class="col-12 mt-3">
                             <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>

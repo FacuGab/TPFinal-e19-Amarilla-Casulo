@@ -6,11 +6,19 @@ using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
 
 namespace Helper
 {
     static public class HelperUsuario
     {
+
+        // Mensaje Pop Up
+        static public void MensajePopUp(Page page, string mensaje)
+        {
+            
+        }
+
         // IsLogged(), si el usuario esta logeado (si este existe en session, y registrado)
         static public bool IsLogged(Usuario usuario)
         {

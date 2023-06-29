@@ -119,7 +119,7 @@ namespace Negocio
                 datos.SetParameters("@IdUsuario", pedidoNuevo.IdUsuario);
                 datos.SetParameters("@IdArticulo", pedidoNuevo.IdArticulo);
                 datos.SetParameters("@Cantidad", pedidoNuevo.totalItems.Count);
-                //datos.SetParameters("@Fecha", pedidoNuevo.fecha); //ver si la fecha la agarra bien SQL, x ahora quedo un getdate por parte de la bd
+                //datos.SetParameters("@Fecha", pedidoNuevo.fecha); //ver si la fecha la agarra bien SQL, x ahora quedo un getdate() por parte de la bd
                 datos.SetParameters("@Estado", pedidoNuevo.Estado);
                 datos.SetParameters("@DireccionEntrega", pedidoNuevo.DireccionEntrega);
                 datos.SetParameters("@Descuento", pedidoNuevo.Descuento);
