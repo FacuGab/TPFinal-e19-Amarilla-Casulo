@@ -138,6 +138,12 @@ namespace Negocio
             }
         }
 
+        //TODO: Agregar Pedido Stored Procedure
+        public int AgregarPedido()
+        {
+            return 0;
+        }
+
         //TODO: Editar Pedidos
         public int EditarPedido(Pedido pedido)
         {

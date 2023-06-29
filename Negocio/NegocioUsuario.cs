@@ -231,7 +231,6 @@ namespace Negocio
                 Data.CerrarConexion();
             }
         }
-
     }
 }
     
