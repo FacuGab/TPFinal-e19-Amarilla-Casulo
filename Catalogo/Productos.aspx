@@ -8,9 +8,8 @@
     <div class="container mt-5 pt-5 min-vh-100">
         <h4 class="mb-5 text-center fs-3">Filtro Seleccionado: <%:Filtro%></h4>
         <div class="row g-0">
+
             <div class="col-md-3 bg-light border mb-3 p-1">
-
-
                 <%--FILTROS AUTOMÁTICOS--%>
                 <div class="p-5">
                     <h5>Filtro automático</h5>
@@ -79,7 +78,6 @@
                 </div>
                 <%--fin filtro manual--%>
                 <img src="https://imagenes.compragamer.com/espacioWeb/DC_20230609164245_TKUu6ZRC.jpg" alt="Alternate Text" class="img-fluid" />
-
             </div>
             <div class="col-md-1"></div>
             <%--Lista de articulos--%>
@@ -110,7 +108,7 @@
                 </asp:UpdatePanel>
             </div>
             <%--fin lista articulos--%>
+
         </div>
-        
     </div>
 </asp:Content>

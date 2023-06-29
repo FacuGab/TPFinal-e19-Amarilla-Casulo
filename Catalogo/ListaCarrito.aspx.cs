@@ -173,7 +173,7 @@ namespace Catalogo
             Response.Redirect("ListaCarrito.aspx", false);
         }
 
-        // Boton Confirmar Pedido (en desarrollo....)
+        //TODO: Boton Confirmar Pedido (en desarrollo....)
         protected void btnConfirmarPedido_Click(object sender, EventArgs e)
         {
             try
@@ -183,9 +183,10 @@ namespace Catalogo
 
                 if ( HelperUsuario.IsLogged(usuarioActual) )
                 {
-                    //List<CarritoItem> lista = carrito?.Items;
-                    //Pedido pedido = pedidoNegocio.CargarPedido(lista, usuarioActual);
-                    //pedidoNegocio.AgregarPedido(pedido);
+                    carrito = Session["listaCarrito"] as NegocioCarrito;
+                    List<CarritoItem> lista = carrito?.Items;
+                    Pedido pedido = pedidoNegocio.CargarPedido(lista, usuarioActual, totalAcumulado);
+                    var res = pedidoNegocio.AgregarPedido(pedido);
                     datosDePago.Visible = true;
                 }
                 else
@@ -292,6 +293,7 @@ namespace Catalogo
             }
             else
             {
+                // Carrito Vacio
                 //Cambiamos visibilidad de los tags
                 divCarritoVacio.Visible = true;
                 divCarritoConItems.Visible = false;

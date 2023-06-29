@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Reflection.Emit;
 
 namespace Data
 {
@@ -12,6 +13,7 @@ namespace Data
         SqlDataReader reader = null;
         SqlCommand cmd = null;
         SqlConnection connection;
+        public object OutputParam { get; set; }
         public SqlDataReader Lector { get { return reader; } }
 
         //TODO: Abrir Conexion
@@ -117,6 +119,67 @@ namespace Data
             try
             {
                 cmd.Parameters.AddWithValue(name, value);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        //TODO: Setear Output Value
+        public void SetOutputValue(string nombre, object type)
+        {
+            try
+            {
+                SqlParameter param = new SqlParameter(nombre, type);
+                cmd.Parameters.Add(param).Direction = System.Data.ParameterDirection.Output;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        //TODO: Get valor de Output param
+        public object GetOutputParam(string name)
+        {
+            try
+            {
+                return cmd.Parameters[name].Value;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        //TODO: Ejecutar Scalar (test x ahora)
+        public object ExecuteScalar()
+        {
+            try
+            {
+                var res = cmd.ExecuteScalar();
+                return res;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        //TODO: Ejecutar Query sin return
+        public void ExecWhitOutParam(string name, object type)
+        {
+            try
+            {
+                SqlParameter param = new SqlParameter(name, type);
+                cmd.Parameters.Add(param).Direction = System.Data.ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                OutputParam = param.Value;
             }
             catch (Exception ex)
             {
