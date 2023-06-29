@@ -2,6 +2,7 @@
 using Dominio;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Negocio
 
         //TABLA #### PEDIDOS ####
         #region PEDIDOS
-        //TODO: Listar Pedidos
+        //TODO: Listar Pedidos (trae con mas data que solo la del pedido, es una query joineada)
         public List<Pedido> ListarPedidos()
         {
             datos = new DataAccess();
@@ -64,22 +65,67 @@ namespace Negocio
             }
         }
 
+        //TODO: Listar Pedodo por ID y modo (puede filtara por idPedido y por idUsuario)
+        public List<Pedido> ListarPedidos(int id, string modo)
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery($"SELECT IdPedido, IdUsuarios, IdArticulos, Cantidad, Fecha, Estado, DireccionEntrega, Descuento, PrecioTotal FROM PEDIDOS WHERE @modo = @id", "query");
+                datos.SetParameters("@modo", modo);
+                datos.SetParameters("@id", id);
+                datos.ReadQuery();
+
+                var aux = datos.Lector;
+                pedidos = new List<Pedido>();
+                while(aux.Read())
+                {
+                    pedido = new Pedido();
+                    pedido.IdPedido = (int)aux["ID_Pedido"];
+                    pedido.IdUsuario = (int)aux["ID_usuario"];
+                    pedido.IdArticulo = (int)aux["ID_Articulo"];
+                    pedido.NombreArt = aux["Nombre_Articulo"].ToString();
+                    pedido.Cantidad = (int)aux["Cantidad_Solicitada"];
+                    pedido.Usuario = aux["Usuario"].ToString();
+                    pedido.fecha = (DateTime)aux["Fecha"];
+                    pedido.Estado = aux["Estado"].ToString();
+                    pedido.DireccionEntrega = aux["Direccion"].ToString();
+                    pedido.Descuento = (decimal)aux["Descuento"];
+                    pedido.precioTotal = (decimal)aux["Precio_Total_Articulo"];
+                    pedidos.Add(pedido);
+                }
+                return pedidos;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
         //TODO: Agregar Pedido
         public int AgregarPedido(Pedido pedidoNuevo)
         {
             datos = new DataAccess();
             try
             {
+                //OUTPUT inserted.IdPedido
                 datos.AbrirConexion();
-                datos.SetQuery("INSERT INTO PEDIDOS VALUES(@IdUsuario, @IdArticulo, @Usuario, @Fecha, @Estado, @DireccionEntrega, @Descuento, @PrecioTotal)", "query");
+                datos.SetQuery("INSERT INTO PEDIDOS (IdUsuarios, IdArticulos, Cantidad, Fecha, Estado, DireccionEntrega, Descuento, PrecioTotal) VALUES (@IdUsuario, @IdArticulo, @Cantidad, GETDATE(), @Estado, @DireccionEntrega, @Descuento, @PrecioTotal)", "query");
                 datos.SetParameters("@IdUsuario", pedidoNuevo.IdUsuario);
                 datos.SetParameters("@IdArticulo", pedidoNuevo.IdArticulo);
-                datos.SetParameters("@Usuario", pedidoNuevo.Usuario);
-                datos.SetParameters("@Fecha", pedidoNuevo.fecha);
+                datos.SetParameters("@Cantidad", pedidoNuevo.totalItems.Count);
+                //datos.SetParameters("@Fecha", pedidoNuevo.fecha); //ver si la fecha la agarra bien SQL, x ahora quedo un getdate() por parte de la bd
                 datos.SetParameters("@Estado", pedidoNuevo.Estado);
                 datos.SetParameters("@DireccionEntrega", pedidoNuevo.DireccionEntrega);
                 datos.SetParameters("@Descuento", pedidoNuevo.Descuento);
                 datos.SetParameters("@PrecioTotal", pedidoNuevo.precioTotal);
+                //datos.SetOutputValue("@IdPedido", SqlDbType.Int);
+                //datos.ExecWhitOutParam("@IdPedido", SqlDbType.Int);
                 return datos.ExecuteQuery();
             }
             catch (Exception ex)
@@ -210,7 +256,7 @@ namespace Negocio
             }
         }
 
-        //TODOS: Agregar Pedido_articulo por Id
+        //TODOS: Listar Pedido_articulo por Id
         public List<CarritoItem> ListarPedido_articulo(int id)
         {
             datos = new DataAccess();
@@ -311,12 +357,33 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
-
         #endregion PEDIDO_ARTICULO
+
         //TODO: Cargar Pedido
-        public Pedido CargarPedido(List<CarritoItem> lista, Usuario usuarioActual)
+        public Pedido CargarPedido(List<CarritoItem> lista, Usuario usuarioActual, decimal total, string dirEntrega = null, decimal descuento = 0.00M)
         {
-            throw new NotImplementedException();
+            try
+            {
+                pedido = new Pedido();
+
+                pedido.IdUsuario = usuarioActual.Id;
+                pedido.Usuario = usuarioActual.Nombre + usuarioActual.Apellido;
+                pedido.Cantidad = lista.Count; // cantidad de articulos distintos, no de unidades totales
+                pedido.fecha = DateTime.Now;
+                pedido.Estado = "Iniciado";
+                pedido.DireccionEntrega = (dirEntrega == null) ? usuarioActual.Direccion : dirEntrega;
+                pedido.totalItems = new List<CarritoItem>(lista);
+
+                //Aca podriamos calcular nuevamente el total a partir de info en lista y llamar un metodo para calcular el total final si usamos descuento
+                pedido.Descuento = descuento > 0.00M? descuento : 0.00M;
+                pedido.precioTotal = total;
+
+                return pedido;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

@@ -8,9 +8,8 @@
     <div class="container mt-5 pt-5 min-vh-100">
         <h4 class="mb-5 text-center fs-3">Filtro Seleccionado: <%:Filtro%></h4>
         <div class="row g-0">
+
             <div class="col-md-3 bg-light border mb-3 p-1">
-
-
                 <%--FILTROS AUTOMÁTICOS--%>
                 <div class="p-5">
                     <h5>Filtro automático</h5>
@@ -76,11 +75,11 @@
                     <asp:DropDownList ID="ddlFiltroMarca" CssClass="form-select h-1 mb-4" runat="server" AutoPostBack="false"></asp:DropDownList>
                     <asp:Button CssClass="btn btn-primary btn-sm mb-5" Text="Aplicar" runat="server" ID="btnFiltro" OnClick="btnFiltro_Click" />
                     <asp:Button CssClass="btn btn-info btn-sm mb-5" Text="Eliminar Filtros" runat="server" ID="btnBorrarFilros" OnClick="btnBorrarFilros_Click" />
+                    <%--fin filtro manual--%>
                 </div>
-                <%--fin filtro manual--%>
                 <img src="https://imagenes.compragamer.com/espacioWeb/DC_20230609164245_TKUu6ZRC.jpg" alt="Alternate Text" class="img-fluid" />
-
             </div>
+
             <div class="col-md-1"></div>
             <%--Lista de articulos--%>
             <div class="col-md-8 ">
@@ -110,7 +109,7 @@
                 </asp:UpdatePanel>
             </div>
             <%--fin lista articulos--%>
+
         </div>
-        
     </div>
 </asp:Content>
