@@ -22,14 +22,16 @@ namespace Catalogo
         List<Pedido> PedidoList;
         NegocioPedido NegocioPedido;
         List<CarritoItem> Pedido_articulos;
+        Usuario usuario;
         
         //LOAD
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            sectionModificarUsuario.Visible = false;
             if (!IsPostBack)
             {
-                if(Request.QueryString["id"] != null)
+                if (Request.QueryString["id"] != null)
                 {
                     switch (int.Parse(Request.QueryString["id"]))
                     {
@@ -73,6 +75,22 @@ namespace Catalogo
             usuarioList = NegocioUsuario.ListarUsuarios();
             dgvAdminUsuario.DataSource = usuarioList;
             dgvAdminUsuario.DataBind();
+        }
+        private void CargarUsuarioParaEditar(int idMatch)
+        { 
+            usuario= new Usuario();
+            NegocioUsuario = new NegocioUsuario();
+            usuario = (Usuario)NegocioUsuario.BuscarUsuarioPorId(idMatch);
+            txtNombre.Text = usuario.Nombre;
+            txtApellido.Text = usuario.Apellido;
+            txtEmail.Text = usuario.Mail;
+            txtClave.Text = usuario.Clave;
+            txtDni.Text = usuario.Dni.ToString();
+            txtDomicilio.Text = usuario.Direccion;
+            txtUrl.Text = usuario.UrlImgUsuario;
+            txtTipoUsuario.Text = usuario.Nivel.ToString();
+            txtId.Text = usuario.Id.ToString();
+            
         }
         private void CargarArticulos()
         {
@@ -158,6 +176,36 @@ namespace Catalogo
 
         }
 
-        
+        protected void ibtEditarUsuario_Click(object sender, ImageClickEventArgs e)
+        {
+            sectionModificarUsuario.Visible = true;
+            dgvAdminUsuario.Visible = false;
+            CargarUsuarioParaEditar(int.Parse((sender as ImageButton).CommandArgument));
+        }
+
+        protected void txtUrl_TextChanged(object sender, EventArgs e)
+        {
+            userImg.ImageUrl = txtUrl.Text;
+        }
+
+        protected void btnGuardarUsuario_Click(object sender, EventArgs e)
+        {
+            //actualizar datos del usuario
+            usuario = new Usuario();
+            NegocioUsuario = new NegocioUsuario();
+            usuario.Id = int.Parse(txtId.Text);
+            usuario.Nombre = txtNombre.Text;
+            usuario.Apellido = txtApellido.Text;
+            usuario.Mail = txtEmail.Text;
+            usuario.Clave = txtClave.Text;
+            usuario.Dni = int.Parse(txtDni.Text);
+            usuario.Direccion = txtDomicilio.Text;
+            usuario.UrlImgUsuario = txtUrl.Text;
+            usuario.Nivel = txtTipoUsuario.Text;
+            NegocioUsuario.ActualizarUsuario(usuario);
+            CargarUsuario();
+            sectionModificarUsuario.Visible = false;
+            dgvAdminUsuario.Visible = true;
+        }
     }
 }

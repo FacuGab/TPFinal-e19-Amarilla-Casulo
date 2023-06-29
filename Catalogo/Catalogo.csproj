@@ -2050,6 +2050,7 @@
     <Content Include="recursos\img\agregar-img.png" />
     <Content Include="recursos\img\agregar-paquete.png" />
     <Content Include="recursos\img\agregar.png" />
+    <Content Include="recursos\img\avatar.png" />
     <Content Include="recursos\img\bart.jpg" />
     <Content Include="recursos\img\boton-eliminar.png" />
     <Content Include="recursos\img\Carrito.png" />
