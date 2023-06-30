@@ -81,13 +81,29 @@ CREATE TABLE USUARIOS(
 )
 
 GO
-
 CREATE TABLE PEDIDO_ARTICULO(
 	Id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	IdPedido INT NOT NULL FOREIGN KEY REFERENCES PEDIDOS (IdPedido),
 	IdArticulo INT NOT NULL FOREIGN KEY REFERENCES ARTICULOS (Id),
 	Cantidad INT NOT NULL
 )
+-- Stored Procedure
+GO
+CREATE PROCEDURE sp_CrearUsuario 
+@IdUsuario int,
+@IdArticulo int,
+@Cantidad int,
+@Fecha date,
+@Estado varchar(20),
+@DireccionEntrega varchar(20),
+@Descuento decimal,
+@PrecioTotal decimal
+AS
+BEGIN
+	INSERT INTO PEDIDOS (IdUsuarios, IdArticulos, Cantidad, Fecha, Estado, DireccionEntrega, Descuento, PrecioTotal)
+	OUTPUT inserted.IdPedido
+	VALUES (@IdUsuario, @IdArticulo, @Cantidad, @Fecha, @Estado, @DireccionEntrega, @Descuento, @PrecioTotal)
+END
 
 --POST IMPLEMENTACION
 SELECT Id,Descripcion, UrlImagen FROM Categorias

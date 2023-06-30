@@ -61,7 +61,7 @@ namespace Data
             }
         }
 
-        //TODO: Setear Query
+        //TODO: Setear Query (Importante)
         public void SetQuery(string query, string tipo)
         {
             // si tipo == 'query', es una consulta normal, si tipo == 'sp', es una consuilta mediante stored procedure
@@ -180,6 +180,19 @@ namespace Data
                 cmd.Parameters.Add(param).Direction = System.Data.ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
                 OutputParam = param.Value;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        //TODO: Quitar Parametros
+        public void DisposeParameters()
+        {
+            try
+            {
+                cmd?.Parameters.Clear();
             }
             catch (Exception ex)
             {

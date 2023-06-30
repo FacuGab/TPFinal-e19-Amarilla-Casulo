@@ -108,24 +108,29 @@ namespace Negocio
         }
 
         //TODO: Agregar Pedido
-        public int AgregarPedido(Pedido pedidoNuevo)
+        public int AgregarPedido(Pedido pedidoNuevo, string tipo)
         {
             datos = new DataAccess();
             try
             {
-                //OUTPUT inserted.IdPedido
                 datos.AbrirConexion();
-                datos.SetQuery("INSERT INTO PEDIDOS (IdUsuarios, IdArticulos, Cantidad, Fecha, Estado, DireccionEntrega, Descuento, PrecioTotal) VALUES (@IdUsuario, @IdArticulo, @Cantidad, GETDATE(), @Estado, @DireccionEntrega, @Descuento, @PrecioTotal)", "query");
+
+                if (tipo == "query")
+                    datos.SetQuery("INSERT INTO PEDIDOS (IdUsuarios, IdArticulos, Cantidad, Fecha, Estado, DireccionEntrega, Descuento, PrecioTotal) VALUES (@IdUsuario, @IdArticulo, @Cantidad, GETDATE(), @Estado, @DireccionEntrega, @Descuento, @PrecioTotal)", tipo);
+                else if (tipo == "sp")
+                    datos.SetQuery("sp_CrearUsuario", tipo);
+
                 datos.SetParameters("@IdUsuario", pedidoNuevo.IdUsuario);
                 datos.SetParameters("@IdArticulo", pedidoNuevo.IdArticulo);
                 datos.SetParameters("@Cantidad", pedidoNuevo.totalItems.Count);
-                //datos.SetParameters("@Fecha", pedidoNuevo.fecha); //ver si la fecha la agarra bien SQL, x ahora quedo un getdate() por parte de la bd
+                datos.SetParameters("@Fecha", pedidoNuevo.fecha); //ver si la fecha la agarra bien SQL, x ahora quedo un getdate() por parte de la bd
                 datos.SetParameters("@Estado", pedidoNuevo.Estado);
                 datos.SetParameters("@DireccionEntrega", pedidoNuevo.DireccionEntrega);
                 datos.SetParameters("@Descuento", pedidoNuevo.Descuento);
                 datos.SetParameters("@PrecioTotal", pedidoNuevo.precioTotal);
-                //datos.SetOutputValue("@IdPedido", SqlDbType.Int);
-                //datos.ExecWhitOutParam("@IdPedido", SqlDbType.Int);
+
+                if(tipo == "sp")
+                    return (int)datos.ExecuteScalar();
                 return datos.ExecuteQuery();
             }
             catch (Exception ex)
@@ -136,12 +141,6 @@ namespace Negocio
             {
                 datos.CerrarConexion();
             }
-        }
-
-        //TODO: Agregar Pedido Stored Procedure
-        public int AgregarPedido()
-        {
-            return 0;
         }
 
         //TODO: Editar Pedidos
@@ -320,6 +319,36 @@ namespace Negocio
             }
         }
 
+        //TODO: Agregar Pedido_articulo Lista
+        public int AgregarPedido_articulo(List<CarritoItem> pedido_articulo)
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("INSERT INTO PEDIDO_ARTICULO VALUES (@IdPedido, @IdArticulo, @Cantidad)", "query");
+                int contador = 0;
+
+                foreach (CarritoItem item in pedido_articulo)
+                {
+                    datos.SetParameters("@IdPedido", item.IdPedido);
+                    datos.SetParameters("@IdArticulo", item.Id);
+                    datos.SetParameters("@Cantidad", item.Cantidad);
+                    contador += datos.ExecuteQuery();
+                    datos.DisposeParameters();
+                }
+                return contador;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
         //TODO: Editar Pedido_articulo
         public int EditarPedido_articulo(CarritoItem pedido_articulo)
         {
@@ -377,7 +406,7 @@ namespace Negocio
                 pedido.Cantidad = lista.Count; // cantidad de articulos distintos, no de unidades totales
                 pedido.fecha = DateTime.Now;
                 pedido.Estado = "Iniciado";
-                pedido.DireccionEntrega = (dirEntrega == null) ? usuarioActual.Direccion : dirEntrega;
+                pedido.DireccionEntrega = dirEntrega ?? usuarioActual.Direccion;
                 pedido.totalItems = new List<CarritoItem>(lista);
 
                 //Aca podriamos calcular nuevamente el total a partir de info en lista y llamar un metodo para calcular el total final si usamos descuento

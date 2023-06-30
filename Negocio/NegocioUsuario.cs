@@ -45,14 +45,15 @@ namespace Negocio
                 Data.CerrarConexion();
             }
         }
-        //TODO: Editar Usuario
+
+        //TODO: Actualizar Usuario
         public void ActualizarUsuario(Usuario usuario)
         {
             Data = new DataAccess();
             try
             {
                 Data.AbrirConexion();
-                Data.SetQuery("UPDATE USUARIOS SET Nombre = @Nombre, Apellido = @Apellido, DNI = @DNI, Mail = @Mail, Clave = @Clave, Direccion = @Direccion, Nivel = @Nivel, UrlImagen = @UrlImagen WHERE ID=@Id" , "nonquery");
+                Data.SetQuery("UPDATE USUARIOS SET Nombre = @Nombre, Apellido = @Apellido, DNI = @DNI, Mail = @Mail, Clave = @Clave, Direccion = @Direccion, Nivel = @Nivel, UrlImagen = @UrlImagen WHERE ID=@Id" , "query");
                 Data.SetParameters("@Id", usuario.Id);
                 Data.SetParameters("@Nombre", usuario.Nombre);
                 Data.SetParameters("@Apellido", usuario.Apellido);
@@ -111,7 +112,8 @@ namespace Negocio
                 Data.CerrarConexion();
             }
         }
-        //TODO: Buscar usuario para editar datos
+
+        //TODO: Buscar Usuario (buscar por Id)
         public Usuario BuscarUsuarioPorId(int id)
         {
             Data = new DataAccess();
@@ -147,7 +149,8 @@ namespace Negocio
                 Data.CerrarConexion();
             }
         }   
-        //TODO: Buscar Usuario (busca por Id, usar para loggins existUser, este solo para buscar por Id)
+
+        //TODO: Buscar Usuario (busca por Clave y Mail)
         public Usuario BuscarUsuario(string mail, string clave)
         {
             Data = new DataAccess();
@@ -207,7 +210,7 @@ namespace Negocio
             }
         }
 
-        //TODO: Editar Usuario
+        //TODO PENDIENTE: Cambiar este metodo para poder buscar Usuarios por distintos campos (DNI, MAIL, CLAVE, NOMBRE .... etc... usar LIKE y otras formas de busqueda)
         public int editarUsuario(int match, Usuario user)
         {
             // se puede buscar por otros campos que tienen qeu ser unicos, DNI, MAIL tienen que ser campos unicos. Por ahora buscar por Id, cambiar despues a distintos metodos de busqueda

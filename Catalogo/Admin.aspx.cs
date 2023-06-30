@@ -128,7 +128,6 @@ namespace Catalogo
             dgvPedido_Articulos.DataSource = pedido_articulo;
             dgvPedido_Articulos.DataBind();
         }
-
         private void CargarPedido_Articulos() //ver si usar
         {
             try
@@ -183,11 +182,13 @@ namespace Catalogo
             CargarUsuarioParaEditar(int.Parse((sender as ImageButton).CommandArgument));
         }
 
+        //
         protected void txtUrl_TextChanged(object sender, EventArgs e)
         {
             userImg.ImageUrl = txtUrl.Text;
         }
 
+        // BOTON ACTUALIZAR USUARIO
         protected void btnGuardarUsuario_Click(object sender, EventArgs e)
         {
             //actualizar datos del usuario

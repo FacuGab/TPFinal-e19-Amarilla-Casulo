@@ -173,7 +173,7 @@ namespace Catalogo
             Response.Redirect("ListaCarrito.aspx", false);
         }
 
-        //TODO: Boton Confirmar Pedido (en desarrollo....)
+        //TODO: Boton Confirmar Pedido (Importante)
         protected void btnConfirmarPedido_Click(object sender, EventArgs e)
         {
             try
@@ -181,17 +181,31 @@ namespace Catalogo
                 NegocioPedido pedidoNegocio = new NegocioPedido();
                 Usuario usuarioActual = (Usuario)Session["usuarioActual"];
 
-                if ( HelperUsuario.IsLogged(usuarioActual) )
+                if (HelperUsuario.IsLogged(usuarioActual))
                 {
                     carrito = Session["listaCarrito"] as NegocioCarrito;
                     List<CarritoItem> lista = carrito?.Items;
                     Pedido pedido = pedidoNegocio.CargarPedido(lista, usuarioActual, totalAcumulado);
-                    var res = pedidoNegocio.AgregarPedido(pedido);
-                    datosDePago.Visible = true;
-                }
-                else
-                {
 
+                    int resPedido = 0;
+                    int resArticulos = 0;
+
+                    resPedido = pedidoNegocio.AgregarPedido(pedido, "sp");
+                    if (resPedido == 0)
+                    {
+                        HelperUsuario.MensajePopUp(this, "Ocurrio Un Error al Cargar el Pedido");
+                        return;
+                    }
+
+                    resArticulos = pedidoNegocio.AgregarPedido_articulo(pedido.totalItems);
+                    if (resArticulos == pedido.totalItems.Count)
+                    {
+                        HelperUsuario.MensajePopUp(this, "Pedido Cargado Correctamente");
+                        datosDePago.Visible = true;
+                    }
+                    else
+                        HelperUsuario.MensajePopUp(this, "Ocurrio Un Error al Cargar el Pedido");
+                    
                 }
             }
             catch (Exception ex)

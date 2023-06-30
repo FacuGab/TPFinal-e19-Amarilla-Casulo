@@ -91,6 +91,7 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+        
         //TODO: Listar Articulo por id
         public Articulo ListarArticulo(int idArticulo)
         {
