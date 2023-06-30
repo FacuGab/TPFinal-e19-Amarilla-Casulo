@@ -25,7 +25,7 @@ namespace Negocio
             try
             {
                 Data.AbrirConexion();
-                Data.SetQuery("INSERT INTO USUARIOS (Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen) VALUES (@Nombre, @Apellido, @DNI, @Mail, @Clave, @Direccion, @Nivel, @UrlImagen)", "nonquery");
+                Data.SetQuery("INSERT INTO USUARIOS (Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen, Activo) VALUES (@Nombre, @Apellido, @DNI, @Mail, @Clave, @Direccion, @Nivel, @UrlImagen, @Activo)", "query");
                 Data.SetParameters("@Nombre", usuario.Nombre);
                 Data.SetParameters("@Apellido", usuario.Apellido);
                 Data.SetParameters("@DNI", usuario.Dni);
@@ -34,6 +34,7 @@ namespace Negocio
                 Data.SetParameters("@Direccion", usuario.Direccion);
                 Data.SetParameters("@Nivel", usuario.Nivel);
                 Data.SetParameters("@UrlImagen", usuario.UrlImgUsuario);
+                Data.SetParameters("@Activo", usuario.Activo);
                 return Data.ExecuteQuery();
             }
             catch (Exception ex)
@@ -45,15 +46,14 @@ namespace Negocio
                 Data.CerrarConexion();
             }
         }
-
-        //TODO: Actualizar Usuario
-        public void ActualizarUsuario(Usuario usuario)
+        //TODO: Editar Usuario
+        public int EditarUsuario(Usuario usuario)
         {
             Data = new DataAccess();
             try
             {
                 Data.AbrirConexion();
-                Data.SetQuery("UPDATE USUARIOS SET Nombre = @Nombre, Apellido = @Apellido, DNI = @DNI, Mail = @Mail, Clave = @Clave, Direccion = @Direccion, Nivel = @Nivel, UrlImagen = @UrlImagen WHERE ID=@Id" , "query");
+                Data.SetQuery("UPDATE USUARIOS SET Nombre = @Nombre, Apellido = @Apellido, DNI = @DNI, Mail = @Mail, Clave = @Clave, Direccion = @Direccion, Nivel = @Nivel, UrlImagen = @UrlImagen, Activo = @Activo WHERE Id = @Id", "query");
                 Data.SetParameters("@Id", usuario.Id);
                 Data.SetParameters("@Nombre", usuario.Nombre);
                 Data.SetParameters("@Apellido", usuario.Apellido);
@@ -63,7 +63,8 @@ namespace Negocio
                 Data.SetParameters("@Direccion", usuario.Direccion);
                 Data.SetParameters("@Nivel", usuario.Nivel);
                 Data.SetParameters("@UrlImagen", usuario.UrlImgUsuario);
-                Data.ExecuteQuery();
+                Data.SetParameters("@Activo", usuario.Activo);
+                return Data.ExecuteQuery();
             }
             catch (Exception ex)
             {
@@ -157,7 +158,7 @@ namespace Negocio
             try
             {
                 Data.AbrirConexion();
-                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen FROM USUARIOS WHERE Mail = @Mail AND Clave = @Clave", "query");
+                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen, Activo FROM USUARIOS WHERE Mail = @Mail AND Clave = @Clave", "query");
                 Data.SetParameters("@Mail", mail);
                 Data.SetParameters("@Clave", clave);
                 Data.ReadQuery();
@@ -174,6 +175,7 @@ namespace Negocio
                     Usuario.Clave = aux["Clave"].ToString();
                     Usuario.Direccion = aux["Direccion"].ToString();
                     Usuario.Nivel = aux["Nivel"].ToString();
+                    Usuario.Activo = (bool)aux["Activo"];
                     Usuario.UrlImgUsuario = aux["UrlImagen"].ToString();
                 }
                 return Usuario;
@@ -209,8 +211,47 @@ namespace Negocio
                 Data.CerrarConexion();
             }
         }
-
-        //TODO PENDIENTE: Cambiar este metodo para poder buscar Usuarios por distintos campos (DNI, MAIL, CLAVE, NOMBRE .... etc... usar LIKE y otras formas de busqueda)
+        //TODO: Dar de alta usuario
+        public int DarAltaUsuario(int match)
+        {
+            Data = new DataAccess();
+            try
+            {
+                Data.AbrirConexion();
+                Data.SetQuery("UPDATE USUARIOS SET Activo = 1 WHERE Id = @id", "query");
+                Data.SetParameters("@id", match);
+                return Data.ExecuteQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Data.CerrarConexion();
+            }
+        }
+        //TODO:Dar de baja suario
+        public int DarBajaUsuario(int match)
+        {
+            Data = new DataAccess();
+            try
+            {
+                Data.AbrirConexion();
+                Data.SetQuery("UPDATE USUARIOS SET Activo = 0 WHERE Id = @id", "query");
+                Data.SetParameters("@id", match);
+                return Data.ExecuteQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Data.CerrarConexion();
+            }
+        }
+        //TODO: Editar Usuario
         public int editarUsuario(int match, Usuario user)
         {
             // se puede buscar por otros campos que tienen qeu ser unicos, DNI, MAIL tienen que ser campos unicos. Por ahora buscar por Id, cambiar despues a distintos metodos de busqueda

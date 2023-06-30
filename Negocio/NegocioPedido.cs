@@ -426,10 +426,7 @@ namespace Negocio
         {
             try
             {
-                foreach (CarritoItem item in items)
-                {
-                    item.IdPedido = idPedido;
-                }
+                items.ForEach(itm => itm.IdPedido = idPedido);
             }
             catch (Exception ex)
             {

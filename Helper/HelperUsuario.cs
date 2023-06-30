@@ -25,6 +25,20 @@ namespace Helper
             return usuario != null;
         }
 
+        // IsAdmin(), si el usurio esta logeado y es un admin, tiene que tener nivel 'A' de admin
+        static public bool IsAdmin(Usuario usuario)
+        {
+            if (usuario == null)
+                return false;
+            else
+            {
+                if (usuario.Nivel.ToUpperInvariant() == "A")
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         // ExistUser(), puede sobrecargarse con el puntero de NegocioUsuario o sin el.
         // devuelve true + un usuario cargado
         // ver cual util pueden ser estos metodos...

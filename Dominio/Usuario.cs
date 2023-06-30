@@ -17,10 +17,11 @@ namespace Dominio
         public string Direccion { get; set; }
         public string Nivel { get; set; }
         public string UrlImgUsuario { get; set; }
+        public bool Activo { get; set; }
 
         //CONSTRUCTORES
         public Usuario() { }
-        public Usuario(int id, string nombre, string apellido, int dni, string mail, string clave, string direccion, string nivel, string urlImgUsuario)
+        public Usuario(int id, string nombre, string apellido, int dni, string mail, string clave, string direccion, string nivel, string urlImgUsuario, bool activo)
         {
             Id = id;
             Nombre = nombre;
@@ -31,6 +32,7 @@ namespace Dominio
             Direccion = direccion;
             Nivel = nivel;
             UrlImgUsuario = urlImgUsuario;
+            Activo = activo;
         }
     }
 }

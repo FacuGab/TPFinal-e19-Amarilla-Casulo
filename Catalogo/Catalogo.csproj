@@ -2089,6 +2089,7 @@
     <Content Include="Registro.aspx" />
     <Content Include="ListaCarrito.aspx" />
     <Content Include="Admin.aspx" />
+    <Content Include="Agregar.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Control.aspx.cs">
@@ -2169,6 +2170,13 @@
     </Compile>
     <Compile Include="Admin.aspx.designer.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Agregar.aspx.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agregar.aspx.designer.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

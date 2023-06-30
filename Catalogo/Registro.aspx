@@ -25,7 +25,7 @@
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text mb-1"><i class="bi bi-person-fill"></i></span>
                                                             <div class="form-floating flex-fill mb-1">
-                                                                <asp:TextBox type="text" class="form-control" runat="server" ID="txtNombre" />
+                                                                <asp:TextBox type="text" class="form-control" runat="server" ID="txtNombre" required minlength="5" maxlength="30" pattern="[A-Za-z\s]+"/>
                                                                 <label type="text" for="txtNombre" class="text-dark">Nombre/s</label>
                                                             </div>
                                                         </div>
@@ -34,7 +34,7 @@
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text mb-1"><i class="bi bi-person-fill"></i></span>
                                                             <div class="form-floating flex-fill mb-1">
-                                                                <asp:TextBox type="text" class="form-control" runat="server" ID="txtApellido" />
+                                                                <asp:TextBox type="text" class="form-control" runat="server" ID="txtApellido" required minlength="5" maxlength="30" pattern="[A-Za-z\s]+"/>
                                                                 <label type="text" for="txtApellido" class="text-dark">Apellido/s</label>
                                                             </div>
                                                         </div>
@@ -44,7 +44,7 @@
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text mb-1"><i class="bi bi-123"></i></span>
                                                             <div class="form-floating flex-fill mb-1">
-                                                                <asp:TextBox type="text" class="form-control" runat="server" ID="txtDni"/>
+                                                                <asp:TextBox type="number" class="form-control" runat="server" ID="txtDni" required pattern="\d{8}"/>
                                                                 <label type="text" for="txtDni" class="text-dark">Documento Nacional de identidad</label>
                                                             </div>
                                                         </div>
@@ -53,7 +53,7 @@
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text mb-1"><i class="bi bi-envelope-at-fill"></i></span>
                                                             <div class="form-floating flex-fill mb-1">
-                                                                <asp:TextBox type="email" class="form-control" runat="server" ID="txtMail" />
+                                                                <asp:TextBox type="email" class="form-control" runat="server" ID="txtMail" required/>
                                                                 <label type="email" for="txtMail" class="text-dark">Correo electrónico</label>
                                                             </div>
                                                         </div>
@@ -63,7 +63,7 @@
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text mb-1"><i class="bi bi-house-door-fill"></i></span>
                                                             <div class="form-floating flex-fill mb-1">
-                                                                <asp:TextBox type="text" class="form-control" runat="server" ID="txtDomicilio" />
+                                                                <asp:TextBox type="text" class="form-control" runat="server" ID="txtDomicilio" required minlength="6" maxlength="100" pattern="[A-Za-z0-9\s.,-]+"/>
                                                                 <label type="text" for="txtDomicilio" class="text-dark">Domicilio</label>
                                                             </div>
                                                         </div>
@@ -72,7 +72,7 @@
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text mb-1"><i class="bi bi-person-fill "></i></span>
                                                             <div class="form-floating flex-fill mb-1" >
-                                                                <asp:TextBox type="text" class="form-control" runat="server" ID="txtTipoUsuario" Text="C"/>
+                                                                <asp:TextBox type="text" class="form-control" runat="server" ID="txtTipoUsuario" Text="C" required minlength="1" maxlength="1" pattern="[A-Za-z]+"/>
                                                                 <label type="text" for="txttipousuario" class="text-dark" >Tipo de usuario</label>
                                                             </div>
                                                         </div>
@@ -81,7 +81,8 @@
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text mb-1"><i class="bi bi-key-fill"></i></span>
                                                             <div class="form-floating flex-fill mb-1">
-                                                                <asp:TextBox type="password" class="form-control" runat="server" ID="txtPassword"/>
+                                                                <asp:TextBox type="password" class="form-control" runat="server" ID="txtPassword" required minlength="6" maxlength="20"/> 
+                                                                <%--patron para solo aceptar claves con un mayus, numeros y minusculas    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$"    --%>
                                                                 <label type="text" for="txtPassword" class="text-dark">Contraseña</label>
                                                             </div>
                                                         </div>

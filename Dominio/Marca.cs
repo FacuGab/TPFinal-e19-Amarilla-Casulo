@@ -23,5 +23,12 @@ namespace Dominio
         {
             return Descripcion;
         }
+        //obtener marca por id
+        public Marca ObtenerMarca(int id)
+        {
+            Marca marca = new Marca();
+            marca.Id = id;
+            return marca;
+        }
     }
 }

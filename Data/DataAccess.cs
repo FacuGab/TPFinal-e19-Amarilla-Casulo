@@ -88,9 +88,9 @@ namespace Data
         {
             try
             {
-               return cmd.ExecuteNonQuery();
+                return cmd.ExecuteNonQuery();
             }
-            catch (SqlException ex) 
+            catch (SqlException ex)
             {
                 throw ex;
             }
@@ -100,7 +100,7 @@ namespace Data
             }
         }
 
-        //TODO: Leer Datos
+        //TODO: Leer Datos  
         public void ReadQuery()
         {
             try

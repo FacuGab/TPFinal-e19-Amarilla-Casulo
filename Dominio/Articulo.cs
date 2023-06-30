@@ -9,7 +9,6 @@ namespace Dominio
     public class Articulo
     {
         public int Id { get; set; }
-        public string Cod { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public Marca Marca { get; set; }
@@ -18,7 +17,6 @@ namespace Dominio
         public string Precio { get { return string.Format("{0:C2}", precio); } }
         public bool Estado { get; set; } // si esta activo o no para mostrar, baja/alta logica
         public int Stock { get; set; }
-        public int Cantidad { get; set; }//Agrege esta propiedad para la cantidad de items iguales en el carrito
         public string ImagenUrl { get; set; }
 
         //CONSTRUCTORES:
@@ -27,10 +25,9 @@ namespace Dominio
             Marca = new Marca();
             Categoria = new Categoria();
         }
-        public Articulo(int id, string cod, string nombre, string descripcion, Marca marca, Categoria categoria, decimal precio, bool estado, int stock)
+        public Articulo(int id, string nombre, string descripcion, Marca marca, Categoria categoria, decimal precio, bool estado, int stock)
         {
             Id = id;
-            Cod = cod;
             Nombre = nombre;
             Descripcion = descripcion;
             //Ver si funciona asi, o simplificar el agregado de los obj marca y categoria instanciando

@@ -42,6 +42,9 @@
                                 <li>
                                     <a href="Admin.aspx?id=5" class="nav-link px-0"><span class="d-none d-sm-inline text-light ms-4">Todos los artículos</span></a>
                                 </li>
+                                <li>
+                                    <a href="Agregar.aspx" class="nav-link px-0"><span class="d-none d-sm-inline text-light ms-4">Nuevo artículo</span></a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -51,15 +54,11 @@
                                 <li class="w-100 ">
                                     <a href="Admin.aspx?id=6" class="nav-link px-0"><span class="d-none d-sm-inline text-light ms-4">Todos</span></a>
                                 </li>
-                                <li class="w-100">
-                                    <a href="Admin.aspx?id=7" class="nav-link px-0"><span class="d-none d-sm-inline text-light ms-4">Eliminar</span></a>
-                                </li>
-                                <li>
-                                    <a href="Admin.aspx?id=8" class="nav-link px-0"><span class="d-none d-sm-inline text-light ms-4">Modificar</span></a>
-                                </li>
                                 <li>
                                     <a href="Registro.aspx" class="nav-link px-0"><span class="d-none d-sm-inline text-light ms-4">Crear nuevo usuario</span></a>
-                                    <%--<a href="Admin.aspx?id=4" class="nav-link px-0" data-bs-toggle="modal" data-bs-target="#nuevoUsuario"> <span class="d-none d-sm-inline text-light ms-4"> Crear nuevo usuario</span></a>--%>
+                                </li>
+                                <li>
+                                    <%--<asp:Button Text="Crear Nuevo Usuario (sin ir a regsitro)" ID="btnAgregarNuevoUsuario" OnClick="btnAgregarNuevoUsuario_Click" runat="server" />--%>
                                 </li>
                             </ul>
                         </li>
@@ -216,68 +215,6 @@
                             </Columns>
                         </asp:GridView>
                         <%--Fin lista marcas--%>
-
-                        <%--Carga nuevo artículo--%>
-                        <div class="modal fade" id="nuevoArticulo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">🆕 Nuevo Artículo 🆕</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="col-12 mt-3">
-                                            <label for="IdArticulo" class="form-label">Número de ID <span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="tbIdArt" placeholder="ID Articulo" runat="server" />
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="Nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="tbNombreArt" runat="server" />
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="Descripcion" class="form-label">Descripcion <span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="tbDescripArt" runat="server" />
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="Marca" class="form-label">ID Marca <span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="TextBox1" runat="server" />
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="Categoria" class="form-label">ID Categoría <span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="TextBox2" runat="server" />
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="img" class="form-label">Imágen <span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="tbImgArt" runat="server" />
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="Precio" class="form-label">Precio <span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="tbPrecioArt" runat="server" />
-                                            <asp:Image ID="imgNuevoArt" runat="server" ImageUrl="#" Width="170px" Height="170px" CssClass="mt-3" />
-                                        </div>
-                                        <div class="col-12 mt-2">
-                                            <div class="form-check">
-                                                <label class="form-check-label text-secondary" for="remember_me">
-                                                    Artículo activo?
-                                                </label>
-                                                <input class="form-check-input" type="checkbox" value="" name="Artículo activo" id="Artículo activo">
-                                            </div>
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <%--SI EL ESTADO NO TIENE EL CHECK DEBERIA CARGAR 0 STOCK POR DEFECTO--%>
-                                            <label for="Stock" class="form-label">Stock <span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="tbStockArt" ToolTip="Ingrese contraseña" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="d-grid">
-                                            <button class="btn btn-primary " type="submit">Cargar nuevo artículo</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <%--Fin Carga nuevo artículo--%>
 
                         <%--Lista Pedidos--%>
                         <asp:GridView ID="dgvAdminPedidos" runat="server" CssClass="table table-striped mt-5" AutoGenerateColumns="False">
@@ -443,13 +380,13 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Acción">
                                     <ItemTemplate>
-                                        <asp:ImageButton ID="ibtEliminarUsuario" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEliminar_Click" Height="29px" ImageUrl="~/recursos/img/Eliminar.png" Width="29px" />
                                         <asp:ImageButton ID="ibtEditarUsuario" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="editar_btn" OnClick="ibtEditarUsuario_Click" Height="29px" ImageUrl="~/recursos/img/editar.png" Width="29px" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                         <%--fin Lista de usuarios--%>
+
                         <%--modificar usuario--%>
                         <asp:UpdatePanel ID="updatePanelModificarUsuario" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
@@ -461,10 +398,9 @@
                                                     <div class="row g-0">
                                                         <div class="col-md-4  text-center bg-warning text-white"
                                                             style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                                                            <asp:Image ID="userImg" runat="server" ImageUrl="~/recursos/img/avatar.png" Width="80px" CssClass="img-fluid my-5" />
-                                                            <asp:TextBox runat="server" ID="txtNombre" CssClass="fs-4 form-control text-center bg-warning border-0"/>
-                                                            <asp:TextBox runat="server" ID="txtApellido" CssClass="fs-5 form-control bg-warning border-0 text-center"/>
-                                                            <i class="far fa-edit mb-5"></i>
+                                                            <asp:Image ID="userImg" runat="server" ImageUrl="~/recursos/img/avatar.png" Width="120px" CssClass="img-fluid my-5" />
+                                                            <h6><strong class="fs-5 text-dark">ID Usuario <asp:Label runat="server" ID="txtId" /></strong> </h6>
+                                                            <i class="far fa-edit mb-5"></i>          
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="card-body p-4">
@@ -472,16 +408,20 @@
                                                                 <hr class="mt-0 mb-4">
                                                                 <div class="row pt-1">
                                                                     <div class="col-6 mb-3">
-                                                                        <h6>Email</h6>
-                                                                        <asp:TextBox runat="server" ID="txtEmail" cssClass="text-muted form-control"/>
+                                                                        <h6>Nombre/s</h6>
+                                                                        <asp:TextBox runat="server" ID="txtNombre" CssClass="text-muted form-control" required minlength="5" maxlength="30" pattern="[A-Za-z\s]+"/>
                                                                     </div>
                                                                     <div class="col-6 mb-3">
-                                                                        <h6>ID</h6>
-                                                                        <asp:TextBox runat="server" ID="txtId" cssClass="text-muted form-control" />
+                                                                        <h6>Apellido/s</h6>
+                                                                        <asp:TextBox runat="server" ID="txtApellido" CssClass="text-muted form-control" required minlength="5" maxlength="30" pattern="[A-Za-z\s]+"/>
+                                                                    </div>
+                                                                    <div class="col-6 mb-3">
+                                                                        <h6>Email</h6>
+                                                                        <asp:TextBox runat="server" ID="txtEmail" cssClass="text-muted form-control" required/>
                                                                     </div>
                                                                     <div class="col-6 mb-3">
                                                                         <h6>Nro. Documento</h6>
-                                                                        <asp:TextBox runat="server" ID="txtDni" cssClass="text-muted form-control"/>
+                                                                        <asp:TextBox type="number" runat="server" ID="txtDni" cssClass="text-muted form-control" required pattern="\d{8}"/>
                                                                     </div>
                                                                 </div>
                                                                 <h6>Contacto</h6>
@@ -489,11 +429,12 @@
                                                                 <div class="row pt-1">
                                                                     <div class="col-6 mb-3">
                                                                         <h6>Contraseña</h6>
-                                                                        <asp:TextBox runat="server" ID="txtClave" cssClass="text-muted form-control"/>
+                                                                        <asp:TextBox type="password" runat="server" ID="txtClave" cssClass="text-muted form-control" required  minlength="6" maxlength="20"/>
+                                                                        <%--patron para solo aceptar claves con un mayus, numeros y minusculas    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$"    --%>
                                                                     </div>
                                                                     <div class="col-6 mb-3">
                                                                         <h6>Dirección</h6>
-                                                                        <asp:TextBox runat="server" ID="txtDomicilio" cssClass="text-muted form-control"/>
+                                                                        <asp:TextBox runat="server" ID="txtDomicilio" cssClass="text-muted form-control" required minlength="6" maxlength="100" pattern="[A-Za-z0-9\s.,-]+"/>
                                                                     </div>
                                                                     <div class="col-6 mb-3">
                                                                         <h6>Imágen de perfil</h6>
@@ -501,10 +442,13 @@
                                                                     </div>
                                                                     <div class="col-6 mb-3">
                                                                         <h6>Nivel de usuario</h6>
-                                                                        <asp:TextBox runat="server"  ID="txtTipoUsuario" cssClass="text-muted form-control"/>
+                                                                        <asp:TextBox runat="server"  ID="txtTipoUsuario" cssClass="text-muted form-control" required minlength="1" maxlength="1" pattern="[A-Za-z]+"/>
                                                                     </div>
                                                                 </div>
                                                                 <div class="d-flex justify-content-end">
+                                                                    <asp:Button Text="Dar de alta" runat="server" ID="btnAltaUsuario" OnClick="btnAltaUsuario_Click" CssClass="btn btn-outline-success mt-3 me-3"/>
+                                                                    <asp:Button Text="Dar de baja" runat="server" ID="btnBajaUsuario" OnClick="btnBajaUsuario_Click" CssClass="btn btn-outline-danger mt-3 me-3"/>
+                                                                    <asp:Button Text="Eliminar" runat="server" ID="btnEliminarUsuario" OnClick="btnEliminarUsuario_Click" CssClass="btn btn-danger mt-3 me-3"/>
                                                                     <asp:Button Text="Guardar usuario" runat="server" ID="btnGuardarUsuario" OnClick="btnGuardarUsuario_Click" CssClass="btn btn-dark mt-3"/>
                                                                 </div>
                                                             </div>
