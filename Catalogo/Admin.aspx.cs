@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Helper;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 
 namespace Catalogo
 {
@@ -23,7 +25,7 @@ namespace Catalogo
         NegocioPedido NegocioPedido;
         List<CarritoItem> Pedido_articulos;
         Usuario usuario;
-        
+
         //LOAD
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -202,10 +204,40 @@ namespace Catalogo
             usuario.Direccion = txtDomicilio.Text;
             usuario.UrlImgUsuario = txtUrl.Text;
             usuario.Nivel = txtTipoUsuario.Text;
-            NegocioUsuario.ActualizarUsuario(usuario);
+            NegocioUsuario.EditarUsuario(usuario);
             CargarUsuario();
-            sectionModificarUsuario.Visible = false;
-            dgvAdminUsuario.Visible = true;
+            Response.Redirect("Admin.aspx?id=6");
+
+        }
+
+        protected void btnBajaUsuario_Click(object sender, EventArgs e)
+        {
+            usuario = new Usuario();
+            NegocioUsuario = new NegocioUsuario();
+            usuario.Id = int.Parse(txtId.Text);
+            NegocioUsuario.DarBajaUsuario(usuario.Id);
+            CargarUsuario();
+            Response.Redirect("Admin.aspx?id=6");
+        }
+
+        protected void btnEliminarUsuario_Click(object sender, EventArgs e)
+        {
+            usuario = new Usuario();
+            NegocioUsuario = new NegocioUsuario();
+            usuario.Id = int.Parse(txtId.Text);
+            NegocioUsuario.EliminarUsuario(usuario.Id);
+            CargarUsuario();
+            Response.Redirect("Admin.aspx?id=6");
+        }
+
+        protected void btnAltaUsuario_Click(object sender, EventArgs e)
+        {
+            usuario = new Usuario();
+            NegocioUsuario = new NegocioUsuario();
+            usuario.Id = int.Parse(txtId.Text);
+            NegocioUsuario.DarAltaUsuario(usuario.Id);
+            CargarUsuario();
+            Response.Redirect("Admin.aspx?id=6");
         }
     }
 }

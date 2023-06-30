@@ -24,5 +24,12 @@ namespace Dominio
         {
             return Descripcion;        
         }
+        //obtener categoria por id
+        public Categoria ObtenerCategoria(int id)
+        {
+            Categoria categoria = new Categoria();
+            categoria.Id = id;
+            return categoria;
+        }
     }
 }

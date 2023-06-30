@@ -15,9 +15,6 @@ namespace Negocio
     {
         DataAccess datos = null;
         List<Categoria> categorias = null;
-        SqlDataReader reader = null;
-        SqlCommand cmd = null;
-
 
         //TODO: Listar Categorias
         public List<Categoria> ListarCategorias() 

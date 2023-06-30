@@ -13,7 +13,6 @@ namespace Catalogo
 {
     public partial class SiteMaster : System.Web.UI.MasterPage
     {
-        private NegocioCarrito carrito;
         private Usuario userControl = null;
         public int itemsCarrito { get; set; }
         public bool Flag { get; set; }

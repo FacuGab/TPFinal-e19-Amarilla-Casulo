@@ -10,7 +10,6 @@ namespace Catalogo
     public partial class WebForm1 : System.Web.UI.Page
     {
         NegocioUsuario NuevoUsuario;
-        Usuario usuario;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)

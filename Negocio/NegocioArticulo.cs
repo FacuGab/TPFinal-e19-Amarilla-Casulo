@@ -15,6 +15,8 @@ namespace Negocio
         List<Articulo> Articulos = null;
         List<string> imagenes = null;
         Articulo articulo;
+        public List<Categoria> categorias;
+        public List<Marca> marcas;
 
         //TODO: Listar Articulos
         public List<Articulo> ListarArticulos()
@@ -125,6 +127,78 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
-
+        public int eliminarArticulo(int idArticulo)
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("DELETE FROM ARTICULOS WHERE Id = @id", "query");
+                datos.SetParameters("@id", idArticulo);
+                return datos.ExecuteQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public int crearArticulo(Articulo articulo)
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("INSERT INTO ARTICULOS (ID,Nombre,Descripcion,IdMarca,IdCategoria,Precio,Estado,Stock,ImagenUrl) VALUES (@Id,@nombre,@descripcion,@idMarca,@idCategoria,@precio,@estado,@stock,@imagenUrl)", "query");
+                datos.SetParameters("@Id", articulo.Id);
+                datos.SetParameters("@nombre", articulo.Nombre);
+                datos.SetParameters("@descripcion", articulo.Descripcion);
+                datos.SetParameters("@idMarca", articulo.Marca.Id);
+                datos.SetParameters("@idCategoria", articulo.Categoria.Id);
+                datos.SetParameters("@precio", articulo.precio);
+                datos.SetParameters("@estado", articulo.Estado);
+                datos.SetParameters("@stock", articulo.Stock);
+                datos.SetParameters("@imagenUrl", articulo.ImagenUrl);
+                return datos.ExecuteQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public int editarArticulo(Articulo articulo)
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("UPDATE ARTICULOS SET Nombre = @nombre, Descripcion = @descripcion, IdMarca = @idMarca, IdCategoria = @idCategoria, Precio = @precio, Estado = @estado, Stock = @stock, ImagenUrl = @imagenUrl WHERE Id = @id", "query");
+                datos.SetParameters("@nombre", articulo.Nombre);
+                datos.SetParameters("@descripcion", articulo.Descripcion);
+                datos.SetParameters("@idMarca", articulo.Marca.Id);
+                datos.SetParameters("@idCategoria", articulo.Categoria.Id);
+                datos.SetParameters("@precio", articulo.precio);
+                datos.SetParameters("@estado", articulo.Estado);
+                datos.SetParameters("@stock", articulo.Stock);
+                datos.SetParameters("@imagenUrl", articulo.ImagenUrl);
+                datos.SetParameters("@id", articulo.Id);
+                return datos.ExecuteQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }//Fin NegocioArticulo
 }

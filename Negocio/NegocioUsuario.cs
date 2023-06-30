@@ -25,7 +25,7 @@ namespace Negocio
             try
             {
                 Data.AbrirConexion();
-                Data.SetQuery("INSERT INTO USUARIOS (Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen) VALUES (@Nombre, @Apellido, @DNI, @Mail, @Clave, @Direccion, @Nivel, @UrlImagen)", "nonquery");
+                Data.SetQuery("INSERT INTO USUARIOS (Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen) VALUES (@Nombre, @Apellido, @DNI, @Mail, @Clave, @Direccion, @Nivel, @UrlImagen, @Activo)", "nonquery");
                 Data.SetParameters("@Nombre", usuario.Nombre);
                 Data.SetParameters("@Apellido", usuario.Apellido);
                 Data.SetParameters("@DNI", usuario.Dni);
@@ -34,6 +34,7 @@ namespace Negocio
                 Data.SetParameters("@Direccion", usuario.Direccion);
                 Data.SetParameters("@Nivel", usuario.Nivel);
                 Data.SetParameters("@UrlImagen", usuario.UrlImgUsuario);
+                Data.SetParameters("@Activo", usuario.Activo);
                 return Data.ExecuteQuery();
             }
             catch (Exception ex)
@@ -46,13 +47,13 @@ namespace Negocio
             }
         }
         //TODO: Editar Usuario
-        public void ActualizarUsuario(Usuario usuario)
+        public int EditarUsuario(Usuario usuario)
         {
             Data = new DataAccess();
             try
             {
                 Data.AbrirConexion();
-                Data.SetQuery("UPDATE USUARIOS SET Nombre = @Nombre, Apellido = @Apellido, DNI = @DNI, Mail = @Mail, Clave = @Clave, Direccion = @Direccion, Nivel = @Nivel, UrlImagen = @UrlImagen WHERE ID=@Id" , "nonquery");
+                Data.SetQuery("UPDATE USUARIOS SET Nombre = @Nombre, Apellido = @Apellido, DNI = @DNI, Mail = @Mail, Clave = @Clave, Direccion = @Direccion, Nivel = @Nivel, UrlImagen = @UrlImagen, Activo = @Activo WHERE Id = @Id", "nonquery");
                 Data.SetParameters("@Id", usuario.Id);
                 Data.SetParameters("@Nombre", usuario.Nombre);
                 Data.SetParameters("@Apellido", usuario.Apellido);
@@ -62,7 +63,8 @@ namespace Negocio
                 Data.SetParameters("@Direccion", usuario.Direccion);
                 Data.SetParameters("@Nivel", usuario.Nivel);
                 Data.SetParameters("@UrlImagen", usuario.UrlImgUsuario);
-                Data.ExecuteQuery();
+                Data.SetParameters("@Activo", usuario.Activo);
+                return Data.ExecuteQuery();
             }
             catch (Exception ex)
             {
@@ -154,7 +156,7 @@ namespace Negocio
             try
             {
                 Data.AbrirConexion();
-                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen FROM USUARIOS WHERE Mail = @Mail AND Clave = @Clave", "query");
+                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen, Activo FROM USUARIOS WHERE Mail = @Mail AND Clave = @Clave", "query");
                 Data.SetParameters("@Mail", mail);
                 Data.SetParameters("@Clave", clave);
                 Data.ReadQuery();
@@ -171,6 +173,7 @@ namespace Negocio
                     Usuario.Clave = aux["Clave"].ToString();
                     Usuario.Direccion = aux["Direccion"].ToString();
                     Usuario.Nivel = aux["Nivel"].ToString();
+                    Usuario.Activo = (bool)aux["Activo"];
                     Usuario.UrlImgUsuario = aux["UrlImagen"].ToString();
                 }
                 return Usuario;
@@ -206,7 +209,46 @@ namespace Negocio
                 Data.CerrarConexion();
             }
         }
-
+        //TODO: Dar de alta usuario
+        public int DarAltaUsuario(int match)
+        {
+            Data = new DataAccess();
+            try
+            {
+                Data.AbrirConexion();
+                Data.SetQuery("UPDATE USUARIOS SET Activo = 1 WHERE Id = @id", "query");
+                Data.SetParameters("@id", match);
+                return Data.ExecuteQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Data.CerrarConexion();
+            }
+        }
+        //TODO:Dar de baja suario
+        public int DarBajaUsuario(int match)
+        {
+            Data = new DataAccess();
+            try
+            {
+                Data.AbrirConexion();
+                Data.SetQuery("UPDATE USUARIOS SET Activo = 0 WHERE Id = @id", "query");
+                Data.SetParameters("@id", match);
+                return Data.ExecuteQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Data.CerrarConexion();
+            }
+        }
         //TODO: Editar Usuario
         public int editarUsuario(int match, Usuario user)
         {
