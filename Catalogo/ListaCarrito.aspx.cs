@@ -4,6 +4,7 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -183,6 +184,7 @@ namespace Catalogo
 
                 if (HelperUsuario.IsLogged(usuarioActual))
                 {
+                    // Cargamos los datos
                     carrito = Session["listaCarrito"] as NegocioCarrito;
                     List<CarritoItem> lista = carrito?.Items;
                     Pedido pedido = pedidoNegocio.CargarPedido(lista, usuarioActual, totalAcumulado);
@@ -190,22 +192,30 @@ namespace Catalogo
                     int resPedido = 0;
                     int resArticulos = 0;
 
+                    // Agregamos el Pedido
                     resPedido = pedidoNegocio.AgregarPedido(pedido, "sp");
                     if (resPedido == 0)
                     {
                         HelperUsuario.MensajePopUp(this, "Ocurrio Un Error al Cargar el Pedido");
                         return;
                     }
+                    else
+                    {
+                        // Agregamos el id del Pedido y cargamos los articulos al Pedido en tabla Pedido_Articulo
+                        pedidoNegocio.CargarIdPedido(pedido.totalItems, resPedido);
+                        resArticulos = pedidoNegocio.AgregarPedido_articulo(pedido.totalItems);
+                    }
 
-                    resArticulos = pedidoNegocio.AgregarPedido_articulo(pedido.totalItems);
+                    // Si dan los numeros:
                     if (resArticulos == pedido.totalItems.Count)
                     {
                         HelperUsuario.MensajePopUp(this, "Pedido Cargado Correctamente");
                         datosDePago.Visible = true;
                     }
                     else
+                    {
                         HelperUsuario.MensajePopUp(this, "Ocurrio Un Error al Cargar el Pedido");
-                    
+                    }   
                 }
             }
             catch (Exception ex)

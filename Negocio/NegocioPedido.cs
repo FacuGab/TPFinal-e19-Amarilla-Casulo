@@ -420,5 +420,21 @@ namespace Negocio
                 throw ex;
             }
         }
+
+        //TODO: Caragar Id Pedido
+        public void CargarIdPedido(List<CarritoItem> items, int idPedido)
+        {
+            try
+            {
+                foreach (CarritoItem item in items)
+                {
+                    item.IdPedido = idPedido;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
