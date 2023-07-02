@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace Negocio
                 datos.AbrirConexion();
                 //Cambiar por un sp
                 //Sacar el nombre de articulo, y agregar en la parte que liste los articulos y sus cantidades asociadas en el pedido
-                datos.SetQuery("SELECT P.IdPedido as 'ID_Pedido',U.Id as 'ID_usuario',A.Id as 'ID_Articulo', U.Nombre + ' '+ U.Apellido as 'Usuario', A.Nombre as 'Nombre_Articulo', P.Cantidad as 'Cantidad_Solicitada', P.Fecha as 'Fecha', P.Estado as 'Estado', P.DireccionEntrega as 'Direccion', P.Descuento as 'Descuento', P.PrecioTotal as 'Precio_Total_Articulo' FROM PEDIDOS P JOIN USUARIOS U ON P.IdUsuarios = U.Id JOIN ARTICULOS A ON P.IdArticulos = A.Id", "query");
+                datos.SetQuery("sp_ListarPedidos","sp");
                 datos.ReadQuery();
 
                 var aux = datos.Lector;
@@ -42,8 +43,7 @@ namespace Negocio
                     pedido.IdPedido = (int)aux["ID_Pedido"];
                     pedido.IdUsuario = (int)aux["ID_usuario"];
                     pedido.IdArticulo = (int)aux["ID_Articulo"];
-                    pedido.NombreArt = aux["Nombre_Articulo"].ToString();
-                    pedido.Cantidad = (int)aux["Cantidad_Solicitada"];
+                    pedido.Cantidad = (int)aux["Cantidad_Articulos"];
                     pedido.Usuario = aux["Usuario"].ToString();
                     pedido.fecha = (DateTime)aux["Fecha"];
                     pedido.Estado = aux["Estado"].ToString();
@@ -66,13 +66,13 @@ namespace Negocio
         }
 
         //TODO: Listar Pedodo por ID y modo (puede filtara por idPedido y por idUsuario)
-        public List<Pedido> ListarPedidos(int id, string modo)
+        public List<Pedido> ListarPedidos(int id, string modo = null)
         {
             datos = new DataAccess();
             try
             {
                 datos.AbrirConexion();
-                datos.SetQuery($"SELECT IdPedido, IdUsuarios, IdArticulos, Cantidad, Fecha, Estado, DireccionEntrega, Descuento, PrecioTotal FROM PEDIDOS WHERE @modo = @id", "query");
+                datos.SetQuery($"SELECT IdPedido, IdUsuarios, IdArticulos, U.Nombre+' '+U.Apellido as 'Usuario', Cantidad, Fecha, Estado, DireccionEntrega, Descuento, PrecioTotal FROM PEDIDOS INNER JOIN USUARIOS U ON IdUsuarios = U.Id WHERE IdPedido = @id", "query");
                 datos.SetParameters("@modo", modo);
                 datos.SetParameters("@id", id);
                 datos.ReadQuery();
@@ -82,17 +82,16 @@ namespace Negocio
                 while(aux.Read())
                 {
                     pedido = new Pedido();
-                    pedido.IdPedido = (int)aux["ID_Pedido"];
-                    pedido.IdUsuario = (int)aux["ID_usuario"];
-                    pedido.IdArticulo = (int)aux["ID_Articulo"];
-                    pedido.NombreArt = aux["Nombre_Articulo"].ToString();
-                    pedido.Cantidad = (int)aux["Cantidad_Solicitada"];
+                    pedido.IdPedido = (int)aux["IdPedido"];
+                    pedido.IdUsuario = (int)aux["IdUsuarios"];
+                    pedido.IdArticulo = (int)aux["IdArticulos"];
                     pedido.Usuario = aux["Usuario"].ToString();
+                    pedido.Cantidad = (int)aux["Cantidad"];
                     pedido.fecha = (DateTime)aux["Fecha"];
                     pedido.Estado = aux["Estado"].ToString();
-                    pedido.DireccionEntrega = aux["Direccion"].ToString();
+                    pedido.DireccionEntrega = aux["DireccionEntrega"].ToString();
                     pedido.Descuento = (decimal)aux["Descuento"];
-                    pedido.precioTotal = (decimal)aux["Precio_Total_Articulo"];
+                    pedido.precioTotal = (decimal)aux["PrecioTotal"];
                     pedidos.Add(pedido);
                 }
                 return pedidos;
@@ -118,7 +117,7 @@ namespace Negocio
                 if (tipo == "query")
                     datos.SetQuery("INSERT INTO PEDIDOS (IdUsuarios, IdArticulos, Cantidad, Fecha, Estado, DireccionEntrega, Descuento, PrecioTotal) VALUES (@IdUsuario, @IdArticulo, @Cantidad, GETDATE(), @Estado, @DireccionEntrega, @Descuento, @PrecioTotal)", tipo);
                 else if (tipo == "sp")
-                    datos.SetQuery("sp_CrearUsuario", tipo);
+                    datos.SetQuery("sp_CrearPedido", tipo);
 
                 datos.SetParameters("@IdUsuario", pedidoNuevo.IdUsuario);
                 datos.SetParameters("@IdArticulo", pedidoNuevo.IdArticulo);
@@ -269,8 +268,8 @@ namespace Negocio
             try
             {
                 datos.AbrirConexion();
-                datos.SetQuery("SELECT IdPedido, IdArticulo, Cantidad FROM PEDIDO_ARTICULO WHERE IdPedido = @Id", "query");
-                datos.SetParameters("@Id", id);
+                datos.SetQuery("sp_ListarPedido_Articulos", "sp");
+                datos.SetParameters("@id", id);
                 datos.ReadQuery();
                 var aux = datos.Lector;
                 Pedido_Articulos = new List<CarritoItem>();
@@ -279,8 +278,16 @@ namespace Negocio
                 {
                     item = new CarritoItem();
                     item.Id = (int)aux["IdArticulo"];
-                    item.IdPedido = (int)aux["IdPedido"];
+                    item.IdPedido = id;
                     item.Cantidad = (int)aux["Cantidad"];
+                    item.Nombre = aux["Nombre"].ToString();
+                    item.Descripcion = aux["Descripcion"].ToString();
+                    item.Marca = aux["Marca"].ToString();
+                    item.Categoria = aux["Categoria"].ToString();
+                    item.ImagenUrl = aux["ImagenUrl"].ToString();
+                    item.Estado = aux["Estado"].ToString();
+                    item.Stock =  (int)aux["Stock"];
+                    item.precio = (decimal)aux["Precio"];
                     Pedido_Articulos.Add(item);
                 }
                 return Pedido_Articulos;

@@ -4,6 +4,7 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -26,20 +27,23 @@ namespace Catalogo
         List<CarritoItem> Pedido_articulos;
         Usuario usuario;
 
-        //LOAD
+        // LOAD
         protected void Page_Load(object sender, EventArgs e)
         {
             sectionModificarUsuario.Visible = false;
             try
             {
-                // Validamos que el user este Logeado y ademas Sea Admin, osea su nivel tiene que ser 'A'. Ver el tema de usar los Redirect constantes para usar por url, es recargar constantemente todo una y otra vez por cada vuelta
-                //Usuario admin = Session["usuarioActual"] as Usuario;
-                //if(!HelperUsuario.IsAdmin(admin))
-                //{
-                //    HelperUsuario.MensajePopUp(this, "No tiene las credenciales para entrar o No te encuentras logeado");
-                //    return;
-                //    //Response.Redirect("Default.aspx", false);
-                //}
+                // Ver el tema de usar los Redirect constantes para usar los param de url, es recargar constantemente todo una y otra vez por cada vuelta.
+
+                // Validamos que el user este Logeado y ademas sea Admin, nivel de usuario = 'A'.
+                // Funciona, pero no se si tenes un user con nivel A creado y aparte redirecciona muy rapido. Ver si crear una pagina de loggin de vista simple para el "uso de empleados" para redireccionar.
+                // Usuario admin = Session["usuarioActual"] as Usuario;
+                // if(!HelperUsuario.IsAdmin(admin))
+                // {
+                //     HelperUsuario.MensajePopUp(this, "No tiene las credenciales para entrar o No te encuentras logeado");
+                //     return;
+                //     //Response.Redirect("Default.aspx", false);
+                // }
 
                 if (!IsPostBack)
                 {
@@ -82,11 +86,11 @@ namespace Catalogo
             }
         }
 
-        //METODOS
+        // ############### METODOS ###############
+        // METODOS USUARIO
         // TODO: Cargar Usuario en Admin
         private void CargarUsuario()
         {
-            usuarioList = new List<Usuario>();
             NegocioUsuario = new NegocioUsuario();
             usuarioList = NegocioUsuario.ListarUsuarios();
             dgvAdminUsuario.DataSource = usuarioList;
@@ -96,9 +100,8 @@ namespace Catalogo
         // TODO: Cargar Usuario para Editar en Admin
         private void CargarUsuarioParaEditar(int idMatch)
         {
-            // Manu, ojo con los new a obj que nunca se van a usar, instancias objetos que ya son traidos por el metodo de Negocio en este caso, se puede perder o pisar data.
-            // En este caso particular solo asigna memoria a un obj que nunca va a usar al cambiar el puntero si hacemos new Usuario() y despues asignamos a otro obj Usuario,
-            // el primer obj en teoria sigue con memoria asignada que nunca se va usar.
+            // Manu, ojo con los new a obj que nunca se van a usar, instancias objetos que ya son traidos por el metodo de Negocio en este caso; se puede perder o pisar data.
+            // Aca particularmente solo asigna memoria a un obj, que nunca va a usar al cambiar el puntero, si hacemos new Usuario() y despues asignamos a otro obj Usuario con el metodo de negocio.
             //usuario = new Usuario();
             NegocioUsuario = new NegocioUsuario();
             usuario = NegocioUsuario.BuscarUsuarioPorId(idMatch);
@@ -114,48 +117,43 @@ namespace Catalogo
             
         }
 
+        // METDOS ARTICULOS
         // TODO: Cargar Articulos en Admin
         private void CargarArticulos()
         {
-            articuloList = new List<Articulo>();
             NegocioArticulo = new NegocioArticulo();
             articuloList = NegocioArticulo.ListarArticulos();
             dgvAdmin.DataSource = articuloList;
             dgvAdmin.DataBind();
         }
 
+        // METDOS CATEGORIA Y MARCAS
         // TODO: Cargar Categorias en Admin
         private void CargarCategorias()
         {
-            categoriaList = new List<Categoria>();
             NegocioCategoria = new NegocioCategoria();
             categoriaList = NegocioCategoria.ListarCategorias();
             dgvAdminCate.DataSource = categoriaList;
             dgvAdminCate.DataBind();
         }
-
         // TODO: Cargar Marcas en Admin
         private void CargarMarcas()
         {
-            MarcaList = new List<Marca>();
             NegocioMarca = new NegocioMarca();
             MarcaList = NegocioMarca.ListarMarcas();
             dgvAdminMarca.DataSource = MarcaList;
             dgvAdminMarca.DataBind();
         }
 
+        // METDOS PEDIDOS
         // TODO: Cargar Pedidos en Admin
         private void CargarPedidos()
         {
-            PedidoList = new List<Pedido>();
+
             NegocioPedido = new NegocioPedido();
             PedidoList = NegocioPedido.ListarPedidos();
             dgvAdminPedidos.DataSource = PedidoList;
             dgvAdminPedidos.DataBind();
-
-            var pedido_articulo = NegocioPedido.ListarPerdido_articulos(); //se puede buscar por ID de Pedido pasando por parametro
-            dgvPedido_Articulos.DataSource = pedido_articulo;
-            dgvPedido_Articulos.DataBind();
         }
 
         // TODO: Cargar Pedido_Articulos en Admin
@@ -163,10 +161,9 @@ namespace Catalogo
         {
             try
             {
-                Pedido_articulos = new List<CarritoItem>();
                 NegocioPedido = new NegocioPedido();
-                var pedido_articulo = NegocioPedido.ListarPerdido_articulos();
-                dgvPedido_Articulos.DataSource = pedido_articulo;
+                Pedido_articulos = NegocioPedido.ListarPerdido_articulos();
+                dgvPedido_Articulos.DataSource = Pedido_articulos;
                 dgvPedido_Articulos.DataBind();
             }
             catch (Exception ex)
@@ -175,40 +172,74 @@ namespace Catalogo
             }
         }
 
-        // EVENTOS (obs: mejor agregar los eventos cuando se estan por ingresar su logica, sino despues se puede complicar buscar en front)
+        // ############### EVENTOS ###############
         protected void ibtEliminar_Click(object sender, ImageClickEventArgs e)
         {
 
-        }
+        } //sin hacer todavia
 
         protected void ibtEditar_Click(object sender, ImageClickEventArgs e)
         {
 
-        }
+        } //sin hacer todavia
 
         protected void ibtBaja_Click(object sender, ImageClickEventArgs e)
         {
 
+        } //sin hacer todavia
+        
+        // TODO: Boton Sing Out en MENU no ABM  (TEST Para cerrar la sesion)
+        protected void btnSingOutMenuAdmin_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Session.Remove("usuarioActual");
+                Response.Redirect("Default.aspx", false);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+        // TODO: ??
+        protected void txtUrl_TextChanged(object sender, EventArgs e)
+        {
+            userImg.ImageUrl = txtUrl.Text;
         }
 
+        // BOTONES LOGICA PEDIDOS
+        // TODO: BOTON Elimnar Pedido en Grid
         protected void ibtEliminarPedido_Click(object sender, ImageClickEventArgs e)
         {
 
-        }
+        } //sin hacer todavia
 
+        // TODO: BOTON Editar/Detalle Pedido en Grid
         protected void ibtEditarPedido_Click(object sender, ImageClickEventArgs e)
         {
+            int idMatch = Convert.ToInt32(((ImageButton)sender).CommandArgument);
+            NegocioPedido = new NegocioPedido();
+            PedidoList = NegocioPedido.ListarPedidos(idMatch, "IdPedido");
+            dgvAdminPedidos.DataSource = PedidoList;
+            dgvAdminPedidos.DataBind();
 
+            Pedido_articulos = NegocioPedido.ListarPedido_articulo(idMatch);
+            dgvPedido_Articulos.DataSource = Pedido_articulos;
+            dgvPedido_Articulos.DataBind();
+            dgvPedido_Articulos.Visible = true;
         }
 
+        // TODO: BOTON Dar Baja Pedido en Grid
         protected void ibtBajaPedido_Click(object sender, ImageClickEventArgs e)
         {
 
-        }
+        } //sin hacer todavia
+        //FIN BOTONES LOGICA PEDIDOS
 
 
-        // #### BOTONES LOGICA USUARIO ####
-        // TODO: BOTON EDITAR USUARIO
+        // BOTONES LOGICA USUARIO
+        // TODO: BOTON EDITAR USUARIO EN GRID
         protected void ibtEditarUsuario_Click(object sender, ImageClickEventArgs e)
         {
             sectionModificarUsuario.Visible = true;
@@ -216,13 +247,7 @@ namespace Catalogo
             CargarUsuarioParaEditar(int.Parse((sender as ImageButton).CommandArgument));
         }
 
-        // TODO: ??
-        protected void txtUrl_TextChanged(object sender, EventArgs e)
-        {
-            userImg.ImageUrl = txtUrl.Text;
-        }
-
-        // TODO: BOTON ACTUALIZAR USUARIO
+        // TODO: BOTON ACTUALIZAR/CREAR USUARIO
         protected void btnGuardarUsuario_Click(object sender, EventArgs e)
         {
             //actualizar datos del usuario
@@ -239,7 +264,8 @@ namespace Catalogo
             usuario.Nivel = txtTipoUsuario.Text;
             NegocioUsuario.EditarUsuario(usuario);
             CargarUsuario();
-            //Response.Redirect("Admin.aspx?id=6");
+            dgvAdminUsuario.Visible = true;
+            //Response.Redirect("Admin.aspx?id=6"); //obs: no hace falta renderiar todo y pasar por el load, solo tenemos que hacer visible y que funcione ajax en los uptadte panel
         }
 
         // TODO: BOTON DAR DE BAJA USUARIO (Logica)
@@ -275,10 +301,18 @@ namespace Catalogo
             Response.Redirect("Admin.aspx?id=6");
         }
 
-        // TODO: AGREGAR NUEVO USUARIO (Sin usar vista registro)
+        // TODO: AGREGAR NUEVO USUARIO (TEST Sin usar vista registro)
         protected void btnAgregarNuevoUsuario_Click(object sender, EventArgs e)
         {
-
+            btnGuardarUsuario.Text = "Agregar Usuario";
+            sectionModificarUsuario.Visible = true;
         }
+
+        // TODO: Link Volver a Lista Usuario (TEST para volver a ver la lista cuando querramos)
+        protected void lnkVolverListaUsuarios_Click(object sender, EventArgs e)
+        {
+            dgvAdminUsuario.Visible = true;
+        }
+        // FIN BOTONES LOGICA USUARIO
     }
 }

@@ -15,6 +15,24 @@ namespace Catalogo
     {
 
         /// <summary>
+        /// btnAgregarNuevoUsuario control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregarNuevoUsuario;
+
+        /// <summary>
+        /// btnSingOutMenuAdmin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSingOutMenuAdmin;
+
+        /// <summary>
         /// dgvAdmin control.
         /// </summary>
         /// <remarks>
@@ -58,6 +76,15 @@ namespace Catalogo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView dgvPedido_Articulos;
+
+        /// <summary>
+        /// dgvPedidosEditar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvPedidosEditar;
 
         /// <summary>
         /// IdUsuario control.
@@ -112,15 +139,6 @@ namespace Catalogo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox direccion;
-
-        /// <summary>
-        /// precioArt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox precioArt;
 
         /// <summary>
         /// dgvAdminUsuario control.
@@ -274,5 +292,14 @@ namespace Catalogo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGuardarUsuario;
+
+        /// <summary>
+        /// lnkVolverListaUsuarios control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkVolverListaUsuarios;
     }
 }
