@@ -65,7 +65,7 @@ namespace Helper
                 return false;
 
             NegocioUsuario negocio = new NegocioUsuario();
-            return negocio.existUser(usuario.Mail, usuario.Clave);
+            return negocio.existUser(usuario.Mail, usuario.Clave, usuario.Dni);
         }
     }
 }

@@ -3,6 +3,7 @@ using Helper;
 using Negocio;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
@@ -86,7 +87,9 @@ namespace Catalogo
             }
         }
 
+
         // ############### METODOS ###############
+
         // METODOS USUARIO
         // TODO: Cargar Usuario en Admin
         private void CargarUsuario()
@@ -117,6 +120,7 @@ namespace Catalogo
             
         }
 
+
         // METDOS ARTICULOS
         // TODO: Cargar Articulos en Admin
         private void CargarArticulos()
@@ -126,6 +130,7 @@ namespace Catalogo
             dgvAdmin.DataSource = articuloList;
             dgvAdmin.DataBind();
         }
+
 
         // METDOS CATEGORIA Y MARCAS
         // TODO: Cargar Categorias en Admin
@@ -144,6 +149,7 @@ namespace Catalogo
             dgvAdminMarca.DataSource = MarcaList;
             dgvAdminMarca.DataBind();
         }
+
 
         // METDOS PEDIDOS
         // TODO: Cargar Pedidos en Admin
@@ -171,6 +177,7 @@ namespace Catalogo
                 throw ex;
             }
         }
+
 
         // ############### EVENTOS ###############
         protected void ibtEliminar_Click(object sender, ImageClickEventArgs e)
@@ -208,6 +215,7 @@ namespace Catalogo
             userImg.ImageUrl = txtUrl.Text;
         }
 
+
         // BOTONES LOGICA PEDIDOS
         // TODO: BOTON Elimnar Pedido en Grid
         protected void ibtEliminarPedido_Click(object sender, ImageClickEventArgs e)
@@ -228,6 +236,7 @@ namespace Catalogo
             dgvPedido_Articulos.DataSource = Pedido_articulos;
             dgvPedido_Articulos.DataBind();
             dgvPedido_Articulos.Visible = true;
+            sectionEditarPedidos.Visible = true;
         }
 
         // TODO: BOTON Dar Baja Pedido en Grid
@@ -250,9 +259,10 @@ namespace Catalogo
         // TODO: BOTON ACTUALIZAR/CREAR USUARIO
         protected void btnGuardarUsuario_Click(object sender, EventArgs e)
         {
-            //actualizar datos del usuario
             usuario = new Usuario();
-            NegocioUsuario = new NegocioUsuario();
+            // Aca habria que llamar helper para validar imputs
+
+            // cargamos los datos
             usuario.Id = int.Parse(txtId.Text);
             usuario.Nombre = txtNombre.Text;
             usuario.Apellido = txtApellido.Text;
@@ -262,8 +272,41 @@ namespace Catalogo
             usuario.Direccion = txtDomicilio.Text;
             usuario.UrlImgUsuario = txtUrl.Text;
             usuario.Nivel = txtTipoUsuario.Text;
-            NegocioUsuario.EditarUsuario(usuario);
-            CargarUsuario();
+            usuario.Activo = true;
+
+            NegocioUsuario = new NegocioUsuario();
+            int res = 0;
+            // si es modo agregar
+            if (btnGuardarUsuario.Text == "Agregar Usuario")
+            {
+                btnGuardarUsuario.Text = "Guardar Cambios";
+                //si usuario ya existe, cortamos la carga, sino cargamos
+                if (!HelperUsuario.ExistUser(usuario))
+                {
+                    res = NegocioUsuario.AgregarUsuario(usuario);
+                    HelperUsuario.MensajePopUp(this, "Usuario Agregado Exitosamente");
+                }
+                else
+                {
+                    HelperUsuario.MensajePopUp(this, "El usuario ya existe");
+                    dgvAdminUsuario.Visible = true;
+                    return;
+                }
+            }
+            // si es modo modificar
+            else if (btnGuardarUsuario.Text == "Guardar Cambios")
+            {
+                res = NegocioUsuario.EditarUsuario(usuario);
+                HelperUsuario.MensajePopUp(this, "Registro Modificado Exitosamente");
+            }
+
+            if (res == 0)
+                HelperUsuario.MensajePopUp(this, "Ocurrio un Error Inesperado"); // va a tirar dos msj si no guarda, mejorar para manejar el error
+            
+            // recargamos la lista
+            usuarioList = NegocioUsuario.ListarUsuarios();
+            dgvAdminUsuario.DataSource = usuarioList;
+            dgvAdminUsuario.DataBind();
             dgvAdminUsuario.Visible = true;
             //Response.Redirect("Admin.aspx?id=6"); //obs: no hace falta renderiar todo y pasar por el load, solo tenemos que hacer visible y que funcione ajax en los uptadte panel
         }
@@ -271,12 +314,15 @@ namespace Catalogo
         // TODO: BOTON DAR DE BAJA USUARIO (Logica)
         protected void btnBajaUsuario_Click(object sender, EventArgs e)
         {
-            usuario = new Usuario();
             NegocioUsuario = new NegocioUsuario();
-            usuario.Id = int.Parse(txtId.Text);
-            NegocioUsuario.DarBajaUsuario(usuario.Id);
-            CargarUsuario();
-            Response.Redirect("Admin.aspx?id=6");
+            int idMatch = int.Parse(((Button)sender).CommandArgument);
+            NegocioUsuario.DarBajaUsuario(idMatch);
+            //CargarUsuario();
+            usuarioList = NegocioUsuario.ListarUsuarios();
+            dgvAdminUsuario.DataSource = usuarioList;
+            dgvAdminUsuario.DataBind();
+            dgvAdminUsuario.Visible = true;
+            //Response.Redirect("Admin.aspx?id=6");
         }
 
         // TODO: BOTON ELIMINAR USUARIO (Fisica)
@@ -293,18 +339,35 @@ namespace Catalogo
         // TODO: BOTON DAR DE ALTA USUARIO (Logica)
         protected void btnAltaUsuario_Click(object sender, EventArgs e)
         {
-            usuario = new Usuario();
             NegocioUsuario = new NegocioUsuario();
-            usuario.Id = int.Parse(txtId.Text);
-            NegocioUsuario.DarAltaUsuario(usuario.Id);
-            CargarUsuario();
-            Response.Redirect("Admin.aspx?id=6");
+            int idMatch = int.Parse(((Button)sender).CommandArgument);
+            NegocioUsuario.DarAltaUsuario(idMatch);
+            //CargarUsuario();
+            usuarioList = NegocioUsuario.ListarUsuarios();
+            dgvAdminUsuario.DataSource = usuarioList;
+            dgvAdminUsuario.DataBind();
+            dgvAdminUsuario.Visible = true;
         }
 
         // TODO: AGREGAR NUEVO USUARIO (TEST Sin usar vista registro)
         protected void btnAgregarNuevoUsuario_Click(object sender, EventArgs e)
         {
             btnGuardarUsuario.Text = "Agregar Usuario";
+
+            txtId.Text = string.Empty;
+            txtNombre.Text = string.Empty;
+            txtApellido.Text = string.Empty;
+            txtEmail.Text = string.Empty;
+            txtClave.Text = string.Empty;
+            txtUrl.Text = string.Empty;
+            txtDni.Text = string.Empty;
+            txtDomicilio.Text = string.Empty;
+            txtTipoUsuario.Text = string.Empty;
+
+            dgvAdminUsuario.Visible = false;
+            btnAltaUsuario.Visible = false;
+            btnBajaUsuario.Visible = false;
+            btnEliminarUsuario.Visible = false;
             sectionModificarUsuario.Visible = true;
         }
 

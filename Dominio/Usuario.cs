@@ -16,8 +16,10 @@ namespace Dominio
         public string Clave { get; set; }
         public string Direccion { get; set; }
         public string Nivel { get; set; }
+        public string NivelUpper { get { return Nivel.ToUpper(); } }
         public string UrlImgUsuario { get; set; }
         public bool Activo { get; set; }
+        public string MostrarActivo { get { return (Activo == true)? "Si" : "No"; } }
 
         //CONSTRUCTORES
         public Usuario() { }

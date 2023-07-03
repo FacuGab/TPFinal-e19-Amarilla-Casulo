@@ -48,6 +48,7 @@ namespace Catalogo
                 usuario.Direccion = txtDomicilio.Text;
                 usuario.Nivel = "C";
                 usuario.UrlImgUsuario = "img/usuarios/default.png";
+                usuario.Activo = true;
 
                 if(HelperUsuario.ExistUser(usuario)) 
                 {

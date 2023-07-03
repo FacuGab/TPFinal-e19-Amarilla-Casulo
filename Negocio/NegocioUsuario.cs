@@ -84,7 +84,7 @@ namespace Negocio
             {
                 Usuarios = new List<Usuario>();
                 Data.AbrirConexion();
-                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen FROM USUARIOS", "query");
+                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen, Activo FROM USUARIOS", "query");
                 Data.ReadQuery();
 
                 var aux = Data.Lector;
@@ -100,6 +100,7 @@ namespace Negocio
                     Usuario.Direccion = aux["Direccion"].ToString();
                     Usuario.Nivel = aux["Nivel"].ToString();
                     Usuario.UrlImgUsuario = aux["UrlImagen"].ToString();
+                    Usuario.Activo = (bool)aux["Activo"];
                     Usuarios.Add(Usuario);
                 }
                 return Usuarios;
@@ -121,7 +122,7 @@ namespace Negocio
             try
             {
                 Data.AbrirConexion();
-                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen FROM USUARIOS WHERE Id = @Id", "query");
+                Data.SetQuery("SELECT Id, Nombre, Apellido, DNI, Mail, Clave, Direccion, Nivel, UrlImagen, Activo FROM USUARIOS WHERE Id = @Id", "query");
                 Data.SetParameters("@Id", id);
                 Data.ReadQuery();
 
@@ -315,15 +316,16 @@ namespace Negocio
             }
         }
         //Solo busca si existe
-        public bool existUser(string mail, string clave)
+        public bool existUser(string mail, string clave, int dni)
         {
             Data = new DataAccess();
             try
             {
                 Data.AbrirConexion();
-                Data.SetQuery("SELECT Id FROM USUARIOS WHERE Mail = @Mail AND Clave = @Clave ", "query");
+                Data.SetQuery("SELECT Id FROM USUARIOS WHERE Mail = @Mail AND Clave = @Clave AND DNI = @DNI", "query");
                 Data.SetParameters("@Mail", mail);
                 Data.SetParameters("@Clave", clave);
+                Data.SetParameters("@DNI", dni);
                 Data.ReadQuery();
 
                 bool res = Data.Lector.HasRows;

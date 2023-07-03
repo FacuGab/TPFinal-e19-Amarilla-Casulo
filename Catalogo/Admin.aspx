@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SiteMaster.Master" AutoEventWireup="true" CodeBehind="Admin.aspx.cs" Inherits="Catalogo.WebForm3" %>
+﻿<%@ Page Title="Panel De Control" Language="C#" MasterPageFile="~/SiteMaster.Master" AutoEventWireup="true" CodeBehind="Admin.aspx.cs" Inherits="Catalogo.WebForm3" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -58,10 +58,7 @@
                                     <a href="Admin.aspx?id=6" class="nav-link px-0"><span class="d-none d-sm-inline text-light ms-4">Todos</span></a>
                                 </li>
                                 <li>
-                                    <a href="Registro.aspx" class="nav-link px-0"><span class="d-none d-sm-inline text-light ms-4">Crear nuevo usuario</span></a>
-                                </li>
-                                <li>
-                                    <asp:Button Text="Crear Nuevo Usuario (test)" ID="btnAgregarNuevoUsuario" OnClick="btnAgregarNuevoUsuario_Click" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" runat="server" />
+                                    <asp:Button Text="Crear Nuevo Usuario" ID="btnAgregarNuevoUsuario" OnClick="btnAgregarNuevoUsuario_Click" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" runat="server" />
                                 </li>
                             </ul>
                         </li>
@@ -91,324 +88,12 @@
             <div class="col-md-1"></div>
 
             <!-- Cuerpo Principal -->
-            <section class="col-md-8 mt-5"  background-image: url(https://img3.wallspic.com/crops/9/3/0/4/6/164039/164039-banner_de_contraccion_de_la_galaxia-contraccion_nerviosa-banner_web-streaming_de_medios_de_comunicacion-gamer-3840x2160.png)">
+            <div class="col-md-8 mt-5"  background-image: url(https://img3.wallspic.com/crops/9/3/0/4/6/164039/164039-banner_de_contraccion_de_la_galaxia-contraccion_nerviosa-banner_web-streaming_de_medios_de_comunicacion-gamer-3840x2160.png)">
                 <asp:UpdatePanel runat="server">
                     <ContentTemplate>
-                        <!-- ################################ ABM para ARTICULOS desde aca ################################ -->
-                        <%--Lista Articulos--%>
-                        <asp:GridView ID="dgvAdmin" runat="server" CssClass="table table-striped mt-5" AutoGenerateColumns="False">
-                            <Columns>
-                                <asp:TemplateField HeaderText="Imágen">
-                                    <ItemTemplate>
-                                        <asp:Image runat="server" ImageUrl='<%#Eval("ImagenUrl") %>' onerror="this.src='./Recursos/image-not-found.png'" Width="70px" Height="70px" CssClass="ml-2" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Nombre">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Nombre") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Descripción">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Descripcion") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Marca">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Marca") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Categoría">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Categoria") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Precio">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Precio") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Acción">
-                                    <ItemTemplate>
-                                        <asp:ImageButton ID="ibtEliminar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEliminar_Click" Height="29px" ImageUrl="~/recursos/img/Eliminar.png" Width="29px" />
-                                        <asp:ImageButton ID="ibtEditar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEditar_Click" Height="29px" ImageUrl="~/recursos/img/editar.png" Width="29px" />
-                                        <asp:ImageButton ID="ibtBaja" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtBaja_Click" Height="29px" ImageUrl="~/recursos/img/boton-eliminar.png" Width="29px" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
-                                <asp:TemplateField HeaderText="">
-                                    <ItemTemplate>
-                                        <%--<asp:ImageButton ID="btnAgregar" ImageUrl="~/Recursos/agregar.png" Height="19" Width="20" runat="server" OnClick="btnAgregar_Click"
-                                                        CommandArgument='<%#Eval("Id") %>' CommandName="btnAgregar" cssClass="mt-3"/>--%>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
-                                <asp:TemplateField HeaderText="">
-                                    <ItemTemplate>
-                                        <%--<asp:ImageButton ID="btnQuitar" ImageUrl="~/Recursos/minimizar.png" Height="19" Width="20" runat="server" OnClick="btnQuitar_Click"
-                                                        CommandArgument='<%#Eval("Id") %>' CommandName="btnRestar" cssClass="mt-3" />--%>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-                        <%--fin lista Articulos--%>
-
-                        <!-- ################################ ABM para CATEGORIAS desde aca ################################ -->
-                        <%--lista categorias--%>
-                        <asp:GridView ID="dgvAdminCate" runat="server" CssClass="table table-striped mt-5 " AutoGenerateColumns="False">
-                            <Columns>
-                                <asp:TemplateField HeaderText="Imágen">
-                                    <ItemTemplate>
-                                        <asp:Image runat="server" ImageUrl='<%#Eval("UrlImagen") %>' onerror="this.src='./Recursos/image-not-found.png'" Width="70px" Height="70px" CssClass="ml-2" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ID Categoria">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Id") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Descripción">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Acción">
-                                    <ItemTemplate>
-                                        <asp:ImageButton ID="ibtEliminar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEliminar_Click" Height="29px" ImageUrl="~/recursos/img/Eliminar.png" Width="29px" />
-                                        <asp:ImageButton ID="ibtEditar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEditar_Click" Height="29px" ImageUrl="~/recursos/img/editar.png" Width="29px" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-                        <%--fin lista categorias--%>
-
-                        <!-- ################################ ABM para MARCAS desde aca ################################ -->
-                        <%--lista marcas--%>
-                        <asp:GridView ID="dgvAdminMarca" runat="server" CssClass="table table-striped mt-5" AutoGenerateColumns="False">
-                            <Columns>
-                                <asp:TemplateField HeaderText="Imágen">
-                                    <ItemTemplate>
-                                        <asp:Image runat="server" ImageUrl='<%#Eval("UrlImagen") %>' onerror="this.src='./Recursos/image-not-found.png'" Width="70px" Height="70px" CssClass="ml-2" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ID Categoria">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Id") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Descripción">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Acción">
-                                    <ItemTemplate>
-                                        <asp:ImageButton ID="ibtEliminar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEliminar_Click" Height="29px" ImageUrl="~/recursos/img/Eliminar.png" Width="29px" />
-                                        <asp:ImageButton ID="ibtEditar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEditar_Click" Height="29px" ImageUrl="~/recursos/img/editar.png" Width="29px" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
-                                <asp:TemplateField HeaderText="">
-                                    <ItemTemplate>
-                                        <%--<asp:ImageButton ID="btnAgregar" ImageUrl="~/Recursos/agregar.png" Height="19" Width="20" runat="server" OnClick="btnAgregar_Click"
-                                                        CommandArgument='<%#Eval("Id") %>' CommandName="btnAgregar" cssClass="mt-3"/>--%>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
-                                <asp:TemplateField HeaderText="">
-                                    <ItemTemplate>
-                                        <%--<asp:ImageButton ID="btnQuitar" ImageUrl="~/Recursos/minimizar.png" Height="19" Width="20" runat="server" OnClick="btnQuitar_Click"
-                                                        CommandArgument='<%#Eval("Id") %>' CommandName="btnRestar" cssClass="mt-3" />--%>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-                        <%--Fin lista marcas--%>
-
-                        <!-- ################################ ABM para PEDIDOS desde aca ################################ -->
-                        <%--Lista Pedidos--%>
-                        <asp:GridView ID="dgvAdminPedidos" runat="server" CssClass="table table-striped table-bordered mt-5" AutoGenerateColumns="False">
-                            <Columns>
-                                <asp:TemplateField HeaderText="ID Pedido">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("IdPedido") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Cantidad solicitada">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Cantidad") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ID Usuario">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("IdUsuario") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Usuario">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Usuario") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Fecha">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Fecha") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Estado">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Estado") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Direccion de entrega">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("DireccionEntrega") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Descuento">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Descuento") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Monto Total">
-                                    <ItemTemplate>
-                                        <span>$</span>
-                                        <asp:Label runat="server" Text='<%# Eval("PrecioTotal") %>'  CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Baja/Eliminar">
-                                    <ItemTemplate>
-                                        <asp:ImageButton ID="ibtEliminarPedido" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("IdPedido") %>' CommandName="eliminar_btn" OnClick="ibtEliminarPedido_Click" Height="29px" ImageUrl="~/recursos/img/Eliminar.png" Width="29px" />
-                                        <asp:ImageButton ID="ibtBajaPedido" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("IdPedido") %>' CommandName="baja_btn" OnClick="ibtBajaPedido_Click" Height="29px" ImageUrl="~/recursos/img/boton-eliminar.png" Width="29px" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Editar">
-                                    <ItemTemplate>
-                                        <asp:ImageButton ID="ibtEditarPedido" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("IdPedido") %>' CommandName="editar_btn" OnClick="ibtEditarPedido_Click" Height="29px" ImageUrl="~/recursos/img/editar.png" Width="29px" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-                        <%--fin lista Pedidos--%>
-
-                        <%--Lista Pedido_Articulos--%>
-                        <asp:GridView ID="dgvPedido_Articulos" AutoGenerateColumns="false" CssClass="table table-striped mt-5" runat="server">
-                            <Columns>
-                                <asp:TemplateField Visible="false">
-                                    <ItemTemplate>
-                                        <asp:Label Text='<%#Eval("IdPedido") %>' runat="server" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:BoundField HeaderText="IdArticulo" DataField="Id" />
-                                <asp:BoundField HeaderText="Articulo" DataField="Nombre"/>
-                                <asp:BoundField HeaderText="Descripcion" DataField="Descripcion"/>
-                                <asp:BoundField HeaderText="Marca" DataField="Marca"/>
-                                <asp:BoundField HeaderText="Categoria" DataField="Categoria" />
-                                <asp:BoundField HeaderText="Estado" DataField="Estado" />
-                                <asp:BoundField HeaderText="Stock" DataField="Stock" />
-                                <asp:BoundField HeaderText="Precio/u" DataField="Precio" />
-                            </Columns>
-                        </asp:GridView>
-                        <%--Fin Lista Pedido_Articulos--%>
-
-                        <!-- Lista Pedidos Editar --> <!-- Aca tendria que ir lo que falta del crud, para editar un pedido (agregar uno, y dar la opcion de elimnar otra vez) -->
-                        <asp:GridView ID="dgvPedidosEditar" CssClass="table table-striped table-bordered mt-5" AutoGenerateColumns="False" runat="server">
-                            <Columns>
-                                <asp:TemplateField HeaderText="ID Pedido">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("IdPedido") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Cantidad solicitada">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Cantidad") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ID Usuario">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("IdUsuario") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Usuario">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Usuario") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Fecha">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Fecha") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Estado">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Estado") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Direccion de entrega">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("DireccionEntrega") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Descuento">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Descuento") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Monto Total">
-                                    <ItemTemplate>
-                                        <span>$</span>
-                                        <asp:Label runat="server" Text='<%# Eval("PrecioTotal") %>'  CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                            </Columns>
-                        </asp:GridView>
-                        <!--  Fin Lista Pedidos Editar -->
-
-                        <!-- ################################ ABM para USUARIOS desde aca ################################ -->
-                        <%--Carga nuevo usuario--%> <!-- No tiene ningun uso esto creo, parece un modal y tenia partes de pedidos pidiendo precios, ¿que es? -->
-                        <div class="modal fade" id="nuevoUsuario" tabindex="-1" aria-labelledby="PedidoModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-warning">
-                                        <h1 class="modal-title fs-4 " id="PedidoModalLabel"><strong>Nuevo Usuario </strong></h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="col-12 mt-3">
-                                            <label for="IdUsuario" class="form-label">Nombre<span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="IdUsuario" runat="server"/>
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="idArt" class="form-label">Apellido <span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="idArt" runat="server"/>
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="cantidadArt" class="form-label">Documento nacional de identidad <span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="cantidadArt" runat="server" placeholder="123456"/>
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="FechaPed" class="form-label">Correo electrónico <span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="FechaPed" runat="server" />
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="estadoPed" class="form-label">Contraseña<span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="estadoPed" runat="server" placeholder="xxxx"/>
-                                        </div>
-                                        <div class="col-12 mt-3">
-                                            <label for="direccion" class="form-label">Dirección <span class="text-danger">*</span></label>
-                                            <asp:TextBox CssClass="form-control" ID="direccion" runat="server"/>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="d-grid">
-                                            <button class="btn btn-warning " type="submit">Registrar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <%--Fin Carga nuevo usuario--%>
-
-                        <%--Lista de usuarios--%>
+                        <%-- ################################ abm USUARIOS ################################ --%>
+                        <%-- Listar Usuarios --%>
                         <asp:GridView ID="dgvAdminUsuario" runat="server" CssClass="table table-striped mt-5 " AutoGenerateColumns="False">
                             <Columns>
                                 <asp:TemplateField HeaderText="ID">
@@ -431,21 +116,30 @@
                                         <asp:Label runat="server" Text='<%# Eval("DNI") %>' CssClass="mt-3"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="E-Mail">
+                                <asp:TemplateField HeaderText="Mail">
                                     <ItemTemplate>
                                         <asp:Label runat="server" Text='<%# Eval("Mail") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Acción">
+                                <asp:BoundField HeaderText="Direccion" DataField="Direccion" />
+                                <asp:BoundField HeaderText="Activo" DataField="MostrarActivo" />
+                                <asp:BoundField HeaderText="Nivel" DataField="NivelUpper" />
+                                <asp:TemplateField HeaderText="Editar">
                                     <ItemTemplate>
                                         <asp:ImageButton ID="ibtEditarUsuario" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="editar_btn" OnClick="ibtEditarUsuario_Click" Height="29px" ImageUrl="~/recursos/img/editar.png" Width="29px" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Cambiar Activo">
+                                    <ItemTemplate>
+                                        <asp:Button Text="Baja" CssClass="btn btn-danger" CommandName="baja_btn" OnClick="btnBajaUsuario_Click" CommandArgument='<%#Eval("Id") %>' runat="server" />
+                                        <asp:Button Text="Alta" CssClass="btn btn-info" CommandName="alta_btn" OnClick="btnAltaUsuario_Click" CommandArgument='<%#Eval("Id") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
-                        <%--fin Lista de usuarios--%>
+                        <%-- Fin Listar Usuarios --%>
 
-                        <%-- Modifciar Usuario --%>
+                        <%-- Modificar/Agregar Usuarios --%>
                         <asp:UpdatePanel ID="updatePanelModificarUsuario" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
                                 <section class="vh-100" style="background-color: #f4f5f7;" runat="server" id="sectionModificarUsuario">
@@ -477,12 +171,12 @@
                                                                     <!-- Nombre -->
                                                                     <div class="col-6 mb-3">
                                                                         <h6>Nombre/s</h6>
-                                                                        <asp:TextBox runat="server" ID="txtNombre" CssClass="text-muted form-control" required minlength="5" MaxLength="30" pattern="[A-Za-z\s]+" />
+                                                                        <asp:TextBox runat="server" ID="txtNombre" CssClass="text-muted form-control" required minlength="1" MaxLength="30" pattern="[A-Za-z\s]+" />
                                                                     </div>
                                                                     <!-- Apellido -->
                                                                     <div class="col-6 mb-3">
                                                                         <h6>Apellido/s</h6>
-                                                                        <asp:TextBox runat="server" ID="txtApellido" CssClass="text-muted form-control" required minlength="5" MaxLength="30" pattern="[A-Za-z\s]+" />
+                                                                        <asp:TextBox runat="server" ID="txtApellido" CssClass="text-muted form-control" required minlength="1" MaxLength="30" pattern="[A-Za-z\s]+" />
                                                                     </div>
                                                                     <!-- MAIL -->
                                                                     <div class="col-6 mb-3">
@@ -542,13 +236,331 @@
                                 </section>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-                        <%-- Fin Modifciar Usuario --%>
+                        <%-- Fin Modifciar/Agregar Usuario --%>
+
+
+                        <!-- ################################ abm PEDIDOS ################################ -->
+                        <%--Lista Pedidos--%>
+                        <asp:GridView ID="dgvAdminPedidos" runat="server" CssClass="table table-striped table-bordered mt-5" AutoGenerateColumns="False">
+                            <Columns>
+                                <asp:TemplateField HeaderText="ID Pedido">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("IdPedido") %>' CssClass="mt-3"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Cantidad solicitada">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Cantidad") %>' CssClass="mt-3"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="ID Usuario">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("IdUsuario") %>' CssClass="mt-3"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Usuario">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Usuario") %>' CssClass="mt-3"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Fecha">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Fecha") %>' CssClass="mt-3"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Estado">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Estado") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Direccion de entrega">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("DireccionEntrega") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Descuento">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Descuento") %>' CssClass="mt-3"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Monto Total">
+                                    <ItemTemplate>
+                                        <span>$</span>
+                                        <asp:Label runat="server" Text='<%# Eval("PrecioTotal") %>'  CssClass="mt-3"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Baja/Eliminar">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="ibtEliminarPedido" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("IdPedido") %>' CommandName="eliminar_btn" OnClick="ibtEliminarPedido_Click" Height="29px" ImageUrl="~/recursos/img/boton-eliminar.png" Width="29px" />
+                                        <asp:ImageButton ID="ibtBajaPedido" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("IdPedido") %>' CommandName="baja_btn" OnClick="ibtBajaPedido_Click" Height="29px" ImageUrl="~/recursos/img/Eliminar.png" Width="29px" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Editar">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="ibtEditarPedido" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("IdPedido") %>' CommandName="editar_btn" OnClick="ibtEditarPedido_Click" Height="29px" ImageUrl="~/recursos/img/editar.png" Width="29px" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                        <%--fin lista Pedidos--%>
+
+                        <%--Lista Pedido_Articulos--%>
+                        <asp:GridView ID="dgvPedido_Articulos" AutoGenerateColumns="false" CssClass="table table-striped mt-5" runat="server">
+                            <Columns>
+                                <asp:TemplateField Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label Text='<%#Eval("IdPedido") %>' runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField HeaderText="IdArticulo" DataField="Id" />
+                                <asp:BoundField HeaderText="Articulo" DataField="Nombre"/>
+                                <asp:BoundField HeaderText="Descripcion" DataField="Descripcion"/>
+                                <asp:BoundField HeaderText="Marca" DataField="Marca"/>
+                                <asp:BoundField HeaderText="Categoria" DataField="Categoria" />
+                                <asp:BoundField HeaderText="Estado" DataField="Estado" />
+                                <asp:BoundField HeaderText="Stock" DataField="Stock" />
+                                <asp:BoundField HeaderText="Precio/u" DataField="Precio" />
+                            </Columns>
+                        </asp:GridView>
+                        <%--Fin Lista Pedido_Articulos--%>
+
+                        <%--<!-- Lista Pedidos Editar --> <!-- Aca tendria que ir lo que falta del crud, para editar un pedido (agregar uno, y dar la opcion de elimnar otra vez) -->--%>
+                        <asp:UpdatePanel ID="upadetePanelPedidosEditar" runat="server" UpdateMode="Conditional">
+                            <ContentTemplate>
+                                <section class="vh-100" style="background-color: #f4f5f7;" runat="server" id="sectionEditarPedidos" visible="false">
+                                    <div class="container py-5 h-100">
+                                        <!-- Card Pedido -->
+                                        <div class="row d-flex justify-content-center align-items-center h-100">
+                                            <div class="col col-lg-8 mb-4 mb-lg-0 ">
+                                                <div class="card mb-3" style="border-radius: .5rem;">
+                                                    <div class="row g-0">
+                                                        <!-- Columna de Imagen -->
+                                                        <div class="col-md-4  text-center bg-warning text-white"
+                                                            style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                                                            <asp:Image ID="Image1" runat="server" ImageUrl="~/recursos/img/avatar.png" Width="120px" CssClass="img-fluid my-5" />
+                                                            <h6>
+                                                                <!-- ID Usuario -->
+                                                                <strong class="fs-5 text-dark">
+                                                                    ID Usuario
+                                                                    <asp:Label runat="server" ID="Label1" />
+                                                                </strong> 
+                                                            </h6>
+                                                            <i class="far fa-edit mb-5"></i>
+                                                        </div>
+                                                        <!-- Columna de Inputs -->
+                                                        <div class="col-md-8">
+                                                            <div class="card-body p-4">
+                                                                <h6>Información del usuario</h6>
+                                                                <hr class="mt-0 mb-4">
+                                                                <div class="row pt-1">
+                                                                    <!-- Nombre -->
+                                                                    <div class="col-6 mb-3">
+                                                                        <h6>Nombre/s</h6>
+                                                                        <asp:TextBox runat="server" ID="TextBox1" CssClass="text-muted form-control" required minlength="1" MaxLength="30" pattern="[A-Za-z\s]+" />
+                                                                    </div>
+                                                                    <!-- Apellido -->
+                                                                    <div class="col-6 mb-3">
+                                                                        <h6>Apellido/s</h6>
+                                                                        <asp:TextBox runat="server" ID="TextBox2" CssClass="text-muted form-control" required minlength="1" MaxLength="30" pattern="[A-Za-z\s]+" />
+                                                                    </div>
+                                                                    <!-- MAIL -->
+                                                                    <div class="col-6 mb-3">
+                                                                        <h6>Email</h6>
+                                                                        <asp:TextBox runat="server" ID="TextBox3" CssClass="text-muted form-control" required />
+                                                                    </div>
+                                                                    <!-- DNI -->
+                                                                    <div class="col-6 mb-3">
+                                                                        <h6>Nro. Documento</h6>
+                                                                        <asp:TextBox type="number" runat="server" ID="TextBox4" CssClass="text-muted form-control" required pattern="\d{8}" />
+                                                                    </div>
+                                                                </div>
+                                                                <h6>Contacto</h6>
+                                                                <hr class="mt-0 mb-4">
+                                                                <div class="row pt-1">
+                                                                    <!-- PASS -->
+                                                                    <div class="col-6 mb-3">
+                                                                        <h6>Contraseña</h6>
+                                                                        <asp:TextBox type="password" runat="server" ID="TextBox5" CssClass="text-muted form-control" required minlength="6" MaxLength="20" />
+                                                                        <%--patron para solo aceptar claves con un mayus, numeros y minusculas    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$"    --%>
+                                                                    </div>
+                                                                    <!-- DIR -->
+                                                                    <div class="col-6 mb-3">
+                                                                        <h6>Dirección</h6>
+                                                                        <asp:TextBox runat="server" ID="TextBox6" CssClass="text-muted form-control" required minlength="6" MaxLength="100" pattern="[A-Za-z0-9\s.,-]+" />
+                                                                    </div>
+                                                                    <!-- IMG -->
+                                                                    <div class="col-6 mb-3">
+                                                                        <h6>Imágen de perfil</h6>
+                                                                        <asp:TextBox runat="server" ID="TextBox7" CssClass="text-muted form-control" OnTextChanged="txtUrl_TextChanged" />
+                                                                    </div>
+                                                                    <!-- NIVEL -->
+                                                                    <div class="col-6 mb-3">
+                                                                        <h6>Nivel de usuario</h6>
+                                                                        <asp:TextBox runat="server" ID="TextBox8" CssClass="text-muted form-control" required minlength="1" MaxLength="1" pattern="[A-Za-z]+" />
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Botones -->
+                                                                <div class="d-flex justify-content-end">
+                                                                    <asp:Button Text="Dar de alta" runat="server" ID="Button1" OnClick="btnAltaUsuario_Click" CssClass="btn btn-outline-success mt-3 me-3" />
+                                                                    <asp:Button Text="Dar de baja" runat="server" ID="Button2" OnClick="btnBajaUsuario_Click" CssClass="btn btn-outline-danger mt-3 me-3" />
+                                                                    <asp:Button Text="Eliminar" runat="server" ID="Button3" OnClick="btnEliminarUsuario_Click" CssClass="btn btn-danger mt-3 me-3" />
+                                                                    <asp:Button Text="Guardar Cambios" runat="server" ID="Button4" OnClick="btnGuardarUsuario_Click" CssClass="btn btn-dark mt-3" />
+                                                                </div>
+                                                                <!-- Link Volver a Lista Usuarios (TEST) -->
+                                                                <div class="col-md-8">
+                                                                    <asp:LinkButton Text="Volver a Lista Usuarios" CssClass="link-body-emphasis" ID="LinkButton1" OnClick="lnkVolverListaUsuarios_Click" runat="server" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Fin Card Usuarios -->
+                                    </div>
+                                </section>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                        <%--  Fin Lista Pedidos Editar --%>
+
+
+                        <%-- ################################ abm ARTICULOS ################################ --%>
+                        <%--Lista Articulos--%>
+                        <asp:GridView ID="dgvAdmin" runat="server" CssClass="table table-striped mt-5" AutoGenerateColumns="False">
+                            <Columns>
+                                <asp:TemplateField HeaderText="Imágen">
+                                    <ItemTemplate>
+                                        <asp:Image runat="server" ImageUrl='<%#Eval("ImagenUrl") %>' onerror="this.src='./Recursos/image-not-found.png'" Width="70px" Height="70px" CssClass="ml-2" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Nombre">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Nombre") %>' CssClass="mt-3"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Descripción">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Descripcion") %>' CssClass="mt-3"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Marca">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Marca") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Categoría">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Categoria") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Precio">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Precio") %>' CssClass="mt-3"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Acción">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="ibtEliminar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEliminar_Click" Height="29px" ImageUrl="~/recursos/img/Eliminar.png" Width="29px" />
+                                        <asp:ImageButton ID="ibtEditar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEditar_Click" Height="29px" ImageUrl="~/recursos/img/editar.png" Width="29px" />
+                                        <asp:ImageButton ID="ibtBaja" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtBaja_Click" Height="29px" ImageUrl="~/recursos/img/boton-eliminar.png" Width="29px" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="">
+                                    <ItemTemplate>
+                                        <%--<asp:ImageButton ID="btnAgregar" ImageUrl="~/Recursos/agregar.png" Height="19" Width="20" runat="server" OnClick="btnAgregar_Click"
+                                                        CommandArgument='<%#Eval("Id") %>' CommandName="btnAgregar" cssClass="mt-3"/>--%>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="">
+                                    <ItemTemplate>
+                                        <%--<asp:ImageButton ID="btnQuitar" ImageUrl="~/Recursos/minimizar.png" Height="19" Width="20" runat="server" OnClick="btnQuitar_Click"
+                                                        CommandArgument='<%#Eval("Id") %>' CommandName="btnRestar" cssClass="mt-3" />--%>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                        <%--fin lista Articulos--%>
+
+                        <%-- ################################ abm CATEGORIAS ################################ --%>
+                        <%--lista categorias--%>
+                        <asp:GridView ID="dgvAdminCate" runat="server" CssClass="table table-striped mt-5 " AutoGenerateColumns="False">
+                            <Columns>
+                                <asp:TemplateField HeaderText="Imágen">
+                                    <ItemTemplate>
+                                        <asp:Image runat="server" ImageUrl='<%#Eval("UrlImagen") %>' onerror="this.src='./Recursos/image-not-found.png'" Width="70px" Height="70px" CssClass="ml-2" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="ID Categoria">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Id") %>' CssClass="mt-3"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Descripción">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Acción">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="ibtEliminar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEliminar_Click" Height="29px" ImageUrl="~/recursos/img/Eliminar.png" Width="29px" />
+                                        <asp:ImageButton ID="ibtEditar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEditar_Click" Height="29px" ImageUrl="~/recursos/img/editar.png" Width="29px" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                        <%--fin lista categorias--%>
+
+                        <%-- ################################ abm MARCAS ################################ --%>
+                        <%--lista marcas--%>
+                        <asp:GridView ID="dgvAdminMarca" runat="server" CssClass="table table-striped mt-5" AutoGenerateColumns="False">
+                            <Columns>
+                                <asp:TemplateField HeaderText="Imágen">
+                                    <ItemTemplate>
+                                        <asp:Image runat="server" ImageUrl='<%#Eval("UrlImagen") %>' onerror="this.src='./Recursos/image-not-found.png'" Width="70px" Height="70px" CssClass="ml-2" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="ID Categoria">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Id") %>' CssClass="mt-3"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Descripción">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Acción">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="ibtEliminar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEliminar_Click" Height="29px" ImageUrl="~/recursos/img/Eliminar.png" Width="29px" />
+                                        <asp:ImageButton ID="ibtEditar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEditar_Click" Height="29px" ImageUrl="~/recursos/img/editar.png" Width="29px" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="">
+                                    <ItemTemplate>
+                                        <%--<asp:ImageButton ID="btnAgregar" ImageUrl="~/Recursos/agregar.png" Height="19" Width="20" runat="server" OnClick="btnAgregar_Click"
+                                                        CommandArgument='<%#Eval("Id") %>' CommandName="btnAgregar" cssClass="mt-3"/>--%>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="">
+                                    <ItemTemplate>
+                                        <%--<asp:ImageButton ID="btnQuitar" ImageUrl="~/Recursos/minimizar.png" Height="19" Width="20" runat="server" OnClick="btnQuitar_Click"
+                                                        CommandArgument='<%#Eval("Id") %>' CommandName="btnRestar" cssClass="mt-3" />--%>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                        <%--Fin lista marcas--%>
+
 
                     </ContentTemplate>
                 </asp:UpdatePanel>
-            </section>
+            </div>
             <!-- Fin Cuerpo Principal -->
-
             <div class="col py-3"></div>
         </div>
     </div>
