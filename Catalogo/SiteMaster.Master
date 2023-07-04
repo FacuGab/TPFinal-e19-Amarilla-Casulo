@@ -32,9 +32,10 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto d-flex ">
                         <li class="nav-item">
-                            <a class="nav-link active text-black " aria-current="page" runat="server" href="~/">
-                            </a>
+                            <a class="nav-link active text-black " aria-current="page" runat="server" href="~/"></a>
                         </li>
+                        <li class="nav-item me-2">
+                            <a class="nav-link text-light" href="Productos.aspx">Productos</a> <!-- Nose cambiar la fuente para que se vea como el resto -->
                         <li class="nav-item me-2 ">
                             <a type="button" class="btn  fs-5 position-relative" href="Admin.aspx">👨‍💻</a>
                         </li>
@@ -49,8 +50,8 @@
                                         <%if (Flag) {%>  
                                         
                                       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                          <asp:Label ID="lblTotalArticulos" runat="server" />
-                                        <span class="visually-hidden">Items en carrito</span>
+                                            <asp:Label ID="lblTotalArticulos" runat="server" />
+                                            <span class="visually-hidden">Items en carrito</span>
                                       </span>
                                         
                                         <%}%> <!--  <--Badges de icono carrito -->
@@ -61,7 +62,24 @@
                         <li class="nav-item me-2 ">
                             <button id="btnLoggin" type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal" runat="server"><i class="bi bi-box-arrow-in-right text-light"> Login</i></button>
                             <asp:Button Text="Cerrar Sesion" CssClass="btn fs-5 bi bi-box-arrow-in-right text-light" ID="btnDisloggin" OnClick="btnDisloggin_Click" runat="server" />
-                        </li> 
+                        </li>
+                        <%--<!-- Nuevos botones para usuarios TEST -->
+                        <li class="nav-item me-2">
+                            <div class="dropdown pb-4">
+                                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                                    <span class="d-none d-sm-inline mx-1">User</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- fin Nuevos Botones usuarios TEST -->--%>
                     </ul>
                 </div>
             </div>
@@ -136,7 +154,7 @@
         </div>
         <%--fin modal busqueda articulo--%>
 
-        <!-- CONTENIDO -->
+        <!-- CONTENIDO "ContentPlaceHolder" -->
         <div class="bg-dark-subtle">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SiteMaster.Master" AutoEventWireup="true" CodeBehind="Productos.aspx.cs" Inherits="Catalogo.Productos" %>
+﻿<%@ Page Title="Productos" Language="C#" MasterPageFile="~/SiteMaster.Master" AutoEventWireup="true" CodeBehind="Productos.aspx.cs" Inherits="Catalogo.Productos" %>
 <%@ MasterType VirtualPath="~/SiteMaster.Master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">

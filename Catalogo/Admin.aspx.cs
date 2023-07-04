@@ -34,8 +34,7 @@ namespace Catalogo
             sectionModificarUsuario.Visible = false;
             try
             {
-                // Ver el tema de usar los Redirect constantes para usar los param de url, es recargar constantemente todo una y otra vez por cada vuelta.
-
+                // Ver el tema de usar los Redirect constantes para usar los param de url si es posible, es recargar constantemente todo una y otra vez por cada vuelta.
                 // Validamos que el user este Logeado y ademas sea Admin, nivel de usuario = 'A'.
                 // Funciona, pero no se si tenes un user con nivel A creado y aparte redirecciona muy rapido. Ver si crear una pagina de loggin de vista simple para el "uso de empleados" para redireccionar.
                 // Usuario admin = Session["usuarioActual"] as Usuario;
@@ -88,7 +87,7 @@ namespace Catalogo
         }
 
 
-        // ############### METODOS ###############
+        //      ############### METODOS ###############
 
         // METODOS USUARIO
         // TODO: Cargar Usuario en Admin
@@ -160,6 +159,17 @@ namespace Catalogo
             PedidoList = NegocioPedido.ListarPedidos();
             dgvAdminPedidos.DataSource = PedidoList;
             dgvAdminPedidos.DataBind();
+            dgvAdminPedidos.Visible = true;
+        }
+
+        // TODO: Cargar Pedidos en Admin con Filtro
+        private void CargarPedidos(string filtro)
+        {
+            NegocioPedido = new NegocioPedido();
+            PedidoList = NegocioPedido.ListarPedidos(filtro);
+            dgvAdminPedidos.DataSource = PedidoList;
+            dgvAdminPedidos.DataBind();
+            dgvAdminPedidos.Visible = true;
         }
 
         // TODO: Cargar Pedido_Articulos en Admin
@@ -179,7 +189,7 @@ namespace Catalogo
         }
 
 
-        // ############### EVENTOS ###############
+        //      ############### EVENTOS ###############
         protected void ibtEliminar_Click(object sender, ImageClickEventArgs e)
         {
 
@@ -224,7 +234,7 @@ namespace Catalogo
         } //sin hacer todavia
 
         // TODO: BOTON Editar/Detalle Pedido en Grid
-        protected void ibtEditarPedido_Click(object sender, ImageClickEventArgs e)
+        protected void ibtEditarPedido_Click(object sender, ImageClickEventArgs e) // TODO: Sin Terminar Editar Pedido
         {
             int idMatch = Convert.ToInt32(((ImageButton)sender).CommandArgument);
             NegocioPedido = new NegocioPedido();
@@ -237,6 +247,7 @@ namespace Catalogo
             dgvPedido_Articulos.DataBind();
             dgvPedido_Articulos.Visible = true;
             sectionEditarPedidos.Visible = true;
+            // Falta seguir ..... 
         }
 
         // TODO: BOTON Dar Baja Pedido en Grid
@@ -244,6 +255,38 @@ namespace Catalogo
         {
 
         } //sin hacer todavia
+
+        // TODO: BOTONES PEDIDOS MENU
+        protected void btnPedidosMenu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string tipoBoton = (sender as Button).CommandName;
+                switch (tipoBoton)
+                {
+                    case "btnPedidosTodos":
+                        CargarPedidos();
+                        break;
+                    case "btnPedidosPendientes":
+                        CargarPedidos("Pendiete");
+                        break;
+                    case "btnPedidosEntregados":
+                        CargarPedidos("Entregado");
+                        break;
+                    case "btnPedidosCancelados":
+                        CargarPedidos("Cancelados");
+                        break;
+                    default:
+                        HelperUsuario.MensajePopUp(this, "Ocurrio un error inesperado");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
         //FIN BOTONES LOGICA PEDIDOS
 
 
@@ -374,7 +417,16 @@ namespace Catalogo
         // TODO: Link Volver a Lista Usuario (TEST para volver a ver la lista cuando querramos)
         protected void lnkVolverListaUsuarios_Click(object sender, EventArgs e)
         {
-            dgvAdminUsuario.Visible = true;
+            string filtro = ((LinkButton)sender).CommandName;
+            if(filtro == "linkVolverPedidos")
+            { 
+                dgvAdminPedidos.Visible = true;
+                sectionEditarPedidos.Visible = false;
+            }
+            else if(filtro == "VolverListaUsuarios")
+            {
+                dgvAdminUsuario.Visible = true;
+            }
         }
         // FIN BOTONES LOGICA USUARIO
     }

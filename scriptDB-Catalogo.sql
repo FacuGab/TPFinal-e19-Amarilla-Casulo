@@ -125,12 +125,12 @@ INNER JOIN MARCAS M on M.Id = A.IdMarca
 INNER JOIN CATEGORIAS C on C.Id = A.IdCategoria
 WHERE IdPedido = @id
 END
+
 -- SP LISTAR PEDIDOS
 CREATE PROCEDURE sp_ListarPedidos
 AS BEGIN
 SELECT  P.IdPedido as 'ID_Pedido',
-		U.Id as 'ID_usuario',
-		P.IdArticulos as 'ID_Articulo', 
+		U.Id as 'ID_usuario', 
 		U.Nombre+' '+U.Apellido as 'Usuario',
 		P.Cantidad as 'Cantidad_Articulos', 
 		P.Fecha as 'Fecha',
@@ -139,7 +139,6 @@ SELECT  P.IdPedido as 'ID_Pedido',
 		P.Descuento as 'Descuento', 
 		P.PrecioTotal as 'Precio_Total_Articulo'
 FROM PEDIDOS P INNER JOIN USUARIOS U ON P.IdUsuarios = U.Id
-INNER JOIN ARTICULOS A ON P.IdArticulos = A.Id
 END
 
 

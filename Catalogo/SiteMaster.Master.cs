@@ -6,8 +6,6 @@ using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
 
 namespace Catalogo
 {
@@ -17,6 +15,7 @@ namespace Catalogo
         public int itemsCarrito { get; set; }
         public bool Flag { get; set; }
         public Usuario usuario { get { return userControl; } }
+        public string preUrl { get { return Request.UrlReferrer.ToString(); } }
 
         //LOAD
         protected void Page_Load(object sender, EventArgs e)
@@ -55,7 +54,7 @@ namespace Catalogo
         protected void btnFiltroRapido_Click(object sender, EventArgs e)
         {
             try
-            {
+            {  
                 string str = tbFiltroRapido.Text;
                 if (!string.IsNullOrWhiteSpace(str))
                     Response.Redirect("Productos.aspx?text=" + str, false);

@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SiteMaster.Master" AutoEventWireup="true" CodeBehind="ListaCarrito.aspx.cs" Inherits="Catalogo.WebForm2" %>
+﻿<%@ Page Title="Carrito" Language="C#" MasterPageFile="~/SiteMaster.Master" AutoEventWireup="true" CodeBehind="ListaCarrito.aspx.cs" Inherits="Catalogo.WebForm2" %>
+
 <%@ MasterType VirtualPath="~/SiteMaster.Master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -61,7 +62,7 @@
                                                                 </div>
                                                                 <p class="m-5 fs-5 text-center">
                                                                     Total
-                                                                    <label class="fs-5 text-primary"> <%# Eval("TotalParcial") %></label>
+                                                                    <label class="fs-5 text-primary"><%# Eval("TotalParcial") %></label>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -81,36 +82,30 @@
                                                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">Total artículos
                                                           <span><strong class="">$<%:TotalAcumulado.ToString() %></strong></span>
                                                     </li>
+                                                    <li>
+                                                        <hr class="dropdown-divider">
+                                                    </li>
                                                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">Envío
                                                          <span>Gratis</span>
                                                     </li>
-                                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">Descuentos
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                                            Descuentos
                                                          <span>10%</span>
                                                     </li>
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                                                         <div>
                                                             <strong>Monto total</strong>
-                                                            <strong>
-                                                                <p class="mb-0">(IVA Incluido)</p>
-                                                            </strong>
+                                                            <strong><p class="mb-0">(IVA Incluido)</p></strong>
                                                         </div>
                                                         <span><strong class="fs-5">$<%:TotalAcumulado.ToString() %></strong></span>
                                                     </li>
                                                 </ul>
+                                                <%-- Botones Cancelar / Continuar Compra --%>
                                                 <div class="d-flex justify-content-end">
                                                     <asp:Button Text="❌ Cancelar" ID="btnEliminarListaCarrito" CssClass="btn btn-warning ms-2" OnClick="btnEliminarListaCarrito_Click" runat="server" />
-
-                                                    <%--<a href="ListaCarrito.aspx?text=ok">
-                                                    </a>--%>
-
-                                                    <button type="button" class="btn btn-primary btn-block ms-2" id="btnContinuarCompra" onServerClick="btnContinuarCompra_Click" runat="server">
-                                                        <i class="bi bi-cart-check-fill "> Continuar compra</i>
+                                                    <button type="button" class="btn btn-primary btn-block ms-2" id="btnContinuarCompra" onserverclick="btnContinuarCompra_Click" runat="server">
+                                                        <i class="bi bi-cart-check-fill ">Continuar compra</i>
                                                     </button>
-
-                                                    <%--<i class="bi bi-cart-check-fill">
-                                                        <asp:Button Text="Continuar compra test" ID="btnContinuarCompra" CssClass="btn btn-primary btn-block ms-2 " OnClick="btnContinuarCompra_Click" runat="server"/>
-                                                    </i>--%>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,41 +133,39 @@
                                                 <h4 class="mb-0 "><strong>Finalizar reserva</strong></h4>
                                             </div>
                                             <table class="table">
-                                              <thead class="fs-5">
-                                                <tr class="text-center">
-                                                  <th scope="col">Imágen</th>
-                                                  <th scope="col">Producto</th>
-                                                  <th scope="col">Cantidad</th>
-                                                  <th scope="col">Precio</th>
-                                                  <th scope="col">Total</th>
-                                                </tr>
-                                              </thead>
+                                                <thead class="fs-5">
+                                                    <tr class="text-center">
+                                                        <th scope="col">Imágen</th>
+                                                        <th scope="col">Producto</th>
+                                                        <th scope="col">Cantidad</th>
+                                                        <th scope="col">Precio</th>
+                                                        <th scope="col">Total</th>
+                                                    </tr>
+                                                </thead>
                                                 <asp:Repeater runat="server" ID="rptCarrito">
                                                     <ItemTemplate>
-                                                          <tbody>
+                                                        <tbody>
                                                             <tr class="text-center fs-5 ">
-                                                              <td class=""><img src="<%# Eval("ImagenUrl") %>" class="w-25" alt="img_producto" /></td>
-                                                              <td class="pt-5"><%# Eval("Nombre") %></td>
-                                                              <td class="pt-5"><%# Eval("Cantidad") %></td>
-                                                              <td class="pt-5"><%# string.Format("{0:C2}", Eval("precio")) %></td>
-                                                              <td class="pt-5"><%# Eval("TotalParcial") %></td>
-                                                             </tr>
-                                                           </tbody>
-                                                   </ItemTemplate>
+                                                                <td class="">
+                                                                    <img src="<%# Eval("ImagenUrl") %>" class="w-25" alt="img_producto" /></td>
+                                                                <td class="pt-5"><%# Eval("Nombre") %></td>
+                                                                <td class="pt-5"><%# Eval("Cantidad") %></td>
+                                                                <td class="pt-5"><%# string.Format("{0:C2}", Eval("precio")) %></td>
+                                                                <td class="pt-5"><%# Eval("TotalParcial") %></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </ItemTemplate>
                                                 </asp:Repeater>
                                             </table>
                                             <div class="card-header py-3 d-flex justify-content-end">
                                                 <h4 class="mb-0 "><strong>Precio total  <span class="text-primary ms-5">$<%:TotalAcumulado.ToString() %></span></strong></h4>
                                             </div>
                                         </div>
-                                        <div  id="divBtnConfirmarReserva" runat="server">
+                                        <div id="divBtnConfirmarReserva" runat="server">
                                             <!-- Boton Cargar Pedido -->
                                             <div class="card text-center mt-5">
                                                 <asp:Button ID="btnConfirmarPedido" Text="Confirmar Reserva" CssClass="btn fs-3 bg-black text-light p-3" OnClick="btnConfirmarPedido_Click" runat="server" />
                                             </div>
-                                            <%--<a href="ListaCarrito.aspx?text=ok&reg=ok&est=success" class=" card text-center mt-5">
-                                                <!-- <button type="button" class="btn fs-3 bg-black text-light p-3"><b>Confirmar Reserva</b></button> -->
-                                            </a>--%>
                                         </div>
                                     </div>
 
@@ -183,7 +176,7 @@
                                             <button type="button" class="btn fs-4 bg-black text-light p-1" data-bs-toggle="modal" data-bs-target="#exampleModal"><b>iniciar sesión.</b></button>
                                                 No tenes una cuenta?
                                             <a href="Registro.aspx?text=registroCompra" class="link-secondary text-decoration-none">
-                                                <button type="button" class="btn btn-success fs-5 p-1" data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="bi bi-person-add">Crear cuenta</i></button>
+                                                <button type="button" class="btn btn-success fs-5 p-1" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-person-add">Crear cuenta</i></button>
                                             </a>
                                             </strong>
                                         </p>
@@ -192,7 +185,7 @@
                                     <%--Metodos de pago--%>
                                     <asp:UpdatePanel runat="server">
                                         <ContentTemplate>
-                                            <div id="datosDePago" runat="server" style="margin-top:150px; margin-bottom:200px;">
+                                            <div id="datosDePago" runat="server" style="margin-top: 150px; margin-bottom: 200px;">
                                                 <h1>Elija un metodo de pago</h1>
                                                 <div class="accordion mt-5" id="accordionExample">
                                                     <div class="accordion-item ">
@@ -300,6 +293,15 @@
                 </div>
             </div>
         </div>
-
+        <div class="container text-center">
+            <div class="row aling-items-center">
+                <div class="col">
+                    <div>
+                        <%-- En teoria un link asi vuelve al link anterior si existe --%>
+                        <p><a href='<%:Request.UrlReferrer != null? Request.UrlReferrer.ToString() : "#" %>' class="link-dark">Volver</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </asp:Content>

@@ -42,7 +42,6 @@ namespace Negocio
                     pedido = new Pedido();
                     pedido.IdPedido = (int)aux["ID_Pedido"];
                     pedido.IdUsuario = (int)aux["ID_usuario"];
-                    pedido.IdArticulo = (int)aux["ID_Articulo"];
                     pedido.Cantidad = (int)aux["Cantidad_Articulos"];
                     pedido.Usuario = aux["Usuario"].ToString();
                     pedido.fecha = (DateTime)aux["Fecha"];
@@ -80,6 +79,46 @@ namespace Negocio
                 var aux = datos.Lector;
                 pedidos = new List<Pedido>();
                 while(aux.Read())
+                {
+                    pedido = new Pedido();
+                    pedido.IdPedido = (int)aux["IdPedido"];
+                    pedido.IdUsuario = (int)aux["IdUsuarios"];
+                    pedido.IdArticulo = (int)aux["IdArticulos"];
+                    pedido.Usuario = aux["Usuario"].ToString();
+                    pedido.Cantidad = (int)aux["Cantidad"];
+                    pedido.fecha = (DateTime)aux["Fecha"];
+                    pedido.Estado = aux["Estado"].ToString();
+                    pedido.DireccionEntrega = aux["DireccionEntrega"].ToString();
+                    pedido.Descuento = (decimal)aux["Descuento"];
+                    pedido.precioTotal = (decimal)aux["PrecioTotal"];
+                    pedidos.Add(pedido);
+                }
+                return pedidos;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        // TODO: Listar Pedidos por Filtro
+        public List<Pedido> ListarPedidos(string filtro)
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery($"SELECT IdPedido, IdUsuarios, IdArticulos, U.Nombre+' '+U.Apellido as 'Usuario', Cantidad, Fecha, Estado, DireccionEntrega, Descuento, PrecioTotal FROM PEDIDOS INNER JOIN USUARIOS U ON IdUsuarios = U.Id WHERE Estado = @filtro", "query");
+                datos.SetParameters("@filtro", filtro);
+                datos.ReadQuery();
+
+                var aux = datos.Lector;
+                pedidos = new List<Pedido>();
+                while (aux.Read())
                 {
                     pedido = new Pedido();
                     pedido.IdPedido = (int)aux["IdPedido"];
@@ -401,6 +440,7 @@ namespace Negocio
         }
         #endregion PEDIDO_ARTICULO
 
+        // OTROS
         //TODO: Cargar Pedido
         public Pedido CargarPedido(List<CarritoItem> lista, Usuario usuarioActual, decimal total, string dirEntrega = null, decimal descuento = 0.00M)
         {
@@ -412,7 +452,7 @@ namespace Negocio
                 pedido.Usuario = usuarioActual.Nombre + usuarioActual.Apellido;
                 pedido.Cantidad = lista.Count; // cantidad de articulos distintos, no de unidades totales
                 pedido.fecha = DateTime.Now;
-                pedido.Estado = "Iniciado";
+                pedido.Estado = "Pendiente";
                 pedido.DireccionEntrega = dirEntrega ?? usuarioActual.Direccion;
                 pedido.totalItems = new List<CarritoItem>(lista);
 
