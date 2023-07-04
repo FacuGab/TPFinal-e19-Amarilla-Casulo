@@ -54,7 +54,7 @@ namespace Catalogo
 
                 if (!IsPostBack)
                 {
-                    // No usar mas el query string para mostrar info
+                    // Tratar de no usar el query string para mostrar info
                     if (Request.QueryString["id"] != null)
                     {
                         switch (int.Parse(Request.QueryString["id"]))
