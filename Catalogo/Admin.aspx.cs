@@ -5,9 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 
@@ -27,11 +30,15 @@ namespace Catalogo
         NegocioPedido NegocioPedido;
         List<CarritoItem> Pedido_articulos;
         Usuario usuario;
+        Articulo articulo;
+        Categoria categoria;
+        Marca marca;
 
         // LOAD
         protected void Page_Load(object sender, EventArgs e)
         {
             sectionModificarUsuario.Visible = false;
+            SectionCrearArt.Visible = false;
             try
             {
                 // Ver el tema de usar los Redirect constantes para usar los param de url, es recargar constantemente todo una y otra vez por cada vuelta.
@@ -71,6 +78,8 @@ namespace Catalogo
                                 CargarUsuario();
                                 break;
                             case 7:
+                                CargaDdl();
+                                SectionCrearArt.Visible= true;
                                 break;
                             case 8:
                                 break;
@@ -136,8 +145,10 @@ namespace Catalogo
         // TODO: Cargar Categorias en Admin
         private void CargarCategorias()
         {
+            dgvAdminCrearCate.Visible = true;
             NegocioCategoria = new NegocioCategoria();
             categoriaList = NegocioCategoria.ListarCategorias();
+            dgvAdminCateTitle.Visible = true;
             dgvAdminCate.DataSource = categoriaList;
             dgvAdminCate.DataBind();
         }
@@ -377,5 +388,178 @@ namespace Catalogo
             dgvAdminUsuario.Visible = true;
         }
         // FIN BOTONES LOGICA USUARIO
+
+        //TODO: LOGICA ARTICULOS
+        //Metodo para agregar articulo
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            marca = new Marca();
+            marca.Id = Convert.ToInt32(ddlMarca.SelectedValue);
+            marca.ObtenerMarca(marca.Id);
+            categoria = new Categoria();
+            categoria.Id = Convert.ToInt32(ddlCategoria.SelectedValue);
+            categoria.ObtenerCategoria(categoria.Id);
+
+            NegocioArticulo = new NegocioArticulo();
+            articulo = new Articulo();
+            articulo.Id = Convert.ToInt32(tbIdArt.Text);
+            articulo.Nombre = tbNombreArt.Text;
+            articulo.Descripcion = tbDescripArt.Text;
+            articulo.ImagenUrl = tbImgArt.Text;
+            articulo.precio = Convert.ToDecimal(tbPrecioArt.Text);
+            articulo.Marca = marca;
+            articulo.Categoria = categoria;
+            articulo.Estado = true;
+            articulo.Stock = int.Parse(tbStockArt.Text);
+            NegocioArticulo.crearArticulo(articulo);
+            Response.Redirect("Admin.aspx?id=5");
+        }
+        //TODO: CARGAR DDL EN AGREGAR ART 
+        protected void CargaDdl()
+        {
+            try
+            {
+                NegocioCategoria = new NegocioCategoria();
+                NegocioMarca = new NegocioMarca();
+                ddlCategoria.DataSource = NegocioCategoria.ListarCategorias();
+                ddlCategoria.DataTextField = "Descripcion";
+                ddlCategoria.DataValueField = "Id";
+                ddlCategoria.DataBind();
+                ddlMarca.DataSource = NegocioMarca.ListarMarcas();
+                ddlMarca.DataTextField = "Descripcion";
+                ddlMarca.DataValueField = "Id";
+                ddlMarca.DataBind();
+                
+            }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+}
+        protected void tbImgArt_TextChanged(object sender, EventArgs e)
+        {
+            imgNuevoArt.ImageUrl = tbImgArt.Text;
+        }
+        //FIN LOGICA ARTÍCULOS
+
+        //LOGICA CATEGORIAS
+
+        //TODO: Guardar categoria modificada
+        protected void btnGuardarCate_Click(object sender, EventArgs e)
+        {
+            categoria = new Categoria();
+            NegocioCategoria = new NegocioCategoria();
+
+            // Obtener el botón que se hizo clic
+            Button btnGuardarCate = (Button)sender;
+
+            // Obtener el contenedor del botón (div.card) utilizando NamingContainer
+            RepeaterItem repeaterItem = (RepeaterItem)btnGuardarCate.NamingContainer;
+            var cardContainer = (HtmlGenericControl)repeaterItem.FindControl("cardContainer");
+
+            // Obtener los controles Label y TextBox dentro del contenedor
+            var lblCategoria = (Label)cardContainer.FindControl("lblCategoria");
+            var txtCategoria = (TextBox)cardContainer.FindControl("txtCategoria");
+            var lblIdCate = (Label)cardContainer.FindControl("lblIdCate");
+            var txtIdCate = (TextBox)cardContainer.FindControl("txtIdCate");
+            var lblUrl = (Label)cardContainer.FindControl("lblUrl");
+            var tbUrlImg = (TextBox)cardContainer.FindControl("tbUrlImg");
+            var lblCambiarImg = (Label)cardContainer.FindControl("lblCambiarImg");
+
+            // Actualizar el texto del Label con el valor ingresado en el TextBox
+            lblCategoria.Text = txtCategoria.Text;
+            lblIdCate.Text = txtIdCate.Text;
+            lblUrl.Text = tbUrlImg.Text;
+
+            //asigno valores para guardarlos en bd
+            categoria.Id = Convert.ToInt32(lblIdCate.Text);
+            categoria.Descripcion = lblCategoria.Text;
+            categoria.UrlImagen = lblUrl.Text;
+
+            //guardar categoria
+            NegocioCategoria.editarCategoria(categoria);
+
+            // Mostrar el Label y ocultar el TextBox
+            lblCategoria.Visible = true;
+            txtCategoria.Visible = false;
+            lblIdCate.Visible = true;
+            txtIdCate.Visible = false;
+            lblUrl.Visible = false;
+            tbUrlImg.Visible = false;
+            lblCambiarImg.Visible= false;
+
+            // Ocultar el botón "Guardar" y mostrar el botón "Editar"
+            var btnEditarCate = (Button)cardContainer.FindControl("btnEditarCate");
+            btnGuardarCate.Visible = false;
+            btnEditarCate.Visible = true;
+        }
+
+        //TODO: Habilitar los label para poder modificar las categorías
+        protected void btnEditarCate_Click(object sender, EventArgs e)
+        {
+            // Obtener el botón que se hizo clic
+            Button btnEditarCate = (Button)sender;
+
+            // Obtener el contenedor del botón (div.card) utilizando NamingContainer
+            RepeaterItem repeaterItem = (RepeaterItem)btnEditarCate.NamingContainer;
+            var cardContainer = (HtmlGenericControl)repeaterItem.FindControl("cardContainer");
+
+            // Obtener los controles Label y TextBox dentro del contenedor
+            var lblCategoria = (Label)cardContainer.FindControl("lblCategoria");
+            var txtCategoria = (TextBox)cardContainer.FindControl("txtCategoria");
+            var lblIdCate = (Label)cardContainer.FindControl("lblIdCate");
+            var txtIdCate = (TextBox)cardContainer.FindControl("txtIdCate");
+            var lblUrl = (Label)cardContainer.FindControl("lblUrl");
+            var tbUrlImg = (TextBox)cardContainer.FindControl("tbUrlImg");
+            var lblCambiarImg = (Label)cardContainer.FindControl("lblCambiarImg");
+
+            // Mostrar el TextBox y ocultar el Label
+            lblCategoria.Visible = false;
+            txtCategoria.Visible = true;
+            lblIdCate.Visible = false;
+            txtIdCate.Visible = true;
+            lblUrl.Visible = false;
+            tbUrlImg.Visible = true;
+            lblCambiarImg.Visible = true;
+            
+
+            // Establecer el texto del TextBox con el valor actual del Label
+            txtCategoria.Text = lblCategoria.Text;
+            txtIdCate.Text = lblIdCate.Text;
+            tbUrlImg.Text = lblUrl.Text;
+
+            // Ocultar el botón "Editar" y mostrar el botón "Guardar"
+            var btnGuardarCate = (Button)cardContainer.FindControl("btnGuardarCate");
+            btnEditarCate.Visible = false;
+            btnGuardarCate.Visible = true;
+        }
+
+        protected void tbUrlImg_TextChanged(object sender, EventArgs e)
+        {
+            TextBox tbUrlImg = (TextBox)sender;
+            RepeaterItem repeaterItem = (RepeaterItem)tbUrlImg.NamingContainer;
+            Image imgCate = (Image)repeaterItem.FindControl("imgCate");
+
+            // Asignar el valor del TextBox al ImageUrl del control Image
+            imgCate.ImageUrl = tbUrlImg.Text;
+        }
+
+        protected void btnBajaCate_Click(object sender, EventArgs e)
+        {
+            
+        }
+        //TODO: eliminar categoria
+        protected void btnEliminarCate_Click(object sender, EventArgs e)
+        {
+            NegocioCategoria = new NegocioCategoria();
+            Button btnBajaCate = (Button)sender;
+            RepeaterItem repeaterItem = (RepeaterItem)btnBajaCate.NamingContainer;
+            var cardContainer = (HtmlGenericControl)repeaterItem.FindControl("cardContainer");
+            var lblIdCate = (Label)cardContainer.FindControl("lblIdCate");
+            NegocioCategoria.borrarCategoria(Convert.ToInt32(lblIdCate.Text));
+            Response.Redirect("Admin.aspx?id=4");
+        }
+        //FIN LOGICA CATEGORIAS
+
     }
 }

@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="background: rgb(33,37,41); background: linear-gradient(90deg, rgba(33,37,41,1) 0%, rgba(33,37,41,1) 42%, rgba(30,120,253,1) 100%);">
         <div class="row flex-nowrap">
 
             <!-- Barra de Opciones -->
@@ -45,7 +45,7 @@
                                     <a href="Admin.aspx?id=5" class="nav-link px-0"><span class="d-none d-sm-inline text-light ms-4">Todos los artículos</span></a>
                                 </li>
                                 <li>
-                                    <a href="Agregar.aspx" class="nav-link px-0"><span class="d-none d-sm-inline text-light ms-4">Nuevo artículo</span></a>
+                                    <a href="Admin.aspx?id=7" class="nav-link px-0"><span class="d-none d-sm-inline text-light ms-4">Nuevo artículo</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -88,7 +88,7 @@
             <div class="col-md-1"></div>
 
             <!-- Cuerpo Principal -->
-            <div class="col-md-8 mt-5"  background-image: url(https://img3.wallspic.com/crops/9/3/0/4/6/164039/164039-banner_de_contraccion_de_la_galaxia-contraccion_nerviosa-banner_web-streaming_de_medios_de_comunicacion-gamer-3840x2160.png)">
+            <div class="col-md-8 mt-5" background-image: url(https://img3.wallspic.com/crops/9/3/0/4/6/164039/164039-banner_de_contraccion_de_la_galaxia-contraccion_nerviosa-banner_web-streaming_de_medios_de_comunicacion-gamer-3840x2160.png)">
                 <asp:UpdatePanel runat="server">
                     <ContentTemplate>
 
@@ -142,98 +142,93 @@
                         <%-- Modificar/Agregar Usuarios --%>
                         <asp:UpdatePanel ID="updatePanelModificarUsuario" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
-                                <section class="vh-100" style="background-color: #f4f5f7;" runat="server" id="sectionModificarUsuario">
-                                    <div class="container py-5 h-100">
-                                        <!-- Card Usuarios -->
-                                        <div class="row d-flex justify-content-center align-items-center h-100">
-                                            <div class="col col-lg-8 mb-4 mb-lg-0 ">
-                                                <div class="card mb-3" style="border-radius: .5rem;">
-                                                    <div class="row g-0">
-                                                        <!-- Columna de Imagen -->
-                                                        <div class="col-md-4  text-center bg-warning text-white"
-                                                            style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                                                            <asp:Image ID="userImg" runat="server" ImageUrl="~/recursos/img/avatar.png" Width="120px" CssClass="img-fluid my-5" />
-                                                            <h6>
-                                                                <!-- ID Usuario -->
-                                                                <strong class="fs-5 text-dark">
-                                                                    ID Usuario
+                                <!-- Card Usuarios -->
+                                <div class="row d-flex justify-content-center align-items-center vh-100" runat="server" id="sectionModificarUsuario">
+                                    <div class="col col-lg-8 mb-4 mb-lg-0 ">
+                                        <div class="card mb-3" style="border-radius: .5rem;">
+                                            <div class="row g-0">
+                                                <!-- Columna de Imagen -->
+                                                <div class="col-md-4  text-center bg-warning text-white"
+                                                    style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                                                    <asp:Image ID="userImg" runat="server" ImageUrl="~/recursos/img/avatar.png" Width="120px" CssClass="img-fluid my-5" />
+                                                    <h6>
+                                                        <!-- ID Usuario -->
+                                                        <strong class="fs-5 text-dark">ID Usuario
                                                                     <asp:Label runat="server" ID="txtId" />
-                                                                </strong> 
-                                                            </h6>
-                                                            <i class="far fa-edit mb-5"></i>
-                                                        </div>
-                                                        <!-- Columna de Inputs -->
-                                                        <div class="col-md-8">
-                                                            <div class="card-body p-4">
-                                                                <h6>Información del usuario</h6>
-                                                                <hr class="mt-0 mb-4">
-                                                                <div class="row pt-1">
-                                                                    <!-- Nombre -->
-                                                                    <div class="col-6 mb-3">
-                                                                        <h6>Nombre/s</h6>
-                                                                        <asp:TextBox runat="server" ID="txtNombre" CssClass="text-muted form-control" required minlength="1" MaxLength="30" pattern="[A-Za-z\s]+" />
-                                                                    </div>
-                                                                    <!-- Apellido -->
-                                                                    <div class="col-6 mb-3">
-                                                                        <h6>Apellido/s</h6>
-                                                                        <asp:TextBox runat="server" ID="txtApellido" CssClass="text-muted form-control" required minlength="1" MaxLength="30" pattern="[A-Za-z\s]+" />
-                                                                    </div>
-                                                                    <!-- MAIL -->
-                                                                    <div class="col-6 mb-3">
-                                                                        <h6>Email</h6>
-                                                                        <asp:TextBox runat="server" ID="txtEmail" CssClass="text-muted form-control" required />
-                                                                    </div>
-                                                                    <!-- DNI -->
-                                                                    <div class="col-6 mb-3">
-                                                                        <h6>Nro. Documento</h6>
-                                                                        <asp:TextBox type="number" runat="server" ID="txtDni" CssClass="text-muted form-control" required pattern="\d{8}" />
-                                                                    </div>
-                                                                </div>
-                                                                <h6>Contacto</h6>
-                                                                <hr class="mt-0 mb-4">
-                                                                <div class="row pt-1">
-                                                                    <!-- PASS -->
-                                                                    <div class="col-6 mb-3">
-                                                                        <h6>Contraseña</h6>
-                                                                        <asp:TextBox type="password" runat="server" ID="txtClave" CssClass="text-muted form-control" required minlength="6" MaxLength="20" />
-                                                                        <%--patron para solo aceptar claves con un mayus, numeros y minusculas    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$"    --%>
-                                                                    </div>
-                                                                    <!-- DIR -->
-                                                                    <div class="col-6 mb-3">
-                                                                        <h6>Dirección</h6>
-                                                                        <asp:TextBox runat="server" ID="txtDomicilio" CssClass="text-muted form-control" required minlength="6" MaxLength="100" pattern="[A-Za-z0-9\s.,-]+" />
-                                                                    </div>
-                                                                    <!-- IMG -->
-                                                                    <div class="col-6 mb-3">
-                                                                        <h6>Imágen de perfil</h6>
-                                                                        <asp:TextBox runat="server" ID="txtUrl" CssClass="text-muted form-control" OnTextChanged="txtUrl_TextChanged" />
-                                                                    </div>
-                                                                    <!-- NIVEL -->
-                                                                    <div class="col-6 mb-3">
-                                                                        <h6>Nivel de usuario</h6>
-                                                                        <asp:TextBox runat="server" ID="txtTipoUsuario" CssClass="text-muted form-control" required minlength="1" MaxLength="1" pattern="[A-Za-z]+" />
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Botones -->
-                                                                <div class="d-flex justify-content-end">
-                                                                    <asp:Button Text="Dar de alta" runat="server" ID="btnAltaUsuario" OnClick="btnAltaUsuario_Click" CssClass="btn btn-outline-success mt-3 me-3" />
-                                                                    <asp:Button Text="Dar de baja" runat="server" ID="btnBajaUsuario" OnClick="btnBajaUsuario_Click" CssClass="btn btn-outline-danger mt-3 me-3" />
-                                                                    <asp:Button Text="Eliminar" runat="server" ID="btnEliminarUsuario" OnClick="btnEliminarUsuario_Click" CssClass="btn btn-danger mt-3 me-3" />
-                                                                    <asp:Button Text="Guardar Cambios" runat="server" ID="btnGuardarUsuario" OnClick="btnGuardarUsuario_Click" CssClass="btn btn-dark mt-3" />
-                                                                </div>
-                                                                <!-- Link Volver a Lista Usuarios (TEST) -->
-                                                                <div class="col-md-8">
-                                                                    <asp:LinkButton Text="Volver a Lista Usuarios" CssClass="link-body-emphasis" ID="lnkVolverListaUsuarios" OnClick="lnkVolverListaUsuarios_Click" runat="server" />
-                                                                </div>
+                                                        </strong>
+                                                    </h6>
+                                                    <i class="far fa-edit mb-5"></i>
+                                                </div>
+                                                <!-- Columna de Inputs -->
+                                                <div class="col-md-8">
+                                                    <div class="card-body p-4">
+                                                        <h6>Información del usuario</h6>
+                                                        <hr class="mt-0 mb-4">
+                                                        <div class="row pt-1">
+                                                            <!-- Nombre -->
+                                                            <div class="col-6 mb-3">
+                                                                <h6>Nombre/s</h6>
+                                                                <asp:TextBox runat="server" ID="txtNombre" CssClass="text-muted form-control" required minlength="1" MaxLength="30" pattern="[A-Za-z\s]+" />
                                                             </div>
+                                                            <!-- Apellido -->
+                                                            <div class="col-6 mb-3">
+                                                                <h6>Apellido/s</h6>
+                                                                <asp:TextBox runat="server" ID="txtApellido" CssClass="text-muted form-control" required minlength="1" MaxLength="30" pattern="[A-Za-z\s]+" />
+                                                            </div>
+                                                            <!-- MAIL -->
+                                                            <div class="col-6 mb-3">
+                                                                <h6>Email</h6>
+                                                                <asp:TextBox runat="server" ID="txtEmail" CssClass="text-muted form-control" required />
+                                                            </div>
+                                                            <!-- DNI -->
+                                                            <div class="col-6 mb-3">
+                                                                <h6>Nro. Documento</h6>
+                                                                <asp:TextBox type="number" runat="server" ID="txtDni" CssClass="text-muted form-control" required pattern="\d{8}" />
+                                                            </div>
+                                                        </div>
+                                                        <h6>Contacto</h6>
+                                                        <hr class="mt-0 mb-4">
+                                                        <div class="row pt-1">
+                                                            <!-- PASS -->
+                                                            <div class="col-6 mb-3">
+                                                                <h6>Contraseña</h6>
+                                                                <asp:TextBox type="password" runat="server" ID="txtClave" CssClass="text-muted form-control" required minlength="6" MaxLength="20" />
+                                                                <%--patron para solo aceptar claves con un mayus, numeros y minusculas    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$"    --%>
+                                                            </div>
+                                                            <!-- DIR -->
+                                                            <div class="col-6 mb-3">
+                                                                <h6>Dirección</h6>
+                                                                <asp:TextBox runat="server" ID="txtDomicilio" CssClass="text-muted form-control" required minlength="6" MaxLength="100" pattern="[A-Za-z0-9\s.,-]+" />
+                                                            </div>
+                                                            <!-- IMG -->
+                                                            <div class="col-6 mb-3">
+                                                                <h6>Imágen de perfil</h6>
+                                                                <asp:TextBox runat="server" ID="txtUrl" CssClass="text-muted form-control" OnTextChanged="txtUrl_TextChanged" />
+                                                            </div>
+                                                            <!-- NIVEL -->
+                                                            <div class="col-6 mb-3">
+                                                                <h6>Nivel de usuario</h6>
+                                                                <asp:TextBox runat="server" ID="txtTipoUsuario" CssClass="text-muted form-control" required minlength="1" MaxLength="1" pattern="[A-Za-z]+" />
+                                                            </div>
+                                                        </div>
+                                                        <!-- Botones -->
+                                                        <div class="d-flex justify-content-end">
+                                                            <asp:Button Text="Dar de alta" runat="server" ID="btnAltaUsuario" OnClick="btnAltaUsuario_Click" CssClass="btn btn-outline-success mt-3 me-3" />
+                                                            <asp:Button Text="Dar de baja" runat="server" ID="btnBajaUsuario" OnClick="btnBajaUsuario_Click" CssClass="btn btn-outline-danger mt-3 me-3" />
+                                                            <asp:Button Text="Eliminar" runat="server" ID="btnEliminarUsuario" OnClick="btnEliminarUsuario_Click" CssClass="btn btn-danger mt-3 me-3" />
+                                                            <asp:Button Text="Guardar Cambios" runat="server" ID="btnGuardarUsuario" OnClick="btnGuardarUsuario_Click" CssClass="btn btn-dark mt-3" />
+                                                        </div>
+                                                        <!-- Link Volver a Lista Usuarios (TEST) -->
+                                                        <div class="col-md-8">
+                                                            <asp:LinkButton Text="Volver a Lista Usuarios" CssClass="link-body-emphasis" ID="lnkVolverListaUsuarios" OnClick="lnkVolverListaUsuarios_Click" runat="server" />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Fin Card Usuarios -->
                                     </div>
-                                </section>
+                                </div>
+                                <!-- Fin Card Usuarios -->
                             </ContentTemplate>
                         </asp:UpdatePanel>
                         <%-- Fin Modifciar/Agregar Usuario --%>
@@ -486,31 +481,59 @@
 
                         <%-- ################################ abm CATEGORIAS ################################ --%>
                         <%--lista categorias--%>
-                        <asp:GridView ID="dgvAdminCate" runat="server" CssClass="table table-striped mt-5 " AutoGenerateColumns="False">
-                            <Columns>
-                                <asp:TemplateField HeaderText="Imágen">
-                                    <ItemTemplate>
-                                        <asp:Image runat="server" ImageUrl='<%#Eval("UrlImagen") %>' onerror="this.src='./Recursos/image-not-found.png'" Width="70px" Height="70px" CssClass="ml-2" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ID Categoria">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Id") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Descripción">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Acción">
-                                    <ItemTemplate>
-                                        <asp:ImageButton ID="ibtEliminar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEliminar_Click" Height="29px" ImageUrl="~/recursos/img/Eliminar.png" Width="29px" />
-                                        <asp:ImageButton ID="ibtEditar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEditar_Click" Height="29px" ImageUrl="~/recursos/img/editar.png" Width="29px" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
+                        <div class="row">
+                            <h1 class="text-light text-center bg-dark border border-light rounded-2 p-2" style="margin-top: 100px;" id="dgvAdminCateTitle" visible="false" runat="server"><strong>Administración de Categorias</strong></h1>
+                            <div class="col-10 mt-5" id="dgvAdminCrearCate" runat="server" visible="false">
+                                <asp:Button ID="btnAgregarCate" Text="➕ Agregar nueva categoría" CssClass="m-3 btn btn-primary btn-lg m-3" runat="server" />
+                            </div>
+                            <asp:Repeater ID="dgvAdminCate" runat="server">
+                                <ItemTemplate>
+                                    <div class="col-3 mt-2 mb-3 text-center">
+                                        <div class="card h-100 m-3 bg-warning border-primary" runat="server" id="cardContainer">
+                                            <div class="card-header">
+                                                <asp:Label Text="Imágen" ID="btnCambiarImg1" runat="server" />
+                                            </div>
+                                            <div class="d-flex justify-content-center align-items-center mt-5">
+                                                <asp:UpdatePanel runat="server">
+                                                    <ContentTemplate>
+                                                        <asp:Image ID="imgCate" runat="server" ImageUrl='<%#Eval("UrlImagen") %>' onerror="this.src='./Recursos/image-not-found.png'" Width="170px" Height="170px" CssClass="ml-2" />
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <asp:Label runat="server" ID="lblCategoria" Text='<%# Eval("Descripcion") %>' Visible="true"></asp:Label>
+                                                    <asp:TextBox runat="server" ID="txtCategoria" Visible="false" CssClass="form-control"></asp:TextBox>
+                                                </h5>
+                                                <p class="card-text">
+                                                    <p>
+                                                        ID Categoría:
+                                                    <asp:Label runat="server" ID="lblIdCate" Text='<%# Eval("Id") %>' CssClass="mt-3"></asp:Label>
+                                                    </p>
+                                                    <asp:TextBox runat="server" ID="txtIdCate" Visible="false" CssClass="form-control  mb-3"></asp:TextBox>
+                                                    <asp:Label ID="lblCambiarImg" Text="URL Imágen" runat="server" Visible="false" CssClass="mt-5" />
+                                                    <asp:Label runat="server" ID="lblUrl" Text='<%# Eval("UrlImagen") %>' CssClass="mt-3" Visible="false"></asp:Label>
+                                                    <asp:TextBox runat="server" ID="tbUrlImg" AutoPostBack="true" Visible="false" CssClass="form-control mt-3" OnTextChanged="tbUrlImg_TextChanged"></asp:TextBox>
+                                                </p>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="col-6 card-footer text-center bg-danger-subtle">
+                                                    <i class="bi bi-x-circle-fill fs-5"></i><asp:Button runat="server" ID="btnBajaCate" Text="Dar baja" CssClass="btn" OnClick="btnBajaCate_Click" />
+                                                    <%--deberiamos evaluar si darle baja logica alas categorias y marcas, no se es tan necesario, por que sino hay que modificar el script de la bd--%>
+                                                </div>
+                                                <div class="col-6 card-footer text-center bg-danger">
+                                                    <i class="bi bi-trash-fill fs-5"></i><asp:Button runat="server" ID="btnEliminarCate" Text="Eliminar" CssClass="btn" OnClick="btnEliminarCate_Click" />
+                                                </div>
+                                            </div>
+                                            <div class="col-12 card-footer text-center bg-primary">
+                                                <i class="bi bi-pencil-fill fs-5"></i><asp:Button runat="server" ID="btnEditarCate" Text="Editar" Visible="true" CssClass="btn btn-primary" OnClick="btnEditarCate_Click" />
+                                                <asp:Button runat="server" ID="btnGuardarCate" Text="Guardar" Visible="false" CssClass="btn btn-primary" OnClick="btnGuardarCate_Click" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
                         <%--fin lista categorias--%>
 
                         <%-- ################################ abm MARCAS ################################ --%>
@@ -556,7 +579,63 @@
                         </asp:GridView>
                         <%--Fin lista marcas--%>
 
-
+                        <%--Registrar nuevos productos--%>
+                        <div class="row d-flex justify-content-center align-items-center vh-100">
+                            <%--row d-flex justify-content-center align-items-center vh-100--%>
+                            <div class="card rounded-4 col-8 bg-warning ms-5" style="margin-top: 100px; margin-bottom: 100px;" id="SectionCrearArt" runat="server">
+                                <div class=" card-header text-center">
+                                    <h1>🆕 Nuevo Artículo 🆕</h1>
+                                </div>
+                                <div class="row p-2">
+                                    <div class="col-6 mt-3">
+                                        <label for="IdArticulo" class="form-label">Número de ID <span class="text-danger">*</span></label>
+                                        <asp:TextBox CssClass="form-control" ID="tbIdArt" placeholder="ID Articulo" runat="server" />
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <label for="Nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+                                        <asp:TextBox CssClass="form-control" ID="tbNombreArt" runat="server" />
+                                    </div>
+                                    <div class="col-4 mt-3">
+                                        <label for="Marca" class="form-label">Marca<span class="text-danger">*</span></label>
+                                        <asp:DropDownList runat="server" ID="ddlMarca" CssClass="btn btn-light dropdown-toggle" Width="280px"></asp:DropDownList>
+                                    </div>
+                                    <div class="col-4 mt-3">
+                                        <label for="Categoria" class="form-label">Categoría <span class="text-danger">*</span></label>
+                                        <asp:DropDownList runat="server" ID="ddlCategoria" CssClass="btn btn-light dropdown-toggle" Width="280px"></asp:DropDownList>
+                                    </div>
+                                    <div class="col-4 mt-3">
+                                        <label for="Stock" class="form-label">Stock <span class="text-danger">*</span></label>
+                                        <asp:TextBox CssClass="form-control" ID="tbStockArt" runat="server" />
+                                    </div>
+                                    <div class="col-4 mt-3">
+                                        <label for="Precio" class="form-label">Precio <span class="text-danger">*</span></label>
+                                        <asp:TextBox CssClass="form-control" ID="tbPrecioArt" runat="server" />
+                                    </div>
+                                    <div class="col-4 mt-3">
+                                        <label for="img" class="form-label">URL imágen <span class="text-danger">*</span></label>
+                                        <asp:TextBox CssClass="form-control" ID="tbImgArt" runat="server" AutoPostBack="true" OnTextChanged="tbImgArt_TextChanged" />
+                                    </div>
+                                    <div class="col-4 mt-3">
+                                        <asp:UpdatePanel runat="server">
+                                            <ContentTemplate>
+                                                <asp:Image ID="imgNuevoArt" runat="server" ImageUrl="~/recursos/img/agregar-img.png" Width="200px" CssClass="mt-3 ms-5" />
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <label for="Descripcion" class="form-label">Descripcion <span class="text-danger">*</span></label>
+                                        <asp:TextBox CssClass="form-control pb-4" ID="tbDescripArt" runat="server" />
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <asp:LinkButton Text="Volver a Lista Usuarios" CssClass="link-body-emphasis mt-5" ID="LinkButton2" runat="server" />
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <asp:Button Text="Guardar artículo" ID="btnAgregar" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" runat="server" OnClick="btnAgregar_Click" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%--fin Registrar nuevos productos--%>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>

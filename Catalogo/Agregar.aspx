@@ -3,7 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <section class="vh-100 h-custom" style="background: rgb(0,0,0); background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(148,187,233,1) 100%);">
+    <section class="vh-100 h-custom" style="background: rgb(0,0,0); background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(148,187,233,1) 100%);" id="SectionCrearArt" >
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <%--Carga nuevo artículo--%>
