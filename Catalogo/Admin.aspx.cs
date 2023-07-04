@@ -82,8 +82,10 @@ namespace Catalogo
                                 SectionCrearArt.Visible= true;
                                 break;
                             case 8:
+                                cargarNuevaCategoria();
                                 break;
                             case 9:
+                                cargarNuevaMarca();
                                 break;
                         }
                     }
@@ -159,6 +161,8 @@ namespace Catalogo
             MarcaList = NegocioMarca.ListarMarcas();
             dgvAdminMarca.DataSource = MarcaList;
             dgvAdminMarca.DataBind();
+            titleMarcas.Visible = true;
+            sectionAgregarMarca.Visible=true;
         }
 
 
@@ -443,7 +447,11 @@ namespace Catalogo
         //FIN LOGICA ARTÍCULOS
 
         //LOGICA CATEGORIAS
-
+        protected void btnAgregarCategoria_Click(object sender, EventArgs e)
+        {
+            //si quiere agregar una nueva categoria lo redirige 
+            Response.Redirect("Admin.aspx?id=8");
+        }
         //TODO: Guardar categoria modificada
         protected void btnGuardarCate_Click(object sender, EventArgs e)
         {
@@ -559,7 +567,161 @@ namespace Catalogo
             NegocioCategoria.borrarCategoria(Convert.ToInt32(lblIdCate.Text));
             Response.Redirect("Admin.aspx?id=4");
         }
+        private void cargarNuevaCategoria()
+        {
+            SectionNuevaCate.Visible = true;
+        }
+        //guardar nuevo articulo
+        protected void btnAgregarCate_Click(object sender, EventArgs e)
+        {
+            categoria = new Categoria();
+            NegocioCategoria = new NegocioCategoria();
+            
+            categoria.Id = int.Parse(tbIdCate.Text);
+            categoria.Descripcion = tbNombreCate.Text;
+            categoria.UrlImagen = tbUrlImgCate.Text;
+            NegocioCategoria.agregarCategoria(categoria);
+            Response.Redirect("Admin.aspx?id=4");
+        }
+
+        protected void tbUrlImgCate_TextChanged(object sender, EventArgs e)
+        {
+            imgNuevaCate.ImageUrl= tbUrlImgCate.Text;
+        }
+
+        protected void volverCate_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Admin.aspx?id=4");
+        }
         //FIN LOGICA CATEGORIAS
+
+        //TODO: LOGICA MARCAS
+        protected void tbUrlImgMarca_TextChanged(object sender, EventArgs e)
+        {
+            // Asignar el valor del TextBox al ImageUrl del control Image
+            TextBox tbUrlImgMarca = (TextBox)sender;
+            RepeaterItem repeaterItem = (RepeaterItem)tbUrlImgMarca.NamingContainer;
+            Image imgMarca = (Image)repeaterItem.FindControl("imgMarca");
+            imgMarca.ImageUrl = tbUrlImgMarca.Text;
+
+        }
+        protected void btnGuardarNewMarca_Click(object sender, EventArgs e)
+        {
+            marca = new Marca();
+            NegocioMarca = new NegocioMarca();
+
+            marca.Id = int.Parse(tbIdMarca.Text);
+            marca.Descripcion = tbNombreMarca.Text;
+            marca.UrlImagen = tbUrlImgMarca.Text;
+            NegocioMarca.AgregarMarca(marca);
+            Response.Redirect("Admin.aspx?id=3");
+        }
+
+        protected void btnVolverMarca_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Admin.aspx?id=3");
+        }
+
+        private void cargarNuevaMarca()
+        {
+            SectionNuevaMarca.Visible = true;
+        }
+
+        protected void btnAgregarMarca_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Admin.aspx?id=9");
+        }
+
+        protected void btnGuardarMarca_Click(Object sender, EventArgs e)
+        {
+            // Obtener el botón que se hizo clic
+            Button btnGuardarMarca = (Button)sender;
+
+            // Obtener el contenedor del botón (div.card) utilizando NamingContainer
+            RepeaterItem repeaterItem = (RepeaterItem)btnGuardarMarca.NamingContainer;
+            var cardContainer = (HtmlGenericControl)repeaterItem.FindControl("cardContainerMarca");
+
+            // Obtener los controles Label y TextBox dentro del contenedor
+            var lblMarca = (Label)cardContainer.FindControl("lblMarca");
+            var txtMarca = (TextBox)cardContainer.FindControl("txtMarca");
+            var lblIdMarca = (Label)cardContainer.FindControl("lblIdMarca");
+            var txtIdMarca = (TextBox)cardContainer.FindControl("txtIdMarca");
+            var lblUrlMarca = (Label)cardContainer.FindControl("lblUrlMarca");
+            var tbUrlImgMarca = (TextBox)cardContainer.FindControl("tbUrlImgMarca");
+
+            //asignar valores para guardar
+            marca = new Marca();
+            NegocioMarca = new NegocioMarca();
+            marca.Id = int.Parse(txtIdMarca.Text);
+            marca.Descripcion = txtMarca.Text;
+            marca.UrlImagen = tbUrlImgMarca.Text;
+            NegocioMarca.EditarMarca(marca);
+
+            lblMarca.Visible = true;
+            txtMarca.Visible = false;
+            lblIdMarca.Visible = true;
+            txtIdMarca.Visible = false;
+            lblUrlMarca.Visible = false;
+            tbUrlImgMarca.Visible = false;
+
+
+            lblMarca.Text = txtMarca.Text;
+            lblIdMarca.Text = txtIdMarca.Text;
+            lblUrlMarca.Text = tbUrlImgMarca.Text;
+
+            var btnEditarMarca = (Button)cardContainer.FindControl("btnEditarMarca");
+            btnGuardarMarca.Visible = false;
+            btnEditarMarca.Visible = true;
+        }
+        protected void btnEliminarMarca_Click(object sender, EventArgs e)
+        {
+            NegocioMarca = new NegocioMarca();
+            Button btnBajaMarca = (Button)sender;
+            RepeaterItem repeaterItem = (RepeaterItem)btnBajaMarca.NamingContainer;
+            var cardContainer = (HtmlGenericControl)repeaterItem.FindControl("cardContainerMarca");
+            var lblIdMarca = (Label)cardContainer.FindControl("lblIdMarca");
+            NegocioMarca.borrarMarca(Convert.ToInt32(lblIdMarca.Text));
+            Response.Redirect("Admin.aspx?id=3");
+        }
+
+        protected void btnEditarMarca_Click(object sender, EventArgs e)
+        {
+            // Obtener el botón que se hizo clic
+            Button btnEditarMarca = (Button)sender;
+
+            // Obtener el contenedor del botón (div.card) utilizando NamingContainer
+            RepeaterItem repeaterItem = (RepeaterItem)btnEditarMarca.NamingContainer;
+            var cardContainer = (HtmlGenericControl)repeaterItem.FindControl("cardContainerMarca");
+
+            // Obtener los controles Label y TextBox dentro del contenedor
+            var lblMarca = (Label)cardContainer.FindControl("lblMarca");
+            var txtMarca = (TextBox)cardContainer.FindControl("txtMarca");
+            var lblIdMarca = (Label)cardContainer.FindControl("lblIdMarca");
+            var txtIdMarca = (TextBox)cardContainer.FindControl("txtIdMarca");
+            var lblUrlMarca = (Label)cardContainer.FindControl("lblUrlMarca");
+            var tbUrlImgMarca = (TextBox)cardContainer.FindControl("tbUrlImgMarca");
+
+            //asignar valor de los label a los textbox
+            txtMarca.Text = lblMarca.Text;
+            txtIdMarca.Text = lblIdMarca.Text;
+            tbUrlImgMarca.Text = lblUrlMarca.Text;
+
+            // Mostrar el TextBox y ocultar el Label
+            lblMarca.Visible = false;
+            txtMarca.Visible = true;
+            lblIdMarca.Visible = false;
+            txtIdMarca.Visible = true;
+            lblUrlMarca.Visible = false;
+            tbUrlImgMarca.Visible = true;
+
+            // Ocultar el botón "Editar" y mostrar el botón "Guardar"
+            var btnGuardarMarca = (Button)cardContainer.FindControl("btnGuardarMarca");
+            btnGuardarMarca.Visible = true;
+            btnEditarMarca.Visible = false;
+
+        }
+
+        //FIN LOGICA MARCAS
 
     }
 }

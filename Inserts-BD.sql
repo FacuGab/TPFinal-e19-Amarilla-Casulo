@@ -42,6 +42,7 @@ INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('9', 'Western Digital', 
 INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('10', 'ViewSonic', 'https://e7.pngegg.com/pngimages/466/107/png-clipart-hewlett-packard-viewsonic-computer-monitors-logo-computer-software-hewlett-packard-text-logo.png');
 INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('11', 'Asrock', 'https://cdn.shopify.com/s/files/1/0331/2789/1082/products/ASRock_grande.jpg?v=1582152086');
 INSERT INTO MARCAS (id, descripcion, urlImagen) VALUES ('12', 'Adata', 'https://2.bp.blogspot.com/-yTiEnencHOA/T08JEEqNlKI/AAAAAAAABts/luVxNynFvW8/s1600/a6.jpg');
+UPDATE MARCAS SET Id = @id,Descripcion = @descripcion, UrlImagen = @urlImagen WHERE Id = @id
 	
 		
 select * from MARCAS;

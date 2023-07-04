@@ -143,7 +143,7 @@
                         <asp:UpdatePanel ID="updatePanelModificarUsuario" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
                                 <!-- Card Usuarios -->
-                                <div class="row d-flex justify-content-center align-items-center vh-100" runat="server" id="sectionModificarUsuario">
+                                <div class="row d-flex justify-content-center align-items-center vh-100" runat="server" id="sectionModificarUsuario" visible="false">
                                     <div class="col col-lg-8 mb-4 mb-lg-0 ">
                                         <div class="card mb-3" style="border-radius: .5rem;">
                                             <div class="row g-0">
@@ -478,110 +478,8 @@
                             </Columns>
                         </asp:GridView>
                         <%--fin lista Articulos--%>
-
-                        <%-- ################################ abm CATEGORIAS ################################ --%>
-                        <%--lista categorias--%>
-                        <div class="row">
-                            <h1 class="text-light text-center bg-dark border border-light rounded-2 p-2" style="margin-top: 100px;" id="dgvAdminCateTitle" visible="false" runat="server"><strong>Administración de Categorias</strong></h1>
-                            <div class="col-10 mt-5" id="dgvAdminCrearCate" runat="server" visible="false">
-                                <asp:Button ID="btnAgregarCate" Text="➕ Agregar nueva categoría" CssClass="m-3 btn btn-primary btn-lg m-3" runat="server" />
-                            </div>
-                            <asp:Repeater ID="dgvAdminCate" runat="server">
-                                <ItemTemplate>
-                                    <div class="col-3 mt-2 mb-3 text-center">
-                                        <div class="card h-100 m-3 bg-warning border-primary" runat="server" id="cardContainer">
-                                            <div class="card-header">
-                                                <asp:Label Text="Imágen" ID="btnCambiarImg1" runat="server" />
-                                            </div>
-                                            <div class="d-flex justify-content-center align-items-center mt-5">
-                                                <asp:UpdatePanel runat="server">
-                                                    <ContentTemplate>
-                                                        <asp:Image ID="imgCate" runat="server" ImageUrl='<%#Eval("UrlImagen") %>' onerror="this.src='./Recursos/image-not-found.png'" Width="170px" Height="170px" CssClass="ml-2" />
-                                                    </ContentTemplate>
-                                                </asp:UpdatePanel>
-                                            </div>
-                                            <div class="card-body">
-                                                <h5 class="card-title">
-                                                    <asp:Label runat="server" ID="lblCategoria" Text='<%# Eval("Descripcion") %>' Visible="true"></asp:Label>
-                                                    <asp:TextBox runat="server" ID="txtCategoria" Visible="false" CssClass="form-control"></asp:TextBox>
-                                                </h5>
-                                                <p class="card-text">
-                                                    <p>
-                                                        ID Categoría:
-                                                    <asp:Label runat="server" ID="lblIdCate" Text='<%# Eval("Id") %>' CssClass="mt-3"></asp:Label>
-                                                    </p>
-                                                    <asp:TextBox runat="server" ID="txtIdCate" Visible="false" CssClass="form-control  mb-3"></asp:TextBox>
-                                                    <asp:Label ID="lblCambiarImg" Text="URL Imágen" runat="server" Visible="false" CssClass="mt-5" />
-                                                    <asp:Label runat="server" ID="lblUrl" Text='<%# Eval("UrlImagen") %>' CssClass="mt-3" Visible="false"></asp:Label>
-                                                    <asp:TextBox runat="server" ID="tbUrlImg" AutoPostBack="true" Visible="false" CssClass="form-control mt-3" OnTextChanged="tbUrlImg_TextChanged"></asp:TextBox>
-                                                </p>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div class="col-6 card-footer text-center bg-danger-subtle">
-                                                    <i class="bi bi-x-circle-fill fs-5"></i><asp:Button runat="server" ID="btnBajaCate" Text="Dar baja" CssClass="btn" OnClick="btnBajaCate_Click" />
-                                                    <%--deberiamos evaluar si darle baja logica alas categorias y marcas, no se es tan necesario, por que sino hay que modificar el script de la bd--%>
-                                                </div>
-                                                <div class="col-6 card-footer text-center bg-danger">
-                                                    <i class="bi bi-trash-fill fs-5"></i><asp:Button runat="server" ID="btnEliminarCate" Text="Eliminar" CssClass="btn" OnClick="btnEliminarCate_Click" />
-                                                </div>
-                                            </div>
-                                            <div class="col-12 card-footer text-center bg-primary">
-                                                <i class="bi bi-pencil-fill fs-5"></i><asp:Button runat="server" ID="btnEditarCate" Text="Editar" Visible="true" CssClass="btn btn-primary" OnClick="btnEditarCate_Click" />
-                                                <asp:Button runat="server" ID="btnGuardarCate" Text="Guardar" Visible="false" CssClass="btn btn-primary" OnClick="btnGuardarCate_Click" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ItemTemplate>
-                            </asp:Repeater>
-                        </div>
-                        <%--fin lista categorias--%>
-
-                        <%-- ################################ abm MARCAS ################################ --%>
-                        <%--lista marcas--%>
-                        <asp:GridView ID="dgvAdminMarca" runat="server" CssClass="table table-striped mt-5" AutoGenerateColumns="False">
-                            <Columns>
-                                <asp:TemplateField HeaderText="Imágen">
-                                    <ItemTemplate>
-                                        <asp:Image runat="server" ImageUrl='<%#Eval("UrlImagen") %>' onerror="this.src='./Recursos/image-not-found.png'" Width="70px" Height="70px" CssClass="ml-2" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ID Categoria">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Id") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Descripción">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Acción">
-                                    <ItemTemplate>
-                                        <asp:ImageButton ID="ibtEliminar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEliminar_Click" Height="29px" ImageUrl="~/recursos/img/Eliminar.png" Width="29px" />
-                                        <asp:ImageButton ID="ibtEditar" CssClass="mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="eliminar_btn" OnClick="ibtEditar_Click" Height="29px" ImageUrl="~/recursos/img/editar.png" Width="29px" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
-                                <asp:TemplateField HeaderText="">
-                                    <ItemTemplate>
-                                        <%--<asp:ImageButton ID="btnAgregar" ImageUrl="~/Recursos/agregar.png" Height="19" Width="20" runat="server" OnClick="btnAgregar_Click"
-                                                        CommandArgument='<%#Eval("Id") %>' CommandName="btnAgregar" cssClass="mt-3"/>--%>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
-                                <asp:TemplateField HeaderText="">
-                                    <ItemTemplate>
-                                        <%--<asp:ImageButton ID="btnQuitar" ImageUrl="~/Recursos/minimizar.png" Height="19" Width="20" runat="server" OnClick="btnQuitar_Click"
-                                                        CommandArgument='<%#Eval("Id") %>' CommandName="btnRestar" cssClass="mt-3" />--%>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-                        <%--Fin lista marcas--%>
-
-                        <%--Registrar nuevos productos--%>
-                        <div class="row d-flex justify-content-center align-items-center vh-100">
-                            <%--row d-flex justify-content-center align-items-center vh-100--%>
+                        <%--Registrar nuevos Artículos--%>
+                        <div class="row d-flex justify-content-center align-items-center">
                             <div class="card rounded-4 col-8 bg-warning ms-5" style="margin-top: 100px; margin-bottom: 100px;" id="SectionCrearArt" runat="server">
                                 <div class=" card-header text-center">
                                     <h1>🆕 Nuevo Artículo 🆕</h1>
@@ -635,7 +533,205 @@
                                 </div>
                             </div>
                         </div>
-                        <%--fin Registrar nuevos productos--%>
+                        <%--fin Registrar nuevos Artículos--%>
+
+                        <%-- ################################ ABM CATEGORIAS ################################ --%>
+                        <%--lista categorias--%>
+                        <div class="row">
+                            <h1 class="text-light text-center bg-dark border border-light rounded-2 p-2" style="margin-top: 100px;" id="dgvAdminCateTitle" visible="false" runat="server"><strong>Administración de Categorias</strong></h1>
+                            <div class="col-10 mt-5" id="dgvAdminCrearCate" runat="server" visible="false">
+                                <asp:Button ID="btnAgregarCategoria" Text="➕ Agregar nueva categoría" CssClass="m-3 btn btn-primary btn-lg m-3" runat="server" OnClick="btnAgregarCategoria_Click" />
+                            </div>
+                            <asp:Repeater ID="dgvAdminCate" runat="server">
+                                <ItemTemplate>
+                                    <div class="col-3 mt-2 mb-3 text-center">
+                                        <div class="card h-100 m-3 bg-warning border-primary" runat="server" id="cardContainer">
+                                            <div class="card-header">
+                                                <asp:Label Text="Imágen" ID="btnCambiarImg1" runat="server" />
+                                            </div>
+                                            <div class="d-flex justify-content-center align-items-center mt-5">
+                                                <asp:UpdatePanel runat="server">
+                                                    <ContentTemplate>
+                                                        <asp:Image ID="imgCate" runat="server" ImageUrl='<%#Eval("UrlImagen") %>' onerror="this.src='./Recursos/image-not-found.png'" Width="170px" Height="170px" CssClass="ml-2" />
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <asp:Label runat="server" ID="lblCategoria" Text='<%# Eval("Descripcion") %>' Visible="true"></asp:Label>
+                                                    <asp:TextBox runat="server" ID="txtCategoria" Visible="false" CssClass="form-control"></asp:TextBox>
+                                                </h5>
+                                                <p class="card-text">
+                                                    <p>
+                                                        ID Categoría:
+                                                    <asp:Label runat="server" ID="lblIdCate" Text='<%# Eval("Id") %>' CssClass="mt-3"></asp:Label>
+                                                    </p>
+                                                    <asp:TextBox runat="server" ID="txtIdCate" Visible="false" CssClass="form-control  mb-3"></asp:TextBox>
+                                                    <asp:Label ID="lblCambiarImg" Text="URL Imágen" runat="server" Visible="false" CssClass="mt-5" />
+                                                    <asp:Label runat="server" ID="lblUrl" Text='<%# Eval("UrlImagen") %>' CssClass="mt-3" Visible="false"></asp:Label>
+                                                    <asp:TextBox runat="server" ID="tbUrlImg" AutoPostBack="true" Visible="false" CssClass="form-control mt-3" OnTextChanged="tbUrlImg_TextChanged"></asp:TextBox>
+                                                </p>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="col-6 card-footer text-center bg-danger-subtle">
+                                                    <i class="bi bi-x-circle-fill fs-5"></i><asp:Button runat="server" ID="btnBajaCate" Text="Dar baja" CssClass="btn" OnClick="btnBajaCate_Click" />
+                                                    <%--deberiamos evaluar si darle baja logica alas categorias y marcas, no se es tan necesario, por que sino hay que modificar el script de la bd--%>
+                                                </div>
+                                                <div class="col-6 card-footer text-center bg-danger">
+                                                    <i class="bi bi-trash-fill fs-5"></i><asp:Button runat="server" ID="btnEliminarCate" Text="Eliminar" CssClass="btn" OnClick="btnEliminarCate_Click" />
+                                                </div>
+                                            </div>
+                                            <div class="col-12 card-footer text-center bg-primary">
+                                                <i class="bi bi-pencil-fill fs-5"></i><asp:Button runat="server" ID="btnEditarCate" Text="Editar" Visible="true" CssClass="btn btn-primary" OnClick="btnEditarCate_Click" />
+                                                <asp:Button runat="server" ID="btnGuardarCate" Text="Guardar" Visible="false" CssClass="btn btn-primary" OnClick="btnGuardarCate_Click" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
+                        <%--fin lista categorias--%>
+
+                        <%--registrar nueva categoria--%>
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="card rounded-4 col-8 bg-primary text-light ms-5" style="margin-top: 100px; margin-bottom: 100px;" id="SectionNuevaCate" visible="false" runat="server">
+                                <div class=" card-header text-center">
+                                    <h1>🆕 Nueva Categoria 🆕</h1>
+                                </div>
+                                <div class="row p-2">
+                                    <div class="col-6 mt-3">
+                                        <label for="IdArticulo" class="form-label">Número de ID <span class="text-danger">*</span></label>
+                                        <asp:TextBox CssClass="form-control" ID="tbIdCate" placeholder="ID Articulo" runat="server" />
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <label for="Nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+                                        <asp:TextBox CssClass="form-control" ID="tbNombreCate" runat="server" />
+                                    </div>
+                                    <div class="col-8 mt-3">
+                                        <label for="img" class="form-label">URL imágen <span class="text-danger">*</span></label>
+                                        <asp:TextBox CssClass="form-control" ID="tbUrlImgCate" runat="server" AutoPostBack="true" OnTextChanged="tbUrlImgCate_TextChanged" />
+                                    </div>
+                                    <div class="col-4 mt-3">
+                                        <asp:UpdatePanel runat="server">
+                                            <ContentTemplate>
+                                                <asp:Image ID="imgNuevaCate" runat="server" ImageUrl="~/recursos/img/agregar-img.png" Width="200px" CssClass="mt-3 ms-5" />
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
+                                    </div>
+
+                                    <div class="col-12 mt-3">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <asp:Button Text="Guardar categoría" ID="btnAgregarCate" CssClass="btn btn-light mb-3 ps-5 pe-5 fs-4" runat="server" OnClick="btnAgregarCate_Click" />
+                                        </div>
+                                        <div class="d-flex justify-content-start align-items-start">
+                                            <asp:LinkButton Text="Volver a categorías" CssClass="link-body-emphasis m-3" ID="volverCate" OnClick="volverCate_Click" runat="server" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <%--fin registro categoria--%>
+
+                        <%-- ################################ ABM MARCAS ################################ --%>
+                        <%--lista marcas--%>
+                        <div class="row">
+                            <h1 class="text-light text-center bg-dark border border-light rounded-2 p-2" style="margin-top: 100px;" id="titleMarcas" visible="false" runat="server"><strong>Administración de Marcas</strong></h1>
+                            <div class="col-10 mt-5" id="sectionAgregarMarca" runat="server" visible="false">
+                                <asp:Button ID="btnAgregarMarca" Text="➕ Agregar nueva categoría" CssClass="fs-5 m-3 btn btn-warning btn-lg m-3" runat="server" OnClick="btnAgregarMarca_Click" />
+                            </div>
+                            <asp:Repeater ID="dgvAdminMarca" runat="server">
+                                <ItemTemplate>
+                                    <div class="col-3 mt-2 mb-3 text-center">
+                                        <div class="card h-100 m-3 bg-light border-primary" runat="server" id="cardContainerMarca">
+                                            <div class="card-header">
+                                                <asp:Label Text="Imágen" ID="btnCambiarImgMarca" runat="server" />
+                                            </div>
+                                            <div class="d-flex justify-content-center align-items-center mt-5">
+                                                <asp:UpdatePanel runat="server">
+                                                    <ContentTemplate>
+                                                        <asp:Image ID="imgMarca" runat="server" ImageUrl='<%#Eval("UrlImagen") %>' onerror="this.src='./Recursos/image-not-found.png'" Width="170px" Height="170px" CssClass="ml-2" />
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <asp:Label runat="server" ID="lblMarca" Text='<%# Eval("Descripcion") %>'></asp:Label>
+                                                    <asp:TextBox runat="server" ID="txtMarca" Visible="false" CssClass="form-control"></asp:TextBox>
+                                                </h5>
+                                                <p class="card-text">
+                                                    <p>
+                                                        ID Categoría:
+                                                    <asp:Label runat="server" ID="lblIdMarca" Text='<%# Eval("Id") %>' CssClass="mt-3"></asp:Label>
+                                                    </p>
+                                                    <asp:TextBox runat="server" ID="txtIdMarca" Visible="false" CssClass="form-control  mb-3"></asp:TextBox>
+                                                    <asp:Label ID="lblCambiarImgMarca" Text="URL Imágen" runat="server" Visible="false" CssClass="mt-5" />
+                                                    <asp:Label runat="server" ID="lblUrlMarca" Text='<%# Eval("UrlImagen") %>' CssClass="mt-3" Visible="false"></asp:Label>
+                                                    <asp:TextBox runat="server" ID="tbUrlImgMarca" AutoPostBack="true" Visible="false" CssClass="form-control mt-3" OnTextChanged="tbUrlImgMarca_TextChanged"></asp:TextBox>
+                                                </p>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="col-6 card-footer text-center bg-danger-subtle">
+                                                    <i class="bi bi-x-circle-fill fs-5"></i>
+                                                    <asp:Button runat="server" ID="btnBaja" Text="Dar baja" CssClass="btn" />
+                                                    <%--deberiamos evaluar si darle baja logica alas categorias y marcas, no se es tan necesario, por que sino hay que modificar el script de la bd--%>
+                                                </div>
+                                                <div class="col-6 card-footer text-center bg-danger">
+                                                    <i class="bi bi-trash-fill fs-5"></i>
+                                                    <asp:Button runat="server" ID="btnEliminarMarca" Text="Eliminar" CssClass="btn" OnClick="btnEliminarMarca_Click"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 card-footer text-center bg-primary">
+                                                <i class="bi bi-pencil-fill fs-5"></i>
+                                                <asp:Button runat="server" ID="btnEditarMarca" Text="Editar" Visible="true" CssClass="btn btn-primary" OnClick="btnEditarMarca_Click"/>
+                                                <asp:Button runat="server" ID="btnGuardarMarca" Text="Guardar" Visible="false" CssClass="btn btn-primary" OnClick="btnGuardarMarca_Click" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
+                        <%--Fin lista marcas--%>
+                        <%--registrar nueva marca--%>
+                        <div class="row d-flex justify-content-center align-items-center vh-100">
+                            <div class="card rounded-4 col-8 bg-light ms-5" style="margin-top: 100px; margin-bottom: 100px;" id="SectionNuevaMarca" visible="false" runat="server">
+                                <div class=" card-header text-center">
+                                    <h1>🆕 Nueva Marca 🆕</h1>
+                                </div>
+                                <div class="row p-2">
+                                    <div class="col-6 mt-3">
+                                        <label for="IdArticulo" class="form-label">Número de ID <span class="text-danger">*</span></label>
+                                        <asp:TextBox CssClass="form-control" ID="tbIdMarca" placeholder="ID Articulo" runat="server" />
+                                    </div>
+                                    <div class="col-6 mt-3">
+                                        <label for="Nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+                                        <asp:TextBox CssClass="form-control" ID="tbNombreMarca" runat="server" />
+                                    </div>
+                                    <div class="col-8 mt-3">
+                                        <label for="img" class="form-label">URL imágen <span class="text-danger">*</span></label>
+                                        <asp:TextBox CssClass="form-control" ID="tbUrlImgMarca" runat="server" AutoPostBack="true" OnTextChanged="tbUrlImgMarca_TextChanged" />
+                                    </div>
+                                    <div class="col-4 mt-3">
+                                        <asp:UpdatePanel runat="server">
+                                            <ContentTemplate>
+                                                <asp:Image ID="imgNuevaMarca" runat="server" ImageUrl="~/recursos/img/agregar-img.png" Width="200px" CssClass="mt-3 ms-5" />
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
+                                    </div>
+
+                                    <div class="col-12 mt-3">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <asp:Button Text="Guardar Marca" ID="btnGuardarMarca" CssClass="btn btn-light mb-3 ps-5 pe-5 fs-4" runat="server" OnClick="btnGuardarNewMarca_Click" />
+                                        </div>
+                                        <div class="d-flex justify-content-start align-items-start">
+                                            <asp:LinkButton Text="Volver a Marcas" CssClass="link-body-emphasis m-3" ID="btnVolverMarca" OnClick="btnVolverMarca_Click" runat="server" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <%--fin registro marca--%>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
