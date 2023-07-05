@@ -16,6 +16,7 @@ namespace Dominio
         public decimal precio { get; set; }
         public string Precio { get { return string.Format("{0:C2}", precio); } }
         public bool Estado { get; set; } // si esta activo o no para mostrar, baja/alta logica
+        public string EstadoStr { get { return (Estado == true) ? "Alta" : "Baja"; } }
         public int Stock { get; set; }
         public string ImagenUrl { get; set; }
 

@@ -12,13 +12,22 @@ namespace Helper
 {
     static public class HelperUsuario
     {
-
+        /// <summary>
+        /// Suelta un mensaje de alerta en la pagina, pop-up
+        /// </summary>
+        /// <param name="page">Page actual</param>
+        /// <param name="mensaje">mensaje a mostrar</param>
         // Mensaje Pop Up
         static public void MensajePopUp(Page page, string mensaje)
         {
             ScriptManager.RegisterStartupScript(page, page.GetType(), "alertMenssage", $"alert('{mensaje}');", true);
         }
 
+        /// <summary>
+        /// Verifica si el usuario esta logeado
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns>true si usuario es != de null, false si usuario es == null</returns>
         // IsLogged(), si el usuario esta logeado (si este existe en session, y registrado)
         static public bool IsLogged(Usuario usuario)
         {
@@ -58,6 +67,11 @@ namespace Helper
             }
         }
 
+        /// <summary>
+        /// Busca en la bd si existe el usuario en la BD
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns>true si se encuntra un registro en la BD, false si no</returns>
         // Solo busca en bd y dice si existe
         static public bool ExistUser(Usuario usuario) 
         {

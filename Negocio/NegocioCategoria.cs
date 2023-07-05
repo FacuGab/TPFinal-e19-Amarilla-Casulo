@@ -112,5 +112,27 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+        public Categoria agregarCategoria(Categoria categoria)
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("INSERT INTO CATEGORIAS (Id, Descripcion, UrlImagen) VALUES (@Id, @descripcion, @urlImagen)", "query");
+                datos.SetParameters("@Id", categoria.Id);
+                datos.SetParameters("@descripcion", categoria.Descripcion);
+                datos.SetParameters("@urlImagen", categoria.UrlImagen);
+                datos.ExecuteQuery();
+                return categoria;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }
