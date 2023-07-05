@@ -7,7 +7,7 @@
     <div class="container-fluid" style="background: rgb(33,37,41); background: linear-gradient(90deg, rgba(33,37,41,1) 0%, rgba(33,37,41,1) 42%, rgba(30,120,253,1) 100%);">
         <div class="row flex-nowrap">
 
-            <!-- Barra de Opciones -->
+            <!-- MENU DE OPCIONES -->
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"></a>
@@ -64,7 +64,7 @@
                         </li>
                     </ul>
                     <hr>
-                    <!-- Menu Pedidos -->
+                    <!-- Menu Usuario Session -->
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <!--FIn Barra de Opciones -->
+            <!-- Fin MENU DE OPCIONES -->
             <div class="col-md-1"></div>
 
             <!-- Cuerpo Principal -->
@@ -229,6 +229,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <%--
+                                    
+                                    --%>
                                 <!-- Fin Card Usuarios -->
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -298,7 +301,7 @@
                                 </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
-                        <%-- Fin Lista Pedidos Todos--%>
+                        <%-- Fin Lista Pedidos Todos --%>
 
                         <%-- Lista Pedido --%>
                         <asp:GridView ID="dgvAdminPedido" runat="server" CssClass="table table-striped table-bordered mt-5" AutoGenerateColumns="False">
@@ -359,7 +362,7 @@
                         </asp:GridView>
                         <%-- fin Lista Pedido --%>
 
-                        <%--Lista Pedido_Articulos--%>
+                        <%-- Lista Pedido_Articulos --%>
                         <asp:GridView ID="dgvPedido_Articulos" AutoGenerateColumns="false" CssClass="table table-striped mt-5" runat="server">
                             <Columns>
                                 <asp:TemplateField Visible="false">
@@ -377,82 +380,52 @@
                                 <asp:BoundField HeaderText="Precio/u" DataField="Precio" />
                             </Columns>
                         </asp:GridView>
-                        <%--Fin Lista Pedido_Articulos--%>
+                        <%-- Fin Lista Pedido_Articulos --%>
 
                         <%--<!-- Lista Pedidos Editar --> <!-- Aca tendria que ir lo que falta del crud, para editar un pedido (agregar uno, y dar la opcion de elimnar otra vez) -->--%>
-                        <asp:UpdatePanel ID="upadetePanelPedidosEditar" runat="server" UpdateMode="Conditional">
+                        <asp:UpdatePanel ID="upadetePanelPedidosEditar" Visible="false" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
-                                <section class="vh-100" style="background-color: #f4f5f7;" runat="server" id="sectionEditarPedidos" visible="false">
-                                    <div class="container py-5 h-100">
-                                        <!-- Card Pedido -->
-                                        <div class="row d-flex justify-content-center align-items-center h-100">
-                                            <div class="col col-lg-10 mb-4 mb-lg-0 ">
-                                                <div class="card mb-3" style="border-radius: .5rem;">
-                                                    <div class="row g-0">
-                                                        <!-- Columna de Imagen -->
-                                                        <div class="col-md-4  text-center bg-warning text-white"
-                                                            style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                                                            <asp:Image ID="Image1" runat="server" ImageUrl="~/recursos/img/avatar.png" Width="120px" CssClass="img-fluid my-5" />
-                                                            <h6>
-                                                                <!-- ID Usuario -->
-                                                                <strong class="fs-5 text-dark">
-                                                                    ID Usuario
-                                                                    <asp:Label runat="server" ID="Label1" />
-                                                                </strong> 
-                                                            </h6>
-                                                            <i class="far fa-edit mb-5"></i>
-                                                        </div>
-                                                        <!-- Columna de Inputs -->
-                                                        <div class="col-md-8">
-                                                            <div class="card-body p-4">
-                                                                <h6>Información del Articulo</h6>
-                                                                <hr class="mt-0 mb-4">
-                                                                <div class="row pt-1">
-                                                                    <!-- Nombre -->
-                                                                    <div class="col-6 mb-3">
-                                                                        <h6>Nombre/s</h6>
-                                                                        <asp:TextBox runat="server" ID="TextBox1" CssClass="text-muted form-control" />
-                                                                    </div>
-
-                                                                </div>
-                                                                <h6>Info</h6>
-                                                                <hr class="mt-0 mb-4">
-                                                                <div class="row pt-1">
-                                                                    <!-- Articulo -->
-                                                                    <div class="col-6 mb-3">
-                                                                        <h6>Articulo</h6>
-                                                                        <asp:TextBox runat="server" ID="TextBox5" CssClass="text-muted form-control" />
-                                                                        <%--patron para solo aceptar claves con un mayus, numeros y minusculas    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$"    --%>
-                                                                    </div>
-
-                                                                </div>
-                                                                <!-- Botones -->
-                                                                <div class="d-flex justify-content-end">
-                                                                    <asp:Button Text="Dar de alta" runat="server" ID="Button1" CssClass="btn btn-outline-success mt-3 me-3" />
-                                                                    <asp:Button Text="Dar de baja" runat="server" ID="Button2" CssClass="btn btn-outline-danger mt-3 me-3" />
-                                                                    <asp:Button Text="Eliminar" runat="server" ID="Button3"  CssClass="btn btn-danger mt-3 me-3" />
-                                                                    <asp:Button Text="Guardar Cambios" runat="server" ID="Button4" CssClass="btn btn-dark mt-3" />
-                                                                </div>
-                                                                <!-- Link Volver a Lista Usuarios -->
-                                                                <div class="col-md-8">
-                                                                    <asp:LinkButton Text="Volver a Lista Pedidos" CssClass="link-body-emphasis" CommandName="btnVolverListaPedidos" OnClick="lnkVolverListaUsuarios_Click" runat="server" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                  <div class="row d-flex justify-content-center align-items-center">
+                                    <div class="card rounded-4 col-10 bg-warning ms-5" style="margin-top: 100px; margin-bottom: 100px;" id="Div1" runat="server">
+                                        <div class=" card-header text-center">
+                                            <h1 id="H1" runat="server"> Editar Pedido </h1>
+                                            <%--<h1 id="H2" runat="server">🆕 Nuevo Pedido 🆕</h1>--%>
+                                        </div>
+                                        <div class="row p-2">
+                                            <div class="col-6 mt-3">
+                                                <label for="IdArticulo" class="form-label">Número de ID <span class="text-danger">*</span></label>
+                                                <asp:TextBox CssClass="form-control" ID="TextBox1" placeholder="ID Articulo" runat="server" />
+                                            </div>
+                                            <div class="col-6 mt-3">
+                                                <label for="Nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+                                                <asp:TextBox CssClass="form-control" ID="TextBox2" runat="server" />
+                                            </div>
+                                            <div class="col-12 mt-3">
+                                                <label for="Descripcion" class="form-label">Descripcion <span class="text-danger">*</span></label>
+                                                <asp:TextBox CssClass="form-control pb-4" ID="TextBox6" runat="server" />
+                                            </div>
+                                            <div class="col-12 mt-3">
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <asp:Button Text="Guardar Cambios" ID="Button1" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" runat="server" OnClick="btnAgregar_Click" />
+                                                </div>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <asp:Button Text="Eliminar" CssClass="btn btn-danger mb-3 ps-5 pe-5 fs-4" runat="server" />
+                                                </div>
+                                                <div class="d-flex justify-content-center">
+                                                    <asp:LinkButton Text="Volver a Lista Pedidos" CssClass="link-body-emphasis" ID="btnVolverListaPedidos" CommandName="btnVolverListaPedidos" OnClick="btnVolverListaPedidos_Click" runat="server" />
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Fin Card Usuarios -->
                                     </div>
-                                </section>
+                                </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
+                        
                         <%--  Fin Lista Pedidos Editar --%>
 
 
                         <%-- ################################ abm ARTICULOS ################################ --%>
-                        <%--Lista Articulos--%>  <!-- Mal el ID, cuidado --> 
+                        <%-- Lista Articulos --%>  <!-- Mal el ID, cuidado --> 
                         <asp:GridView ID="dgvAdmin" runat="server" CssClass="table table-striped mt-5" AutoGenerateColumns="False"
                             AllowPaging="true"
                             PageSize="10"
@@ -499,7 +472,7 @@
                                 </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
-                        <%--fin lista Articulos--%>
+                        <%-- fin lista Articulos --%>
 
                         <%-- Lista Articulo (unitario) --%>
                         <asp:GridView ID="dgvAdminArtUnitario" runat="server" CssClass="table table-striped mt-5" AutoGenerateColumns="False"
@@ -543,7 +516,7 @@
                         </asp:GridView>
                         <%-- fin Lista Articulo (unitario) --%>
 
-                        <%--Registrar nuevos Artículos--%>
+                        <%-- Registrar nuevos Artículos --%>
                         <div class="row d-flex justify-content-center align-items-center">
                             <div class="card rounded-4 col-10 bg-warning ms-5" style="margin-top: 100px; margin-bottom: 100px;" id="SectionCrearArt" runat="server">
                                 <div class=" card-header text-center">
@@ -594,6 +567,9 @@
                                         <div class="d-flex justify-content-center align-items-center">
                                             <asp:Button Text="Guardar artículo" ID="btnAgregar" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" runat="server" OnClick="btnAgregar_Click" />
                                         </div>
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <asp:Button Text="Eliminar" CssClass="btn btn-danger mb-3 ps-5 pe-5 fs-4" runat="server" />
+                                        </div>
                                         <div class="d-flex justify-content-center">
                                             <asp:LinkButton Text="Volver a Lista Articulos" CssClass="link-body-emphasis mt-5" ID="linkButtonVolverListaArticulos" OnClick="btnLinkVolverListaArticulos_Click"  runat="server" />
                                         </div>
@@ -601,11 +577,11 @@
                                 </div>
                             </div>
                         </div>
-                        <%--fin Registrar nuevos Artículos--%>
+                        <%-- fin Registrar nuevos Artículos--%>
 
 
                         <%-- ################################ ABM CATEGORIAS ################################ --%>
-                        <%--lista categorias--%>
+                        <%-- lista categorias--%>
                         <div class="row">
                             <h1 class="text-light text-center bg-dark border border-light rounded-2 p-2" style="margin-top: 100px;" id="dgvAdminCateTitle" visible="false" runat="server"><strong>Administración de Categorias</strong></h1>
                             <div class="col-10 mt-5" id="dgvAdminCrearCate" runat="server" visible="false">
@@ -659,9 +635,9 @@
                                 </ItemTemplate>
                             </asp:Repeater>
                         </div>
-                        <%--fin lista categorias--%>
+                        <%-- fin lista categorias--%>
 
-                        <%--registrar nueva categoria--%>
+                        <%-- registrar nueva categoria--%>
                         <div class="row d-flex justify-content-center align-items-center">
                             <div class="card rounded-4 col-8 bg-primary text-light ms-5" style="margin-top: 100px; margin-bottom: 100px;" id="SectionNuevaCate" visible="false" runat="server">
                                 <div class=" card-header text-center">
@@ -704,7 +680,7 @@
 
 
                         <%-- ################################ ABM MARCAS ################################ --%>
-                        <%--lista marcas--%>
+                        <%-- lista marcas--%>
                         <div class="row">
                             <h1 class="text-light text-center bg-dark border border-light rounded-2 p-2" style="margin-top: 100px;" id="titleMarcas" visible="false" runat="server"><strong>Administración de Marcas</strong></h1>
                             <div class="col-10 mt-5" id="sectionAgregarMarca" runat="server" visible="false">
@@ -761,9 +737,9 @@
                                 </ItemTemplate>
                             </asp:Repeater>
                         </div>
-                        <%--Fin lista marcas--%>
+                        <%-- Fin lista marcas--%>
 
-                        <%--registrar nueva marca--%>
+                        <%-- registrar nueva marca--%>
                         <div class="row d-flex justify-content-center align-items-center vh-100">
                             <div class="card rounded-4 col-8 bg-light ms-5" style="margin-top: 100px; margin-bottom: 100px;" id="SectionNuevaMarca" visible="false" runat="server">
                                 <div class=" card-header text-center">
@@ -802,7 +778,7 @@
                             </div>
                         </div>
                         <%--</div>--%> 
-                        <%--fin registro marca--%>
+                        <%-- fin registro marca--%>
 
                     </ContentTemplate>
                 </asp:UpdatePanel>

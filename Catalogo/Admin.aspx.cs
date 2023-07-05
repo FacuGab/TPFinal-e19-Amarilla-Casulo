@@ -181,6 +181,8 @@ namespace Catalogo
             dgvAdminPedidos.DataSource = PedidoList;
             dgvAdminPedidos.DataBind();
             dgvAdminPedidos.Visible = true;
+            dgvAdminUsuario.Visible = false;
+            
         }
 
         // TODO: Cargar Pedidos en Admin con Filtro
@@ -255,8 +257,8 @@ namespace Catalogo
             dgvAdminPedido.Visible = true;
             dgvAdminPedidos.Visible = false;
             dgvPedido_Articulos.Visible = true;
-            sectionEditarPedidos.Visible = true; 
-        } //TASK: Arreglar el detalle de pedido Error
+            upadetePanelPedidosEditar.Visible = true; 
+        } // Arreglar el detalle de pedido Error
 
         // TODO: BOTON Dar Baja Pedido en Grid
         protected void ibtBajaPedido_Click(object sender, ImageClickEventArgs e)
@@ -274,7 +276,7 @@ namespace Catalogo
                 {
                     case "btnPedidosTodos":
                         CargarPedidos();
-                        break;
+                        break; // no usos despues de aca, pero lo dejo por si las dudas (filtra por tipo de estado la listra principal)
                     case "btnPedidosPendientes":
                         CargarPedidos("Pendiete");
                         break;
@@ -293,6 +295,20 @@ namespace Catalogo
             {
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //TODO: Boton Volver Lista Pedidos
+        protected void btnVolverListaPedidos_Click(object sender, EventArgs e)
+        {
+            string filtro = ((LinkButton)sender).CommandName;
+            if (filtro == "btnVolverListaPedidos")
+            {
+                dgvAdminPedidos.Visible = true;
+                dgvAdminPedido.Visible = false;
+                dgvPedido_Articulos.Visible = false;
+                upadetePanelPedidosEditar.Visible = false;
+                dgvAdmin.Visible = false;
             }
         }
         //FIN BOTONES LOGICA PEDIDOS
@@ -429,13 +445,8 @@ namespace Catalogo
         protected void lnkVolverListaUsuarios_Click(object sender, EventArgs e)
         {
             string filtro = ((LinkButton)sender).CommandName;
-            if (filtro == "btnVolverListaPedidos")
-            {
-                dgvAdminPedidos.Visible = true;
-                sectionEditarPedidos.Visible = false;
-                dgvAdminPedido.Visible = false;
-            }
-            else if (filtro == "btnVolverListaUsuarios")
+
+            if (filtro == "btnVolverListaUsuarios")
             {
                 dgvAdminUsuario.Visible = true;
                 sectionModificarUsuario.Visible = false;
