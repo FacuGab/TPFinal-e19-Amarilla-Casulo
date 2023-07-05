@@ -27,50 +27,125 @@ namespace Catalogo
             }
         }
 
-        //TODO: Crear usuario
+        //TODO:Boton Crear usuario
         protected void btnRegistro_Click(object sender, EventArgs e)
         {
-            NuevoUsuario = new NegocioUsuario();
-            string urlRedirect = (((Button)sender).CommandName == "RegistroInicial")? "Default.aspx" : "ListaCarrito.aspx?text=ok&reg=ok";
-
-            //Obs: para validar en back, se puede hacer un metodo aparte que valide todos los imputs usando strin string.IsNullOrWhiteSpace() que verifica que no sean null, vacio o espacio en blanco
-            // y usar char.IsLetterOrDigit() char.IsNumber() char.IsControl() para recorrer cada input y ver si cumplen la condicion dependiendo del input y su modo.
-            // En front, javascript tiene metodos similares para recorrer strings creo.
-
-            if (txtNombre.Text != "" && txtApellido.Text != "" && txtDni.Text != "" && txtMail.Text != "" && txtPassword.Text != "" && txtDomicilio.Text != "")
+            try
             {
-                Usuario usuario = new Usuario();
-                usuario.Nombre = txtNombre.Text;
-                usuario.Apellido = txtApellido.Text;
-                usuario.Dni = int.Parse(txtDni.Text);
-                usuario.Mail = txtMail.Text;
-                usuario.Clave = txtPassword.Text;
-                usuario.Direccion = txtDomicilio.Text;
-                usuario.Nivel = "C";
-                usuario.UrlImgUsuario = "img/usuarios/default.png";
-                usuario.Activo = true;
-
-                if(HelperUsuario.ExistUser(usuario)) 
+                if(Page.IsValid)
                 {
-                    HelperUsuario.MensajePopUp(this, "Usuario Existente");
+                    if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApellido.Text) || string.IsNullOrEmpty(txtDni.Text) || string.IsNullOrEmpty(txtMail.Text) || string.IsNullOrEmpty(txtPassword.Text) || string.IsNullOrEmpty(txtDomicilio.Text))
+                    {
+                        HelperUsuario.MensajePopUp(this, "Hay campos erróneos o vacíos");
+                        return;
+                    }
+                    Usuario usuario = new Usuario();
+                    usuario.Nombre = txtNombre.Text;
+                    usuario.Apellido = txtApellido.Text;
+                    usuario.Dni = int.Parse(txtDni.Text);
+                    usuario.Mail = txtMail.Text;
+                    usuario.Clave = txtPassword.Text;
+                    usuario.Direccion = txtDomicilio.Text;
+                    usuario.Nivel = "C";
+                    usuario.UrlImgUsuario = "img/usuarios/default.png";
+                    usuario.Activo = true;
+
+                    if (HelperUsuario.ExistUser(usuario))
+                    {
+                        HelperUsuario.MensajePopUp(this, "Usuario Existente");
+                    }
+                    else
+                    {
+                        int res = NuevoUsuario.AgregarUsuario(usuario);
+                        if (res > 0)
+                        {
+                            HelperUsuario.MensajePopUp(this, "Usuario Registrado Exitosamente");
+                            //Response.Redirect(urlRedirect, true);
+                            // aca un response a Default.aspx o a ListaCarrito.aspx?text=ok&reg=ok. funciona correcteamente, pero es tan rapido que no muestra el cartel, intente poner un async await pero fallo por completo
+                        }
+                        else
+                        {
+                            HelperUsuario.MensajePopUp(this, "No se pudo crear el usurio");
+                        }
+                    }  
                 }
                 else
                 {
-                    int res = NuevoUsuario.AgregarUsuario(usuario);
-                    if (res > 0)
-                    {
-                        HelperUsuario.MensajePopUp(this, "Usuario Registrado Exitosamente");
-                        //Response.Redirect(urlRedirect, true);
-                        // aca un response a Default.aspx o a ListaCarrito.aspx?text=ok&reg=ok. funciona correcteamente, pero es tan rapido que no muestra el cartel, intente poner un async await pero fallo por completo
-                    }
-                    else
-                        HelperUsuario.MensajePopUp(this, "No se pudo crear el usurio");
-                }
+                    HelperUsuario.MensajePopUp(this, "Hubo error en una validación");
+                } 
             }
-            else
+            catch (Exception)
             {
-                HelperUsuario.MensajePopUp(this, "Campos Incorrectos");
+
+                throw;
             }
+            NuevoUsuario = new NegocioUsuario();
+             
+        }
+        //METODOS DE VALIDACION DE LOS CAMPOS
+        protected void customValidatorNombre_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            string nombre = txtNombre.Text;
+            bool isValid = !string.IsNullOrWhiteSpace(nombre) && System.Text.RegularExpressions.Regex.IsMatch(nombre, "^[A-Za-z\\s]+$");
+            args.IsValid = isValid;
+            customValidatorNombre.ErrorMessage = "El nombre debe contener solo letras y espacios.";
+            customValidatorNombre.Visible = false;
+        }
+        protected void customValidatorApellido_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            string apellido = txtApellido.Text;
+            bool isValid = !string.IsNullOrWhiteSpace(apellido) && System.Text.RegularExpressions.Regex.IsMatch(apellido, "^[A-Za-z\\s]+$");
+            args.IsValid = isValid;
+            customValidatorApellido.ErrorMessage = "El apellido es obligatorio solo se permiten letras.";
+            customValidatorApellido.Visible = false;
+        }
+
+        protected void customValidatorDocumento_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            string dni = txtDni.Text;
+            bool isValid = !string.IsNullOrWhiteSpace(dni) && System.Text.RegularExpressions.Regex.IsMatch(dni, @"^\d+$"); /*Para que solo acepte 8 digitos  @"^\d{8}$"  */
+            args.IsValid = isValid;
+            customValidatorDocumento.ErrorMessage = "El DNI solo debe tener números";
+            customValidatorDocumento.Visible = false;
+        }
+
+
+        protected void customValidatorMail_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            string mail = txtMail.Text;
+            bool isValid = !string.IsNullOrWhiteSpace(mail) && System.Text.RegularExpressions.Regex.IsMatch(mail, @"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$");
+            args.IsValid = isValid;
+            customValidatorMail.ErrorMessage = "Ingrese un mail correcto";
+            customValidatorMail.Visible = false;
+        }
+
+        protected void customValidatorDomicilio_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            string domicilio = txtDomicilio.Text;
+            bool isValid = !string.IsNullOrWhiteSpace(domicilio) && System.Text.RegularExpressions.Regex.IsMatch(domicilio, "^[A-Za-z0-9\\s.,-]+$");
+            args.IsValid = isValid;
+            customValidatorDomicilio.ErrorMessage = "Ingrese un domicilio válido";
+            customValidatorDomicilio.Visible = false;
+        }
+
+        protected void customValidatorTipoUsuario_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            string tipoUsuario = txtTipoUsuario.Text;
+            bool isValid = !string.IsNullOrWhiteSpace(tipoUsuario) && (tipoUsuario == "C" || tipoUsuario == "A" || tipoUsuario == "E");
+            args.IsValid = isValid;
+            customValidatorTipoUsuario.ErrorMessage = "Tipos de usuarios admitidos: C - Cliente, A - Admin, E- Empleado";
+            customValidatorTipoUsuario.Visible = false;
+        }
+
+        protected void customValidatorPassword_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            string password = txtPassword.Text;
+            bool isValid = !string.IsNullOrWhiteSpace(password) && System.Text.RegularExpressions.Regex.IsMatch(password, "^(?=.*[A-Za-z])(?=.*\\d).+$");
+            args.IsValid = isValid;
+            customValidatorPassword.ErrorMessage = "La clave debe contener al menos un número y letra";
+            customValidatorPassword.Visible = false;
+
         }
     }
+    
 }
