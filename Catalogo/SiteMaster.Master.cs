@@ -22,6 +22,14 @@ namespace Catalogo
         {
             try
             {
+                ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition
+                {
+                    Path = "~/scripts/jquery-3.6.0.min.js",
+                    DebugPath = "~/scripts/jquery-3.6.0.js",
+                    CdnPath = "https://code.jquery.com/jquery-3.6.0.min.js",
+                    CdnDebugPath = "https://code.jquery.com/jquery-3.6.0.js"
+                });
+
                 if (Session["countCarrito"] != null)
                 {
                     lblTotalArticulos.Text = Session["countCarrito"].ToString();
