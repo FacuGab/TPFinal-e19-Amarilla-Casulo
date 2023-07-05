@@ -480,5 +480,25 @@ namespace Negocio
                 throw ex;
             }
         }
+
+        //TODO: Dar Alta/Baja Pedido
+        public int DarAltaBajaPedido(int idMatch, bool tipo)
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("UPDATE PEDIDOS SET ", "query");
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }

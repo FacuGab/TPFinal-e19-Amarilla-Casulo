@@ -249,31 +249,67 @@ namespace Catalogo
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl H1;
 
         /// <summary>
-        /// TextBox1 control.
+        /// txtIdUsuarioEditarPedido control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox txtIdUsuarioEditarPedido;
 
         /// <summary>
-        /// TextBox2 control.
+        /// txtNombreUsuarioEditarPedido control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
+        protected global::System.Web.UI.WebControls.TextBox txtNombreUsuarioEditarPedido;
 
         /// <summary>
-        /// TextBox6 control.
+        /// txtEstadoEditarPedido control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox6;
+        protected global::System.Web.UI.WebControls.TextBox txtEstadoEditarPedido;
+
+        /// <summary>
+        /// txtDirEditarPedido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDirEditarPedido;
+
+        /// <summary>
+        /// txtFechaEditarPedido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFechaEditarPedido;
+
+        /// <summary>
+        /// txtDescuentoEditarPedido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDescuentoEditarPedido;
+
+        /// <summary>
+        /// txtTotalEditarPedido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTotalEditarPedido;
 
         /// <summary>
         /// Button1 control.

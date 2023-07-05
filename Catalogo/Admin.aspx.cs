@@ -236,11 +236,27 @@ namespace Catalogo
 
 
         // LOGICA PEDIDOS
-        // TODO: BOTON Elimnar Pedido en Grid
-        protected void ibtEliminarPedido_Click(object sender, ImageClickEventArgs e)
+        // TODO: BOTON Dar Alta Pedido en Grid
+        protected void btnAltaBajaPedido_Click(object sender, EventArgs e)
         {
+            try
+            {
+                int idMatch = int.Parse(((Button)sender).CommandArgument);
+                
+                //NegocioArticulo = new NegocioArticulo();
+                //NegocioArticulo.DarAltaBajaUsuario(idMatch, true);
+                //dgvAdmin.DataSource = NegocioArticulo.ListarArticulos();
+                //dgvAdmin.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
 
-        } //sin hacer todavia
+        // TODO: BOTON Dar Baja Pedido en Grid
+
 
         // TODO: BOTON Editar/Detalle Pedido en Grid
         protected void ibtEditarPedido_Click(object sender, ImageClickEventArgs e)
@@ -259,12 +275,6 @@ namespace Catalogo
             dgvPedido_Articulos.Visible = true;
             upadetePanelPedidosEditar.Visible = true; 
         } // Arreglar el detalle de pedido Error
-
-        // TODO: BOTON Dar Baja Pedido en Grid
-        protected void ibtBajaPedido_Click(object sender, ImageClickEventArgs e)
-        {
-
-        } //sin hacer todavia
 
         // TODO: BOTONES PEDIDOS MENU
         protected void btnPedidosMenu_Click(object sender, EventArgs e)
