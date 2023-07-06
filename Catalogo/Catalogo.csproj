@@ -85,6 +85,8 @@
     <Content Include="fonts\bootstrap.rtl.css" />
     <Content Include="fonts\bootstrap.rtl.min.css" />
     <Content Include="fonts\CSS.css" />
+    <Content Include="fonts\Profile-Card-Slider---Slick-Slider-slick.js" />
+    <Content Include="fonts\Profile-Card-Slider---Slick-Slider.css" />
     <Content Include="fonts\script.js" />
     <Content Include="fonts\styles.css" />
     <Content Include="Global.asax" />
