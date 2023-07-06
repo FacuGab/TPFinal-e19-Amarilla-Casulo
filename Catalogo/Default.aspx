@@ -47,20 +47,29 @@
         </section>
             <%-- FIN CAROUSEL --%>
 
-        <%--TODO: Listar categorias--%>
+         <%--TODO: Listar categorias--%>
          <div class="container">
              <div class="row">
-                 <h1 class="mt-5">Los mejores hardware</h1>
-                 <asp:Repeater runat="server" ID="rptCategorias">
-                     <ItemTemplate>
-                         <div class="card m-3 mt-4" style="width: 18rem;">
-                             <asp:ImageButton ImageUrl='<%# Eval("UrlImagen") %>' class="card-img-top" ID="btnImgCate" OnClick="btnImgCate_Click" CommandArgument='<%# Eval("Id") %>' runat="server" />
-                             <div class="card-body">
-                                 <p class="card-text text-center fs-4"><%#Eval("Descripcion") %></p>
-                             </div>
-                         </div>
-                     </ItemTemplate>
-                 </asp:Repeater>
+                 <div class="col">
+                     <h1 class="mt-5">Los mejores hardware</h1>
+                     <div class="slider responsive">
+                         <asp:Repeater runat="server" ID="rptCategorias">
+                             <ItemTemplate>
+                                 <div>
+                                     <%--<img class="img-fluid" src="http://placehold.it/200x200?text=1">--%>
+                                     <div class="card bg-warning">
+                                         <div class="card-body text-center">
+                                             <h4 class="card-header fw-bold"><%#Eval("Descripcion") %></h4>
+                                         </div>
+                                         <div class="p-3 ">
+                                             <asp:ImageButton ImageUrl='<%# Eval("UrlImagen") %>' class="card-img-top" ID="btnImgCate" OnClick="btnImgCate_Click" CommandArgument='<%# Eval("Id") %>' runat="server" />
+                                         </div>
+                                     </div>
+                                 </div>
+                             </ItemTemplate>
+                         </asp:Repeater>
+                     </div>
+                 </div>
              </div>
          </div>
          <%--fin categorias--%>
@@ -68,19 +77,45 @@
          <%--TODO: Listar marcas--%>
          <div class="container">
              <div class="row">
-                 <h1 class="mt-5">Las mejores Marcas</h1>
-                 <asp:Repeater runat="server" ID="rptMarcas">
-                     <ItemTemplate>
-                         <div class="card m-3 mt-4" style="width: 18rem;">
-                             <asp:ImageButton ImageUrl='<%# Eval("UrlImagen") %>' class="card-img-top" ID="btnImgMarca" OnClick="btnImgMarca_Click" CommandArgument='<%# Eval("Id") %>' runat="server" />
-                         </div>
-                     </ItemTemplate>
-                 </asp:Repeater>
+                 <div class="col">
+                     <h1 class="mt-5">Nuestras marcas</h1>
+                     <div class="slider responsive">
+                         <asp:Repeater runat="server" ID="rptMarcas">
+                             <ItemTemplate>
+                                 <div>
+                                     <div class="card bg-dark text-light pb-3 ps-3 pe-3">
+                                         <div class="card-body text-center">
+                                             <h4 class="card-header fw-bold"><%#Eval("Descripcion") %></h4>
+                                         </div>
+                                         <asp:ImageButton ImageUrl='<%# Eval("UrlImagen") %>' class="card-img-top w-100" Width="" ID="btnImgCate" OnClick="btnImgCate_Click" CommandArgument='<%# Eval("Id") %>' runat="server" />
+                                     </div>
+                                 </div>
+                             </ItemTemplate>
+                         </asp:Repeater>
+                     </div>
+                 </div>
              </div>
          </div>
          <%--fin marcas--%>
 
+         <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
 
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
+</div>
+         <%--fin toast--%>
+
+         
 
     </main>
 </asp:Content>
