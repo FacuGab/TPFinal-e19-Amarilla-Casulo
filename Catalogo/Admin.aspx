@@ -288,9 +288,13 @@
                                         <asp:Label runat="server" Text='<%# Eval("PrecioTotal") %>'  CssClass="mt-3"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Terminar/Cancelar">
+                                <asp:TemplateField HeaderText="Cancelar">
                                     <ItemTemplate>
                                         <asp:Button Text="Cancelar" CssClass="btn btn-outline-danger mt-3" ID="btnCancelarPedido"  runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Terminar">
+                                    <ItemTemplate>
                                         <asp:Button Text="Terminar" CssClass="btn btn-outline-success mt-3" ID="btnTerminarPedido" runat="server" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -348,8 +352,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Monto Total">
                                     <ItemTemplate>
-                                        <span>$</span>
-                                        <asp:Label runat="server" Text='<%# Eval("PrecioTotal") %>'  CssClass="mt-3"></asp:Label>
+                                        <asp:Label runat="server" Text='<%# string.Format("{0:C2}", Eval("PrecioTotal")) %>'  CssClass="mt-3"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -357,35 +360,47 @@
                         <%-- fin Lista Pedido Unitario --%>
 
                         <%-- Lista Pedido_Articulos --%>
-                        <asp:GridView ID="dgvPedido_Articulos" AutoGenerateColumns="false" CssClass="table table-striped mt-5" runat="server">
-                            <Columns>
-                                <asp:TemplateField Visible="false">
-                                    <ItemTemplate>
-                                        <asp:Label Text='<%#Eval("IdPedido") %>' runat="server" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:BoundField HeaderText="IdArticulo" DataField="Id" />
-                                <asp:BoundField HeaderText="Articulo" DataField="Nombre"/>
-                                <asp:BoundField HeaderText="Descripcion" DataField="Descripcion"/>
-                                <asp:BoundField HeaderText="Marca" DataField="Marca"/>
-                                <asp:BoundField HeaderText="Categoria" DataField="Categoria" />
-                                <asp:BoundField HeaderText="Estado" DataField="Estado" />
-                                <asp:BoundField HeaderText="Stock" DataField="Stock" />
-                                <asp:BoundField HeaderText="Precio/u" DataField="Precio" />
-                                <asp:BoundField HeaderText="Cantidad" DataField="Cantidad" />
-                                <asp:TemplateField HeaderText="Agregar/Quitar">
-                                    <ItemTemplate>
-                                        <asp:ImageButton ID="btnAgregarArtPedido" ImageUrl="~/recursos/img/agregar.png" Height="19" Width="20" runat="server"/>
-                                        <asp:ImageButton ID="btnRestarArtPedido" ImageUrl="~/recursos/img/minimizar.png" Height="19" Width="20" runat="server"/>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Eliminar">
-                                    <ItemTemplate>
-                                        <asp:ImageButton ID="btnEliminarArtPedido" ImageUrl="~/recursos/img/eliminar.png" Height="40" Width="40" runat="server"/>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
+                        <asp:UpdatePanel runat="server">
+                            <ContentTemplate>
+                                <asp:GridView ID="dgvPedido_Articulos" AutoGenerateColumns="false" CssClass="table table-striped table-bordered mt-5" runat="server">
+                                    <Columns>
+                                        <asp:TemplateField Visible="false">
+                                            <ItemTemplate>
+                                                <asp:Label Text='<%#Eval("IdPedido") %>' runat="server" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:BoundField HeaderText="IdArticulo" DataField="Id" />
+                                        <asp:BoundField HeaderText="Articulo" DataField="Nombre"/>
+                                        <asp:BoundField HeaderText="Descripcion" DataField="Descripcion"/>
+                                        <asp:BoundField HeaderText="Marca" DataField="Marca"/>
+                                        <asp:BoundField HeaderText="Categoria" DataField="Categoria" />
+                                        <asp:BoundField HeaderText="Estado" DataField="Estado" />
+                                        <asp:BoundField HeaderText="Stock" DataField="Stock" />
+                                        <asp:TemplateField HeaderText="Precio">
+                                            <ItemTemplate>
+                                                <asp:Label Text='<%#string.Format("{0:C2}", Eval("Precio"))%>' runat="server" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:BoundField HeaderText="Cantidad" DataField="Cantidad" />
+                                        <asp:TemplateField HeaderText="Agregar">
+                                            <ItemTemplate>
+                                                <asp:ImageButton ID="btnAgregarArtPedido" ImageUrl="~/recursos/img/agregar.png" CommandArgument='<%#Eval("Id")%>' OnClick="btnAgregarArtPedido_Click" Height="19" Width="20" runat="server"/>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Quitar">
+                                            <ItemTemplate>
+                                                <asp:ImageButton ID="btnRestarArtPedido" ImageUrl="~/recursos/img/minimizar.png" Height="19" Width="20" runat="server"/>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Eliminar">
+                                            <ItemTemplate>
+                                                <asp:ImageButton ID="btnEliminarArtPedido" ImageUrl="~/recursos/img/eliminar.png" CommandArgument='<%#Eval("Id")%>' OnClick="btnEliminarArtPedido_Click" Height="40" Width="40" runat="server"/>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
                         <%-- Fin Lista Pedido_Articulos --%>
 
                         <%--<!-- Lista Pedidos Editar --> <!-- Aca tendria que ir lo que falta del crud, para editar un pedido (agregar uno, y dar la opcion de elimnar otra vez) -->--%>
@@ -401,6 +416,7 @@
                                             <div class="col-6 mt-3">
                                                 <label for="txtIdUsuarioEditarPedido" class="form-label">Numero de Usuario<span class="text-danger">*</span></label>
                                                 <asp:TextBox CssClass="form-control" ID="txtIdUsuarioEditarPedido" placeholder="ID Usuario" runat="server" />
+                                                <asp:TextBox ID="txtIdPedidoEditar" Visible="false" runat="server"/>
                                             </div>
                                             <div class="col-6 mt-3">
                                                 <label for="txtNombreUsuarioEditarPedido" class="form-label">Nombre <span class="text-danger">*</span></label>
@@ -416,7 +432,7 @@
                                             </div>
                                             <div class="col-6 mt-3">
                                                 <label for="txtFechaEditarPedido" class="form-label">Fecha de Inicio</label>
-                                                <asp:TextBox CssClass="form-control" TextMode="Date" ID="txtFechaEditarPedido" placeholder="Fecha de Inicio" runat="server" />
+                                                <asp:TextBox CssClass="form-control" TextMode="DateTime" ID="txtFechaEditarPedido" placeholder="Fecha de Inicio" runat="server" />
                                             </div>
                                             <div class="col-6 mt-3">
                                                 <label for="txtDescuentoEditarPedido" class="form-label">Descuento</label>
@@ -428,7 +444,7 @@
                                             </div>
                                             <div class="col-12 mt-3">
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <asp:Button Text="Guardar Cambios" ID="Button1" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" runat="server" />
+                                                    <asp:Button Text="Guardar Cambios" ID="btnModificarAgregarPedido" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" OnClick="btnModificarAgregarPedido_Click"  runat="server" />
                                                 </div>
                                                 <div class="d-flex justify-content-center align-items-center">
                                                     <asp:Button Text="Eliminar" CssClass="btn btn-danger mb-3 ps-5 pe-5 fs-4" runat="server" />
@@ -442,7 +458,6 @@
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-                        
                         <%--  Fin Lista Pedidos Editar --%>
 
 

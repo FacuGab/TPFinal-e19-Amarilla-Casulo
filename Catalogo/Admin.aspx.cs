@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
+using System.Globalization;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
@@ -195,6 +196,34 @@ namespace Catalogo
             dgvAdminPedidos.Visible = true;
         }
 
+        // TODO: Cargar Pedido en form de actualizacion
+        private void CargarPedidoEnForm(Pedido pedido)
+        {
+            if (pedido == null) return;
+            txtIdPedidoEditar.Text = pedido.IdPedido.ToString();
+            txtIdUsuarioEditarPedido.Text = pedido.IdUsuario.ToString();
+            txtNombreUsuarioEditarPedido.Text = pedido.Usuario;
+            txtEstadoEditarPedido.Text = pedido.Estado;
+            txtDirEditarPedido.Text = pedido.DireccionEntrega;
+            txtFechaEditarPedido.Text = pedido.fecha.ToString();
+            txtDescuentoEditarPedido.Text = pedido.Descuento.ToString();
+            txtTotalEditarPedido.Text = pedido.PrecioTotal;
+        }
+
+        // TODO: Cargar Pedido del Form en Objeto
+        private void CargarPedidoDelForm(Pedido pedido)
+        {
+            if (pedido == null) return;
+            pedido.IdPedido = int.Parse(txtIdPedidoEditar.Text);
+            pedido.IdUsuario = int.Parse(txtIdUsuarioEditarPedido.Text);
+            pedido.Usuario = txtNombreUsuarioEditarPedido.Text;
+            pedido.Estado = txtEstadoEditarPedido.Text;
+            pedido.DireccionEntrega = txtDirEditarPedido.Text;
+            pedido.fecha = DateTime.Parse(txtFechaEditarPedido.Text);
+            pedido.Descuento = int.Parse(txtDescuentoEditarPedido.Text);
+            pedido.precioTotal = decimal.Parse(txtTotalEditarPedido.Text, NumberStyles.Currency);
+        }
+
         // TODO: Cargar Pedido_Articulos en Admin
         private void CargarPedido_Articulos() //ver si usar
         {
@@ -257,23 +286,36 @@ namespace Catalogo
 
         // TODO: BOTON Dar Baja Pedido en Grid
 
-
         // TODO: BOTON Editar/Detalle Pedido en Grid
         protected void ibtEditarPedido_Click(object sender, ImageClickEventArgs e)
         {
-            int idMatch = Convert.ToInt32(((ImageButton)sender).CommandArgument);
-            NegocioPedido = new NegocioPedido();
-            PedidoList = NegocioPedido.ListarPedidos(idMatch, "IdPedido");
-            dgvAdminPedido.DataSource = PedidoList;
-            dgvAdminPedido.DataBind();
+            try
+            {
+                int idMatch = Convert.ToInt32(((ImageButton)sender).CommandArgument);
+                NegocioPedido = new NegocioPedido();
 
-            Pedido_articulos = NegocioPedido.ListarPedido_articulo(idMatch);
-            dgvPedido_Articulos.DataSource = Pedido_articulos;
-            dgvPedido_Articulos.DataBind();
-            dgvAdminPedido.Visible = true;
-            dgvAdminPedidos.Visible = false;
-            dgvPedido_Articulos.Visible = true;
-            upadetePanelPedidosEditar.Visible = true; 
+                PedidoList = NegocioPedido.ListarPedidos(idMatch, "IdPedido");
+                dgvAdminPedido.DataSource = PedidoList;
+                dgvAdminPedido.DataBind();
+
+                Session.Add("PedidoArticulosListaEdit", NegocioPedido.ListarPedido_articulo(idMatch));
+                Pedido_articulos = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
+
+                dgvPedido_Articulos.DataSource = Pedido_articulos;
+                dgvPedido_Articulos.DataBind();
+
+                CargarPedidoEnForm(PedidoList[0]);
+                dgvAdminPedido.Visible = true;
+                dgvAdminPedidos.Visible = false;
+                dgvPedido_Articulos.Visible = true;
+                upadetePanelPedidosEditar.Visible = true; 
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+            
         } // Arreglar el detalle de pedido Error
 
         // TODO: BOTONES PEDIDOS MENU
@@ -319,6 +361,73 @@ namespace Catalogo
                 dgvPedido_Articulos.Visible = false;
                 upadetePanelPedidosEditar.Visible = false;
                 dgvAdmin.Visible = false;
+            }
+        }
+
+        // TODO: Boton Agregar/Modificar Pedido
+        protected void btnModificarAgregarPedido_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Cargamos variables e instanciamos objetos
+                NegocioPedido = new NegocioPedido();
+                Pedido pedido = new Pedido();
+                CargarPedidoDelForm(pedido);
+                
+                // editamos pedido y buscamos lista Pedido_Articulos en Session
+                int res = NegocioPedido.EditarPedido(pedido);
+                List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
+
+                // Modificamos Lista Pedido_Articulos segun el estado del pedido
+                // .....HACER........
+
+                // Modificamos Pedido_Articulo en DB segun el estado del pedido y la cantidad en lista Pedido_Articulos
+                for (int i = 0; i < listaPedido_Articulo.Count; i++)
+                {
+                    NegocioPedido.EditarPedido_articulo(listaPedido_Articulo[i]);
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //TODO: Boton Agregar Articulo en Editar Pedidos
+        protected void btnAgregarArtPedido_Click(object sender, ImageClickEventArgs e)
+        {
+            try
+            {
+                // Cargamos variables e instanciamos objetos
+                int idArticulo = int.Parse(((ImageButton)sender).CommandArgument);
+                List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
+
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        // TODO: Boton Eliminar Articulo en lista Pedido_Articulo
+        protected void btnEliminarArtPedido_Click(object sender, ImageClickEventArgs e)
+        {
+            try
+            {
+                int idArticulo = int.Parse(((ImageButton)sender).CommandArgument);
+                // Eliminamos el articulo de la lista Pedido_Articulo
+                List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
+                listaPedido_Articulo.RemoveAll(itm => itm.Id == idArticulo);
+                dgvPedido_Articulos.DataSource = listaPedido_Articulo;
+                dgvPedido_Articulos.DataBind();
+                dgvPedido_Articulos.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
             }
         }
         //FIN BOTONES LOGICA PEDIDOS

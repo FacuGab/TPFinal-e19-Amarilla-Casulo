@@ -402,7 +402,7 @@ namespace Negocio
             try
             {
                 datos.AbrirConexion();
-                datos.SetQuery("UPDATE PEDIDO_ARTICULO SET IdPedido = @IdPedido, IdArticulo = @IdArticulo, Cantidad = @Cantidad WHERE IdPedido = @IdPedido", "query");
+                datos.SetQuery("UPDATE PEDIDO_ARTICULO SET IdArticulo = @IdArticulo, Cantidad = @Cantidad WHERE IdPedido = @IdPedido", "query");
                 datos.SetParameters("@IdPedido", pedido_articulo.IdPedido);
                 datos.SetParameters("@IdArticulo", pedido_articulo.Id);
                 datos.SetParameters("@Cantidad", pedido_articulo.Cantidad);
@@ -482,14 +482,16 @@ namespace Negocio
         }
 
         //TODO: Dar Alta/Baja Pedido
-        public int DarAltaBajaPedido(int idMatch, bool tipo)
+        public int CambiarEstado(int idMatch, string estado)
         {
             datos = new DataAccess();
             try
             {
                 datos.AbrirConexion();
-                datos.SetQuery("UPDATE PEDIDOS SET ", "query");
-                return 0;
+                datos.SetQuery("UPDATE PEDIDOS SET Estado = @estado WHERE IdPedido = @id ", "query");
+                datos.SetParameters("@id", idMatch);
+                datos.SetParameters("@estado", estado);
+                return datos.ExecuteQuery();
             }
             catch (Exception ex)
             {
