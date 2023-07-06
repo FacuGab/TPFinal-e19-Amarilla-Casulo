@@ -242,7 +242,7 @@ namespace Catalogo
 
 
         //############################## EVENTOS ##############################
-
+        // Eventos de la pagina:
         // TODO: Boton Sing Out en MENU no ABM  (TEST Para cerrar la sesion)
         protected void btnSingOutMenuAdmin_Click(object sender, EventArgs e)
         {
@@ -264,8 +264,8 @@ namespace Catalogo
         }
 
 
-        // LOGICA PEDIDOS
-        // TODO: BOTON Dar Alta Pedido en Grid
+        #region// LOGICA PEDIDOS
+        // TODO: BOTON Dar Alta Pedido en Grid, Metodos sin sentido, no se usa. Sacar luego para no romper codigo
         protected void btnAltaBajaPedido_Click(object sender, EventArgs e)
         {
             try
@@ -283,8 +283,6 @@ namespace Catalogo
                 Response.Redirect("Error.aspx", false);
             }
         }
-
-        // TODO: BOTON Dar Baja Pedido en Grid
 
         // TODO: BOTON Editar/Detalle Pedido en Grid
         protected void ibtEditarPedido_Click(object sender, ImageClickEventArgs e)
@@ -316,7 +314,7 @@ namespace Catalogo
                 Response.Redirect("Error.aspx", false);
             }
             
-        } // Arreglar el detalle de pedido Error
+        }
 
         // TODO: BOTONES PEDIDOS MENU
         protected void btnPedidosMenu_Click(object sender, EventArgs e)
@@ -430,10 +428,10 @@ namespace Catalogo
                 Response.Redirect("Error.aspx", false);
             }
         }
-        //FIN BOTONES LOGICA PEDIDOS
+        #endregion//FIN BOTONES LOGICA PEDIDOS
 
 
-        // LOGICA USUARIO
+        #region //TODO: LOGICA USUARIO
         // TODO: BOTON EDITAR USUARIO EN GRID
         protected void ibtEditarUsuario_Click(object sender, ImageClickEventArgs e)
         {
@@ -524,7 +522,6 @@ namespace Catalogo
             CargarUsuario();
             Response.Redirect("Admin.aspx?id=6");
         }
-
         // TODO: BOTON DAR DE ALTA USUARIO (Logica)
         protected void btnAltaUsuario_Click(object sender, EventArgs e)
         {
@@ -559,7 +556,7 @@ namespace Catalogo
             btnEliminarUsuario.Visible = false;
             sectionModificarUsuario.Visible = true;
         }
-
+        
         // TODO: Link Volver a Lista Aneterior (Depende del CommandName del btn)
         protected void lnkVolverListaUsuarios_Click(object sender, EventArgs e)
         {
@@ -571,10 +568,10 @@ namespace Catalogo
                 sectionModificarUsuario.Visible = false;
             }
         }
-        // FIN BOTONES LOGICA USUARIO
+        #endregion // FIN LOGICA USUARIO
 
 
-        //TODO: LOGICA ARTICULOS
+        #region//TODO: LOGICA ARTICULOS
         //Metodo para agregar articulo
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -722,10 +719,10 @@ namespace Catalogo
             tbImgArt.Text = art.ImagenUrl;
             imgNuevoArt.ImageUrl = art.ImagenUrl;
         }
-        //FIN LOGICA ARTÍCULOS
+        #endregion//FIN LOGICA ARTÍCULOS
 
 
-        //LOGICA CATEGORIAS
+        #region//LOGICA CATEGORIAS
         // BOTON Agregar Categorias (Ver)
         protected void btnAgregarCategoria_Click(object sender, EventArgs e)
         {
@@ -880,10 +877,10 @@ namespace Catalogo
         {
             Response.Redirect("Admin.aspx?id=4");
         }
-        //FIN LOGICA CATEGORIAS
+        #endregion//FIN LOGICA CATEGORIAS
 
 
-        //TODO: LOGICA MARCAS
+        #region//TODO: LOGICA MARCAS
         //TODO: Evento cambio de ImgUrl Marca
         protected void tbUrlImgMarca_TextChanged(object sender, EventArgs e)
         {
@@ -1024,6 +1021,6 @@ namespace Catalogo
             dgvAdmin.PageIndex = e.NewPageIndex;
             CargarArticulos();
         }
-        //FIN LOGICA MARCAS
+        #endregion//FIN LOGICA MARCAS
     }//END CLASS
 }
