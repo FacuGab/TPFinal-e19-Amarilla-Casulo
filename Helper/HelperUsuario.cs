@@ -81,5 +81,22 @@ namespace Helper
             NegocioUsuario negocio = new NegocioUsuario();
             return negocio.existUser(usuario.Mail, usuario.Clave, usuario.Dni);
         }
+        //valido si el id de una marca esta registrado en la base de datos
+        static public bool ExistMarca(int id)
+        {
+            NegocioMarca negocio = new NegocioMarca();
+            return negocio.ExistMarca(id);
+        }
+        //Valido si el id de una categoria esta registrado en la base de datos
+        static public bool ExistCategoria(int id)
+        {
+            NegocioCategoria negocio = new NegocioCategoria();
+            return negocio.existCategoria(id);
+        }
+        static public void MostrarConfirmacionBorrado(Page page, string mensaje, string funcionConfirmacion)
+        {
+            string script = $"if (confirm('{mensaje}')) {{ {funcionConfirmacion} }}";
+            ScriptManager.RegisterStartupScript(page, page.GetType(), "confirmDialog", script, true);
+        }
     }
 }

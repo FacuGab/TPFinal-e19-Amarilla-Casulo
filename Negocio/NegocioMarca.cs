@@ -108,5 +108,32 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+        public bool ExistMarca(int id)
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("SELECT Id, Descripcion, UrlImagen FROM MARCAS WHERE Id = @Id", "query");
+                datos.SetParameters("@Id", id);
+                datos.ReadQuery();
+                var aux = datos.Lector;
+                if (aux.Read())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }

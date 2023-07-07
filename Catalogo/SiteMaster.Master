@@ -90,41 +90,35 @@
         <%--modal login--%>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">Inicio de sesión</h1>
+                <div class="modal-content bg-body-secondary">
+                    <div class="modal-header bg-primary text-light">
+                        <h1 class="modal-title fs-4 fw-bold" id="exampleModalLabel">Inicio de sesión</h1>
                         <button id="btnCerrarModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" runat="server" onServerClick="btnCerrarModal_Click"></button>
                     </div>
                     <div class="modal-body">
                         <div class="col-12">
                             <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                             <asp:TextBox CssClass="form-control" ID="txtMailLogin" ToolTip="name@example.com" runat="server" />
+                            <asp:RegularExpressionValidator ID="regexEmailValidator" ControlToValidate="txtMailLogin" ValidationExpression="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" ErrorMessage="El formato de correo electrónico no es válido." runat="server" CssClass="text-danger form-text mb-2" />
                         </div>
-                        <div class="col-12 mt-3">
+                        <div class="col-12">
                             <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
                             <asp:TextBox CssClass="form-control" ID="txtClaveLogin" TextMode="Password" ToolTip="Ingrese contraseña" runat="server" />
-                        </div>
-                        <div class="col-12 mt-2">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" name="remember_me" id="remember_me">
-                                <label class="form-check-label text-secondary" for="remember_me">
-                                    Mantenerme logeado
-                                </label>
-                            </div>
                         </div>
                     </div>
                     <asp:UpdatePanel runat="server">
                         <ContentTemplate>
                             <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end m-2">
-                                <a href="Registro.aspx" class="link-secondary text-decoration-none">Crear cuenta</a>
+                                
                                 <p id="lblUsuarioNoExiste" visible="false" runat="server">
-                                    <span class="badge text-bg-warning">
+                                    <span class="badge text-bg-danger text-light me-2">
                                         <asp:Label ID="lblRespuestaLoggin" runat="server" />
                                     </span>
                                 </p>
                             </div>
                             <div class="modal-footer">
-                                <div class="d-grid">
+                                <div class="d-flex">
+                                    <asp:Button Text="Registrarse" ID="btnRegistro" OnClick="btnRegistro_Click" runat="server" cssClass="btn btn-secondary me-3"/>
                                     <asp:Button Text="Ingresar" CssClass="btn btn-primary" ID="btnIngresar" OnClick="btnIngresar_Click" runat="server" />
                                 </div>
                             </div>

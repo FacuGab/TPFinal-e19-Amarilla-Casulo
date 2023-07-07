@@ -18,8 +18,8 @@ namespace Catalogo
 
         protected void Application_End(object sender, EventArgs e)
         {
-            if(Session.Count > 0)
-                Session.Clear();
+            //if(Session.Count > 0)
+            //    Session.Clear();
         }
     }
 }

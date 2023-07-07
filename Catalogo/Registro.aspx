@@ -87,8 +87,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="d-flex justify-content-center ">
-                                                        <asp:Button Text="Registrarse" runat="server" ID="btnRegistro" OnClick="btnRegistro_Click" CommandName="RegistroInicial" CssClass="btn btn-warning btn-lg flex-fill" ValidationGroup="GuardarUsuario"/>
-                                                        <asp:Button Text="Registrarse y continuar" runat="server" ID="btnRegistroParaCompra" OnClick="btnRegistro_Click" CommandName="RegistroCompra" CssClass="btn btn-success btn-lg flex-fill" ValidationGroup="GuardarUsuario"/>
+                                                        <asp:Button Text="Registrarse" runat="server" ID="btnRegistroUsu" OnClick="btnRegistroUsu_Click"  CssClass="btn btn-warning btn-lg flex-fill" ValidationGroup="GuardarUsuario"/>
                                                     </div>
                                                     <%--validaciones--%>
                                                             <asp:ValidationSummary runat="server" ID="validationSummary" ValidationGroup="GuardarUsuario" CssClass="validation-summary fw-bold text-danger mt-5 col-form-label bg-light border rounded-3 " />

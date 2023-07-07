@@ -134,5 +134,34 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+        public bool existCategoria(int id)
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("SELECT Id FROM CATEGORIAS WHERE Id = @id", "query");
+                datos.SetParameters("@id", id);
+                datos.ReadQuery();
+                var aux = datos.Lector;
+                aux.Read();
+                if (aux.HasRows)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }

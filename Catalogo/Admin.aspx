@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="container-fluid" style="background: rgb(33,37,41); background: linear-gradient(90deg, rgba(33,37,41,1) 0%, rgba(33,37,41,1) 42%, rgba(30,120,253,1) 100%);">
+    <div class="container-fluid" >
         <div class="row flex-nowrap">
 
             <!-- MENU DE OPCIONES -->
@@ -672,7 +672,6 @@
                                                         ID Categoría:
                                                     <asp:Label runat="server" ID="lblIdCate" Text='<%# Eval("Id") %>' CssClass="mt-3"></asp:Label>
                                                     </p>
-                                                    <asp:TextBox runat="server" ID="txtIdCate" Visible="false" CssClass="form-control  mb-3"></asp:TextBox>
                                                     <asp:Label ID="lblCambiarImg" Text="URL Imágen" runat="server" Visible="false" CssClass="mt-5" />
                                                     <asp:Label runat="server" ID="lblUrl" Text='<%# Eval("UrlImagen") %>' CssClass="mt-3" Visible="false"></asp:Label>
                                                     <asp:TextBox runat="server" ID="tbUrlImg" AutoPostBack="true" Visible="false" CssClass="form-control mt-3" OnTextChanged="tbUrlImg_TextChanged"></asp:TextBox>
@@ -750,7 +749,7 @@
                             <asp:Repeater ID="dgvAdminMarca" runat="server">
                                 <ItemTemplate>
                                     <div class="col-3 mt-2 mb-3 text-center">
-                                        <div class="card h-100 m-3 bg-light border-primary" runat="server" id="cardContainerMarca">
+                                        <div class="card h-100 m-3 bg-light border-primary " runat="server" id="cardContainerMarca">
                                             <div class="card-header">
                                                 <asp:Label Text="Imágen" ID="btnCambiarImgMarca" runat="server" />
                                             </div>
@@ -771,27 +770,19 @@
                                                         ID Categoría:
                                                     <asp:Label runat="server" ID="lblIdMarca" Text='<%# Eval("Id") %>' CssClass="mt-3"></asp:Label>
                                                     </p>
-                                                    <asp:TextBox runat="server" ID="txtIdMarca" Visible="false" CssClass="form-control  mb-3"></asp:TextBox>
                                                     <asp:Label ID="lblCambiarImgMarca" Text="URL Imágen" runat="server" Visible="false" CssClass="mt-5" />
                                                     <asp:Label runat="server" ID="lblUrlMarca" Text='<%# Eval("UrlImagen") %>' CssClass="mt-3" Visible="false"></asp:Label>
                                                     <asp:TextBox runat="server" ID="tbUrlImgMarca" AutoPostBack="true" Visible="false" CssClass="form-control mt-3" OnTextChanged="tbUrlImgMarca_TextChanged"></asp:TextBox>
                                                 </p>
                                             </div>
-                                            <div class="d-flex">
-                                                <div class="col-6 card-footer text-center bg-danger-subtle">
-                                                    <i class="bi bi-x-circle-fill fs-5"></i>
-                                                    <asp:Button runat="server" ID="btnBaja" Text="Dar baja" CssClass="btn" />
-                                                    <%--deberiamos evaluar si darle baja logica alas categorias y marcas, no se es tan necesario, por que sino hay que modificar el script de la bd--%>
-                                                </div>
-                                                <div class="col-6 card-footer text-center bg-danger">
-                                                    <i class="bi bi-trash-fill fs-5"></i>
-                                                    <asp:Button runat="server" ID="btnEliminarMarca" Text="Eliminar" CssClass="btn" OnClick="btnEliminarMarca_Click"/>
-                                                </div>
+                                            <div class="col-12 bg-danger text-center">
+                                                <i class="bi bi-trash-fill fs-5"></i>
+                                                <asp:Button runat="server" ID="btnEliminarMarca" Text="Eliminar" Font-Bold="true" CssClass="btn" OnClick="btnEliminarMarca_Click" OnClientClick="return confirm('¿Estás seguro de que deseas eliminar esta marca?');"/>
                                             </div>
                                             <div class="col-12 card-footer text-center bg-primary">
                                                 <i class="bi bi-pencil-fill fs-5"></i>
-                                                <asp:Button runat="server" ID="btnEditarMarca" Text="Editar" Visible="true" CssClass="btn btn-primary" OnClick="btnEditarMarca_Click"/>
-                                                <asp:Button runat="server" ID="btnGuardarMarca" Text="Guardar" Visible="false" CssClass="btn btn-primary" OnClick="btnGuardarMarca_Click" />
+                                                <asp:Button runat="server" ID="btnEditarMarca" Text="Editar" Font-Bold="true" Visible="true" CssClass="btn btn-primary" OnClick="btnEditarMarca_Click"/>
+                                                <asp:Button runat="server" ID="btnGuardarMarca" Text="Guardar" Font-Bold="true" Visible="false" CssClass="btn btn-warning" OnClick="btnGuardarMarca_Click" />
                                             </div>
                                         </div>
                                     </div>
@@ -808,7 +799,7 @@
                                 </div>
                                 <div class="row p-2">
                                     <div class="col-6 mt-3">
-                                        <label for="IdArticulo" class="form-label">Número de ID <span class="text-danger">*</span></label>
+                                        <label for="IdArticulo" class="form-label">ID de la Marca<span class="text-danger">*</span></label>
                                         <asp:TextBox CssClass="form-control" ID="tbIdMarca" placeholder="ID Articulo" runat="server" />
                                     </div>
                                     <div class="col-6 mt-3">
@@ -817,7 +808,7 @@
                                     </div>
                                     <div class="col-8 mt-3">
                                         <label for="img" class="form-label">URL imágen <span class="text-danger">*</span></label>
-                                        <asp:TextBox CssClass="form-control" ID="tbUrlImgMarca" runat="server" AutoPostBack="true" OnTextChanged="tbUrlImgMarca_TextChanged" />
+                                        <asp:TextBox CssClass="form-control" ID="tbUrlImgNuevaMarca" runat="server" AutoPostBack="true" OnTextChanged="tbUrlImgNuevaMarca_TextChanged" />
                                     </div>
                                     <div class="col-4 mt-3">
                                         <asp:UpdatePanel runat="server">

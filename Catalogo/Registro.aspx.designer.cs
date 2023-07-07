@@ -78,22 +78,13 @@ namespace Catalogo
         protected global::System.Web.UI.WebControls.TextBox txtPassword;
 
         /// <summary>
-        /// btnRegistro control.
+        /// btnRegistroUsu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRegistro;
-
-        /// <summary>
-        /// btnRegistroParaCompra control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRegistroParaCompra;
+        protected global::System.Web.UI.WebControls.Button btnRegistroUsu;
 
         /// <summary>
         /// validationSummary control.

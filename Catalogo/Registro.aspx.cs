@@ -16,19 +16,19 @@ namespace Catalogo
             {
                 if(Request.QueryString["text"] == "registroCompra")
                 {
-                    btnRegistro.Visible = false;
-                    btnRegistroParaCompra.Visible= true;
+                    btnRegistroUsu.Visible = false;
+                    //btnRegistroParaCompra.Visible= true;
                 }
                 else
                 {
-                    btnRegistro.Visible = true;
-                    btnRegistroParaCompra.Visible = false;
+                    btnRegistroUsu.Visible = true;
+                    //btnRegistroParaCompra.Visible = false;
                 }
             }
         }
 
         //TODO:Boton Crear usuario
-        protected void btnRegistro_Click(object sender, EventArgs e)
+        protected void btnRegistroUsu_Click(object sender, EventArgs e)
         {
             try
             {
@@ -146,6 +146,8 @@ namespace Catalogo
             customValidatorPassword.Visible = false;
 
         }
+
+        
     }
     
 }

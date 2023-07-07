@@ -2078,6 +2078,7 @@
     <Content Include="recursos\img\minimizar.png" />
     <Content Include="recursos\img\minimizar1.png" />
     <Content Include="recursos\img\miss.png" />
+    <Content Include="recursos\img\placa de video.png" />
     <Content Include="recursos\img\the-simpsons-beatles.jpg" />
     <Content Include="scripts\bootstrap.bundle.js" />
     <Content Include="scripts\bootstrap.bundle.min.js" />

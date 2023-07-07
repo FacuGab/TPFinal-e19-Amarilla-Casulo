@@ -70,6 +70,7 @@ namespace Catalogo
                                 CargarPedidos();
                                 break;
                             case 3:
+                                guardadoExitoso();
                                 CargarMarcas();
                                 break;
                             case 4:
@@ -959,8 +960,6 @@ namespace Catalogo
             // Obtener los controles Label y TextBox dentro del contenedor
             var lblCategoria = (Label)cardContainer.FindControl("lblCategoria");
             var txtCategoria = (TextBox)cardContainer.FindControl("txtCategoria");
-            var lblIdCate = (Label)cardContainer.FindControl("lblIdCate");
-            var txtIdCate = (TextBox)cardContainer.FindControl("txtIdCate");
             var lblUrl = (Label)cardContainer.FindControl("lblUrl");
             var tbUrlImg = (TextBox)cardContainer.FindControl("tbUrlImg");
             var lblCambiarImg = (Label)cardContainer.FindControl("lblCambiarImg");
@@ -968,15 +967,12 @@ namespace Catalogo
             // Mostrar el TextBox y ocultar el Label
             lblCategoria.Visible = false;
             txtCategoria.Visible = true;
-            lblIdCate.Visible = false;
-            txtIdCate.Visible = true;
             lblUrl.Visible = false;
             tbUrlImg.Visible = true;
             lblCambiarImg.Visible = true;
 
             // Establecer el texto del TextBox con el valor actual del Label
             txtCategoria.Text = lblCategoria.Text;
-            txtIdCate.Text = lblIdCate.Text;
             tbUrlImg.Text = lblUrl.Text;
 
             // Ocultar el botón "Editar" y mostrar el botón "Guardar"
@@ -1047,7 +1043,7 @@ namespace Catalogo
         #endregion//FIN LOGICA CATEGORIAS
 
 
-        #region//TODO: LOGICA MARCAS
+        //TODO: LOGICA MARCAS
         //TODO: Evento cambio de ImgUrl Marca
         protected void tbUrlImgMarca_TextChanged(object sender, EventArgs e)
         {
@@ -1057,7 +1053,11 @@ namespace Catalogo
             Image imgMarca = (Image)repeaterItem.FindControl("imgMarca");
             imgMarca.ImageUrl = tbUrlImgMarca.Text;
         }
-
+        //TODO:Evento cambio de ImgUrl al crear nueva Marca
+        protected void tbUrlImgNuevaMarca_TextChanged(object sender, EventArgs e)
+        {
+            imgNuevaMarca.ImageUrl = tbUrlImgNuevaMarca.Text;
+        }
         //TODO: Boton Guardar nueva Marca
         protected void btnGuardarNewMarca_Click(object sender, EventArgs e)
         {
@@ -1066,9 +1066,31 @@ namespace Catalogo
 
             marca.Id = int.Parse(tbIdMarca.Text);
             marca.Descripcion = tbNombreMarca.Text;
-            marca.UrlImagen = tbUrlImgMarca.Text;
-            NegocioMarca.AgregarMarca(marca);
-            Response.Redirect("Admin.aspx?id=3");
+            marca.UrlImagen = tbUrlImgNuevaMarca.Text;
+
+            if(HelperUsuario.ExistMarca(marca.Id))
+            {
+                HelperUsuario.MensajePopUp(this,"Ya existe una marca con ese ID");
+            }
+            else
+            {
+                NegocioMarca.AgregarMarca(marca);
+                HelperUsuario.MensajePopUp(this, "Nueva marca registrada con exito!");
+                Session["MensajeExito"] = "Nueva marca registrada con éxito!";
+                Response.Redirect("Admin.aspx?id=3");
+
+            }
+        }
+        protected void guardadoExitoso()
+        {
+            if (Session["MensajeExito"] != null)
+            {
+                string mensajeExito = Session["MensajeExito"].ToString();
+                // Muestra el mensaje de éxito
+                HelperUsuario.MensajePopUp(this, mensajeExito);
+                // Limpia la variable de sesión para evitar mostrar el mensaje en futuras visitas a la página
+                Session.Remove("MensajeExito");
+            }
         }
 
         //TODO: Boton Volver a Lista Marcas (ver)
@@ -1100,31 +1122,27 @@ namespace Catalogo
             var cardContainer = (HtmlGenericControl)repeaterItem.FindControl("cardContainerMarca");
 
             // Obtener los controles Label y TextBox dentro del contenedor
+            var lblIdMarca = (Label)cardContainer.FindControl("lblIdMarca");
             var lblMarca = (Label)cardContainer.FindControl("lblMarca");
             var txtMarca = (TextBox)cardContainer.FindControl("txtMarca");
-            var lblIdMarca = (Label)cardContainer.FindControl("lblIdMarca");
-            var txtIdMarca = (TextBox)cardContainer.FindControl("txtIdMarca");
             var lblUrlMarca = (Label)cardContainer.FindControl("lblUrlMarca");
             var tbUrlImgMarca = (TextBox)cardContainer.FindControl("tbUrlImgMarca");
 
             //asignar valores para guardar
             marca = new Marca();
             NegocioMarca = new NegocioMarca();
-            marca.Id = int.Parse(txtIdMarca.Text);
+            marca.Id = int.Parse(lblIdMarca.Text);
             marca.Descripcion = txtMarca.Text;
             marca.UrlImagen = tbUrlImgMarca.Text;
             NegocioMarca.EditarMarca(marca);
 
             lblMarca.Visible = true;
             txtMarca.Visible = false;
-            lblIdMarca.Visible = true;
-            txtIdMarca.Visible = false;
             lblUrlMarca.Visible = false;
             tbUrlImgMarca.Visible = false;
 
 
             lblMarca.Text = txtMarca.Text;
-            lblIdMarca.Text = txtIdMarca.Text;
             lblUrlMarca.Text = tbUrlImgMarca.Text;
 
             var btnEditarMarca = (Button)cardContainer.FindControl("btnEditarMarca");
@@ -1157,21 +1175,16 @@ namespace Catalogo
             // Obtener los controles Label y TextBox dentro del contenedor
             var lblMarca = (Label)cardContainer.FindControl("lblMarca");
             var txtMarca = (TextBox)cardContainer.FindControl("txtMarca");
-            var lblIdMarca = (Label)cardContainer.FindControl("lblIdMarca");
-            var txtIdMarca = (TextBox)cardContainer.FindControl("txtIdMarca");
             var lblUrlMarca = (Label)cardContainer.FindControl("lblUrlMarca");
             var tbUrlImgMarca = (TextBox)cardContainer.FindControl("tbUrlImgMarca");
 
             //asignar valor de los label a los textbox
             txtMarca.Text = lblMarca.Text;
-            txtIdMarca.Text = lblIdMarca.Text;
             tbUrlImgMarca.Text = lblUrlMarca.Text;
 
             // Mostrar el TextBox y ocultar el Label
             lblMarca.Visible = false;
             txtMarca.Visible = true;
-            lblIdMarca.Visible = false;
-            txtIdMarca.Visible = true;
             lblUrlMarca.Visible = false;
             tbUrlImgMarca.Visible = true;
 
@@ -1189,8 +1202,7 @@ namespace Catalogo
             CargarArticulos();
         }
 
-
-
-        #endregion//FIN LOGICA MARCAS
+        
+        //FIN LOGICA MARCAS
     }//END CLASS
 }//END

@@ -87,6 +87,15 @@ namespace Catalogo
         protected global::System.Web.UI.WebControls.TextBox txtMailLogin;
 
         /// <summary>
+        /// regexEmailValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator regexEmailValidator;
+
+        /// <summary>
         /// txtClaveLogin control.
         /// </summary>
         /// <remarks>
@@ -112,6 +121,15 @@ namespace Catalogo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRespuestaLoggin;
+
+        /// <summary>
+        /// btnRegistro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRegistro;
 
         /// <summary>
         /// btnIngresar control.
