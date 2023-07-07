@@ -42,7 +42,7 @@ namespace Catalogo
         {
             sectionModificarUsuario.Visible = false;
             SectionCrearArt.Visible = false;
-            btnAgregarArticuloPedido_Articulos.Visible = false;
+            //btnAgregarArticuloPedido_Articulos.Visible = false;
             //ddlAgregarArticuloPedido_Articulos.Visible = false;
             try
             {
@@ -315,14 +315,18 @@ namespace Catalogo
                 dgvAdminPedido.Visible = true;
                 dgvAdminPedidos.Visible = false;
                 dgvPedido_Articulos.Visible = true;
-                upadetePanelPedidosEditar.Visible = true; 
+                upadetePanelPedidosEditar.Visible = true;
+                btnAgregarArticuloPedido_Articulos.Visible = true;
+
+                lblArticulosXidPedido_Articulos.Visible = false;
+                ddlAgregarArticuloPedido_Articulos.Visible = false;
+                btnAgregarArticuloPedido_ArticulosFinal.Visible = false;
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx", false);
             }
-            
         }
 
         // TODO: BOTONES PEDIDOS MENU (sin uso casi)
@@ -538,6 +542,56 @@ namespace Catalogo
             {
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //TODO: Boton Crear Nuevo Pedido
+        protected void btnCrearNuevoPedidoMenu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                upadetePanelPedidosEditar.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        protected void btnCancelarTerminarPedido(object sender, EventArgs e)
+        {
+            int idPedido = int.Parse(((Button)sender).CommandArgument);
+            string tipo = ((Button)sender).CommandName;
+            if(tipo == "Cancelar")
+            {
+                try
+                {
+                    NegocioPedido = new NegocioPedido();
+                    NegocioPedido.ModificarEstado(idPedido, "CANCELADO");
+                    dgvAdminPedidos.DataSource = NegocioPedido.ListarPedidos();
+                    dgvAdminPedidos.DataBind();
+                }
+                catch (Exception ex)
+                {
+                    Session.Add("error", ex);
+                    Response.Redirect("Error.aspx", false);
+                }
+            }
+            else if (tipo == "Terminar")
+            {
+                try
+                {
+                    NegocioPedido = new NegocioPedido();
+                    NegocioPedido.ModificarEstado(idPedido, "TERMINADO");
+                    dgvAdminPedidos.DataSource = NegocioPedido.ListarPedidos();
+                    dgvAdminPedidos.DataBind();
+                }
+                catch (Exception ex)
+                {
+                    Session.Add("error", ex);
+                    Response.Redirect("Error.aspx", false);
+                }
             }
         }
         #endregion//FIN BOTONES LOGICA PEDIDOS
@@ -1136,8 +1190,7 @@ namespace Catalogo
         }
 
 
+
         #endregion//FIN LOGICA MARCAS
-
-
     }//END CLASS
 }//END

@@ -27,6 +27,7 @@
                                     <asp:LinkButton Text="Todos los Pedidos" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" CommandName="btnPedidosTodos" OnClick="btnPedidosMenu_Click" runat="server" />
                                 </li>
                                 <li>
+                                    <asp:Button ID="btnCrearNuevoPedidoMenu" Text="Crear Nuevo Pedido" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" OnClick="btnCrearNuevoPedidoMenu_Click" runat="server" />
                                 </li>
                             </ul>
                         </li>
@@ -288,12 +289,12 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Cancelar">
                                     <ItemTemplate>
-                                        <asp:Button Text="Cancelar" CssClass="btn btn-outline-danger mt-3" ID="btnCancelarPedido"  runat="server" />
+                                        <asp:Button Text="Cancelar" CssClass="btn btn-outline-danger mt-3" ID="btnCancelarPedido" CommandName="Cancelar" CommandArgument='<%#Eval("IdPedido") %>' OnClick="btnCancelarTerminarPedido" runat="server" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Terminar">
                                     <ItemTemplate>
-                                        <asp:Button Text="Terminar" CssClass="btn btn-outline-success mt-3" ID="btnTerminarPedido" runat="server" />
+                                        <asp:Button Text="Terminar" CssClass="btn btn-outline-success mt-3" ID="btnTerminarPedido" CommandName="Terminar" CommandArgument='<%#Eval("IdPedido") %>' OnClick="btnCancelarTerminarPedido" runat="server" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Editar">
@@ -364,7 +365,7 @@
 
                             <%-- botones --%>
                             <div class="col-10 mt-5">
-                                <asp:Button ID="btnAgregarArticuloPedido_Articulos" Text="➕ Agregar nuevo Articulo" CssClass="m-3 btn btn-primary btn-lg m-3" OnClick="btnAgregarArticuloPedido_Articulos_Click" runat="server"/>
+                                <asp:Button ID="btnAgregarArticuloPedido_Articulos" Text="➕ Agregar nuevo Articulo" CssClass="m-3 btn btn-primary btn-lg m-3" OnClick="btnAgregarArticuloPedido_Articulos_Click" Visible ="false" runat="server"/>
                                 <div class="col-6 mt-5">
                                     <asp:Label runat="server" ID="lblArticulosXidPedido_Articulos" Text="Articulos por Id" CssClass="badge rounded-pill text-bg-warning mt-3" Visible="false"></asp:Label>
                                     <asp:DropDownList runat="server" ID="ddlAgregarArticuloPedido_Articulos" CssClass="form-control m-3" Visible="false"></asp:DropDownList>
@@ -467,10 +468,10 @@
                                             </div>
                                             <div class="col-12 mt-3">
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <asp:Button Text="Guardar Cambios" ID="btnModificarAgregarPedido" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" OnClick="btnModificarAgregarPedido_Click"  runat="server" />
+                                                    <asp:Button Text="Guardar Cambios" ID="btnModificarAgregarPedido" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" OnClick="btnModificarAgregarPedido_Click" OnClientClick="return confirm('¿Seguro de Modificar?');"  runat="server" />
                                                 </div>
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <asp:Button ID="btnEliminarPedido_Articulos" Text="Eliminar" CssClass="btn btn-danger mb-3 ps-5 pe-5 fs-4" OnClick="btnEliminarPedido_Articulos_Click" OnClientClick="return confirm('¿Está seguro de Eliminar?');" runat="server" />
+                                                    <asp:Button ID="btnEliminarPedido_Articulos" Text="Eliminar" CssClass="btn btn-danger mb-3 ps-5 pe-5 fs-4" OnClick="btnEliminarPedido_Articulos_Click" OnClientClick="return confirm('¿Seguro de Eliminar?');" runat="server" />
                                                 </div>
                                                 <div class="d-flex justify-content-center">
                                                     <asp:LinkButton Text="Volver a Lista Pedidos" CssClass="link-body-emphasis" ID="btnVolverListaPedidos" CommandName="btnVolverListaPedidos" OnClick="btnVolverListaPedidos_Click" runat="server" />
