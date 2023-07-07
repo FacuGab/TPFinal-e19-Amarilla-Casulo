@@ -3,55 +3,33 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <main>
-        <%-- CAROUSEL BANNER--%>
-        <section class="row" aria-labelledby="aspnetTitle">
-            <div id="myCarousel" class="carousel slide mb-6 " data-bs-ride="carousel" data-bs-theme="light">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="https://logitechsouthcone.com/logitechg/images/Landing-Gaming-BANNERS_WEBCAM.jpg" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>First slide label</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://logitechsouthcone.com/logitechg/images/Landing-Gaming-BANNERS_Mousepad.jpg" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>First slide label</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://logitechsouthcone.com/logitechg/images/Landing-Gaming-BANNERS_MOuse.jpg" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>First slide label</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        </section>
-            <%-- FIN CAROUSEL --%>
+     <main style="background-image:url(https://img3.wallspic.com/previews/9/2/0/5/6/165029/165029-imac_color_matching_wallpaper_in_dark_purple_for_ipad_or_desktop-x750.jpg);background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;">
+         <%-- CAROUSEL BANNER--%>
+         <div id="carousel-1" class="carousel slide mt-5" data-bs-ride="false">
+             <div class="carousel-inner">
+                 <div class="carousel-item active">
+                     <img class="w-100 d-block" src="https://logitechsouthcone.com/logitechg/images/Landing-Gaming-BANNERS_WEBCAM.jpg" alt="Slide Image" /></div>
+                 <div class="carousel-item">
+                     <img class="w-100 d-block" src="https://logitechsouthcone.com/logitechg/images/Landing-Gaming-BANNERS_Mousepad.jpg" alt="Slide Image" /></div>
+                 <div class="carousel-item">
+                     <img class="w-100 d-block" src="https://logitechsouthcone.com/logitechg/images/Landing-Gaming-BANNERS_MOuse.jpg" alt="Slide Image" /></div>
+             </div>
+             <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></a><a class="carousel-control-next" href="#carousel-1" role="button" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></a></div>
+             <div class="carousel-indicators">
+                 <button class="active" type="button" data-bs-target="#carousel-1" data-bs-slide-to="0"></button>
+                 <button type="button" data-bs-target="#carousel-1" data-bs-slide-to="1"></button>
+                 <button type="button" data-bs-target="#carousel-1" data-bs-slide-to="2"></button>
+             </div>
+         </div>
+         <%-- FIN CAROUSEL --%>
 
          <%--TODO: Listar categorias--%>
-         <div class="container">
+         <div class="container mt-5">
              <div class="row">
                  <div class="col">
-                     <h1 class="mt-5">Los mejores hardware</h1>
+                     <h1 class="mt-5 fw-bold text-light">Los mejores hardware</h1>
                      <div class="slider responsive">
                          <asp:Repeater runat="server" ID="rptCategorias">
                              <ItemTemplate>
@@ -75,10 +53,10 @@
          <%--fin categorias--%>
          
          <%--TODO: Listar marcas--%>
-         <div class="container">
+         <div class="container mt-5">
              <div class="row">
                  <div class="col">
-                     <h1 class="mt-5">Nuestras marcas</h1>
+                     <h1 class="mt-5 fw-bold text-light">Nuestras marcas</h1>
                      <div class="slider responsive">
                          <asp:Repeater runat="server" ID="rptMarcas">
                              <ItemTemplate>
@@ -98,23 +76,46 @@
          </div>
          <%--fin marcas--%>
 
-         <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
-
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <img src="..." class="rounded me-2" alt="...">
-      <strong class="me-auto">Bootstrap</strong>
-      <small>11 mins ago</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      Hello, world! This is a toast message.
-    </div>
-  </div>
-</div>
-         <%--fin toast--%>
-
+         <%--sección nuestro equipo--%>
+             <div id="nuestroEquipo" class="container py-4 py-xl-5 mt-5" >
+                 <div class="row mb-4 mb-lg-5">
+                     <div class="col-md-12 col-xl-6 text-center mx-auto">
+                         <h2 class="text-bg-light rounded-4 p-2"><strong>Nuestro equipo</strong></h2>
+                     </div>
+                 </div>
+                 <div  class="row gy-4 row-cols-2 row-cols-md-4">
+                     <div class="col"></div>
+                     <div class="col">
+                         <div class="card-body text-center d-flex flex-column align-items-center p-0">
+                             <img class="rounded-circle mb-3 fit-cover" width="130" height="130" src="https://avatars.githubusercontent.com/u/85770730?v=4" />
+                             <h5 class="fw-bold text-warning card-title mb-0"><strong>Emanuel F. Casulo</strong></h5>
+                             <p class="text-light card-text mb-2">Legajo: 24482</p>
+                             <ul class="list-inline fs-6 text-muted w-100 mb-0">
+                                 <li class="list-inline-item text-center">
+                                     <div class="d-flex flex-column align-items-center">
+                                         <a href="https://github.com/EmanuelFCasulo"><i class="bi bi-github text-light fs-4"></i></a>
+                                     </div>
+                                 </li>
+                             </ul>
+                         </div>
+                     </div>
+                     <div class="col">
+                         <div class="card-body text-center d-flex flex-column align-items-center p-0">
+                             <img class="rounded-circle mb-3 fit-cover" width="130" height="130" src="https://pps.whatsapp.net/v/t61.24694-24/300220495_1109287563010387_3814727986638712940_n.jpg?ccb=11-4&oh=01_AdQyeAMz4KwSQXik5DwmhrGrIr_Me_Lr_R-f9DH3AQBgEg&oe=64B416A0" />
+                             <h5 class="fw-bold text-warning card-title mb-0"><strong>Facundo Amarilla</strong></h5>
+                             <p class="text-light card-text mb-2">Legajo:</p>
+                             <ul class="list-inline fs-6 text-muted w-100 mb-0">
+                                 <li class="list-inline-item text-center">
+                                     <div class="d-flex flex-column align-items-center">
+                                         <a href="https://github.com/FacuGab"><i class="bi bi-github text-light fs-4"></i></a>
+                                     </div>
+                                 </li>
+                             </ul>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         <%--fin sección nuestro equipo--%>
          
 
     </main>

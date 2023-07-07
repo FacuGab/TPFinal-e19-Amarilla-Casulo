@@ -19,34 +19,35 @@
     <asp:ScriptManager runat="server" />
 
         <!-- BARRA NAVEGACIÓN -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-primary bg-gradient fixed-top p-3"> <%--fixed-top--%>
+        <nav class="navbar navbar-expand-lg navbar-light bg-warning bg-gradient fixed-top p-3"> <%--fixed-top--%>
             <div class="container-fluid ">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand img-fluid text-light" href="Default.aspx">
+                <a class="navbar-brand img-fluid" href="Default.aspx">
                     <!-- mande el icono para ver como quedaba -->
                     <asp:Image ImageUrl="recursos/img/hellfish.png" Height="35px" Width="35px" CssClass="img-fluid" AlternateText="LOGO-MARCA" ID="navIcon" runat="server" ImageAlign="Middle" />
-                    <span>HARDFISH</span>
+                    <span class="fw-bold">HARDFISH</span>
                 </a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto d-flex ">
-                        <li class="nav-item">
-                            <a class="nav-link active text-black " aria-current="page" runat="server" href="~/"></a>
+                        <li class="nav-item me-2">
+                            <a class="nav-link active scroll-link fs-5 fw-bold " aria-current="page" href="#nuestroEquipo"><i>Nosotros</i></a>
                         </li>
                         <li class="nav-item me-2">
-                            <a class="nav-link text-light" href="Productos.aspx">Productos</a> <!-- Nose cambiar la fuente para que se vea como el resto -->
+                            <a class="nav-link fs-5 fw-bold" aria-current="page" href="Productos.aspx"><i>Productos</i></a>
+                        </li>
                         <li class="nav-item me-2 ">
                             <a type="button" class="btn  fs-5 position-relative" href="Admin.aspx">👨‍💻</a>
                         </li>
                         <li class="nav-item me-2 ">
-                            <button type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#modalBusqueda"><i class="bi bi-search text-light"> Buscar</i></button>
+                            <button type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#modalBusqueda"><i class="bi bi-search fw-bold"> Buscar</i></button>
                         </li>
                         <asp:UpdatePanel runat="server">
                             <ContentTemplate>
                                 <li class="nav-item ms-2 me-2">
                                     <a type="button" class="btn  fs-5 position-relative" href="ListaCarrito.aspx">
-                                      <i class="fs-4 bi bi-cart4 text-light"></i>
+                                      <i class="fs-4 bi bi-cart4"></i>
                                         <%if (Flag) {%>  
                                         
                                       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -60,8 +61,8 @@
                             </ContentTemplate>
                         </asp:UpdatePanel>
                         <li class="nav-item me-2 ">
-                            <button id="btnLoggin" type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal" runat="server"><i class="bi bi-box-arrow-in-right text-light"> Login</i></button>
-                            <asp:Button Text="Cerrar Sesion" CssClass="btn fs-5 bi bi-box-arrow-in-right text-light" ID="btnDisloggin" OnClick="btnDisloggin_Click" runat="server" />
+                            <button id="btnLoggin" type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal" runat="server"><i class="bi bi-box-arrow-in-right fw-bold"> Login</i></button>
+                            <asp:Button Text="Cerrar Sesion" CssClass="btn fs-5 bi bi-box-arrow-in-right" ID="btnDisloggin" OnClick="btnDisloggin_Click" runat="server" />
                         </li>
                         <%--<!-- Nuevos botones para usuarios TEST -->
                         <li class="nav-item me-2">
@@ -162,8 +163,8 @@
 
         <!-- FOOTER -->
         <footer class="text-center text-lg-start text-light pt-5 bg-black">
-            <section id="contacto" class="foot">
-                <div class="container text-center text-md-start">
+            <section id="contacto" class="foot mt-5" >
+                <div class="container text-center text-md-start" >
                     <div class="row">
                         <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4 text-light">
                             <h6 class="text-uppercase fw-bold mb-4 text-center" id="repositorio-foot">
@@ -209,7 +210,6 @@
         <!--Boostrap js (no borrar, sino no andan los dropdowns)-->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="scripts/bootstrap.min.js"></script>
-        <script src="fonts/script.js"></script>
         <script src="fonts/Profile-Card-Slider---Slick-Slider-slick.js"></script>
     </form>
 </body>
