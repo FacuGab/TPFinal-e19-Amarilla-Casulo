@@ -18,6 +18,7 @@ namespace Negocio
         Articulo articulo;
         public List<Categoria> categorias;
         public List<Marca> marcas;
+        public List<int> idMarcas;
 
         //TODO: Listar Articulos
         public List<Articulo> ListarArticulos()
@@ -218,7 +219,7 @@ namespace Negocio
             }
         }
 
-        //TODO: Dar Alta/Baja Articulo
+        //TODO: Dar Alta/Baja ARTICULO, error el nombre
         public int DarAltaBajaUsuario(int id, bool estado)
         {
             datos = new DataAccess();
@@ -234,6 +235,35 @@ namespace Negocio
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        //TODO: Listar Articulos dropdowlist
+        public List<int> ListarIdArticulos()
+        {
+            datos = new DataAccess();
+            try
+            {
+                idMarcas = new List<int>();
+                int id = 0;
+                datos.AbrirConexion();
+                datos.SetQuery("SELECT Id FROM ARTICULOS", "query");
+                datos.ReadQuery();
+                while(datos.Lector.Read())
+                {
+                    id = Convert.ToInt32(datos.Lector["Id"]);
+                    idMarcas.Add(id);
+                }
+                return idMarcas;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
             finally
             {

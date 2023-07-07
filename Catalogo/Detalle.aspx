@@ -36,17 +36,16 @@
                             {
                                 if (item.Id == idMatch)
                                 {%>
-                        <div class="card-body bg-warning-subtle">
-                            <h5 class="card-title fs-3"><%=item.Nombre%></h5>
-                            <p class="card-text"><%=item.Descripcion%></p>
-                            <p class="card-text">Marca: <%= item.Marca%></p>
-                            <p class="card-text">Categoria: <%= item.Categoria%></p>
-                            <p class="card-text text-primary fs-4 mt-4">$ <%=item.precio%></p>
-                            <a href="#" class="btn btn-warning "><i class="bi bi-cart-plus-fill">Agregar al carrito</i></a>
-                        </div>
-                        <%}
+                                <div class="card-body bg-warning-subtle">
+                                    <h5 class="card-title fs-3"><%=item.Nombre%></h5>
+                                    <p class="card-text"><%=item.Descripcion%></p>
+                                    <p class="card-text">Marca: <%= item.Marca%></p>
+                                    <p class="card-text">Categoria: <%= item.Categoria%></p>
+                                    <p class="card-text text-primary fs-4 mt-4">$ <%=item.precio%></p>
+                                    <a href="Productos.aspx" class="btn btn-warning "><i class="bi bi-cart-plus-fill">Volver</i></a>
+                                </div>
+                                <%}
                             }%>
-                        <!-- Tiene sentido tener un foreach dentro de un repeater?  -->
                     </ItemTemplate>
                 </asp:Repeater>
             </div>

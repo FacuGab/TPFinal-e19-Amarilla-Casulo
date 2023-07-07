@@ -29,7 +29,9 @@ namespace Negocio
                 var aux = datos.Lector;
                 while(aux.Read())
                 {
-                    marcas.Add( new Marca( (int)aux["Id"], aux["Descripcion"].ToString(), aux["UrlImagen"].ToString() ));
+                    marcas.Add( new Marca( (int)aux["Id"], 
+                        aux["Descripcion"].ToString(), 
+                        aux["UrlImagen"].ToString() ));
                 }
                 return marcas;
             }

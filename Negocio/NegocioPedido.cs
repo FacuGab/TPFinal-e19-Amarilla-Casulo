@@ -425,7 +425,7 @@ namespace Negocio
             try
             {
                 datos.AbrirConexion();
-                datos.SetQuery("DELETE FROM PEDIDOS_ARTICULO WHERE IdPedido = @IdPedido", "query");
+                datos.SetQuery("DELETE FROM PEDIDO_ARTICULO WHERE IdPedido = @IdPedido", "query");
                 datos.SetParameters("@IdPedido", id);
                 return datos.ExecuteQuery();
             }

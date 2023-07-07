@@ -229,9 +229,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <%--
-                                    
-                                    --%>
                                 <!-- Fin Card Usuarios -->
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -240,8 +237,9 @@
 
                         <!-- ################################ abm PEDIDOS ################################ -->
                         <%-- Lista Pedidos Todos --%>
-                        <asp:GridView ID="dgvAdminPedidos" runat="server" CssClass="table table-striped table-bordered mt-5" AutoGenerateColumns="False">
-                            <Columns>
+                        <asp:Panel ID="sectionDgvAdminPedidos" runat="server">  
+                            <asp:GridView ID="dgvAdminPedidos" runat="server" CssClass="table table-striped table-bordered mt-5" AutoGenerateColumns="False">
+                                <Columns>
                                 <asp:TemplateField HeaderText="ID Pedido">
                                     <ItemTemplate>
                                         <asp:Label runat="server" Text='<%# Eval("IdPedido") %>' CssClass="mt-3"></asp:Label>
@@ -304,59 +302,76 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
-                        </asp:GridView>
+                            </asp:GridView>
+                        </asp:Panel>
                         <%-- Fin Lista Pedidos Todos --%>
 
                         <%-- Lista Pedido Unitario --%>
-                        <asp:GridView ID="dgvAdminPedido" runat="server" CssClass="table table-striped table-bordered mt-5" AutoGenerateColumns="False">
-                            <Columns>
-                                <asp:TemplateField HeaderText="ID Pedido">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("IdPedido") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Cantidad solicitada">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Cantidad") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="ID Usuario">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("IdUsuario") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Usuario">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Usuario") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Fecha">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Fecha") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Estado">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Estado") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Direccion de entrega">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("DireccionEntrega") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Descuento">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Descuento") %>' CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Monto Total">
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# string.Format("{0:C2}", Eval("PrecioTotal")) %>'  CssClass="mt-3"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
+                        <asp:Panel ID="sectionAdminPedidoUnitario" runat="server">
+                            <asp:UpdatePanel runat="server">
+                                <ContentTemplate>
+                                    <asp:GridView ID="dgvAdminPedido" runat="server" CssClass="table table-striped table-bordered mt-5" AutoGenerateColumns="False">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="ID Pedido">
+                                                <ItemTemplate>
+                                                    <asp:Label runat="server" Text='<%# Eval("IdPedido") %>' CssClass="mt-3"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Cantidad solicitada">
+                                                <ItemTemplate>
+                                                    <asp:Label runat="server" Text='<%# Eval("Cantidad") %>' CssClass="mt-3"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="ID Usuario">
+                                                <ItemTemplate>
+                                                    <asp:Label runat="server" Text='<%# Eval("IdUsuario") %>' CssClass="mt-3"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Usuario">
+                                                <ItemTemplate>
+                                                    <asp:Label runat="server" Text='<%# Eval("Usuario") %>' CssClass="mt-3"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Fecha">
+                                                <ItemTemplate>
+                                                    <asp:Label runat="server" Text='<%# Eval("Fecha") %>' CssClass="mt-3"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Estado">
+                                                <ItemTemplate>
+                                                    <asp:Label runat="server" Text='<%# Eval("Estado") %>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Direccion de entrega">
+                                                <ItemTemplate>
+                                                    <asp:Label runat="server" Text='<%# Eval("DireccionEntrega") %>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Descuento">
+                                                <ItemTemplate>
+                                                    <asp:Label runat="server" Text='<%# Eval("Descuento") %>' CssClass="mt-3"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Monto Total">
+                                                <ItemTemplate>
+                                                    <asp:Label runat="server" Text='<%# string.Format("{0:C2}", Eval("PrecioTotal")) %>'  CssClass="mt-3"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+
+                            <%-- botones --%>
+                            <div class="col-10 mt-5">
+                                <asp:Button ID="btnAgregarArticuloPedido_Articulos" Text="➕ Agregar nuevo Articulo" CssClass="m-3 btn btn-primary btn-lg m-3" OnClick="btnAgregarArticuloPedido_Articulos_Click" runat="server"/>
+                                <div class="col-6 mt-5">
+                                    <asp:Label runat="server" ID="lblArticulosXidPedido_Articulos" Text="Articulos por Id" CssClass="badge rounded-pill text-bg-warning mt-3" Visible="false"></asp:Label>
+                                    <asp:DropDownList runat="server" ID="ddlAgregarArticuloPedido_Articulos" CssClass="form-control m-3" Visible="false"></asp:DropDownList>
+                                    <asp:Button runat="server" Text="Agregar" ID="btnAgregarArticuloPedido_ArticulosFinal" CssClass="m-3 btn btn-primary btn-lg m-3" OnClick="btnAgregarArticuloPedido_ArticulosFinal_Click" Visible="false"/>
+                                </div>
+                            </div>
+                        </asp:Panel>
                         <%-- fin Lista Pedido Unitario --%>
 
                         <%-- Lista Pedido_Articulos --%>
@@ -364,11 +379,13 @@
                             <ContentTemplate>
                                 <asp:GridView ID="dgvPedido_Articulos" AutoGenerateColumns="false" CssClass="table table-striped table-bordered mt-5" runat="server">
                                     <Columns>
+
                                         <asp:TemplateField Visible="false">
                                             <ItemTemplate>
                                                 <asp:Label Text='<%#Eval("IdPedido") %>' runat="server" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
+
                                         <asp:BoundField HeaderText="IdArticulo" DataField="Id" />
                                         <asp:BoundField HeaderText="Articulo" DataField="Nombre"/>
                                         <asp:BoundField HeaderText="Descripcion" DataField="Descripcion"/>
@@ -376,34 +393,40 @@
                                         <asp:BoundField HeaderText="Categoria" DataField="Categoria" />
                                         <asp:BoundField HeaderText="Estado" DataField="Estado" />
                                         <asp:BoundField HeaderText="Stock" DataField="Stock" />
+
                                         <asp:TemplateField HeaderText="Precio">
                                             <ItemTemplate>
                                                 <asp:Label Text='<%#string.Format("{0:C2}", Eval("Precio"))%>' runat="server" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
+
                                         <asp:BoundField HeaderText="Cantidad" DataField="Cantidad" />
+
                                         <asp:TemplateField HeaderText="Agregar">
                                             <ItemTemplate>
                                                 <asp:ImageButton ID="btnAgregarArtPedido" ImageUrl="~/recursos/img/agregar.png" CommandArgument='<%#Eval("Id")%>' OnClick="btnAgregarArtPedido_Click" Height="19" Width="20" runat="server"/>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+
                                         <asp:TemplateField HeaderText="Quitar">
                                             <ItemTemplate>
-                                                <asp:ImageButton ID="btnRestarArtPedido" ImageUrl="~/recursos/img/minimizar.png" Height="19" Width="20" runat="server"/>
+                                                <asp:ImageButton ID="btnRestarArtPedido" ImageUrl="~/recursos/img/minimizar.png" CommandArgument='<%#Eval("Id")%>' Height="19" Width="20" OnClick="btnRestarArtPedido_Click" runat="server"/>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+
                                         <asp:TemplateField HeaderText="Eliminar">
                                             <ItemTemplate>
                                                 <asp:ImageButton ID="btnEliminarArtPedido" ImageUrl="~/recursos/img/eliminar.png" CommandArgument='<%#Eval("Id")%>' OnClick="btnEliminarArtPedido_Click" Height="40" Width="40" runat="server"/>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+
                                     </Columns>
                                 </asp:GridView>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                         <%-- Fin Lista Pedido_Articulos --%>
 
-                        <%--<!-- Lista Pedidos Editar --> <!-- Aca tendria que ir lo que falta del crud, para editar un pedido (agregar uno, y dar la opcion de elimnar otra vez) -->--%>
+                        <%-- Lista Pedidos Editar --%>
                         <asp:UpdatePanel ID="upadetePanelPedidosEditar" Visible="false" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
                                   <div class="row d-flex justify-content-center align-items-center">
@@ -447,7 +470,7 @@
                                                     <asp:Button Text="Guardar Cambios" ID="btnModificarAgregarPedido" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" OnClick="btnModificarAgregarPedido_Click"  runat="server" />
                                                 </div>
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <asp:Button Text="Eliminar" CssClass="btn btn-danger mb-3 ps-5 pe-5 fs-4" runat="server" />
+                                                    <asp:Button ID="btnEliminarPedido_Articulos" Text="Eliminar" CssClass="btn btn-danger mb-3 ps-5 pe-5 fs-4" OnClick="btnEliminarPedido_Articulos_Click" OnClientClick="return confirm('¿Está seguro de Eliminar?');" runat="server" />
                                                 </div>
                                                 <div class="d-flex justify-content-center">
                                                     <asp:LinkButton Text="Volver a Lista Pedidos" CssClass="link-body-emphasis" ID="btnVolverListaPedidos" CommandName="btnVolverListaPedidos" OnClick="btnVolverListaPedidos_Click" runat="server" />
@@ -458,7 +481,7 @@
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-                        <%--  Fin Lista Pedidos Editar --%>
+                        <%-- Fin Lista Pedidos Editar --%>
 
 
                         <%-- ################################ abm ARTICULOS ################################ --%>

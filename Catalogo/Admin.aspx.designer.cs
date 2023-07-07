@@ -195,6 +195,15 @@ namespace Catalogo
         protected global::System.Web.UI.WebControls.LinkButton lnkVolverListaUsuarios;
 
         /// <summary>
+        /// sectionDgvAdminPedidos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel sectionDgvAdminPedidos;
+
+        /// <summary>
         /// dgvAdminPedidos control.
         /// </summary>
         /// <remarks>
@@ -204,6 +213,15 @@ namespace Catalogo
         protected global::System.Web.UI.WebControls.GridView dgvAdminPedidos;
 
         /// <summary>
+        /// sectionAdminPedidoUnitario control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel sectionAdminPedidoUnitario;
+
+        /// <summary>
         /// dgvAdminPedido control.
         /// </summary>
         /// <remarks>
@@ -211,6 +229,42 @@ namespace Catalogo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView dgvAdminPedido;
+
+        /// <summary>
+        /// btnAgregarArticuloPedido_Articulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregarArticuloPedido_Articulos;
+
+        /// <summary>
+        /// lblArticulosXidPedido_Articulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblArticulosXidPedido_Articulos;
+
+        /// <summary>
+        /// ddlAgregarArticuloPedido_Articulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAgregarArticuloPedido_Articulos;
+
+        /// <summary>
+        /// btnAgregarArticuloPedido_ArticulosFinal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregarArticuloPedido_ArticulosFinal;
 
         /// <summary>
         /// dgvPedido_Articulos control.
@@ -328,6 +382,15 @@ namespace Catalogo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnModificarAgregarPedido;
+
+        /// <summary>
+        /// btnEliminarPedido_Articulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEliminarPedido_Articulos;
 
         /// <summary>
         /// btnVolverListaPedidos control.
