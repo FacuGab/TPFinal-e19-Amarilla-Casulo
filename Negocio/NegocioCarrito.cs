@@ -11,13 +11,14 @@ namespace Negocio
     {
         public List<CarritoItem> Items { get; set; }
 
+        //Constructor
         public NegocioCarrito()
         {
             Items = new List<CarritoItem>();
         }
 
         //TODO: Agregar Item
-        public void AgregarItem(CarritoItem item)//Ya debería validar que si hay otro articulo igual solo lo incremente
+        public void AgregarItem(CarritoItem item)
         {
             CarritoItem itemExistente = Items.FirstOrDefault(it => it.Id == item.Id);
             if (itemExistente != null)

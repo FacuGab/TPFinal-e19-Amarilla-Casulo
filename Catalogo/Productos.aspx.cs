@@ -293,7 +293,7 @@ namespace Catalogo
             Response.Redirect("Productos.aspx", false);
         }
 
-        //TODO: Boton para agregar item al carrito
+        //TODO: Boton para agregar item al carrito (IMPORTANTE)
         protected void btnAgregarArt_Click(object sender, EventArgs e)
         {
             try
@@ -307,7 +307,7 @@ namespace Catalogo
                 List<Articulo> list = Session["listaPrincipal"] as List<Articulo>;
                 NegocioCarrito carrito = Session["listaCarrito"] as NegocioCarrito;
 
-                // Agregar el artículo al carrito
+                // Buscamos en listaPrincipal de art el art a Agregar el artículo al carrito
                 articulo = list.Find(art => art.Id == itemId); // posible bug si las listas no existen ... aunq dificil que pase
                 if (articulo != null)
                 {
