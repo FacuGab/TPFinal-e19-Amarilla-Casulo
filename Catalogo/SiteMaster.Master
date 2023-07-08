@@ -103,6 +103,7 @@
                         </div>
                         <div class="col-12">
                             <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
+                            <%-- saco el campo TextMode="Password", que creo que trae un erro, (volver a agregar, no afecat mepa) --%>
                             <asp:TextBox CssClass="form-control" ID="txtClaveLogin" TextMode="Password" ToolTip="Ingrese contraseña" runat="server" />
                         </div>
                     </div>

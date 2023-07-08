@@ -164,7 +164,7 @@
                                         <div id="divBtnConfirmarReserva" runat="server">
                                             <!-- Boton Cargar Pedido -->
                                             <div class="card text-center mt-5">
-                                                <asp:Button ID="btnConfirmarPedido" Text="Confirmar Reserva" CssClass="btn fs-3 bg-black text-light p-3" OnClick="btnConfirmarPedido_Click" runat="server" />
+                                                <asp:Button ID="btnConfirmarPedido" Text="Confirmar Reserva" CssClass="btn fs-3 bg-black text-light p-3" OnClientClick="return confirm('¿Seguro de Confirmar?');" OnClick="btnConfirmarPedido_Click" runat="server" />
                                             </div>
                                         </div>
                                     </div>

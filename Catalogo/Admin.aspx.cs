@@ -270,8 +270,8 @@ namespace Catalogo
         }
 
 
-        #region// LOGICA PEDIDOS
-        // TODO: BOTON Dar Alta Pedido en Grid, Metodos sin sentido, no se usa. Sacar luego para no romper codigo
+        #region LOGICA PEDIDOS
+        // TODO: BOTON Dar Alta Pedido en Grid: METODO SIN USO Y SENTIDO, SACAR LUEGO PARA NO ROMPER NADA
         protected void btnAltaBajaPedido_Click(object sender, EventArgs e)
         {
             try
@@ -290,7 +290,7 @@ namespace Catalogo
             }
         }
 
-        // TODO: BOTON Editar/Detalle Pedido en Grid
+        // TODO: BOTON ir Editar/Detalle Pedido en Grid
         protected void ibtEditarPedido_Click(object sender, ImageClickEventArgs e)
         {
             try
@@ -318,6 +318,9 @@ namespace Catalogo
                 dgvPedido_Articulos.Visible = true;
                 upadetePanelPedidosEditar.Visible = true;
                 btnAgregarArticuloPedido_Articulos.Visible = true;
+                lblNuevoPedido.Visible = false;
+                lblEditarPedido.Visible = true;
+                btnEliminarPedido_Articulos.Visible = true;
 
                 lblArticulosXidPedido_Articulos.Visible = false;
                 ddlAgregarArticuloPedido_Articulos.Visible = false;
@@ -376,6 +379,7 @@ namespace Catalogo
                 dgvPedido_Articulos.Visible = false;
                 upadetePanelPedidosEditar.Visible = false;
                 dgvAdmin.Visible = false;
+                Response.Redirect("Admin.aspx?id=1", false);
             }
         }
 
@@ -409,7 +413,7 @@ namespace Catalogo
             }
         }
 
-        //TODO: Boton Agregar Articulo en Editar Pedidos
+        //TODO: Boton SUMAR Articulo en Editar Pedidos
         protected void btnAgregarArtPedido_Click(object sender, ImageClickEventArgs e)
         {
             try
@@ -427,9 +431,9 @@ namespace Catalogo
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx", false);
             }
-        } // TERMINAR DE HACER
+        }
 
-        //TODO: Boton Restar Articulo en Editar Pedidos
+        //TODO: Boton RESTAR Articulo en Editar Pedidos
         protected void btnRestarArtPedido_Click(object sender, ImageClickEventArgs e)
         {
             // Cargamos variables e instanciamos objetos
@@ -552,6 +556,11 @@ namespace Catalogo
             try
             {
                 upadetePanelPedidosEditar.Visible = true;
+                dgvAdminPedidos.Visible = false;
+                lblNuevoPedido.Visible = true;
+                lblEditarPedido.Visible = false;
+                btnEliminarPedido_Articulos.Visible = false;
+                btnAgregarArticuloPedido_Articulos.Visible = true;
             }
             catch (Exception ex)
             {
@@ -560,6 +569,7 @@ namespace Catalogo
             }
         }
 
+        //TODO: Cancelar/Terminar Pedido
         protected void btnCancelarTerminarPedido(object sender, EventArgs e)
         {
             int idPedido = int.Parse(((Button)sender).CommandArgument);
@@ -598,7 +608,7 @@ namespace Catalogo
         #endregion//FIN BOTONES LOGICA PEDIDOS
 
 
-        #region //TODO: LOGICA USUARIO
+        #region TODO: LOGICA USUARIO
         // TODO: BOTON EDITAR USUARIO EN GRID
         protected void ibtEditarUsuario_Click(object sender, ImageClickEventArgs e)
         {
@@ -739,7 +749,7 @@ namespace Catalogo
         #endregion // FIN LOGICA USUARIO
 
 
-        #region//TODO: LOGICA ARTICULOS
+        #region TODO: LOGICA ARTICULOS
         //Metodo para agregar articulo
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -887,10 +897,17 @@ namespace Catalogo
             tbImgArt.Text = art.ImagenUrl;
             imgNuevoArt.ImageUrl = art.ImagenUrl;
         }
+
+        //TODO: Page Index Change en LISTA ARTICULOS
+        protected void dgvAdmin_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            dgvAdmin.PageIndex = e.NewPageIndex;
+            CargarArticulos();
+        }
         #endregion//FIN LOGICA ARTÍCULOS
 
 
-        #region//LOGICA CATEGORIAS
+        #region LOGICA CATEGORIAS
         // BOTON Agregar Categorias (Ver)
         protected void btnAgregarCategoria_Click(object sender, EventArgs e)
         {
@@ -1043,6 +1060,7 @@ namespace Catalogo
         #endregion//FIN LOGICA CATEGORIAS
 
 
+        #region LOGICA MARCAS
         //TODO: LOGICA MARCAS
         //TODO: Evento cambio de ImgUrl Marca
         protected void tbUrlImgMarca_TextChanged(object sender, EventArgs e)
@@ -1053,11 +1071,13 @@ namespace Catalogo
             Image imgMarca = (Image)repeaterItem.FindControl("imgMarca");
             imgMarca.ImageUrl = tbUrlImgMarca.Text;
         }
+
         //TODO:Evento cambio de ImgUrl al crear nueva Marca
         protected void tbUrlImgNuevaMarca_TextChanged(object sender, EventArgs e)
         {
             imgNuevaMarca.ImageUrl = tbUrlImgNuevaMarca.Text;
         }
+
         //TODO: Boton Guardar nueva Marca
         protected void btnGuardarNewMarca_Click(object sender, EventArgs e)
         {
@@ -1081,6 +1101,8 @@ namespace Catalogo
 
             }
         }
+
+        //TODO: Metodo de PopUp, 'Guardado Exitoso'
         protected void guardadoExitoso()
         {
             if (Session["MensajeExito"] != null)
@@ -1194,15 +1216,8 @@ namespace Catalogo
             btnEditarMarca.Visible = false;
 
         }
-
-        //TODO: Page Index Change en LISTA ARTICULOS
-        protected void dgvAdmin_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            dgvAdmin.PageIndex = e.NewPageIndex;
-            CargarArticulos();
-        }
-
-        
         //FIN LOGICA MARCAS
+        #endregion MARCAS
+
     }//END CLASS
 }//END

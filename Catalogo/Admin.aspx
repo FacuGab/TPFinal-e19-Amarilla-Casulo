@@ -17,13 +17,12 @@
                                 <i class="fs-3 bi-house text-warning"></i><span class="ms-1 d-none d-sm-inline text-light fs-5 ms-2">Inicio</span>
                             </a>
                         </li>
+                        <!-- Menu Pedidos -->
                         <li>
-                            <!-- Menu Pedidos -->
                             <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                 <i class="fs-3 bi-table text-warning"></i><span class="ms-1 d-none d-sm-inline text-light fs-5 ms-2">Pedidos</span></a>
                             <ul class="collapse nav flex-column ms-1 " id="submenu2" data-bs-parent="#menu">
                                 <li class="w-100 ">
-                                    <%--<a href="Admin.aspx?id=2" class="nav-link px-0"><span class="d-none d-sm-inline text-light ms-4">Todos los pedidos</span></a>--%>
                                     <asp:LinkButton Text="Todos los Pedidos" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" CommandName="btnPedidosTodos" OnClick="btnPedidosMenu_Click" runat="server" />
                                 </li>
                                 <li>
@@ -31,8 +30,8 @@
                                 </li>
                             </ul>
                         </li>
+                        <!-- Menu Articulos, Marcas y Categorias -->
                         <li>
-                            <!-- Menu Articulos, Marcas y Categorias -->
                             <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                 <i class="fs-3 bi-grid text-warning"></i><span class="ms-1 d-none d-sm-inline text-light fs-5 ms-2">Artículos</span> </a>
                             <ul class="collapse nav flex-column ms-1 " id="submenu3" data-bs-parent="#menu">
@@ -50,8 +49,8 @@
                                 </li>
                             </ul>
                         </li>
+                        <!-- Menu Usuarios -->
                         <li>
-                            <!-- Menu Usuarios -->
                             <a href="#submenu4" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                 <i class="fs-3 bi-people text-warning"></i><span class="ms-1 d-none d-sm-inline text-light fs-5 ms-2">Usuarios</span> </a>
                             <ul class="collapse nav flex-column ms-1 " id="submenu4" data-bs-parent="#menu">
@@ -65,7 +64,7 @@
                         </li>
                     </ul>
                     <hr>
-                    <!-- Menu Usuario Session -->
+                    <!-- Menu Usuario Session (el que tiene foto) -->
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
@@ -433,8 +432,8 @@
                                   <div class="row d-flex justify-content-center align-items-center">
                                     <div class="card rounded-4 col-10 bg-warning ms-5" style="margin-top: 100px; margin-bottom: 100px;" id="Div1" runat="server">
                                         <div class=" card-header text-center">
-                                            <h1 id="H1" runat="server"> Editar Pedido </h1>
-                                            <%--<h1 id="H2" runat="server">🆕 Nuevo Pedido 🆕</h1>--%>
+                                            <h1 id="lblEditarPedido" runat="server"> Editar Pedido </h1>
+                                            <h1 id="lblNuevoPedido" runat="server" visible="false">🆕 Nuevo Pedido 🆕</h1>
                                         </div>
                                         <div class="row p-2">
                                             <div class="col-6 mt-3">
@@ -466,6 +465,7 @@
                                                 <label for="txtTotalEditarPedido" class="form-label">Total</label>
                                                 <asp:TextBox CssClass="form-control" ID="txtTotalEditarPedido" placeholder="Total" runat="server" />
                                             </div>
+                                            <%-- Botones --%>
                                             <div class="col-12 mt-3">
                                                 <div class="d-flex justify-content-center align-items-center">
                                                     <asp:Button Text="Guardar Cambios" ID="btnModificarAgregarPedido" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" OnClick="btnModificarAgregarPedido_Click" OnClientClick="return confirm('¿Seguro de Modificar?');"  runat="server" />
