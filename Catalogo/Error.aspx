@@ -8,6 +8,19 @@
             <div class="col">
                 <asp:Label Text="" ID="lblMensaje" runat="server" />
             </div>
+            <div class="col">
+                <asp:label ID="lblErrorFuente" runat="server" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <asp:Label ID="lblErrorPath" runat="server" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <asp:Label ID="lblErrorCompleto" runat="server" />
+            </div>
         </div>
     </div>
 

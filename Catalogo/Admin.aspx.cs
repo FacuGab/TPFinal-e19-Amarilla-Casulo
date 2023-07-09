@@ -232,7 +232,7 @@ namespace Catalogo
         private void CargarPedidoDelForm(Pedido pedido)
         {
             if (pedido == null) return;
-            pedido.IdPedido = int.Parse(txtIdPedidoEditar.Text);
+            pedido.IdPedido = !string.IsNullOrWhiteSpace(txtIdPedidoEditar.Text)? int.Parse(txtIdPedidoEditar.Text) : -1;
             pedido.IdUsuario = int.Parse(txtIdUsuarioEditarPedido.Text);
             pedido.Usuario = txtNombreUsuarioEditarPedido.Text;
             pedido.Estado = txtEstadoEditarPedido.Text;
@@ -240,6 +240,7 @@ namespace Catalogo
             pedido.fecha = DateTime.Parse(txtFechaEditarPedido.Text);
             pedido.Descuento = int.Parse(txtDescuentoEditarPedido.Text);
             pedido.precioTotal = decimal.Parse(txtTotalEditarPedido.Text, NumberStyles.Currency);
+            //pedido.Cantidad = int.Parse(txtCantidadEditarPedido.Text);
         }
 
         // TODO: Cargar Pedido_Articulos en Admin
@@ -472,6 +473,7 @@ namespace Catalogo
                 // Cargamos variables e instanciamos objetos
                 int idArticulo = int.Parse(((ImageButton)sender).CommandArgument);
                 List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
+
                 
                 listaPedido_Articulo.Find(itm => itm.Id == idArticulo).Cantidad += 1;
                 dgvPedido_Articulos.DataSource = listaPedido_Articulo;
@@ -522,16 +524,20 @@ namespace Catalogo
         protected void btnAgregarArticuloPedido_ArticulosFinal_Click(object sender, EventArgs e)
         {
             //Cargamos variables e instanciamos objetos
-            int idPedido = 0;
+            int idPedido = -1; //ID CAMBIADO A -1
             if (Session["idPedidoEditar"] != null)
                 idPedido = (int)Session["idPedidoEditar"];
             int idArticulo = int.Parse(ddlAgregarArticuloPedido_Articulos.SelectedValue);
             List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
 
+            //Si no hay obj en session, lo agregamos
             if(listaPedido_Articulo == null)
+            {
                 listaPedido_Articulo = new List<CarritoItem>();
+                Session.Add("PedidoArticulosListaEdit", listaPedido_Articulo);
+            }
 
-            //Comprobamos si el articulo a agregar ya esta en la lista Pedido_Articulo
+            //Comprobamos si el articulo a agregar ya esta en la lista Pedido_Articulo. Si esta se acumula, renderea y retorna
             if (listaPedido_Articulo.Find(itm => itm.Id == idArticulo) != null)
             {
                 listaPedido_Articulo.Find(itm => itm.Id == idArticulo).Cantidad += 1;
@@ -551,13 +557,14 @@ namespace Catalogo
                 Categoria = newArticulo.Categoria.Descripcion,
                 Descripcion = newArticulo.Descripcion,
                 Estado = newArticulo.Estado ? "Alta" : "Baja",
-                IdPedido = idPedido,
+                IdPedido = idPedido, // ACA SE ASIGNA EL ID DEL PEDIDO
                 precio = newArticulo.precio,
                 ImagenUrl = newArticulo.ImagenUrl,
                 Marca = newArticulo.Marca.Descripcion,
                 Stock = newArticulo.Stock,
             };
 
+            //render de la lista Pedido_Articulo
             listaPedido_Articulo.Add(newItem);
             dgvPedido_Articulos.DataSource = listaPedido_Articulo;
             dgvPedido_Articulos.DataBind();
@@ -611,6 +618,10 @@ namespace Catalogo
                 lblArticulosXidPedido_Articulos.Visible = true;
                 ddlAgregarArticuloPedido_Articulos.Visible = true;
                 btnAgregarArticuloPedido_ArticulosFinal.Visible = true;
+
+                txtFechaEditarPedido.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                btnAgregarPedido.Visible = true;
+                btnModificarAgregarPedido.Visible = false;
             }
             catch (Exception ex)
             {
@@ -665,6 +676,80 @@ namespace Catalogo
                 NegocioArticulo = new NegocioArticulo();
                 dgvArticuloBuscado_Pedido_Articulos.DataSource = NegocioArticulo.ListarArticulo(idMatch);
                 dgvArticuloBuscado_Pedido_Articulos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //TODO: Boton Agregar Nuevo Pedido
+        protected void btnAgregarPedido_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Cargamos variables e instanciamos objetos
+                NegocioPedido = new NegocioPedido();
+                Pedido pedido = new Pedido();
+                CargarPedidoDelForm(pedido);
+                int iDpedidoRes = 0;
+                int resAgregarArticulos = 0;
+
+                // Comprobamos que el Id del usuario exista
+                int idMatch = int.Parse(txtIdUsuarioEditarPedido.Text);
+                NegocioUsuario = new NegocioUsuario();
+                int resUser = 0;
+                resUser = NegocioUsuario.ComprobarId(idMatch);
+                if (resUser == 0)
+                {
+                    lblAlertUsuarioNoEncontrado.Visible = true;
+                    btnModificarAgregarPedido.Enabled = false;
+                    return;
+                }
+
+                // Comprobamos articulos nuevos a crear
+                List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
+                if (listaPedido_Articulo == null)
+                {
+                    HelperUsuario.MensajePopUp(this, "No hay articulos en el pedido");
+                    return;
+                }
+                else
+                {
+                    // cargamos cantidad de articulos distintos(no la cantidad de cada uno)
+                    pedido.Cantidad = listaPedido_Articulo.Count;
+                }
+
+                // Creamos el pedido
+                iDpedidoRes = NegocioPedido.AgregarPedido(pedido, "sp");
+
+                // Si se creo el pedido, creamos los articulos del pedido
+                if(iDpedidoRes <= 0)
+                {
+                    HelperUsuario.MensajePopUp(this, "Ocurrio un Error al agregar el pedido");
+                    return;
+                }
+                else
+                {
+                    // Cargamos el id del pedido en cada articulo y creamos en bd los articulos asociados al pedido
+                    NegocioPedido.CargarIdPedido(listaPedido_Articulo, iDpedidoRes);
+                    resAgregarArticulos = NegocioPedido.AgregarPedido_articulo(listaPedido_Articulo);
+                }
+                
+                //confirmamos carga
+                if(resAgregarArticulos > 0)
+                {
+                    HelperUsuario.MensajePopUp(this, "Pedido Agregado Correctamente");
+                    return;
+                }
+                else
+                {
+                    HelperUsuario.MensajePopUp(this, "Ocurrio un Error al agregar el pedido");
+                    return;
+                }
+
+
             }
             catch (Exception ex)
             {
@@ -1325,9 +1410,9 @@ namespace Catalogo
 
         }
 
+
         //FIN LOGICA MARCAS
         #endregion MARCAS
 
-        
     }//END CLASS
 }//END
