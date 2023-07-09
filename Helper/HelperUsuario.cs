@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Helper
 {
@@ -98,5 +99,6 @@ namespace Helper
             string script = $"if (confirm('{mensaje}')) {{ {funcionConfirmacion} }}";
             ScriptManager.RegisterStartupScript(page, page.GetType(), "confirmDialog", script, true);
         }
+
     }
 }

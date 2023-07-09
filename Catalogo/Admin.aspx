@@ -737,8 +737,8 @@
                             <asp:Repeater ID="dgvAdminCate" runat="server">
                                 <ItemTemplate>
                                     <div class="col-3 mt-2 mb-3 text-center">
-                                        <div class="card h-100 m-3 bg-warning border-primary" runat="server" id="cardContainer">
-                                            <div class="card-header">
+                                        <div class="card h-100 m-3 border-warning" runat="server" id="cardContainer">
+                                            <div class="card-header bg-body-secondary">
                                                 <asp:Label Text="Imágen" ID="btnCambiarImg1" runat="server" />
                                             </div>
                                             <div class="d-flex justify-content-center align-items-center mt-5">
@@ -750,7 +750,7 @@
                                             </div>
                                             <div class="card-body">
                                                 <h5 class="card-title">
-                                                    <asp:Label runat="server" ID="lblCategoria" Text='<%# Eval("Descripcion") %>' Visible="true"></asp:Label>
+                                                    <asp:Label runat="server" ID="lblCategoria" Text='<%# Eval("Descripcion") %>' Font-Bold="true" Font-Size="Larger" Visible="true"></asp:Label>
                                                     <asp:TextBox runat="server" ID="txtCategoria" Visible="false" CssClass="form-control"></asp:TextBox>
                                                 </h5>
                                                 <p class="card-text">
@@ -763,13 +763,9 @@
                                                     <asp:TextBox runat="server" ID="tbUrlImg" AutoPostBack="true" Visible="false" CssClass="form-control mt-3" OnTextChanged="tbUrlImg_TextChanged"></asp:TextBox>
                                                 </p>
                                             </div>
-                                            <div class="d-flex">
-                                                <div class="col-6 card-footer text-center bg-danger-subtle">
-                                                    <i class="bi bi-x-circle-fill fs-5"></i><asp:Button runat="server" ID="btnBajaCate" Text="Dar baja" CssClass="btn" OnClick="btnBajaCate_Click" />
-                                                    <%--deberiamos evaluar si darle baja logica alas categorias y marcas, no se es tan necesario, por que sino hay que modificar el script de la bd--%>
-                                                </div>
-                                                <div class="col-6 card-footer text-center bg-danger">
-                                                    <i class="bi bi-trash-fill fs-5"></i><asp:Button runat="server" ID="btnEliminarCate" Text="Eliminar" CssClass="btn" OnClick="btnEliminarCate_Click" />
+                                            <div class="col-12">
+                                                <div class="text-center bg-danger">
+                                                    <i class="bi bi-trash-fill fs-5"></i><asp:Button runat="server" ID="btnEliminarCate" Text="Eliminar" CssClass="btn" OnClick="btnEliminarCate_Click" OnClientClick="return confirm('¿Desea eliminar la Categoría seleccionada?');"/>
                                                 </div>
                                             </div>
                                             <div class="col-12 card-footer text-center bg-primary">
@@ -792,7 +788,7 @@
                                 <div class="row p-2">
                                     <div class="col-6 mt-3">
                                         <label for="IdArticulo" class="form-label">Número de ID <span class="text-danger">*</span></label>
-                                        <asp:TextBox CssClass="form-control" ID="tbIdCate" placeholder="ID Articulo" runat="server" />
+                                        <asp:TextBox CssClass="form-control" ID="tbIdCate" placeholder="ID Categoría" runat="server" />
                                     </div>
                                     <div class="col-6 mt-3">
                                         <label for="Nombre" class="form-label">Nombre <span class="text-danger">*</span></label>

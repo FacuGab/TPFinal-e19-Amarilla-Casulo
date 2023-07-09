@@ -14,6 +14,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace Catalogo
@@ -74,6 +75,7 @@ namespace Catalogo
                                 CargarMarcas();
                                 break;
                             case 4:
+                                guardadoExitoso();
                                 CargarCategorias();
                                 break;
                             case 5:
@@ -108,6 +110,18 @@ namespace Catalogo
             {
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx", false);
+            }
+        }
+        //TODO: Metodo de PopUp, 'Guardado Exitoso'
+        protected void guardadoExitoso()
+        {
+            if (Session["MensajeExito"] != null)
+            {
+                string mensajeExito = Session["MensajeExito"].ToString();
+                // Muestra el mensaje de éxito
+                HelperUsuario.MensajePopUp(this, mensajeExito);
+                // Limpia la variable de sesión para evitar mostrar el mensaje en futuras visitas a la página
+                Session.Remove("MensajeExito");
             }
         }
 
@@ -956,19 +970,18 @@ namespace Catalogo
             // Obtener el contenedor del botón (div.card) utilizando NamingContainer
             RepeaterItem repeaterItem = (RepeaterItem)btnGuardarCate.NamingContainer;
             var cardContainer = (HtmlGenericControl)repeaterItem.FindControl("cardContainer");
+            var btnEditarCate = (Button)cardContainer.FindControl("btnEditarCate");
 
             // Obtener los controles Label y TextBox dentro del contenedor
             var lblCategoria = (Label)cardContainer.FindControl("lblCategoria");
             var txtCategoria = (TextBox)cardContainer.FindControl("txtCategoria");
             var lblIdCate = (Label)cardContainer.FindControl("lblIdCate");
-            var txtIdCate = (TextBox)cardContainer.FindControl("txtIdCate");
             var lblUrl = (Label)cardContainer.FindControl("lblUrl");
             var tbUrlImg = (TextBox)cardContainer.FindControl("tbUrlImg");
             var lblCambiarImg = (Label)cardContainer.FindControl("lblCambiarImg");
 
             // Actualizar el texto del Label con el valor ingresado en el TextBox
             lblCategoria.Text = txtCategoria.Text;
-            lblIdCate.Text = txtIdCate.Text;
             lblUrl.Text = tbUrlImg.Text;
 
             //asigno valores para guardarlos en bd
@@ -976,20 +989,39 @@ namespace Catalogo
             categoria.Descripcion = lblCategoria.Text;
             categoria.UrlImagen = lblUrl.Text;
 
-            //guardar categoria
-            NegocioCategoria.editarCategoria(categoria);
+            //validamos que el nombre de la categoría sea valido antes de guardar
+            if (txtCategoria.Text == "")
+            {
+                HelperUsuario.MensajePopUp(this, "El campo no puede estar vacío");
+                return;
+            }
+            else
+            {
+                // Validar que solo se permitan números y letras
+                Regex regex = new Regex("^[a-zA-Z0-9]+$");
+                if (!regex.IsMatch(txtCategoria.Text))
+                {
+                    HelperUsuario.MensajePopUp(this, "Solo se permiten números y letras");
+                    return;
+                }
+                else
+                {
+                    //guardar categoria
+                    NegocioCategoria.editarCategoria(categoria);
+                    HelperUsuario.MensajePopUp(this, "Categoría modificada con exito!");
+                    
+                }
+            }  
 
             // Mostrar el Label y ocultar el TextBox
             lblCategoria.Visible = true;
             txtCategoria.Visible = false;
             lblIdCate.Visible = true;
-            txtIdCate.Visible = false;
             lblUrl.Visible = false;
             tbUrlImg.Visible = false;
             lblCambiarImg.Visible = false;
 
             // Ocultar el botón "Guardar" y mostrar el botón "Editar"
-            var btnEditarCate = (Button)cardContainer.FindControl("btnEditarCate");
             btnGuardarCate.Visible = false;
             btnEditarCate.Visible = true;
         }
@@ -1033,7 +1065,7 @@ namespace Catalogo
         {
             TextBox tbUrlImg = (TextBox)sender;
             RepeaterItem repeaterItem = (RepeaterItem)tbUrlImg.NamingContainer;
-            Image imgCate = (Image)repeaterItem.FindControl("imgCate");
+            System.Web.UI.WebControls.Image imgCate = (System.Web.UI.WebControls.Image)repeaterItem.FindControl("imgCate");
 
             // Asignar el valor del TextBox al ImageUrl del control Image
             imgCate.ImageUrl = tbUrlImg.Text;
@@ -1072,8 +1104,20 @@ namespace Catalogo
             categoria.Id = int.Parse(tbIdCate.Text);
             categoria.Descripcion = tbNombreCate.Text;
             categoria.UrlImagen = tbUrlImgCate.Text;
-            NegocioCategoria.agregarCategoria(categoria);
-            Response.Redirect("Admin.aspx?id=4");
+
+            //validamos que el nombre de la categoría no exista antes de guardar
+            if (HelperUsuario.ExistCategoria(categoria.Id))
+            {
+                HelperUsuario.MensajePopUp(this, "Ya existe una categoría con ese número ID");
+            }
+            else
+            {
+                NegocioCategoria.agregarCategoria(categoria);
+                HelperUsuario.MensajePopUp(this, "Nueva categoría registrada con exito!");
+                Session["MensajeExito"] = "Nueva categoría registrada con éxito!";
+                Response.Redirect("Admin.aspx?id=4");
+
+            }
         }
 
         //TODO: Evento cambio de ImgUrl Categoria
@@ -1098,7 +1142,7 @@ namespace Catalogo
             // Asignar el valor del TextBox al ImageUrl del control Image
             TextBox tbUrlImgMarca = (TextBox)sender;
             RepeaterItem repeaterItem = (RepeaterItem)tbUrlImgMarca.NamingContainer;
-            Image imgMarca = (Image)repeaterItem.FindControl("imgMarca");
+            System.Web.UI.WebControls.Image imgMarca = (System.Web.UI.WebControls.Image)repeaterItem.FindControl("imgMarca");
             imgMarca.ImageUrl = tbUrlImgMarca.Text;
         }
 
@@ -1132,19 +1176,7 @@ namespace Catalogo
             }
         }
 
-        //TODO: Metodo de PopUp, 'Guardado Exitoso'
-        protected void guardadoExitoso()
-        {
-            if (Session["MensajeExito"] != null)
-            {
-                string mensajeExito = Session["MensajeExito"].ToString();
-                // Muestra el mensaje de éxito
-                HelperUsuario.MensajePopUp(this, mensajeExito);
-                // Limpia la variable de sesión para evitar mostrar el mensaje en futuras visitas a la página
-                Session.Remove("MensajeExito");
-            }
-        }
-
+       
         //TODO: Boton Volver a Lista Marcas (ver)
         protected void btnVolverMarca_Click(object sender, EventArgs e)
         {
@@ -1186,8 +1218,32 @@ namespace Catalogo
             marca.Id = int.Parse(lblIdMarca.Text);
             marca.Descripcion = txtMarca.Text;
             marca.UrlImagen = tbUrlImgMarca.Text;
-            NegocioMarca.EditarMarca(marca);
 
+
+            //validamos que el nombre de la marca sea valido antes de guardar
+            if (txtMarca.Text == "")
+            {
+                HelperUsuario.MensajePopUp(this, "El campo no puede estar vacío");
+                return;
+            }
+            else
+            {
+                // Validar que solo se permitan números y letras
+                Regex regex = new Regex("^[a-zA-Z0-9]+$");
+                if (!regex.IsMatch(txtMarca.Text))
+                {
+                    HelperUsuario.MensajePopUp(this, "Solo se permiten ingresar números y letras");
+                    return;
+                }
+                else
+                {
+                    //guardar marca
+                    NegocioMarca.EditarMarca(marca);
+                    HelperUsuario.MensajePopUp(this, "Marca modificada con exito!");
+
+                }
+            }
+            // Mostrar el Label y ocultar el TextBox
             lblMarca.Visible = true;
             txtMarca.Visible = false;
             lblUrlMarca.Visible = false;
