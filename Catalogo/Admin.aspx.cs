@@ -574,6 +574,7 @@ namespace Catalogo
                 lblEditarPedido.Visible = false;
                 btnEliminarPedido_Articulos.Visible = false;
                 dgvAdminPedido.Visible = false;
+                accordionPedidoArticulos.Visible = true;
             }
             catch (Exception ex)
             {

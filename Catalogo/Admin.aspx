@@ -306,7 +306,7 @@
                         </asp:Panel>
                         <%-- Fin Lista Pedidos Todos --%>
 
-                        <%-- Lista Pedido Unitario --%>
+                        <%-- Lista Pedido Unitario + Acordion --%>
                         <asp:Panel ID="sectionAdminPedidoUnitario" runat="server">
                             <asp:UpdatePanel runat="server">
                                 <ContentTemplate>

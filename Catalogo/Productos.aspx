@@ -112,4 +112,17 @@
 
         </div>
     </div>
+    <div class="container text-center bg-white border rounded-3 p-3">
+            <div class="row aling-items-center">
+                <div class="col">
+                    <div>
+                        <%-- En teoria un link asi vuelve al link anterior si existe --%>
+                        <p><a href='<%:Request.UrlReferrer != null? Request.UrlReferrer.ToString() : "#" %>' class="link-dark">Volver</a></p>
+                    </div>
+                    <div>
+                        <p><a href="Default.aspx" class="link-dark">Volver al inicio</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
 </asp:Content>

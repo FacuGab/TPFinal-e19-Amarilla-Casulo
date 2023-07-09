@@ -302,6 +302,9 @@
                         <%-- En teoria un link asi vuelve al link anterior si existe --%>
                         <p><a href='<%:Request.UrlReferrer != null? Request.UrlReferrer.ToString() : "#" %>' class="link-dark">Volver</a></p>
                     </div>
+                    <div>
+                        <p><a href="Default.aspx" class="link-dark">Volver al inicio</a></p>
+                    </div>
                 </div>
             </div>
         </div>
