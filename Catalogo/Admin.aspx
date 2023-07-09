@@ -524,7 +524,7 @@
                                         <div class="row p-2">
                                             <div class="col-6 mt-3">
                                                 <label for="txtIdUsuarioEditarPedido" class="form-label">Numero de Usuario<span class="text-danger">*</span></label>
-                                                <asp:TextBox CssClass="form-control" ID="txtIdUsuarioEditarPedido" placeholder="ID Usuario" runat="server" />
+                                                <asp:TextBox CssClass="form-control" ID="txtIdUsuarioEditarPedido" placeholder="ID Usuario" runat="server"/>
                                                 <asp:TextBox ID="txtIdPedidoEditar" Visible="false" runat="server"/>
                                             </div>
                                             <div class="col-6 mt-3">
@@ -550,6 +550,11 @@
                                             <div class="col-6 mt-3">
                                                 <label for="txtTotalEditarPedido" class="form-label">Total</label>
                                                 <asp:TextBox CssClass="form-control" ID="txtTotalEditarPedido" placeholder="Total" runat="server" />
+                                            </div>
+                                            <div id="lblAlertUsuarioNoEncontrado" class="row justify-content-center" runat="server" visible="false">
+                                                <div class="alert alert-warning align-items-center col-10 mt-3" role="alert">
+                                                  <p>El usuario no encontrado en la base de datos, se creara un nuevo usuario.</p>
+                                                </div>
                                             </div>
                                             <%-- Botones --%>
                                             <div class="col-12 mt-3">

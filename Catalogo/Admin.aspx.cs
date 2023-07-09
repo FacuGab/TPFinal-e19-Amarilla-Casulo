@@ -59,7 +59,6 @@ namespace Catalogo
                 // }
                 if (!IsPostBack)
                 {    
-                    //Obs: Tratar de no usar el query string para mostrar info, trae problemas de postback
                     if (Request.QueryString["id"] != null)
                     {
                         switch (int.Parse(Request.QueryString["id"]))
@@ -360,7 +359,7 @@ namespace Catalogo
             }
         }
 
-        // TODO: BOTONES PEDIDOS MENU (sin uso casi)
+        // TODO: BOTONES PEDIDOS MENU
         protected void btnPedidosMenu_Click(object sender, EventArgs e)
         {
             try
@@ -369,7 +368,7 @@ namespace Catalogo
                 switch (tipoBoton)
                 {
                     case "btnPedidosTodos":
-                        CargarPedidos();
+                        Response.Redirect("Admin.aspx?id=1", false);
                         break; // no usos despues de aca, pero lo dejo por si las dudas (filtra por tipo de estado la listra principal)
                     case "btnPedidosPendientes":
                         CargarPedidos("Pendiete");
@@ -419,7 +418,19 @@ namespace Catalogo
                 Pedido pedido = new Pedido();
                 CargarPedidoDelForm(pedido);
                 int res = 0;
-                
+
+                // Comprobamos que el Id del usuario exista
+                int idMatch = int.Parse(txtIdUsuarioEditarPedido.Text);
+                NegocioUsuario = new NegocioUsuario();
+                int resUser = 0;
+                resUser = NegocioUsuario.ComprobarId(idMatch);
+                if (resUser == 0)
+                {
+                    lblAlertUsuarioNoEncontrado.Visible = true;
+                    btnModificarAgregarPedido.Enabled = false;
+                    return;
+                }
+
                 // editamos pedido y buscamos lista Pedido_Articulos en Session
                 res = NegocioPedido.EditarPedido(pedido);
                 List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
@@ -511,7 +522,9 @@ namespace Catalogo
         protected void btnAgregarArticuloPedido_ArticulosFinal_Click(object sender, EventArgs e)
         {
             //Cargamos variables e instanciamos objetos
-            int idPedido = (int)Session["idPedidoEditar"];
+            int idPedido = 0;
+            if (Session["idPedidoEditar"] != null)
+                idPedido = (int)Session["idPedidoEditar"];
             int idArticulo = int.Parse(ddlAgregarArticuloPedido_Articulos.SelectedValue);
             List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
 
@@ -582,6 +595,12 @@ namespace Catalogo
         {
             try
             {
+                //cargamos los id de los articulos que hay en BD
+                ddlAgregarArticuloPedido_Articulos.DataSource = new NegocioArticulo().ListarArticulos();
+                ddlAgregarArticuloPedido_Articulos.DataTextField = "Id";
+                ddlAgregarArticuloPedido_Articulos.DataValueField = "Id";
+                ddlAgregarArticuloPedido_Articulos.DataBind();
+
                 upadetePanelPedidosEditar.Visible = true;
                 dgvAdminPedidos.Visible = false;
                 lblNuevoPedido.Visible = true;
@@ -589,6 +608,9 @@ namespace Catalogo
                 btnEliminarPedido_Articulos.Visible = false;
                 dgvAdminPedido.Visible = false;
                 accordionPedidoArticulos.Visible = true;
+                lblArticulosXidPedido_Articulos.Visible = true;
+                ddlAgregarArticuloPedido_Articulos.Visible = true;
+                btnAgregarArticuloPedido_ArticulosFinal.Visible = true;
             }
             catch (Exception ex)
             {
@@ -1302,6 +1324,7 @@ namespace Catalogo
             btnEditarMarca.Visible = false;
 
         }
+
         //FIN LOGICA MARCAS
         #endregion MARCAS
 
