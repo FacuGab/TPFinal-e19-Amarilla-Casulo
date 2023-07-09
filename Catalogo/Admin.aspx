@@ -283,7 +283,7 @@
                                 <asp:TemplateField HeaderText="Monto Total">
                                     <ItemTemplate>
                                         <span>$</span>
-                                        <asp:Label runat="server" Text='<%# Eval("PrecioTotal") %>'  CssClass="mt-3"></asp:Label>
+                                        <asp:Label runat="server" Text='<%# string.Format("{0:C2}", Eval("precioTotal")) %>'  CssClass="mt-3"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Cancelar">
@@ -362,14 +362,100 @@
                                 </ContentTemplate>
                             </asp:UpdatePanel>
 
-                            <%-- botones --%>
+                            <%-- botones y accordion items --%>
                             <div class="col-10 mt-5">
-                                <asp:Button ID="btnAgregarArticuloPedido_Articulos" Text="➕ Agregar nuevo Articulo" CssClass="m-3 btn btn-primary btn-lg m-3" OnClick="btnAgregarArticuloPedido_Articulos_Click" Visible ="false" runat="server"/>
-                                <div class="col-6 mt-5">
-                                    <asp:Label runat="server" ID="lblArticulosXidPedido_Articulos" Text="Articulos por Id" CssClass="badge rounded-pill text-bg-warning mt-3" Visible="false"></asp:Label>
-                                    <asp:DropDownList runat="server" ID="ddlAgregarArticuloPedido_Articulos" CssClass="form-control m-3" Visible="false"></asp:DropDownList>
-                                    <asp:Button runat="server" Text="Agregar" ID="btnAgregarArticuloPedido_ArticulosFinal" CssClass="m-3 btn btn-primary btn-lg m-3" OnClick="btnAgregarArticuloPedido_ArticulosFinal_Click" Visible="false"/>
+                                <%-- nuevo test Acordion --%>
+                                <div class="accordion mt-5" id="accordionPedidoArticulos" runat="server" visible="false">
+                                   <!-- Item -->
+                                   <div class="accordion-item "> 
+                                       <h2 class="accordion-header">
+                                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                               <p class="fw-bold">➕ Agregar nuevo Articulo</p>
+                                           </button>
+                                       </h2>
+                                       <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionPedidoArticulos">
+                                           <div class="accordion-body text-center">
+                                               <div class="row gy-3 justify-content-center">
+                                                    <div class="col-6 mt-5">
+                                                        <h4><asp:Label runat="server" ID="lblArticulosXidPedido_Articulos" Text="Articulos por Id" CssClass="badge rounded-pill text-bg-warning mt-3" Visible="false"></asp:Label>
+                                                        <asp:DropDownList runat="server" ID="ddlAgregarArticuloPedido_Articulos" CssClass="form-control m-3" Visible="false"></asp:DropDownList>
+                                                        <asp:Button runat="server" Text="Agregar" ID="btnAgregarArticuloPedido_ArticulosFinal" CssClass="m-3 btn btn-primary btn-lg m-3" OnClick="btnAgregarArticuloPedido_ArticulosFinal_Click" Visible="false"/>
+                                                    </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <!-- Item -->
+                                    <asp:UpdatePanel UpdateMode="Conditional" runat="server">
+                                     <ContentTemplate>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                   <i class="bi bi-search fw-bold"> Buscar Articulo por id</i>
+                                                </button>
+                                            </h2>
+                                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionPedidoArticulos">
+                                                <div class="accordion-body">
+                                                    <div class="row gy-3">
+                                                        <div class="col-3">
+                                                            <label for="txtIdArticuloAbuscar_Pedido_Articulos" class="form-label">ID Articulo</label>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                             <asp:TextBox runat="server" ID="txtIdArticuloAbuscar_Pedido_Articulos" TextMode="Search" CssClass="form-control"/>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                             <asp:Button Text="Buscar" runat="server" ID="btnBuscarArticuloXid_Pedido_Articulos" class="w-100 btn btn-warning btn-lg"
+                                                                 OnClick="btnBuscarArticuloXid_Pedido_Articulos_Click"/>
+                                                        </div>
+                                                        <hr class="my-4">
+                                                        <%-- Grid de Articulo a Buscar --%>
+                                                        <asp:GridView runat="server" ID="dgvArticuloBuscado_Pedido_Articulos" AutoGenerateColumns="false" CssClass="table table-striped table-bordered mt-5">
+                                                            <Columns>
+                                                                         <asp:TemplateField HeaderText="ID Articulo">
+                                                                    <ItemTemplate>
+                                                                         <asp:Label runat="server" Text='<%# Eval("Id") %>'></asp:Label>
+                                                                    </ItemTemplate>
+                                                                  </asp:TemplateField>
+                                                                         <asp:TemplateField HeaderText="Nombre">
+                                                                    <ItemTemplate>
+                                                                         <asp:Label runat="server" Text='<%# Eval("Nombre") %>'></asp:Label>
+                                                                    </ItemTemplate>
+                                                                  </asp:TemplateField>
+                                                                         <asp:TemplateField HeaderText="Descripcion">
+                                                                    <ItemTemplate>
+                                                                         <asp:Label runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
+                                                                    </ItemTemplate>
+                                                                  </asp:TemplateField>
+                                                                         <asp:TemplateField HeaderText="Precio">
+                                                                    <ItemTemplate>
+                                                                         <asp:Label runat="server" Text='<%# string.Format("{0:C2}", Eval("Precio")) %>'></asp:Label>
+                                                                    </ItemTemplate>
+                                                                  </asp:TemplateField>
+                                                                         <asp:TemplateField HeaderText="Stock">
+                                                                    <ItemTemplate>
+                                                                         <asp:Label runat="server" Text='<%# Eval("Stock") %>'></asp:Label>
+                                                                    </ItemTemplate>
+                                                                  </asp:TemplateField>
+                                                                         <asp:TemplateField HeaderText="Categoria">
+                                                                    <ItemTemplate>
+                                                                         <asp:Label runat="server" Text='<%# Eval("Categoria") %>'></asp:Label>
+                                                                    </ItemTemplate>
+                                                                  </asp:TemplateField>
+                                                                         <asp:TemplateField HeaderText="Imagen">
+                                                                    <ItemTemplate>
+                                                                         <asp:Image runat="server" ImageUrl='<%# Eval("ImagenUrl") %>' Width="250px" Height="250px"></asp:Image>
+                                                                    </ItemTemplate>
+                                                                  </asp:TemplateField>
+                                                                    </Columns>
+                                                        </asp:GridView>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                     </ContentTemplate>
+                                    </asp:UpdatePanel>
                                 </div>
+                                <%-- fin nuevo test Acordion --%>
                             </div>
                         </asp:Panel>
                         <%-- fin Lista Pedido Unitario --%>

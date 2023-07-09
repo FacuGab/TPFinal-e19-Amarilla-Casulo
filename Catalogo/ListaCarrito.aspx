@@ -142,12 +142,14 @@
                                                         <th scope="col">Total</th>
                                                     </tr>
                                                 </thead>
+                                                <%-- Repeater Items --%>
                                                 <asp:Repeater runat="server" ID="rptCarrito">
                                                     <ItemTemplate>
                                                         <tbody>
                                                             <tr class="text-center fs-5 ">
                                                                 <td class="">
-                                                                    <img src="<%# Eval("ImagenUrl") %>" class="w-25" alt="img_producto" /></td>
+                                                                    <img src="<%# Eval("ImagenUrl") %>" class="w-25" alt="img_producto" />
+                                                                </td>
                                                                 <td class="pt-5"><%# Eval("Nombre") %></td>
                                                                 <td class="pt-5"><%# Eval("Cantidad") %></td>
                                                                 <td class="pt-5"><%# string.Format("{0:C2}", Eval("precio")) %></td>
@@ -158,7 +160,7 @@
                                                 </asp:Repeater>
                                             </table>
                                             <div class="card-header py-3 d-flex justify-content-end">
-                                                <h4 class="mb-0 "><strong>Precio total  <span class="text-primary ms-5">$<%:TotalAcumulado.ToString() %></span></strong></h4>
+                                                <h4 class="mb-0 "><strong>Precio total:  <span class="text-primary ms-5">$<%:TotalAcumulado.ToString() %></span></strong></h4>
                                             </div>
                                         </div>
                                         <div id="divBtnConfirmarReserva" runat="server">

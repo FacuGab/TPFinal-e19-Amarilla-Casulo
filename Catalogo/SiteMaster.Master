@@ -50,10 +50,10 @@
                                       <i class="fs-4 bi bi-cart4"></i>
                                         <%if (Flag) {%>  
                                         
-                                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            <asp:Label ID="lblTotalArticulos" runat="server" />
-                                            <span class="visually-hidden">Items en carrito</span>
-                                      </span>
+                                           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                <asp:Label ID="lblTotalArticulos" runat="server" />
+                                                <span class="visually-hidden">Items en carrito</span>
+                                           </span>
                                         
                                         <%}%> <!--  <--Badges de icono carrito -->
                                     </a>
@@ -61,26 +61,11 @@
                             </ContentTemplate>
                         </asp:UpdatePanel>
                         <li class="nav-item me-2 ">
-                            <button id="btnLoggin" type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal" runat="server"><i class="bi bi-box-arrow-in-right fw-bold"> Login</i></button>
+                            <button id="btnLoggin" type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal" runat="server">
+                                <i class="bi bi-box-arrow-in-right fw-bold"> Login</i>
+                            </button>
                             <asp:Button Text="Cerrar Sesion" CssClass="btn fs-5 bi bi-box-arrow-in-right" ID="btnDisloggin" OnClick="btnDisloggin_Click" runat="server" />
                         </li>
-                        <%--<!-- Nuevos botones para usuarios TEST -->
-                        <li class="nav-item me-2">
-                            <div class="dropdown pb-4">
-                                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                                    <span class="d-none d-sm-inline mx-1">User</span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- fin Nuevos Botones usuarios TEST -->--%>
                     </ul>
                 </div>
             </div>

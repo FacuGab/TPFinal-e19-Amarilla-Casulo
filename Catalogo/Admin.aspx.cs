@@ -134,7 +134,6 @@ namespace Catalogo
             usuarioList = NegocioUsuario.ListarUsuarios();
             dgvAdminUsuario.DataSource = usuarioList;
             dgvAdminUsuario.DataBind();
-            btnAgregarArticuloPedido_Articulos.Visible = false;
             ddlAgregarArticuloPedido_Articulos.Visible = false;
         }
 
@@ -304,41 +303,55 @@ namespace Catalogo
             }
         }
 
-        // TODO: BOTON ir Editar/Detalle Pedido en Grid
+        // TODO: BOTON ir Editar/Detalle Pedido en Grid (IMPORTANTE)
         protected void ibtEditarPedido_Click(object sender, ImageClickEventArgs e)
         {
             try
             {
+                //cargamos variables
                 int idMatch = Convert.ToInt32(((ImageButton)sender).CommandArgument);
                 Session.Add("idPedidoEditar", idMatch);
                 NegocioPedido = new NegocioPedido();
 
+                //buscamos el pedido
                 PedidoList = NegocioPedido.ListarPedidos(idMatch, "IdPedido");
                 dgvAdminPedido.DataSource = PedidoList;
                 dgvAdminPedido.DataBind();
 
+                //buscamos los articulos del pedido
                 Session.Add("PedidoArticulosListaEdit", NegocioPedido.ListarPedido_articulo(idMatch));
                 Pedido_articulos = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
 
                 dgvPedido_Articulos.DataSource = Pedido_articulos;
                 dgvPedido_Articulos.DataBind();
 
+                //Cargamos pedido en form
                 CargarPedidoEnForm(PedidoList[0]);
                 sectionAdminPedidoUnitario.Visible = true;
-                btnAgregarArticuloPedido_Articulos.Visible = true;
 
+                //cargamos los id de los articulos que hay en BD
+                ddlAgregarArticuloPedido_Articulos.DataSource = new NegocioArticulo().ListarArticulos();
+                ddlAgregarArticuloPedido_Articulos.DataTextField = "Id";
+                ddlAgregarArticuloPedido_Articulos.DataValueField = "Id";
+                ddlAgregarArticuloPedido_Articulos.DataBind();
+
+                //quitamos/mostramos
                 dgvAdminPedido.Visible = true;
                 dgvAdminPedidos.Visible = false;
                 dgvPedido_Articulos.Visible = true;
                 upadetePanelPedidosEditar.Visible = true;
-                btnAgregarArticuloPedido_Articulos.Visible = true;
                 lblNuevoPedido.Visible = false;
                 lblEditarPedido.Visible = true;
                 btnEliminarPedido_Articulos.Visible = true;
+                accordionPedidoArticulos.Visible = true;
 
                 lblArticulosXidPedido_Articulos.Visible = false;
                 ddlAgregarArticuloPedido_Articulos.Visible = false;
                 btnAgregarArticuloPedido_ArticulosFinal.Visible = false;
+
+                ddlAgregarArticuloPedido_Articulos.Visible = true;
+                btnAgregarArticuloPedido_ArticulosFinal.Visible = true;
+                lblArticulosXidPedido_Articulos.Visible = true;
             }
             catch (Exception ex)
             {
@@ -388,7 +401,6 @@ namespace Catalogo
                 dgvAdminPedidos.Visible = true;
                 dgvAdminPedido.Visible = false;
                 sectionAdminPedidoUnitario.Visible = false;
-                btnAgregarArticuloPedido_Articulos.Visible = false;
 
                 dgvPedido_Articulos.Visible = false;
                 upadetePanelPedidosEditar.Visible = false;
@@ -406,19 +418,33 @@ namespace Catalogo
                 NegocioPedido = new NegocioPedido();
                 Pedido pedido = new Pedido();
                 CargarPedidoDelForm(pedido);
+                int res = 0;
                 
                 // editamos pedido y buscamos lista Pedido_Articulos en Session
-                int res = NegocioPedido.EditarPedido(pedido);
+                res = NegocioPedido.EditarPedido(pedido);
                 List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
+                
+                // Si lista_pedido_articulos es null, es porque no se agrego ningun articulo al pedido, cortamos modificacion
+                if (listaPedido_Articulo == null)
+                {
+                    HelperUsuario.MensajePopUp(this, "Pedido editado con exito");
+                    return;
+                }
 
-                // Eliminamos Pedidos_Articulos en DB anterior
+                // Eliminamos Pedidos_Articulos en DB anterior para piasar los anteriores, no funciona bien sino
                 for (int i = 0; i < listaPedido_Articulo.Count; i++)
                 {
                     NegocioPedido.EliminarPedido_articulo(pedido.IdPedido);
                 }
 
                 // Agregamos los articulos nuevos Pedido_Articulo en DB segun el estado del pedido y la cantidad en lista Pedido_Articulos
-                NegocioPedido.AgregarPedido_articulo(listaPedido_Articulo);
+                res += NegocioPedido.AgregarPedido_articulo(listaPedido_Articulo);
+                
+                // Mensaje de exito o error
+                if(res >= 1)
+                    HelperUsuario.MensajePopUp(this, "Pedido editado con exito");
+                else if(res == 0)
+                    HelperUsuario.MensajePopUp(this, "Ocurrio un error al intentar guardar los cambios");
             }
             catch (Exception ex)
             {
@@ -479,19 +505,6 @@ namespace Catalogo
                 Session.Add("error", ex);
                 Response.Redirect("Error.aspx", false);
             }
-        }
-
-        // TODO: Boton Agregar Articulo en Lista Pedidos_Articulos
-        protected void btnAgregarArticuloPedido_Articulos_Click(object sender, EventArgs e)
-        {
-            ddlAgregarArticuloPedido_Articulos.DataSource = new NegocioArticulo().ListarArticulos();
-            ddlAgregarArticuloPedido_Articulos.DataTextField = "Id";
-            ddlAgregarArticuloPedido_Articulos.DataValueField = "Id";
-            ddlAgregarArticuloPedido_Articulos.DataBind();
-
-            ddlAgregarArticuloPedido_Articulos.Visible = true;
-            btnAgregarArticuloPedido_ArticulosFinal.Visible = true;
-            lblArticulosXidPedido_Articulos.Visible = true;
         }
 
         //TODO: Boton Agregar Articulo Nuevo a lista Pedido_Articulos
@@ -574,7 +587,7 @@ namespace Catalogo
                 lblNuevoPedido.Visible = true;
                 lblEditarPedido.Visible = false;
                 btnEliminarPedido_Articulos.Visible = false;
-                btnAgregarArticuloPedido_Articulos.Visible = true;
+                dgvAdminPedido.Visible = false;
             }
             catch (Exception ex)
             {
@@ -617,6 +630,23 @@ namespace Catalogo
                     Session.Add("error", ex);
                     Response.Redirect("Error.aspx", false);
                 }
+            }
+        }
+
+        //TODO: Boton Buscar Articulo por ID Pedido_Articulos
+        protected void btnBuscarArticuloXid_Pedido_Articulos_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idMatch = int.Parse(txtIdArticuloAbuscar_Pedido_Articulos.Text);
+                NegocioArticulo = new NegocioArticulo();
+                dgvArticuloBuscado_Pedido_Articulos.DataSource = NegocioArticulo.ListarArticulo(idMatch);
+                dgvArticuloBuscado_Pedido_Articulos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
             }
         }
         #endregion//FIN BOTONES LOGICA PEDIDOS
@@ -745,7 +775,6 @@ namespace Catalogo
             btnAltaUsuario.Visible = false;
             btnBajaUsuario.Visible = false;
             btnEliminarUsuario.Visible = false;
-            btnAgregarArticuloPedido_Articulos.Visible = false;
             sectionModificarUsuario.Visible = true;
         }
         
@@ -1275,5 +1304,6 @@ namespace Catalogo
         //FIN LOGICA MARCAS
         #endregion MARCAS
 
+        
     }//END CLASS
 }//END

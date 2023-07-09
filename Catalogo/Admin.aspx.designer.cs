@@ -240,13 +240,13 @@ namespace Catalogo
         protected global::System.Web.UI.WebControls.GridView dgvAdminPedido;
 
         /// <summary>
-        /// btnAgregarArticuloPedido_Articulos control.
+        /// accordionPedidoArticulos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregarArticuloPedido_Articulos;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl accordionPedidoArticulos;
 
         /// <summary>
         /// lblArticulosXidPedido_Articulos control.
@@ -274,6 +274,33 @@ namespace Catalogo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAgregarArticuloPedido_ArticulosFinal;
+
+        /// <summary>
+        /// txtIdArticuloAbuscar_Pedido_Articulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtIdArticuloAbuscar_Pedido_Articulos;
+
+        /// <summary>
+        /// btnBuscarArticuloXid_Pedido_Articulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuscarArticuloXid_Pedido_Articulos;
+
+        /// <summary>
+        /// dgvArticuloBuscado_Pedido_Articulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvArticuloBuscado_Pedido_Articulos;
 
         /// <summary>
         /// dgvPedido_Articulos control.

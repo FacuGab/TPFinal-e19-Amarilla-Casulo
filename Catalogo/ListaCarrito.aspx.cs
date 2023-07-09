@@ -186,7 +186,16 @@ namespace Catalogo
                 {
                     // Cargamos los datos
                     carrito = Session["listaCarrito"] as NegocioCarrito;
-                    List<CarritoItem> lista = carrito?.Items;
+                    List<CarritoItem> lista = carrito.Items;
+
+                    // Si lista == null, cortamos
+                    if(lista == null)
+                    {
+                        HelperUsuario.MensajePopUp(this, "No hay articulos en el carrito");
+                        return;
+                    }
+
+                    // Cargamos el Pedido
                     Pedido pedido = pedidoNegocio.CargarPedido(lista, usuarioActual, totalAcumulado);
 
                     int resPedido = 0;
