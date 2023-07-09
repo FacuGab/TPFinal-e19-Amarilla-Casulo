@@ -283,7 +283,7 @@
                                 <asp:TemplateField HeaderText="Monto Total">
                                     <ItemTemplate>
                                         <span>$</span>
-                                        <asp:Label runat="server" Text='<%# Eval("PrecioTotal") %>'  CssClass="mt-3"></asp:Label>
+                                        <asp:Label runat="server" Text='<%# string.Format("{0:C2}", Eval("precioTotal")) %>'  CssClass="mt-3"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Cancelar">
