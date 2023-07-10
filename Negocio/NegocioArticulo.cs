@@ -270,5 +270,27 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+
+        //TODO: Comprobar si Existe ID
+        public int ComprobarId(int id)
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("SELECT COUNT(*) FROM ARTICULOS WHERE Id = @id", "query");
+                datos.SetParameters("@id", id);
+                int res = Convert.ToInt32(datos.ExecuteScalar());
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }//Fin NegocioArticulo
 }

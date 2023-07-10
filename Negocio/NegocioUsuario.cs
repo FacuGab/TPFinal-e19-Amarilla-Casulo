@@ -340,6 +340,28 @@ namespace Negocio
                 Data.CerrarConexion();
             }
         }
+
+        //TODO: Comprobar Id
+        public int ComprobarId(int idMatch)
+        {
+            Data = new DataAccess();
+            try
+            {
+                Data.AbrirConexion();
+                Data.SetQuery("SELECT COUNT(*) FROM USUARIOS WHERE Id = @id", "query");
+                Data.SetParameters("@id", idMatch);
+                int res = Convert.ToInt32(Data.ExecuteScalar());
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Data.CerrarConexion();
+            }
+        }
     }
 }
     

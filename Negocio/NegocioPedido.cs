@@ -151,6 +151,12 @@ namespace Negocio
             datos = new DataAccess();
             try
             {
+                int totalItems;
+                if(pedidoNuevo.totalItems == null)
+                    totalItems = pedidoNuevo.Cantidad;
+                else
+                    totalItems = pedidoNuevo.totalItems.Count;
+
                 datos.AbrirConexion();
 
                 if (tipo == "query")
@@ -160,7 +166,7 @@ namespace Negocio
 
                 datos.SetParameters("@IdUsuario", pedidoNuevo.IdUsuario);
                 datos.SetParameters("@IdArticulo", pedidoNuevo.IdArticulo);
-                datos.SetParameters("@Cantidad", pedidoNuevo.totalItems.Count);
+                datos.SetParameters("@Cantidad", totalItems);
                 datos.SetParameters("@Fecha", pedidoNuevo.fecha); //ver si la fecha la agarra bien SQL, x ahora quedo un getdate() por parte de la bd
                 datos.SetParameters("@Estado", pedidoNuevo.Estado);
                 datos.SetParameters("@DireccionEntrega", pedidoNuevo.DireccionEntrega);

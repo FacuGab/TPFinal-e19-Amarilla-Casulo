@@ -4,8 +4,11 @@
 <html>
 <head runat="server">
     <title>TIENDA HARDFISH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- ojo, ver quea hacer -->
+    <meta charset="utf-8" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <link rel="icon" href="iconoPP.ico" />
     <link href="recursos/bootstrap-icons-1.10.5/font/bootstrap-icons.min.css" rel="stylesheet" />
     <link href="fonts/bootstrap.min.css" rel="stylesheet" />
     <link href="fonts/Profile-Card-Slider---Slick-Slider.css" rel="stylesheet" />
