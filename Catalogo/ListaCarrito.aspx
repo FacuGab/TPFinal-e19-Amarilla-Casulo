@@ -295,7 +295,7 @@
                 </div>
             </div>
         </div>
-        <div class="container text-center">
+        <div class="container text-center bg-white border rounded-3 p-3">
             <div class="row aling-items-center">
                 <div class="col">
                     <div>

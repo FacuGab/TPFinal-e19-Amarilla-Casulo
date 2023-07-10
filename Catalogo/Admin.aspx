@@ -358,7 +358,7 @@
                                                     <asp:Label runat="server" Text='<%# Eval("Descuento") %>' CssClass="mt-3"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Monto Total">
+                                            <asp:TemplateField HeaderText="Monto">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" Text='<%# string.Format("{0:C2}", Eval("PrecioTotal")) %>'  CssClass="mt-3"></asp:Label>
                                                 </ItemTemplate>
@@ -486,7 +486,7 @@
                                         <asp:BoundField HeaderText="Estado" DataField="Estado" />
                                         <asp:BoundField HeaderText="Stock" DataField="Stock" />
 
-                                        <asp:TemplateField HeaderText="Precio">
+                                        <asp:TemplateField HeaderText="Precio Unitario">
                                             <ItemTemplate>
                                                 <asp:Label Text='<%#string.Format("{0:C2}", Eval("Precio"))%>' runat="server" />
                                             </ItemTemplate>
@@ -526,65 +526,76 @@
                         <%-- Lista Pedidos Editar --%>
                         <asp:UpdatePanel ID="upadetePanelPedidosEditar" Visible="false" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
-                                  <div class="row d-flex justify-content-center align-items-center">
-                                    <div class="card rounded-4 col-10 bg-warning ms-5" style="margin-top: 100px; margin-bottom: 100px;" id="Div1" runat="server">
-                                        <div class=" card-header text-center">
-                                            <h1 id="lblEditarPedido" runat="server"> Editar Pedido </h1>
-                                            <h1 id="lblNuevoPedido" runat="server" visible="false">🆕 Nuevo Pedido 🆕</h1>
-                                        </div>
-                                        <div class="row p-2">
-                                            <div class="col-6 mt-3">
-                                                <label for="txtIdUsuarioEditarPedido" class="form-label">Numero de Usuario<span class="text-danger">*</span></label>
-                                                <asp:TextBox CssClass="form-control" ID="txtIdUsuarioEditarPedido" placeholder="ID Usuario" runat="server"/>
-                                                <asp:TextBox ID="txtIdPedidoEditar" Visible="false" runat="server"/>
+                                  <div class="container text-center">                                      
+                                    <div class="row d-flex justify-content-center aling-items-center">
+                                          <div class="col-4 align-self-center bg-warning border rounded-3 p-3">
+                                                <h4>Nuevo Total: 
+                                                    <span class="badge bg-secondary">
+                                                        <asp:TextBox ID="txtNuevoTotal" CssClass="form-control" Visible="false" ReadOnly="true" runat="server" />
+                                                    </span>
+                                                </h4>
+                                          </div>
+                                    </div>
+                                  </div>
+                                    <div class="row d-flex justify-content-center align-items-center">
+                                        <div class="card rounded-4 col-10 bg-warning ms-5" style="margin-top: 100px; margin-bottom: 100px;" id="Div1" runat="server">
+                                            <div class=" card-header text-center">
+                                                <h1 id="lblEditarPedido" runat="server"> Editar Pedido </h1>
+                                                <h1 id="lblNuevoPedido" runat="server" visible="false">🆕 Nuevo Pedido 🆕</h1>
                                             </div>
-                                            <div class="col-6 mt-3">
-                                                <label for="txtNombreUsuarioEditarPedido" class="form-label">Nombre <span class="text-danger">*</span></label>
-                                                <asp:TextBox CssClass="form-control" ID="txtNombreUsuarioEditarPedido" placeholder="Nombre Usuario" runat="server" />
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <label for="txtEstadoEditarPedido" class="form-label">Estado <span class="text-danger">*</span></label>
-                                                <asp:TextBox CssClass="form-control" ID="txtEstadoEditarPedido" placeholder="Pendiente" runat="server" />
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <label for="txtDirEditarPedido" class="form-label">Direccion de Entrega</label>
-                                                <asp:TextBox CssClass="form-control" ID="txtDirEditarPedido" placeholder="Dir de Entrega" runat="server" />
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <label for="txtFechaEditarPedido" class="form-label">Fecha de Inicio</label>
-                                                <asp:TextBox CssClass="form-control" TextMode="DateTime" ID="txtFechaEditarPedido" placeholder="Fecha de Inicio" runat="server" />
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <label for="txtDescuentoEditarPedido" class="form-label">Descuento</label>
-                                                <asp:TextBox CssClass="form-control" ID="txtDescuentoEditarPedido" placeholder="Descuento" runat="server" />
-                                            </div>
-                                            <div class="col-6 mt-3">
-                                                <label for="txtTotalEditarPedido" class="form-label">Total</label>
-                                                <asp:TextBox CssClass="form-control" ID="txtTotalEditarPedido" placeholder="Total" runat="server" />
-                                            </div>
-                                            <div id="lblAlertUsuarioNoEncontrado" class="row justify-content-center" runat="server" visible="false">
-                                                <div class="alert alert-warning align-items-center col-10 mt-3" role="alert">
-                                                  <p>El usuario no encontrado en la base de datos, se creara un nuevo usuario.</p>
+                                            <div class="row p-2">
+                                                <div class="col-6 mt-3">
+                                                    <label for="txtIdUsuarioEditarPedido" class="form-label">Numero de Usuario<span class="text-danger">*</span></label>
+                                                    <asp:TextBox CssClass="form-control" ID="txtIdUsuarioEditarPedido" placeholder="ID Usuario" runat="server"/>
+                                                    <asp:TextBox ID="txtIdPedidoEditar" Visible="false" runat="server"/>
                                                 </div>
-                                            </div>
-                                            <%-- Botones --%>
-                                            <div class="col-12 mt-3">
-                                                <div class="d-flex justify-content-center align-items-center">
-                                                    <asp:Button Text="Guardar Cambios" ID="btnModificarAgregarPedido" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" OnClick="btnModificarAgregarPedido_Click" OnClientClick="return confirm('¿Seguro de Modificar?');"  runat="server" />
+                                                <div class="col-6 mt-3">
+                                                    <label for="txtNombreUsuarioEditarPedido" class="form-label">Nombre <span class="text-danger">*</span></label>
+                                                    <asp:TextBox CssClass="form-control" ID="txtNombreUsuarioEditarPedido" placeholder="Nombre Usuario" runat="server" />
                                                 </div>
-                                                <div class="d-flex justify-content-center aling-items-center">
-                                                    <asp:Button Text="Agregar Pedido" ID="btnAgregarPedido" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" OnClick="btnAgregarPedido_Click" OnClientClick="return confirm('¿Seguro de Agregar?');" runat="server"  Visible="false"/>
+                                                <div class="col-6 mt-3">
+                                                    <label for="txtEstadoEditarPedido" class="form-label">Estado <span class="text-danger">*</span></label>
+                                                    <asp:TextBox CssClass="form-control" ID="txtEstadoEditarPedido" placeholder="Pendiente" runat="server" />
                                                 </div>
-                                                <div class="d-flex justify-content-center align-items-center">
-                                                    <asp:Button ID="btnEliminarPedido_Articulos" Text="Eliminar" CssClass="btn btn-danger mb-3 ps-5 pe-5 fs-4" OnClick="btnEliminarPedido_Articulos_Click" OnClientClick="return confirm('¿Seguro de Eliminar?');" runat="server" />
+                                                <div class="col-6 mt-3">
+                                                    <label for="txtDirEditarPedido" class="form-label">Direccion de Entrega</label>
+                                                    <asp:TextBox CssClass="form-control" ID="txtDirEditarPedido" placeholder="Dir de Entrega" runat="server" />
                                                 </div>
-                                                <div class="d-flex justify-content-center">
-                                                    <asp:LinkButton Text="Volver a Lista Pedidos" CssClass="link-body-emphasis" ID="btnVolverListaPedidos" CommandName="btnVolverListaPedidos" OnClick="btnVolverListaPedidos_Click" runat="server" />
+                                                <div class="col-6 mt-3">
+                                                    <label for="txtFechaEditarPedido" class="form-label">Fecha de Inicio</label>
+                                                    <asp:TextBox CssClass="form-control" TextMode="DateTime" ID="txtFechaEditarPedido" placeholder="Fecha de Inicio" runat="server" />
+                                                </div>
+                                                <div class="col-6 mt-3">
+                                                    <label for="txtDescuentoEditarPedido" class="form-label">Descuento</label>
+                                                    <asp:TextBox CssClass="form-control" ID="txtDescuentoEditarPedido" placeholder="Descuento" runat="server" />
+                                                </div>
+                                                <div class="col-6 mt-3">
+                                                    <label for="txtTotalEditarPedido" class="form-label">Total</label>
+                                                    <asp:TextBox CssClass="form-control" ID="txtTotalEditarPedido" placeholder="Total" runat="server" />
+                                                </div>
+                                                <div id="lblAlertUsuarioNoEncontrado" class="row justify-content-center" runat="server" visible="false">
+                                                    <div class="alert alert-warning align-items-center col-10 mt-3" role="alert">
+                                                      <p>El usuario no encontrado en la base de datos, se debe crear un nuevo usuario para poder registrar el pedido.</p>
+                                                    </div>
+                                                </div>
+                                                <%-- Botones --%>
+                                                <div class="col-12 mt-3">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <asp:Button Text="Guardar Cambios" ID="btnModificarAgregarPedido" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" OnClick="btnModificarAgregarPedido_Click" OnClientClick="return confirm('¿Seguro de Modificar?');"  runat="server" />
+                                                    </div>
+                                                    <div class="d-flex justify-content-center aling-items-center">
+                                                        <asp:Button Text="Agregar Pedido" ID="btnAgregarPedido" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" OnClick="btnAgregarPedido_Click" OnClientClick="return confirm('¿Seguro de Agregar?');" runat="server"  Visible="false"/>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <asp:Button ID="btnEliminarPedido_Articulos" Text="Eliminar" CssClass="btn btn-danger mb-3 ps-5 pe-5 fs-4" OnClick="btnEliminarPedido_Articulos_Click" OnClientClick="return confirm('¿Seguro de Eliminar?');" runat="server" />
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <asp:LinkButton Text="Volver a Lista Pedidos" CssClass="link-body-emphasis" ID="btnVolverListaPedidos" CommandName="btnVolverListaPedidos" OnClick="btnVolverListaPedidos_Click" runat="server" />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                         <%-- Fin Lista Pedidos Editar --%>

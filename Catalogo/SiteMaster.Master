@@ -98,7 +98,6 @@
                     <asp:UpdatePanel runat="server">
                         <ContentTemplate>
                             <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end m-2">
-                                
                                 <p id="lblUsuarioNoExiste" visible="false" runat="server">
                                     <span class="badge text-bg-danger text-light me-2">
                                         <asp:Label ID="lblRespuestaLoggin" runat="server" />

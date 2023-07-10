@@ -219,6 +219,7 @@ namespace Catalogo
                     if (resArticulos == pedido.totalItems.Count)
                     {
                         HelperUsuario.MensajePopUp(this, "Pedido Cargado Correctamente");
+                        btnConfirmarPedido.Enabled = false;
                         datosDePago.Visible = true;
                     }
                     else
