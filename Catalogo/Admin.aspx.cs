@@ -58,7 +58,12 @@ namespace Catalogo
                 //     //Response.Redirect("Default.aspx", false);
                 // }
                 if (!IsPostBack)
-                {    
+                {
+                    //Damos mensaje si es que hay alguno
+                    if (Session["MensajeExito"] != null)
+                        HelperUsuario.MensajePopUp(this, Session["MensajeExito"].ToString());
+                    Session["MensajeExito"] = null;
+
                     if (Request.QueryString["id"] != null)
                     {
                         switch (int.Parse(Request.QueryString["id"]))
@@ -372,7 +377,7 @@ namespace Catalogo
                         Response.Redirect("Admin.aspx?id=1", false);
                         break; // no usos despues de aca, pero lo dejo por si las dudas (filtra por tipo de estado la listra principal)
                     case "btnPedidosPendientes":
-                        CargarPedidos("Pendiete");
+                        CargarPedidos("Pendiente");
                         break;
                     case "btnPedidosEntregados":
                         CargarPedidos("Entregado");
@@ -583,7 +588,8 @@ namespace Catalogo
 
                 if (res >= 1)
                 {
-                    HelperUsuario.MensajePopUp(this, "Pedido eliminado");
+                    Session["MensajeExito"] = "Pedido eliminado";
+                    Response.Redirect("Admin.aspx?id=2", false);
                 }
                 else
                 {

@@ -26,6 +26,12 @@
                                     <asp:LinkButton Text="Todos los Pedidos" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" CommandName="btnPedidosTodos" OnClick="btnPedidosMenu_Click" runat="server" />
                                 </li>
                                 <li>
+                                    <asp:LinkButton ID="btnPedidosPendientes" Text="Pedidos Pendientes" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" CommandName="btnPedidosPendientes" OnClick="btnPedidosMenu_Click" runat="server"/>
+                                </li>
+                                <li>
+                                    <asp:LinkButton ID="btnPedidosCancelados" Text="Pedidos Cancelados" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" CommandName="btnPedidosCancelados" OnClick="btnPedidosMenu_Click" runat="server"/>
+                                </li>
+                                <li>
                                     <asp:Button ID="btnCrearNuevoPedidoMenu" Text="Crear Nuevo Pedido" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" OnClick="btnCrearNuevoPedidoMenu_Click" runat="server" />
                                 </li>
                             </ul>
@@ -191,7 +197,7 @@
                                                             <!-- PASS -->
                                                             <div class="col-6 mb-3">
                                                                 <h6>Contraseña</h6>
-                                                                <asp:TextBox type="password" runat="server" ID="txtClave" CssClass="text-muted form-control" required minlength="6" MaxLength="20" />
+                                                                <asp:TextBox runat="server" ID="txtClave" CssClass="text-muted form-control" required minlength="6" MaxLength="20" />
                                                                 <%--patron para solo aceptar claves con un mayus, numeros y minusculas    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$"    --%>
                                                             </div>
                                                             <!-- DIR -->
@@ -508,6 +514,11 @@
 
                                     </Columns>
                                 </asp:GridView>
+                                <div>
+                                    <div>
+
+                                    </div>
+                                </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                         <%-- Fin Lista Pedido_Articulos --%>

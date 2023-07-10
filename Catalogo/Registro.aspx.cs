@@ -10,6 +10,8 @@ namespace Catalogo
     public partial class WebForm1 : System.Web.UI.Page
     {
         NegocioUsuario NuevoUsuario;
+
+        //LOAD
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -27,11 +29,12 @@ namespace Catalogo
             }
         }
 
-        //TODO:Boton Crear usuario
+        //TODO:BOTON CREAR USUARIO (Importante)
         protected void btnRegistroUsu_Click(object sender, EventArgs e)
         {
             try
             {
+                //si es valido los imputs
                 if(Page.IsValid)
                 {
                     if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApellido.Text) || string.IsNullOrEmpty(txtDni.Text) || string.IsNullOrEmpty(txtMail.Text) || string.IsNullOrEmpty(txtPassword.Text) || string.IsNullOrEmpty(txtDomicilio.Text))
@@ -39,6 +42,7 @@ namespace Catalogo
                         HelperUsuario.MensajePopUp(this, "Hay campos erróneos o vacíos");
                         return;
                     }
+                    //cargamos usuario
                     Usuario usuario = new Usuario();
                     usuario.Nombre = txtNombre.Text;
                     usuario.Apellido = txtApellido.Text;
@@ -50,18 +54,22 @@ namespace Catalogo
                     usuario.UrlImgUsuario = "img/usuarios/default.png";
                     usuario.Activo = true;
 
+                    //vemos si esta registrado
                     if (HelperUsuario.ExistUser(usuario))
                     {
                         HelperUsuario.MensajePopUp(this, "Usuario Existente");
                     }
                     else
                     {
+                        //Registramos usuario
                         NuevoUsuario = new NegocioUsuario();
                         int res = NuevoUsuario.AgregarUsuario(usuario);
+                        
+                        //si fue exitoso el registro, se envia un mail de bienvenida
                         if (res > 0)
                         {
                             HelperUsuario.MensajePopUp(this, "Usuario Registrado Exitosamente, debes iniciar sesión.");
-                            EmailService emailService = new EmailService();
+                            EmailService emailService = new EmailService(); // eviar mail de bienvenida
                             emailService.ArmarCorreo(usuario.Mail, "Bienvenido a HardFish", "Gracias por registrarte en HardFish Store, esperamos que disfrutes de nuestros productos. Saludos!");
                             emailService.EnviarCorreo();
                             Session["MensajeExito"] = "Usuario Registrado Exitosamente, debes iniciar sesión.";
@@ -80,15 +88,16 @@ namespace Catalogo
                     HelperUsuario.MensajePopUp(this, "Hubo error en una validación");
                 } 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Session.Add("Error", ex);
+                Response.Redirect("Error.aspx", false);
             }
-            NuevoUsuario = new NegocioUsuario();
-             
         }
+
+
         //METODOS DE VALIDACION DE LOS CAMPOS
+        #region Validaciones
         protected void customValidatorNombre_ServerValidate(object source, ServerValidateEventArgs args)
         {
             string nombre = txtNombre.Text;
@@ -134,14 +143,14 @@ namespace Catalogo
             customValidatorDomicilio.Visible = false;
         }
 
-        protected void customValidatorTipoUsuario_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            string tipoUsuario = txtTipoUsuario.Text;
-            bool isValid = !string.IsNullOrWhiteSpace(tipoUsuario) && (tipoUsuario == "C" || tipoUsuario == "A" || tipoUsuario == "E");
-            args.IsValid = isValid;
-            customValidatorTipoUsuario.ErrorMessage = "Tipos de usuarios admitidos: C - Cliente, A - Admin, E- Empleado";
-            customValidatorTipoUsuario.Visible = false;
-        }
+        //protected void customValidatorTipoUsuario_ServerValidate(object source, ServerValidateEventArgs args)
+        //{
+        //    string tipoUsuario = txtTipoUsuario.Text;
+        //    bool isValid = !string.IsNullOrWhiteSpace(tipoUsuario) && (tipoUsuario == "C" || tipoUsuario == "A" || tipoUsuario == "E");
+        //    args.IsValid = isValid;
+        //    customValidatorTipoUsuario.ErrorMessage = "Tipos de usuarios admitidos: C - Cliente, A - Admin, E- Empleado";
+        //    customValidatorTipoUsuario.Visible = false;
+        //}
 
         protected void customValidatorPassword_ServerValidate(object source, ServerValidateEventArgs args)
         {
@@ -152,8 +161,8 @@ namespace Catalogo
             customValidatorPassword.Visible = false;
 
         }
+        #endregion Validaciones
 
-        
     }
-    
+
 }

@@ -68,15 +68,15 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="d-flex flex-row align-items-center mb-4">
+                                                    <%--<div class="d-flex flex-row align-items-center mb-4">
                                                         <div class="input-group ">
                                                             <span class="input-group-text mb-1"><i class="bi bi-person-fill "></i></span>
                                                             <div class="form-floating flex-fill mb-1">
-                                                                <asp:TextBox type="text" class="form-control" runat="server" ID="txtTipoUsuario" Text="C" MaxLength="1" required/>
+                                                                <asp:TextBox Enabled="false" class="form-control" runat="server" ID="txtTipoUsuario" Text="C" MaxLength="1" />
                                                                 <label type="text" for="txttipousuario" class="text-dark">Tipo de usuario</label>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div>--%>
                                                     <div class="d-flex flex-row align-items-center mb-4">
                                                         <div class="input-group ">
                                                             <span class="input-group-text mb-1"><i class="bi bi-key-fill"></i></span>
@@ -96,7 +96,7 @@
                                                             <asp:CustomValidator runat="server" ID="customValidatorDocumento" ControlToValidate="txtDni" OnServerValidate="customValidatorDocumento_ServerValidate" ValidationGroup="GuardarUsuario" ErrorMessage="El número de documento es inválido" />
                                                             <asp:CustomValidator runat="server" ID="customValidatorMail" ControlToValidate="txtMail" OnServerValidate="customValidatorMail_ServerValidate" ValidationGroup="GuardarUsuario" ErrorMessage="El correo electrónico es inválido" />
                                                             <asp:CustomValidator runat="server" ID="customValidatorDomicilio" ControlToValidate="txtDomicilio" OnServerValidate="customValidatorDomicilio_ServerValidate" ValidationGroup="GuardarUsuario" ErrorMessage="El domicilio es inválido" />
-                                                            <asp:CustomValidator runat="server" ID="customValidatorTipoUsuario" ControlToValidate="txtTipoUsuario" OnServerValidate="customValidatorTipoUsuario_ServerValidate" ValidationGroup="GuardarUsuario" ErrorMessage="El tipo de usuario es inválido" />
+                                                            <%--<asp:CustomValidator runat="server" ID="customValidatorTipoUsuario" ControlToValidate="txtTipoUsuario" OnServerValidate="customValidatorTipoUsuario_ServerValidate" ValidationGroup="GuardarUsuario" ErrorMessage="El tipo de usuario es inválido" />--%>
                                                             <asp:CustomValidator runat="server" ID="customValidatorPassword" ControlToValidate="txtPassword" OnServerValidate="customValidatorPassword_ServerValidate" ValidationGroup="GuardarUsuario" ErrorMessage="La contraseña es inválida" />
                                                     <%--validaciones--%>
                                                 </div>

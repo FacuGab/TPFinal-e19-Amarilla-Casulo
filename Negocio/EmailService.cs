@@ -15,7 +15,9 @@ namespace Negocio
     {
         private MailMessage mensaje;
         private SmtpClient servicioCorreo;
+        private string plantillaHTML;
 
+        //CONSTRUCTOR
         public EmailService()
         {
             servicioCorreo = new SmtpClient();
@@ -25,6 +27,7 @@ namespace Negocio
             servicioCorreo.Port = 587;
         }
 
+        //ARMAR CORREO
         public void ArmarCorreo(string destinatario, string asunto, string contenido)
         {
             try
@@ -42,6 +45,7 @@ namespace Negocio
                 throw ex;
             }
         }
+        //ENVIAR CORREO
         public void EnviarCorreo()
         {
             try
@@ -54,6 +58,19 @@ namespace Negocio
                 throw ex;
             }
 
+        }
+        //CERRAR CONEXION (Ver si es necesario utilizar)
+        public void CerrarConexion()
+        {
+            try
+            {
+                servicioCorreo.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }
