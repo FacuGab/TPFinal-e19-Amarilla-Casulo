@@ -56,11 +56,17 @@ namespace Catalogo
                     }
                     else
                     {
+                        NuevoUsuario = new NegocioUsuario();
                         int res = NuevoUsuario.AgregarUsuario(usuario);
                         if (res > 0)
                         {
-                            HelperUsuario.MensajePopUp(this, "Usuario Registrado Exitosamente");
-                            //Response.Redirect(urlRedirect, true);
+                            HelperUsuario.MensajePopUp(this, "Usuario Registrado Exitosamente, debes iniciar sesión.");
+                            EmailService emailService = new EmailService();
+                            emailService.ArmarCorreo(usuario.Mail, "Bienvenido a HardFish", "Gracias por registrarte en HardFish Store, esperamos que disfrutes de nuestros productos. Saludos!");
+                            emailService.EnviarCorreo();
+                            Session["MensajeExito"] = "Usuario Registrado Exitosamente, debes iniciar sesión.";
+                            Response.Redirect("Default.aspx", true);
+
                             // aca un response a Default.aspx o a ListaCarrito.aspx?text=ok&reg=ok. funciona correcteamente, pero es tan rapido que no muestra el cartel, intente poner un async await pero fallo por completo
                         }
                         else

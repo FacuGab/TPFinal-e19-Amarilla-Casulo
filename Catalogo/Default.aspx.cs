@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Helper;
 
 namespace Catalogo
 {
@@ -18,6 +19,7 @@ namespace Catalogo
             {
                 if(!IsPostBack)
                 {
+                    guardadoExitoso();
                     NegocioCategoria categoria = new NegocioCategoria();
                     List<Categoria> categorias = categoria.ListarCategorias();
                     rptCategorias.DataSource = categorias;
@@ -37,6 +39,18 @@ namespace Catalogo
         }
 
         //EVENTOS
+        //TODO: Metodo de PopUp, 'Guardado Exitoso'
+        protected void guardadoExitoso()
+        {
+            if (Session["MensajeExito"] != null)
+            {
+                string mensajeExito = Session["MensajeExito"].ToString();
+                // Muestra el mensaje de éxito
+                HelperUsuario.MensajePopUp(this, mensajeExito);
+                // Limpia la variable de sesión para evitar mostrar el mensaje en futuras visitas a la página
+                Session.Remove("MensajeExito");
+            }
+        }
         //TODO: Boton img Categorias
         protected void btnImgCate_Click(object sender, ImageClickEventArgs e)
         {
