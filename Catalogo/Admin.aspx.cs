@@ -4,6 +4,7 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
@@ -152,12 +153,193 @@ namespace Catalogo
         // TODO: Cargar Articulos en Admin
         private void CargarArticulos()
         {
+            FiltrosArticulos.Visible = true;
+            //Cargar filtros
+            NegocioMarca = new NegocioMarca();
+            NegocioCategoria = new NegocioCategoria();
+
+            ddlFiltroMarca.DataSource = NegocioMarca.ListarMarcas();
+            ddlFiltroMarca.DataBind();
+            ddlFiltroMarca.DataValueField = "Id";
+            ddlFiltroMarca.DataTextField = "Descripcion";
+
+            ddlFiltroCategoria.DataSource = NegocioCategoria.ListarCategorias();
+            ddlFiltroCategoria.DataBind();
+            ddlFiltroCategoria.DataValueField = "Id";
+            ddlFiltroCategoria.DataTextField = "Descripcion";
+
+            
+
+            rptMarcas.DataSource = NegocioMarca.ListarMarcas();
+            rptMarcas.DataBind();
+            rptCategorias.DataSource = NegocioCategoria.ListarCategorias();
+            rptCategorias.DataBind();
+            //fin carga filtros
             NegocioArticulo = new NegocioArticulo();
             articuloList = NegocioArticulo.ListarArticulos();
             dgvAdmin.DataSource = articuloList;
             dgvAdmin.DataBind();
         }
+        //TODO: Filtrar Lista
+        private List<Articulo> filtrarLista(object param, string tipoParam = null)
+        {
+            //List<Articulo> listaFiltrada = null;
+            try
+            {
+                //gatillo de seguridad
+                if (Session["listaPrincipal"] == null)
+                    return null;
 
+                //Asingnamos lista principal a variables
+                List<Articulo> listaPrincipal = (List<Articulo>)Session["listaPrincipal"];
+                List<Articulo> listaFiltrada = (List<Articulo>)Session["listaFiltrada"];
+
+                // Si es un parametro string, filtramos lista principal y agregamos a session con ese filtro
+                if (param is string)
+                {
+                    string match = param as string;
+                    listaFiltrada = listaPrincipal.FindAll(
+                        x => (x.Nombre.ToUpperInvariant().Contains(match.ToUpperInvariant()) ||
+                        x.Marca.Descripcion.ToUpperInvariant().Contains(match.ToUpperInvariant()))
+                        );
+                }
+                // Si es un parametro entero, filtramos lista principal y agregamos a session con ese filtro
+                else if (param is int)
+                {
+                    int match = (int)param;
+
+                    if (tipoParam == "idCate")
+                        listaFiltrada = listaPrincipal.FindAll(art => art.Categoria.Id == match);
+                    else if (tipoParam == "idMarca")
+                        listaFiltrada = listaPrincipal.FindAll(art => art.Marca.Id == match);
+                }
+                return listaFiltrada;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        //TODO: Filtro Caegorias
+        protected void btnFiltroCate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                dgvAdmin.DataSource = filtrarLista(int.Parse(((Button)sender).CommandArgument), "idCate");
+                dgvAdmin.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //TODO: Filtro Marca
+        protected void btnFiltroMarca_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                dgvAdmin.DataSource = filtrarLista(int.Parse(((Button)sender).CommandArgument), "idMarca");
+                dgvAdmin.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+        //TODO: Boton Filtro
+        protected void btnFiltro_Click(object sender, EventArgs e)
+        {
+            List<Articulo> listaPrincipal = (List<Articulo>)Session["listaPrincipal"];
+            try
+            {
+                dgvAdmin.DataSource = listaPrincipal.FindAll(x =>
+                    x.Categoria.Descripcion.Contains(ddlFiltroCategoria.Text)
+                    && x.Marca.Descripcion.Contains(ddlFiltroMarca.Text));
+                dgvAdmin.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx");
+            }
+        }
+        //TODO: Boton Filtro Precio dsc
+        protected void btnFiltroPrecioDesc_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Request.Params["text"] != null)
+                {
+                    List<Articulo> listaArticulos;
+                    listaArticulos = (List<Articulo>)Session["listaFiltrada"];
+
+                    List<Articulo> listaFiltrada = new List<Articulo>();
+                    listaFiltrada = listaArticulos.OrderByDescending(producto => producto.precio).ToList();
+
+                    dgvAdmin.DataSource = listaFiltrada;
+                    dgvAdmin.DataBind();
+                }
+                else
+                {
+                    List<Articulo> listaArticulos;
+                    listaArticulos = (List<Articulo>)Session["listaPrincipal"];
+
+                    List<Articulo> listaFiltrada = new List<Articulo>();
+                    listaFiltrada = listaArticulos.OrderByDescending(producto => producto.precio).ToList();
+
+                    dgvAdmin.DataSource = listaFiltrada;
+                    dgvAdmin.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx");
+            }
+
+        }
+        //TODO: Boton Filtro Precio asc
+        protected void btnFiltroPrecioAsc_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Request.Params["text"] != null)
+                {
+                    List<Articulo> listaArticulos;
+                    listaArticulos = (List<Articulo>)Session["listaFiltrada"];
+                    List<Articulo> listaFiltrada = new List<Articulo>();
+                    listaFiltrada = listaArticulos.OrderBy(producto => producto.precio).ToList();
+                    dgvAdmin.DataSource = listaFiltrada;
+                    dgvAdmin.DataBind();
+                }
+                else
+                {
+                    List<Articulo> listaArticulos;
+                    listaArticulos = (List<Articulo>)Session["listaPrincipal"];
+                    List<Articulo> listaFiltrada = new List<Articulo>();
+                    listaFiltrada = listaArticulos.OrderBy(producto => producto.precio).ToList();
+                    dgvAdmin.DataSource = listaFiltrada;
+                    dgvAdmin.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx");
+            }
+
+        }
+        //TODO: Boton Borrar Filtros
+        protected void btnBorrarFilros_Click(object sender, EventArgs e)
+        {
+            //ver si borrar obj listas de art en session o no aca ....
+            Session.Remove("listaFiltrada");
+            //Session.Remove("listaPrincipal"); //mmm ver si hace falta esta linea o no
+            Response.Redirect("Productos.aspx", false);
+        }
 
         // METDOS CATEGORIA Y MARCAS
         // TODO: Cargar Categorias en Admin
