@@ -22,6 +22,11 @@ namespace Catalogo
                     lblErrorFuente.Text = "FUENTE: " + ex.Source;
                     lblErrorCompleto.Text = "ERROR COMPLETO: " + ex.ToString();
                 }
+                else if (Session["MensajeError"] != null)
+                {
+                    string msj = Session["MensajeError"].ToString();
+                    lblMensajeError.Text = "Mensaje: \n" + msj;
+                }
             }
             catch
             {

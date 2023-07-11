@@ -3,12 +3,7 @@ using Helper;
 using Negocio;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
@@ -47,16 +42,6 @@ namespace Catalogo
             //ddlAgregarArticuloPedido_Articulos.Visible = false;
             try
             {
-                // Ver el tema de usar los Redirect constantes para usar los param de url si es posible, es recargar constantemente todo una y otra vez por cada vuelta.
-                // Validamos que el user este Logeado y ademas sea Admin, nivel de usuario = 'A'.
-                // Funciona, pero no se si tenes un user con nivel A creado y aparte redirecciona muy rapido. Ver si crear una pagina de loggin de vista simple para el "uso de empleados" para redireccionar.
-                // Usuario admin = Session["usuarioActual"] as Usuario;
-                // if(!HelperUsuario.IsAdmin(admin))
-                // {
-                //     HelperUsuario.MensajePopUp(this, "No tiene las credenciales para entrar o No te encuentras logeado");
-                //     return;
-                //     //Response.Redirect("Default.aspx", false);
-                // }
                 if (!IsPostBack)
                 {
                     //Damos mensaje si es que hay alguno
@@ -64,6 +49,15 @@ namespace Catalogo
                         HelperUsuario.MensajePopUp(this, Session["MensajeExito"].ToString());
                     Session["MensajeExito"] = null;
 
+                    //Validamos si el usuario es Admin
+                    Usuario admin = Session["usuarioActual"] as Usuario;
+                    if (!HelperUsuario.IsAdmin(admin))
+                    {
+                        Session["MensajeError"] = "No tiene las credenciales para entrar o No te encuentras logeado";
+                        Response.Redirect("Error.aspx", false);
+                    }
+
+                    //Validamos si hay un id en la url
                     if (Request.QueryString["id"] != null)
                     {
                         switch (int.Parse(Request.QueryString["id"]))
@@ -101,13 +95,6 @@ namespace Catalogo
                                 break;
                         }
                     }
-
-                    //Validamos que el user este Logeado y ademas sea Admin, nivel de usuario = 'A'.
-                    //usuario = Session["usuarioActual"] as Usuario;
-                    //if(HelperUsuario.IsLogged(usuario) && HelperUsuario.IsAdmin(usuario))
-                    //    HelperUsuario.MensajePopUp(this, "Bienvenido " + usuario.Nombre + " " + usuario.Apellido);
-                    //else
-                    //    HelperUsuario.MensajePopUp(this, "No tiene las credenciales para entrar o No te encuentras logeado");
                 }
             }
             catch (Exception ex)

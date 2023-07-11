@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Helper;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace Catalogo
                     CdnDebugPath = "https://code.jquery.com/jquery-3.6.0.js"
                 });
 
+                //total Carrito
                 if (Session["countCarrito"] != null)
                 {
                     lblTotalArticulos.Text = Session["countCarrito"].ToString();
@@ -40,6 +42,7 @@ namespace Catalogo
                     Flag = false;
                 }
 
+                // usuario logueado
                 if (Session["usuarioActual"] != null)
                 {
                     btnLoggin.Visible = false;
@@ -50,6 +53,7 @@ namespace Catalogo
                     btnLoggin.Visible = true;
                     btnDisloggin.Visible = false;
                 }
+
             }
             catch (Exception ex)
             {
