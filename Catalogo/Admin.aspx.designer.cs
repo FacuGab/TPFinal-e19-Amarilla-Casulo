@@ -537,6 +537,24 @@ namespace Catalogo
         protected global::System.Web.UI.WebControls.Button btnFiltroPrecioDesc;
 
         /// <summary>
+        /// btnFiltroEstadoAlta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltroEstadoAlta;
+
+        /// <summary>
+        /// btnFiltroEstadoBaja control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltroEstadoBaja;
+
+        /// <summary>
         /// ddlFiltroCategoria control.
         /// </summary>
         /// <remarks>
