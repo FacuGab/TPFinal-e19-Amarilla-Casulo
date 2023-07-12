@@ -7,6 +7,7 @@ using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Catalogo
 {
@@ -54,6 +55,9 @@ namespace Catalogo
                     btnDisloggin.Visible = false;
                 }
 
+                // checkeamos si hay un mensaje para mostrar
+                mensajes();
+
             }
             catch (Exception ex)
             {
@@ -61,6 +65,36 @@ namespace Catalogo
                 Response.Redirect("Error.aspx", false);
             }
         }
+
+        //Mensajes
+        private void mensajes()
+        {
+            try
+            {
+                if (Session["mensajeEnMaster"] != null)
+                {
+                    HelperUsuario.MensajePopUp(this, Session["mensajeEnMaster"].ToString());
+                    Session.Remove("mensajeEnMaster");
+                }
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
+        }
+
+        //Cambiamos el nav si es admin
+        //private void navAdmin(Usuario user)
+        //{
+        //    if(user.Nivel == "A")
+        //    {
+        //        navAdminMaster.Visible = true;
+        //    }
+        //    else
+        //    {
+        //        navClienteMaster.Visible = false;
+        //    }
+        //}
 
         //Filtro Rapido
         protected void btnFiltroRapido_Click(object sender, EventArgs e)
@@ -100,6 +134,7 @@ namespace Catalogo
                     if (userControl != null)
                     {
                         Session.Add("usuarioActual", userControl);
+                        Session.Add("mensajeEnMaster", $"Bienvenido {userControl.Nombre}!");
                         Response.Redirect(paginaActual, false);
                         btnLoggin.Visible = false;
                         btnDisloggin.Visible = true;

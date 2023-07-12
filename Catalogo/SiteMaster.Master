@@ -22,7 +22,7 @@
     <asp:ScriptManager runat="server" />
 
         <!-- BARRA NAVEGACIÓN -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-warning bg-gradient fixed-top p-3"> <%--fixed-top--%>
+        <nav class="navbar navbar-expand-lg navbar-light bg-warning bg-gradient fixed-top p-3" id="navClienteMaster" runat="server"> <%--fixed-top--%>
             <div class="container-fluid ">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -73,6 +73,37 @@
                 </div>
             </div>
         </nav>
+        <%--<nav class="navbar navbar-expand-lg navbar-light bg-warning bg-gradient fixed-top p-3" id="navAdminMaster" runat="server" visible="false">
+            <div class="container-fluid ">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAdmin" aria-controls="navbarNavAdmin" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand img-fluid" href="Default.aspx">
+                    <!-- mande el icono para ver como quedaba -->
+                    <asp:Image ImageUrl="recursos/img/hellfish.png" Height="35px" Width="35px" CssClass="img-fluid" AlternateText="LOGO-MARCA" ID="Image1" runat="server" ImageAlign="Middle" />
+                    <span class="fw-bold">HARDFISH</span>
+                </a>
+                <div class="collapse navbar-collapse" id="navbarNavAdmin">
+                    <ul class="navbar-nav ms-auto d-flex ">
+                        <li class="nav-item me-2">
+                            <a class="nav-link fs-5 fw-bold" aria-current="page" href="Productos.aspx"><i>Productos</i></a>
+                        </li>
+                        <li class="nav-item me-2 ">
+                            <a type="button" class="btn  fs-5 position-relative" href="Admin.aspx">👨‍💻</a>
+                        </li>
+                        <li class="nav-item me-2 ">
+                            <button type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#modalBusqueda"><i class="bi bi-search fw-bold"> Buscar</i></button>
+                        </li>
+                        <li class="nav-item me-2 ">
+                            <button id="Button1" type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal" runat="server">
+                                <i class="bi bi-box-arrow-in-right fw-bold"> Login</i>
+                            </button>
+                            <asp:Button Text="Cerrar Sesion" CssClass="btn fs-5 bi bi-box-arrow-in-right" ID="Button2" OnClick="btnDisloggin_Click" runat="server" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>--%>
         <!-- FIN BARRA NAV -->
 
         <%--modal login--%>
@@ -91,7 +122,6 @@
                         </div>
                         <div class="col-12">
                             <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
-                            <%-- saco el campo TextMode="Password", que creo que trae un erro, (volver a agregar, no afecat mepa) --%>
                             <asp:TextBox CssClass="form-control" ID="txtClaveLogin" TextMode="Password" ToolTip="Ingrese contraseña" runat="server" />
                         </div>
                     </div>
