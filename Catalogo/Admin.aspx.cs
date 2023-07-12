@@ -143,8 +143,7 @@ namespace Catalogo
             txtClave.Text = usuario.Clave;
             txtDni.Text = usuario.Dni.ToString();
             txtDomicilio.Text = usuario.Direccion;
-            txtUrl.Text = usuario.UrlImgUsuario;
-            txtTipoUsuario.Text = usuario.Nivel.ToString();
+            ddlTipoUsuario.SelectedValue = usuario.Nivel.ToString();
             txtId.Text = usuario.Id.ToString();
         }
 
@@ -452,12 +451,6 @@ namespace Catalogo
                 Response.Redirect("Error.aspx", false);
             }
         }
-        // TODO: Evento User ImgUrl cambio??
-        protected void txtUrl_TextChanged(object sender, EventArgs e)
-        {
-            userImg.ImageUrl = txtUrl.Text;
-        }
-
 
         #region LOGICA PEDIDOS
         // TODO: BOTON Dar Alta Pedido en Grid: METODO SIN USO Y SENTIDO, SACAR LUEGO PARA NO ROMPER NADA
@@ -1000,56 +993,77 @@ namespace Catalogo
         // TODO: BOTON ACTUALIZAR/CREAR USUARIO
         protected void btnGuardarUsuario_Click(object sender, EventArgs e)
         {
-            usuario = new Usuario();
-            // Aca habria que llamar helper para validar imputs
-
-            // cargamos los datos
-            usuario.Id = int.Parse(txtId.Text);
-            usuario.Nombre = txtNombre.Text;
-            usuario.Apellido = txtApellido.Text;
-            usuario.Mail = txtEmail.Text;
-            usuario.Clave = txtClave.Text;
-            usuario.Dni = int.Parse(txtDni.Text);
-            usuario.Direccion = txtDomicilio.Text;
-            usuario.UrlImgUsuario = txtUrl.Text;
-            usuario.Nivel = txtTipoUsuario.Text;
-            usuario.Activo = true;
-
-            NegocioUsuario = new NegocioUsuario();
-            int res = 0;
-            // si es modo agregar
-            if (btnGuardarUsuario.Text == "Agregar Usuario")
+            try
             {
-                btnGuardarUsuario.Text = "Guardar Cambios";
-                //si usuario ya existe, cortamos la carga, sino cargamos
-                if (!HelperUsuario.ExistUser(usuario))
+                //si es valido los imputs
+                if (Page.IsValid)
                 {
-                    res = NegocioUsuario.AgregarUsuario(usuario);
-                    HelperUsuario.MensajePopUp(this, "Usuario Agregado Exitosamente");
+                    if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApellido.Text) || string.IsNullOrEmpty(txtDni.Text) || string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtClave.Text) || string.IsNullOrEmpty(txtDomicilio.Text))
+                    {
+                        HelperUsuario.MensajePopUp(this, "Hay campos erróneos o vacíos");
+                        return;
+                    }
+                    // cargamos los datos
+                    usuario = new Usuario();
+                    usuario.Nombre = txtNombre.Text;
+                    usuario.Apellido = txtApellido.Text;
+                    usuario.Mail = txtEmail.Text;
+                    usuario.Clave = txtClave.Text;
+                    usuario.Dni = int.Parse(txtDni.Text);
+                    usuario.Direccion = txtDomicilio.Text;
+                    usuario.UrlImgUsuario = "img/usuarios/default.png";
+                    usuario.Nivel = ddlTipoUsuario.SelectedValue.ToString();
+                    usuario.Activo = true;
+                    NegocioUsuario = new NegocioUsuario();
+                    //int res = 0;
+                    // si es modo agregar
+                    int res = 0;
+                    if (btnGuardarUsuario.Text == "Agregar Usuario")
+                    {
+                        //btnGuardarUsuario.Text = "Guardar Cambios";
+                        //si usuario ya existe, cortamos la carga, sino cargamos
+                        if (!HelperUsuario.ExistUser(usuario))
+                        {
+                            res = NegocioUsuario.AgregarUsuario(usuario);
+                            HelperUsuario.MensajePopUp(this, "Usuario Agregado Exitosamente");
+                        }
+                        else
+                        {
+                            HelperUsuario.MensajePopUp(this, "El usuario ya existe");
+                            dgvAdminUsuario.Visible = true;
+                            return;
+                        }
+                    }
+                    // si es modo modificar
+                    else if (btnGuardarUsuario.Text == "Guardar Cambios")
+                    {
+                        res = NegocioUsuario.EditarUsuario(usuario);
+                        HelperUsuario.MensajePopUp(this, "Registro Modificado Exitosamente");
+                    }
+
+                    if (res == 0)
+                        HelperUsuario.MensajePopUp(this, "Ocurrio un Error Inesperado"); // va a tirar dos msj si no guarda, mejorar para manejar el error
+
+                    // recargamos la lista
+                    usuarioList = NegocioUsuario.ListarUsuarios();
+                    dgvAdminUsuario.DataSource = usuarioList;
+                    dgvAdminUsuario.DataBind();
+                    dgvAdminUsuario.Visible = true;
+                    //Response.Redirect("Admin.aspx?id=6");
                 }
                 else
                 {
-                    HelperUsuario.MensajePopUp(this, "El usuario ya existe");
-                    dgvAdminUsuario.Visible = true;
-                    return;
+                    HelperUsuario.MensajePopUp(this, "Hubo error en una validación");
                 }
+
+
             }
-            // si es modo modificar
-            else if (btnGuardarUsuario.Text == "Guardar Cambios")
+            catch (Exception ex)
             {
-                res = NegocioUsuario.EditarUsuario(usuario);
-                HelperUsuario.MensajePopUp(this, "Registro Modificado Exitosamente");
+
+                Session.Add("Error", ex);
+                Response.Redirect("Error.aspx", false);
             }
-
-            if (res == 0)
-                HelperUsuario.MensajePopUp(this, "Ocurrio un Error Inesperado"); // va a tirar dos msj si no guarda, mejorar para manejar el error
-
-            // recargamos la lista
-            usuarioList = NegocioUsuario.ListarUsuarios();
-            dgvAdminUsuario.DataSource = usuarioList;
-            dgvAdminUsuario.DataBind();
-            dgvAdminUsuario.Visible = true;
-            //Response.Redirect("Admin.aspx?id=6");
         }
 
         // TODO: BOTON DAR DE BAJA USUARIO (Logica)
@@ -1099,10 +1113,8 @@ namespace Catalogo
             txtApellido.Text = string.Empty;
             txtEmail.Text = string.Empty;
             txtClave.Text = string.Empty;
-            txtUrl.Text = string.Empty;
             txtDni.Text = string.Empty;
             txtDomicilio.Text = string.Empty;
-            txtTipoUsuario.Text = string.Empty;
 
             dgvAdminUsuario.Visible = false;
             btnAltaUsuario.Visible = false;

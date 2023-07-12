@@ -162,7 +162,6 @@
                                                                     <asp:Label runat="server" ID="txtId" />
                                                         </strong>
                                                     </h6>
-                                                    <i class="far fa-edit mb-5"></i>
                                                 </div>
                                                 <!-- Columna de Inputs -->
                                                 <div class="col-md-8">
@@ -173,60 +172,59 @@
                                                             <!-- Nombre -->
                                                             <div class="col-6 mb-3">
                                                                 <h6>Nombre/s</h6>
-                                                                <asp:TextBox runat="server" ID="txtNombre" CssClass="text-muted form-control" required minlength="1" MaxLength="30" pattern="[A-Za-z\s]+" />
+                                                                <asp:TextBox type="text" runat="server" ID="txtNombre" CssClass="text-muted form-control" required pattern="[A-Za-z]+"/>
                                                             </div>
                                                             <!-- Apellido -->
                                                             <div class="col-6 mb-3">
                                                                 <h6>Apellido/s</h6>
-                                                                <asp:TextBox runat="server" ID="txtApellido" CssClass="text-muted form-control" required minlength="1" MaxLength="30" pattern="[A-Za-z\s]+" />
+                                                                <asp:TextBox type="text" runat="server" ID="txtApellido" CssClass="text-muted form-control" required pattern="^[A-Za-z\\s]+$"/>
                                                             </div>
                                                             <!-- MAIL -->
                                                             <div class="col-6 mb-3">
                                                                 <h6>Email</h6>
-                                                                <asp:TextBox runat="server" ID="txtEmail" CssClass="text-muted form-control" required />
+                                                                <asp:TextBox type="email" runat="server" ID="txtEmail" CssClass="text-muted form-control" required pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"/>
                                                             </div>
                                                             <!-- DNI -->
                                                             <div class="col-6 mb-3">
                                                                 <h6>Nro. Documento</h6>
-                                                                <asp:TextBox type="number" runat="server" ID="txtDni" CssClass="text-muted form-control" required pattern="\d{8}" />
+                                                                <asp:TextBox type="number" runat="server" ID="txtDni" CssClass="text-muted form-control" required pattern="^\d+$"/>
                                                             </div>
-                                                        </div>
-                                                        <h6>Contacto</h6>
-                                                        <hr class="mt-0 mb-4">
-                                                        <div class="row pt-1">
-                                                            <!-- PASS -->
-                                                            <div class="col-6 mb-3">
-                                                                <h6>Contraseña</h6>
-                                                                <asp:TextBox runat="server" ID="txtClave" CssClass="text-muted form-control" required minlength="6" MaxLength="20" />
-                                                                <%--patron para solo aceptar claves con un mayus, numeros y minusculas    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$"    --%>
+                                                            <h6>Contacto</h6>
+                                                            <hr class="mt-0 mb-4">
+                                                            <div class="row pt-1">
+                                                                <!-- PASS -->
+                                                                <div class="col-6 mb-3">
+                                                                    <h6>Contraseña</h6>
+                                                                    <asp:TextBox runat="server" ID="txtClave" CssClass="text-muted form-control" required/>
+                                                                    <%--patron para solo aceptar claves con un mayus, numeros y minusculas    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$"    --%>
+                                                                </div>
+                                                                <!-- DIR -->
+                                                                <div class="col-6 mb-3">
+                                                                    <h6>Dirección</h6>
+                                                                    <asp:TextBox type="text" runat="server" ID="txtDomicilio" CssClass="text-muted form-control" required />
+                                                                </div>
+                                                                <!-- NIVEL -->
+                                                                <div class="col-6 mb-3">
+                                                                    <h6>Nivel de usuario</h6>
+                                                                    <asp:DropDownList ID="ddlTipoUsuario" runat="server" CssClass="form-select">
+                                                                        <asp:ListItem Text="C - Cliente" Value="C"></asp:ListItem>
+                                                                        <asp:ListItem Text="A - Administrador" Value="A"></asp:ListItem>
+                                                                        <asp:ListItem Text="E - Empleado" Value="E"></asp:ListItem>
+                                                                    </asp:DropDownList>
+                                                                </div>
                                                             </div>
-                                                            <!-- DIR -->
-                                                            <div class="col-6 mb-3">
-                                                                <h6>Dirección</h6>
-                                                                <asp:TextBox runat="server" ID="txtDomicilio" CssClass="text-muted form-control" required minlength="6" MaxLength="100" pattern="[A-Za-z0-9\s.,-]+" />
-                                                            </div>
-                                                            <!-- IMG -->
-                                                            <div class="col-6 mb-3">
-                                                                <h6>Imágen de perfil</h6>
-                                                                <asp:TextBox runat="server" ID="txtUrl" CssClass="text-muted form-control" OnTextChanged="txtUrl_TextChanged" />
-                                                            </div>
-                                                            <!-- NIVEL -->
-                                                            <div class="col-6 mb-3">
-                                                                <h6>Nivel de usuario</h6>
-                                                                <asp:TextBox runat="server" ID="txtTipoUsuario" CssClass="text-muted form-control" required minlength="1" MaxLength="1" pattern="[A-Za-z]+" />
-                                                            </div>
-                                                        </div>
-                                                        <!-- Botones -->
-                                                        <div class="row">
-                                                            <div class="d-flex justify-content-end">
-                                                                <asp:Button Text="Dar de alta" runat="server" ID="btnAltaUsuario" OnClick="btnAltaUsuario_Click" CssClass="btn btn-outline-success mt-3 me-3" />
-                                                                <asp:Button Text="Dar de baja" runat="server" ID="btnBajaUsuario" OnClick="btnBajaUsuario_Click" CssClass="btn btn-outline-danger mt-3 me-3" />
-                                                                <asp:Button Text="Eliminar" runat="server" ID="btnEliminarUsuario" OnClick="btnEliminarUsuario_Click" CssClass="btn btn-danger mt-3 me-3" />
-                                                                <asp:Button Text="Guardar Cambios" runat="server" ID="btnGuardarUsuario" OnClick="btnGuardarUsuario_Click" CssClass="btn btn-dark mt-3" />
-                                                            </div>
-                                                            <!-- Link Volver a Lista Usuarios (TEST) -->
-                                                            <div class="d-flex justify-content-center">
-                                                                <asp:LinkButton Text="Volver a Lista Usuarios" CssClass="link-body-emphasis" ID="lnkVolverListaUsuarios" CommandName="btnVolverListaUsuarios" OnClick="lnkVolverListaUsuarios_Click" runat="server" />
+                                                            <!-- Botones -->
+                                                            <div class="row">
+                                                                <div class="d-flex justify-content-end">
+                                                                    <asp:Button Text="Dar de alta" runat="server" ID="btnAltaUsuario" OnClick="btnAltaUsuario_Click" CssClass="btn btn-outline-success mt-3 me-3" />
+                                                                    <asp:Button Text="Dar de baja" runat="server" ID="btnBajaUsuario" OnClick="btnBajaUsuario_Click" CssClass="btn btn-outline-danger mt-3 me-3" />
+                                                                    <asp:Button Text="Eliminar" runat="server" ID="btnEliminarUsuario" OnClick="btnEliminarUsuario_Click" CssClass="btn btn-danger mt-3 me-3" />
+                                                                    <asp:Button Text="Guardar Cambios" runat="server" ID="btnGuardarUsuario" OnClick="btnGuardarUsuario_Click" CssClass="btn btn-dark mt-3" />
+                                                                </div>
+                                                                <!-- Link Volver a Lista Usuarios (TEST) -->
+                                                                <div class="d-flex justify-content-center">
+                                                                    <asp:LinkButton Text="Volver a Lista Usuarios" CssClass="link-body-emphasis" ID="lnkVolverListaUsuarios" CommandName="btnVolverListaUsuarios" OnClick="lnkVolverListaUsuarios_Click" runat="server" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

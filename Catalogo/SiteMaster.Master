@@ -75,6 +75,7 @@
         </nav>
         <!-- FIN BARRA NAV -->
 
+        
         <%--modal login--%>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -188,11 +189,12 @@
         <!-- fin footer -->
 
         <!-- jQuery full con ajax -->
-        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+       <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
         <!--Boostrap js (no borrar, sino no andan los dropdowns)-->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="scripts/bootstrap.min.js"></script>
         <script src="fonts/Profile-Card-Slider---Slick-Slider-slick.js"></script>
+        <script src="fonts/script.js"></script>
     </form>
 </body>
 </html>

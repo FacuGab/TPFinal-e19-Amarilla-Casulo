@@ -88,6 +88,7 @@
     <Content Include="fonts\Profile-Card-Slider---Slick-Slider-slick.js" />
     <Content Include="fonts\Profile-Card-Slider---Slick-Slider.css" />
     <Content Include="fonts\script.js" />
+    <Content Include="fonts\snippets.js" />
     <Content Include="fonts\styles.css" />
     <Content Include="Global.asax" />
     <Content Include="iconoPP.ico" />

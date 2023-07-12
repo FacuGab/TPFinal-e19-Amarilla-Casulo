@@ -18,3 +18,15 @@ function validarSoloNumeros(elemento) {
 
     return true;
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    var btnAgregar = document.getElementById('<%= btnAgregar.ClientID %>');
+    var toast = document.getElementById('toast');
+
+    btnAgregar.addEventListener('click', function () {
+        toast.classList.add('show');
+        setTimeout(function () {
+            toast.classList.remove('show');
+        }, 5000); // Ocultar el toast después de 5 segundos
+    });
+});
