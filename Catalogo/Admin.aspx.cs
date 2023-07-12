@@ -45,9 +45,7 @@ namespace Catalogo
                 if (!IsPostBack)
                 {
                     //Damos mensaje si es que hay alguno
-                    if (Session["MensajeExito"] != null)
-                        HelperUsuario.MensajePopUp(this, Session["MensajeExito"].ToString());
-                    Session["MensajeExito"] = null;
+                    mensajes();
 
                     //Validamos si el usuario es Admin
                     Usuario admin = Session["usuarioActual"] as Usuario;
@@ -55,9 +53,10 @@ namespace Catalogo
                     {
                         Session["MensajeError"] = "No tiene las credenciales para entrar o No te encuentras logeado";
                         Response.Redirect("Error.aspx", false);
+                        return;
                     }
 
-                    //Validamos si hay un id en la url
+                    //Validamos si hay un id en la url para renderear la pagina
                     if (Request.QueryString["id"] != null)
                     {
                         switch (int.Parse(Request.QueryString["id"]))
@@ -114,6 +113,25 @@ namespace Catalogo
                 HelperUsuario.MensajePopUp(this, mensajeExito);
                 // Limpia la variable de sesión para evitar mostrar el mensaje en futuras visitas a la página
                 Session.Remove("MensajeExito");
+            }
+        }
+        private  void mensajes()
+        {
+            try
+            {
+                if (Session["MensajeExito"] != null)
+                {
+                    string mensajeExito = Session["MensajeExito"].ToString();
+                    // Muestra el mensaje de éxito
+                    HelperUsuario.MensajePopUp(this, mensajeExito);
+                    // Limpia la variable de sesión para evitar mostrar el mensaje en futuras visitas a la página
+                    Session.Remove("MensajeExito");
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
             }
         }
 
@@ -474,6 +492,8 @@ namespace Catalogo
             txtFechaEditarPedido.Text = pedido.fecha.ToString();
             txtDescuentoEditarPedido.Text = pedido.Descuento.ToString();
             txtTotalEditarPedido.Text = pedido.PrecioTotal;
+            //txtCantidadTotalEditarPedido.Text = pedido.Cantidad.ToString();
+            txtCantidadTotalEditarPedido.Text = pedido.CantidadTotal.ToString();
         }
 
         // TODO: Cargar Pedido del Form en Objeto
@@ -487,10 +507,10 @@ namespace Catalogo
             pedido.DireccionEntrega = txtDirEditarPedido.Text;
             pedido.fecha = DateTime.Parse(txtFechaEditarPedido.Text);
             pedido.Descuento = int.Parse(txtDescuentoEditarPedido.Text);
+            pedido.Cantidad = int.Parse(txtCantidadTotalEditarPedido.Text);
             
             if(!string.IsNullOrWhiteSpace(txtTotalEditarPedido.Text))
                 pedido.precioTotal = decimal.Parse(txtTotalEditarPedido.Text, NumberStyles.Currency);
-            //pedido.Cantidad = int.Parse(txtCantidadEditarPedido.Text);
         }
 
         // TODO: Cargar Pedido_Articulos en Admin
@@ -555,7 +575,7 @@ namespace Catalogo
 
         // TODO: BOTON ir Editar/Detalle Pedido en Grid (IMPORTANTE)
         protected void ibtEditarPedido_Click(object sender, ImageClickEventArgs e)
-        {
+         {
             try
             {
                 //cargamos variables
@@ -576,6 +596,10 @@ namespace Catalogo
                 dgvPedido_Articulos.DataBind();
 
                 //Cargamos pedido en form
+                int cantTotal = 0;
+                Pedido_articulos.ForEach(x => cantTotal += x.Cantidad);
+                PedidoList[0].CantidadTotal = cantTotal;
+
                 CargarPedidoEnForm(PedidoList[0]);
                 sectionAdminPedidoUnitario.Visible = true;
 
@@ -683,7 +707,6 @@ namespace Catalogo
                 }
 
                 // editamos pedido y buscamos lista Pedido_Articulos en Session
-                res = NegocioPedido.EditarPedido(pedido);
                 List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
                 
                 // Si lista_pedido_articulos es null, es porque no se agrego ningun articulo al pedido, cortamos modificacion
@@ -692,6 +715,15 @@ namespace Catalogo
                     HelperUsuario.MensajePopUp(this, "No hay articulos en Pedido");
                     return;
                 }
+                //calculamos nuevo total
+                int resTotal = listaPedido_Articulo.Sum(x => x.Cantidad);
+                if(resTotal != pedido.Cantidad)
+                {
+                    HelperUsuario.MensajePopUp(this, "Cantidades distintas, verificar");
+                }
+
+                // Editamos pedido en DB (IMPORTANTE)
+                res = NegocioPedido.EditarPedido(pedido);
 
                 // Eliminamos Pedidos_Articulos en DB anterior para piasar los anteriores, no funciona bien sino
                 for (int i = 0; i < listaPedido_Articulo.Count; i++)
@@ -706,7 +738,7 @@ namespace Catalogo
                 if(res >= 1)
                 {
                     HelperUsuario.MensajePopUp(this, "Pedido editado con exito");
-                    dgvAdminPedido.DataSource = new NegocioPedido().ListarPedidos(idMatch, "IdPedido");
+                    dgvAdminPedido.DataSource = new NegocioPedido().ListarPedidos(pedido.IdPedido, "IdPedido");
                     dgvAdminPedido.DataBind();
                 }
                 else if(res == 0)
@@ -728,18 +760,21 @@ namespace Catalogo
                 int idArticulo = int.Parse(((ImageButton)sender).CommandArgument);
                 List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
                 decimal nuevoTotal = 0;
+                int nuevaCantidad = 0;
                 
                 //calculamos el nuevo total y acumulamos items
                 listaPedido_Articulo.Find(itm => itm.Id == idArticulo).Cantidad += 1;
                 foreach (CarritoItem item in listaPedido_Articulo)
                 {
                     nuevoTotal += item.Cantidad * item.precio;
+                    nuevaCantidad += item.Cantidad;
                 }
 
                 //rendereamos otra vez
                 txtTotalEditarPedido.Text = string.Format("{0:C2}", nuevoTotal);
                 txtNuevoTotal.Text = string.Format("{0:C2}", nuevoTotal);
                 txtNuevoTotal.Visible = true;
+                txtCantidadTotalEditarPedido.Text = nuevaCantidad.ToString();
                 dgvPedido_Articulos.DataSource = listaPedido_Articulo;
                 dgvPedido_Articulos.DataBind();
             }
@@ -757,19 +792,24 @@ namespace Catalogo
             int idArticulo = int.Parse(((ImageButton)sender).CommandArgument);
             List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
             decimal nuevoTotal = 0; 
+            int nuevaCantidad = 0;
 
             //calculamos nuevo total y restamos items
-            listaPedido_Articulo.Find(itm => itm.Id == idArticulo).Cantidad -= 1;
+            listaPedido_Articulo.Find(itm => itm.Id == idArticulo).Cantidad -= 1; //restamos aca el item
             if (listaPedido_Articulo.Find(itm => itm.Id == idArticulo).Cantidad == 0)
             {
                 listaPedido_Articulo.RemoveAll(itm => itm.Id == idArticulo);
             }
-            listaPedido_Articulo.ForEach(itm => nuevoTotal += (itm.Cantidad * itm.precio));
+            listaPedido_Articulo.ForEach(itm => { 
+                nuevoTotal += itm.Cantidad * itm.precio; 
+                nuevaCantidad += itm.Cantidad;
+            });
 
             //rendereamos otra vez
             txtNuevoTotal.Text = string.Format("{0:C2}", nuevoTotal);
             txtTotalEditarPedido.Text = string.Format("{0:C2}", nuevoTotal);
             txtNuevoTotal.Visible = true;
+            txtCantidadTotalEditarPedido.Text = nuevaCantidad.ToString();
             dgvPedido_Articulos.DataSource = listaPedido_Articulo;
             dgvPedido_Articulos.DataBind();
         }
@@ -779,19 +819,25 @@ namespace Catalogo
         {
             try
             {
+                //cargamos variables e instanciamos objetos
                 int idArticulo = int.Parse(((ImageButton)sender).CommandArgument);
                 decimal nuevoTotal = 0;
+                int nuevaCantidad = 0;
 
                 // Eliminamos el articulo de la lista Pedido_Articulo y calculamos el nuevo total
                 List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
                 listaPedido_Articulo.RemoveAll(itm => itm.Id == idArticulo);
-                listaPedido_Articulo.ForEach(itm => nuevoTotal += itm.Cantidad * itm.precio);
+                listaPedido_Articulo.ForEach(itm => {
+                    nuevoTotal += itm.Cantidad * itm.precio;
+                    nuevaCantidad += itm.Cantidad;
+                    });
                 if (nuevoTotal < 0) nuevoTotal = 0;
 
                 //rendereamos otra vez
                 txtNuevoTotal.Text = string.Format("{0:C2}", nuevoTotal);
                 txtNuevoTotal.Visible = true;
                 txtTotalEditarPedido.Text = string.Format("{0:C2}", nuevoTotal);
+                txtCantidadTotalEditarPedido.Text = nuevaCantidad.ToString();
                 dgvPedido_Articulos.DataSource = listaPedido_Articulo;
                 dgvPedido_Articulos.DataBind();
                 dgvPedido_Articulos.Visible = true;
@@ -810,9 +856,11 @@ namespace Catalogo
             int idPedido = -1; //ID CAMBIADO A -1
             if (Session["idPedidoEditar"] != null)
                 idPedido = (int)Session["idPedidoEditar"];
+
             int idArticulo = int.Parse(ddlAgregarArticuloPedido_Articulos.SelectedValue);
             List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
             decimal nuevoTotal = 0;
+            int nuevaCantidad = 0;
 
             //Si no hay obj en session, lo agregamos
             if(listaPedido_Articulo == null)
@@ -825,11 +873,15 @@ namespace Catalogo
             if (listaPedido_Articulo.Find(itm => itm.Id == idArticulo) != null)
             {
                 listaPedido_Articulo.Find(itm => itm.Id == idArticulo).Cantidad += 1;
-                listaPedido_Articulo.ForEach(itm => nuevoTotal += itm.Cantidad * itm.precio);
+                listaPedido_Articulo.ForEach(itm => { 
+                    nuevoTotal += itm.Cantidad * itm.precio;
+                    nuevaCantidad += itm.Cantidad;
+                });
 
                 txtNuevoTotal.Text = string.Format("{0:C2}", nuevoTotal);
                 txtNuevoTotal.Visible = true;
                 txtTotalEditarPedido.Text = string.Format("{0:C2}", nuevoTotal);
+                txtCantidadTotalEditarPedido.Text = nuevaCantidad.ToString();
                 dgvPedido_Articulos.DataSource = listaPedido_Articulo;
                 dgvPedido_Articulos.DataBind();
                 return;
@@ -1016,8 +1068,19 @@ namespace Catalogo
                 }
                 else
                 {
-                    // cargamos cantidad de articulos distintos(no la cantidad de cada uno)
-                    pedido.Cantidad = listaPedido_Articulo.Count;
+                    int resCant = 0;
+                    listaPedido_Articulo.ForEach(itm => resCant += itm.Cantidad);
+                    if (resCant == 0)
+                    {
+                        HelperUsuario.MensajePopUp(this, "No hay articulos en el pedido");
+                        return;
+                    }
+                    else
+                    {
+                        pedido.Cantidad = resCant;
+                        pedido.CantidadTotal = resCant;
+                    }
+
                 }
 
                 // Creamos el pedido

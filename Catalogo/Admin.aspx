@@ -558,6 +558,12 @@
                                                     <asp:TextBox CssClass="form-control" ID="txtEstadoEditarPedido" placeholder="Pendiente" runat="server" />
                                                 </div>
                                                 <div class="col-6 mt-3">
+                                                    <div class="col">
+                                                        <label for="txtCantidadTotalEditarPedido" class="form-label">Cantidad total</label>
+                                                        <asp:TextBox CssClass="form-control" ID="txtCantidadTotalEditarPedido" placeholder="Cantidad Total" runat="server" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 mt-3">
                                                     <label for="txtDirEditarPedido" class="form-label">Direccion de Entrega</label>
                                                     <asp:TextBox CssClass="form-control" ID="txtDirEditarPedido" placeholder="Dir de Entrega" runat="server" />
                                                 </div>

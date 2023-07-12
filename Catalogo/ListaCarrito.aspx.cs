@@ -218,7 +218,14 @@ namespace Catalogo
                     // Si dan los numeros:
                     if (resArticulos == pedido.totalItems.Count)
                     {
+                        //Enviamos mensaje de confirmacion, y mail de confirmacion del pedido
+
+                        EmailService emailService = new EmailService();
+                        Usuario user = Session["usuarioActual"] as Usuario;
+                        emailService.ArmarCorreo(user.Mail, "HardFish", newHtmlMsj(user));
+                        emailService.EnviarCorreo();
                         HelperUsuario.MensajePopUp(this, "Pedido Cargado Correctamente");
+                        
                         btnConfirmarPedido.Enabled = false;
                         datosDePago.Visible = true;
                     }
@@ -357,6 +364,18 @@ namespace Catalogo
                 datosDePago.Visible = false;
                 divCarritoVacio.Visible = true;
             }
+        }
+
+        private string newHtmlMsj(Usuario usuario)
+        {
+            string html = "<div> " +
+                "<h4>HardFish</h4> " +
+                "<p>Gracias por su compra, "+usuario.Nombre+"</p> " +
+                "<p>El pedido se encuentra en proceso de preparación</p> " +
+                "<p>En breve recibirá un mail con la confirmación del pedido</p> " +
+                "<p>Saludos</p> "+
+                "</div>";
+            return html;
         }
 
     }

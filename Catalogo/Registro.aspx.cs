@@ -73,7 +73,7 @@ namespace Catalogo
                             emailService.ArmarCorreo(usuario.Mail, "Bienvenido a HardFish", "Gracias por registrarte en HardFish Store, esperamos que disfrutes de nuestros productos. Saludos!");
                             emailService.EnviarCorreo();
                             Session["MensajeExito"] = "Usuario Registrado Exitosamente, debes iniciar sesión.";
-                            Response.Redirect("Default.aspx", true);
+                            Response.Redirect("Default.aspx", false);
 
                             // aca un response a Default.aspx o a ListaCarrito.aspx?text=ok&reg=ok. funciona correcteamente, pero es tan rapido que no muestra el cartel, intente poner un async await pero fallo por completo
                         }
