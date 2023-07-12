@@ -14,6 +14,7 @@ namespace Dominio
         public string Usuario { get; set; }
         public string NombreArt { get; set; } // no usar
         public int Cantidad { get; set; }
+        public int CantidadTotal { get; set; }
         public DateTime fecha { get; set; } //ver si este formato es util
         public string Fecha { get { return string.Format(" {0:dd/MM/yyyy}.", Fecha); } } // ver si anda correctamente
         public string Estado { get; set; }

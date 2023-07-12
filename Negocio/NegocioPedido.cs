@@ -71,7 +71,7 @@ namespace Negocio
             try
             {
                 datos.AbrirConexion();
-                datos.SetQuery($"SELECT IdPedido, IdUsuarios, IdArticulos, U.Nombre+' '+U.Apellido as 'Usuario', Cantidad, Fecha, Estado, DireccionEntrega, Descuento, PrecioTotal FROM PEDIDOS INNER JOIN USUARIOS U ON IdUsuarios = U.Id WHERE IdPedido = @id", "query");
+                datos.SetQuery("SELECT IdPedido, IdUsuarios, IdArticulos, U.Nombre+' '+U.Apellido as 'Usuario', Cantidad, Fecha, Estado, DireccionEntrega, Descuento, PrecioTotal FROM PEDIDOS INNER JOIN USUARIOS U ON IdUsuarios = U.Id WHERE IdPedido = @id", "query");
                 datos.SetParameters("@modo", modo);
                 datos.SetParameters("@id", id);
                 datos.ReadQuery();
@@ -456,11 +456,11 @@ namespace Negocio
 
                 pedido.IdUsuario = usuarioActual.Id;
                 pedido.Usuario = usuarioActual.Nombre + usuarioActual.Apellido;
-                pedido.Cantidad = lista.Count; // cantidad de articulos distintos, no de unidades totales
                 pedido.fecha = DateTime.Now;
                 pedido.Estado = "Pendiente";
                 pedido.DireccionEntrega = dirEntrega ?? usuarioActual.Direccion;
                 pedido.totalItems = new List<CarritoItem>(lista);
+                pedido.Cantidad = lista.Sum(itm => itm.Cantidad); // cantidad de articulos distintos, no de unidades totales
 
                 //Aca podriamos calcular nuevamente el total a partir de info en lista y llamar un metodo para calcular el total final si usamos descuento
                 pedido.Descuento = descuento > 0.00M? descuento : 0.00M;

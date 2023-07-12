@@ -556,6 +556,12 @@
                                                     <asp:TextBox CssClass="form-control" ID="txtEstadoEditarPedido" placeholder="Pendiente" runat="server" />
                                                 </div>
                                                 <div class="col-6 mt-3">
+                                                    <div class="col">
+                                                        <label for="txtCantidadTotalEditarPedido" class="form-label">Cantidad total</label>
+                                                        <asp:TextBox CssClass="form-control" ID="txtCantidadTotalEditarPedido" placeholder="Cantidad Total" runat="server" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 mt-3">
                                                     <label for="txtDirEditarPedido" class="form-label">Direccion de Entrega</label>
                                                     <asp:TextBox CssClass="form-control" ID="txtDirEditarPedido" placeholder="Dir de Entrega" runat="server" />
                                                 </div>
@@ -600,8 +606,7 @@
 
 
                         <%-- ################################ abm ARTICULOS ################################ --%>
-                        <%-- Lista Articulos --%>
-                        <!-- Mal el ID, cuidado -->
+                        <%-- Lista Articulos y Filtros --%>
                         <div class="row">
                             <%--FILTROS AUTOMÁTICOS--%>
                             <div id="FiltrosArticulos" class="col-3 p-5" runat="server" visible="false">
@@ -616,6 +621,7 @@
                                                 <asp:Repeater runat="server" ID="rptMarcas">
                                                     <ItemTemplate>
                                                         <li>
+                                                            <%-- MARCAS --%>
                                                             <asp:Button CssClass="btn" Text='<%#Eval("Descripcion") %>' runat="server" ID="btnFiltroMarca" OnClick="btnFiltroMarca_Click" CommandArgument='<%#Eval("Id") %>' />
                                                         </li>
                                                     </ItemTemplate>
@@ -634,6 +640,7 @@
                                                 <asp:Repeater runat="server" ID="rptCategorias">
                                                     <ItemTemplate>
                                                         <li>
+                                                            <%-- CATEGORIAS  --%>
                                                             <asp:Button CssClass="btn" Text='<%#Eval("Descripcion") %>' runat="server" ID="btnFiltroCate" OnClick="btnFiltroCate_Click" CommandArgument='<%#Eval("Id") %>' />
                                                         </li>
                                                     </ItemTemplate>
@@ -642,7 +649,7 @@
                                         </asp:UpdatePanel>
                                     </ul>
                                 </div>
-                                <div class="dropend mb-4">
+                                <div class="dropend">
                                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Ordenar
                                     </button>
@@ -650,14 +657,27 @@
                                         <asp:UpdatePanel runat="server">
                                             <ContentTemplate>
                                                 <li>
-                                                    <asp:Button CssClass="btn" Text="Menor precio" runat="server" ID="btnFiltroPrecioAsc" OnClick="btnFiltroPrecioAsc_Click" />
+                                                    <asp:Button CssClass="btn" Text="Mayor precio" runat="server" ID="btnFiltroPrecioAsc" OnClick="btnFiltroPrecioAsc_Click" />
                                                 </li>
                                                 <li>
-                                                    <asp:Button CssClass="btn" Text="Mayor precio" runat="server" ID="btnFiltroPrecioDesc" OnClick="btnFiltroPrecioDesc_Click" />
+                                                    <asp:Button CssClass="btn" Text="Menor precio" runat="server" ID="btnFiltroPrecioDesc" OnClick="btnFiltroPrecioDesc_Click" />
                                                 </li>
                                                 </ItemTemplate>
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
+                                    </ul>
+                                </div>
+                                <div class="dropend mb-4">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Estado    
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <asp:Button ID="btnFiltroEstadoAlta" CssClass="btn" Text="Alta" CommandArgument="Activo" OnClick="btnFiltroEstadoAlta_Click"  runat="server"/>
+                                        </li>
+                                        <li>
+                                            <asp:Button ID="btnFiltroEstadoBaja" CssClass="btn" Text="Baja" CommandArgument="Inactivo" OnClick="btnFiltroEstadoBaja_Click" runat="server"/>
+                                        </li>
                                     </ul>
                                 </div>
                                 <%--FIN FILTRO AUTOMÁTICO--%>
@@ -670,6 +690,8 @@
                                 <asp:Button CssClass="btn btn-info btn-sm mb-5" Text="Eliminar Filtros" runat="server" ID="btnBorrarFilros" OnClick="btnBorrarFilros_Click" />
                             </div>
                             <%--fin filtro manual--%>
+
+                            <%-- Lista Articulos --%>
                             <div class="col-8">
                                 <asp:UpdatePanel runat="server">
                                     <ContentTemplate>
@@ -706,31 +728,30 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Precio">
                                                     <ItemTemplate>
-                                                        <asp:Label runat="server" Text='<%# Eval("Precio") %>' CssClass="mt-3"></asp:Label>
+                                                        <asp:Label runat="server" Text='<%# string.Format("{0:C2}", Eval("precio")) %>' CssClass="mt-3"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:BoundField HeaderText="Estado" DataField="EstadoStr" />
                                                 <asp:TemplateField HeaderText="Acción" ItemStyle-CssClass="m-3">
                                                     <ItemTemplate>
-                                                         <asp:DropDownList ID="ddlAccionArticulos" CssClass="form-select ps-3 pe-3 m-4" runat="server" AutoPostBack="false">
+                                                         <%--<asp:DropDownList ID="ddlAccionArticulos" CssClass="form-select ps-3 pe-3 m-4" runat="server" AutoPostBack="false">
                                                             <asp:ListItem Text="Acción" Value="0"></asp:ListItem>
                                                             <asp:ListItem Text="Alta" Value="1"></asp:ListItem>
                                                             <asp:ListItem Text="Baja" Value="2"></asp:ListItem>
                                                             <asp:ListItem Text="Modificar" Value="3"></asp:ListItem>
-                                                         </asp:DropDownList>
-                                                        <%--<asp:Button ID="btnDarAltaArticuloLista" CssClass="btn btn-outline-success mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="alta_btn" OnClick="btnDarAltaArticuloLista_Click" />
+                                                         </asp:DropDownList>--%>
+                                                        <asp:Button Text="ALTA" ID="btnDarAltaArticuloLista" CssClass="btn btn-outline-success mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="alta_btn" OnClick="btnDarAltaArticuloLista_Click" />
                                                         <asp:Button Text="BAJA" ID="btnDarBajaArticuloLista" CssClass="btn btn-outline-danger mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="baja_btn" OnClick="btnDarBajaArticuloLista_Click" />
-                                                        <asp:Button Text="EDITAR" ID="btnEditarArticuloLista" CssClass="btn btn-outline-secondary mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="editar_btn" OnClick="btnEditarArticuloLista_Click" />--%>
+                                                        <asp:Button Text="EDITAR" ID="btnEditarArticuloLista" CssClass="btn btn-outline-secondary mt-3" runat="server" CommandArgument='<%#Eval("Id") %>' CommandName="editar_btn" OnClick="btnEditarArticuloLista_Click" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
                                         </asp:GridView>
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
-
                             </div>
                         </div>
-                        <%-- fin lista Articulos --%>
+                        <%-- fin lista Articulos y Filtros --%>
 
                         <%-- Lista Articulo (unitario) --%>
                         <asp:GridView ID="dgvAdminArtUnitario" runat="server" CssClass="table table-striped mt-5" AutoGenerateColumns="False"

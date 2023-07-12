@@ -24,6 +24,15 @@ namespace Helper
             ScriptManager.RegisterStartupScript(page, page.GetType(), "alertMenssage", $"alert('{mensaje}');", true);
         }
 
+        static public void MensajePopUp(MasterPage master, string mensaje)
+        {
+            ScriptManager.RegisterStartupScript(master, master.GetType(), "alertMenssage", $"alert('{mensaje}');", true);
+        }
+
+        static public void MensajePopUp(MasterPage master, string mensaje, string url)
+        {
+            ScriptManager.RegisterStartupScript(master, master.GetType(), "alertMenssage", $"alert('{mensaje}'); window.location.href = '{url}';", true);
+        }
         /// <summary>
         /// Verifica si el usuario esta logeado
         /// </summary>
