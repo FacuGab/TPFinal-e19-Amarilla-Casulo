@@ -44,6 +44,10 @@ namespace Catalogo
             {
                 if (!IsPostBack)
                 {
+
+                    string script = "document.getElementById('btnAgregarArtAcordion').onclick(function () {       localStorage.setItem('collapse_One', $(this).attr('collapseOne'));        console.log('collapse_One');    });    // Obtener el id del elemento colapsable    var collapseItem = localStorage.getItem('collapse_One');    if (collapseItem) {       // Abrir el elemento colapsable        $(collapseItem).collapse('show')    }";
+                    ClientScript.RegisterStartupScript(GetType(), "saludo", script, true);
+
                     //Damos mensaje si es que hay alguno
                     mensajes();
 
@@ -95,6 +99,7 @@ namespace Catalogo
                         }
                     }
                 }
+                
             }
             catch (Exception ex)
             {
@@ -115,25 +120,7 @@ namespace Catalogo
                 Session.Remove("MensajeExito");
             }
         }
-        private  void mensajes()
-        {
-            try
-            {
-                if (Session["MensajeExito"] != null)
-                {
-                    string mensajeExito = Session["MensajeExito"].ToString();
-                    // Muestra el mensaje de éxito
-                    HelperUsuario.MensajePopUp(this, mensajeExito);
-                    // Limpia la variable de sesión para evitar mostrar el mensaje en futuras visitas a la página
-                    Session.Remove("MensajeExito");
-                }
-            }
-            catch (Exception ex)
-            {
-                Session.Add("error", ex);
-                Response.Redirect("Error.aspx", false);
-            }
-        }
+        
 
         //############################## METODOS ##############################
         // METODOS USUARIO
@@ -197,6 +184,7 @@ namespace Catalogo
                 NegocioArticulo = new NegocioArticulo();
                 Session.Add("listaPrincipal", NegocioArticulo.ListarArticulos() ); //guardamos/pisamos lista principal para su uso en filtro
 
+                lblAdministracionArticulos.Visible = true;
                 articuloList = NegocioArticulo.ListarArticulos();
                 dgvAdmin.DataSource = articuloList;
                 dgvAdmin.DataBind();
@@ -466,7 +454,8 @@ namespace Catalogo
             dgvAdminPedidos.DataBind();
             dgvAdminPedidos.Visible = true;
             dgvAdminUsuario.Visible = false;
-            
+            lblAdministracionPedidos.Visible = true;
+
         }
 
         // TODO: Cargar Pedidos en Admin con Filtro
@@ -477,6 +466,7 @@ namespace Catalogo
             dgvAdminPedidos.DataSource = PedidoList;
             dgvAdminPedidos.DataBind();
             dgvAdminPedidos.Visible = true;
+            lblAdministracionPedidos.Visible = true;
         }
 
         // TODO: Cargar Pedido en form de actualizacion
@@ -528,6 +518,25 @@ namespace Catalogo
             }
         }
 
+        private void mensajes()
+        {
+            try
+            {
+                if (Session["MensajeExito"] != null)
+                {
+                    string mensajeExito = Session["MensajeExito"].ToString();
+                    // Muestra el mensaje de éxito
+                    HelperUsuario.MensajePopUp(this, mensajeExito);
+                    // Limpia la variable de sesión para evitar mostrar el mensaje en futuras visitas a la página
+                    Session.Remove("MensajeExito");
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
 
         //############################## EVENTOS ##############################
         // Eventos de la pagina:
@@ -1341,6 +1350,7 @@ namespace Catalogo
                 dgvAdmin.DataBind();
                 dgvAdmin.Visible = true;
                 dgvAdminArtUnitario.Visible = false;
+                FiltrosArticulos.Visible = true;
             }
         }
 
@@ -1401,6 +1411,7 @@ namespace Catalogo
                 SectionCrearArt.Visible = true;
                 tituloNuevoArticulo.Visible = false;
                 tituloEditarArticulo.Visible = true;
+                FiltrosArticulos.Visible = false;
                 btnAgregar.Text = "Guardar Cambios";
             }
             catch (Exception ex)

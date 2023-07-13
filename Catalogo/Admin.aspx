@@ -25,12 +25,12 @@
                                 <li class="w-100 ">
                                     <asp:LinkButton Text="Todos los Pedidos" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" CommandName="btnPedidosTodos" OnClick="btnPedidosMenu_Click" runat="server" />
                                 </li>
-                                <li>
+<%--                                <li>
                                     <asp:LinkButton ID="btnPedidosPendientes" Text="Pedidos Pendientes" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" CommandName="btnPedidosPendientes" OnClick="btnPedidosMenu_Click" runat="server"/>
                                 </li>
                                 <li>
                                     <asp:LinkButton ID="btnPedidosCancelados" Text="Pedidos Cancelados" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" CommandName="btnPedidosCancelados" OnClick="btnPedidosMenu_Click" runat="server"/>
-                                </li>
+                                </li>--%>
                                 <li>
                                     <asp:Button ID="btnCrearNuevoPedidoMenu" Text="Crear Nuevo Pedido" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" OnClick="btnCrearNuevoPedidoMenu_Click" runat="server" />
                                 </li>
@@ -241,7 +241,85 @@
 
                         <!-- ################################ abm PEDIDOS ################################ -->
                         <%-- Lista Pedidos Todos --%>
-                        <asp:Panel ID="sectionDgvAdminPedidos" runat="server">  
+                        <asp:Panel ID="sectionDgvAdminPedidos" runat="server">
+                            <h1 class="text-light text-center bg-dark border border-light rounded-2 p-2" style="margin-top: 100px;" id="lblAdministracionPedidos" visible="false" runat="server"><strong>Administración de Pedidos</strong></h1>
+                            
+                            <%-- filtros --%>
+                            <div class="row d-flex justify-content-center align-items-center bg-warning pb-2 pt-1"  id="filtrosPedidos" runat="server">
+                                <div class="col-2">
+                                    <h2>Filtros:</h2>
+                                </div>
+                                <div class="col-2">
+                                    <div class="dropend">
+                                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Ordenar
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <asp:UpdatePanel runat="server">
+                                                    <ContentTemplate>
+                                                        <li>
+                                                            <asp:Button CssClass="btn" Text="Mayor precio" runat="server" />
+                                                        </li>
+                                                        <li>
+                                                            <asp:Button CssClass="btn" Text="Menor precio" runat="server" />
+                                                        </li>
+                                                        </ItemTemplate>
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
+                                            </ul>
+                                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Estado
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <asp:UpdatePanel runat="server">
+                                                    <ContentTemplate>
+                                                        <li>
+                                                            <asp:Button CssClass="btn" Text="Pendiente" runat="server" />
+                                                        </li>
+                                                        <li>
+                                                            <asp:Button CssClass="btn" Text="Terminado" runat="server" />
+                                                        </li>
+                                                        <li>
+                                                            <asp:Button CssClass="btn" Text="Cancelado" runat="server" />
+                                                        </li>
+                                                        </ItemTemplate>
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
+                                            </ul>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    <label for="txtFiltroIdUser_Pedido" class="form-label">Id Usuario</label>
+                                    <asp:TextBox ID="txtFiltroIdUser_Pedido" TextMode="Number" CssClass="form-control" runat="server"/>
+                                </div>
+                                <div class="col-1">
+                                    <label for="txtFiltroIdPedido_Pedido" class="form-label">Id Pedido</label>
+                                    <asp:TextBox ID="txtFiltroIdPedido_Pedido" Text="Id Pedido" TextMode="Number" CssClass="form-control" runat="server" />
+                                </div>
+                                <div class="col-1">
+                                    <label for="txtFiltroNombreUsuario_Pedido" class="form-label">Usuario</label>
+                                    <asp:TextBox ID="txtFiltroNombreUsuario_Pedido" Text="Nombre" CssClass="form-control" runat="server" />
+                                </div>
+                                <div class="col-1">
+                                    <label for="txtFiltro"></label>
+                                </div>
+                                <div class="col-2">
+                                    <div class="row">
+                                        <div class="col">
+                                            <asp:Button ID="btnFiltrarPedidos" Text="Filtrar" CssClass="btn btn-dark" runat="server" />
+                                        </div>
+                                        <div class="col">
+                                            <asp:Button ID="btnLimpiarFiltrosPedidos" Text="Limpiar Filtros" CssClass="btn btn-dark" runat="server" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <%--<div class="col-2">
+                                </div>
+                                <div class="col-2">
+                                </div>--%>
+                            </div>
+                            <%-- fin filtros --%>
+
                             <asp:GridView ID="dgvAdminPedidos" runat="server" CssClass="table table-striped table-bordered mt-5" AutoGenerateColumns="False">
                                 <Columns>
                                 <asp:TemplateField HeaderText="ID Pedido">
@@ -368,12 +446,12 @@
 
                             <%-- botones y accordion items --%>
                             <div class="col-10 mt-5">
-                                <%-- nuevo test Acordion --%>
+                                <%-- Nuevo Acordion --%>
                                 <div class="accordion mt-5" id="accordionPedidoArticulos" runat="server" visible="false">
                                    <!-- Item -->
                                    <div class="accordion-item "> 
                                        <h2 class="accordion-header">
-                                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                           <button id="btnAgregarArtAcordion" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                                <p class="fw-bold">➕ Agregar nuevo Articulo</p>
                                            </button>
                                        </h2>
@@ -459,7 +537,7 @@
                                      </ContentTemplate>
                                     </asp:UpdatePanel>
                                 </div>
-                                <%-- fin nuevo test Acordion --%>
+                                <%-- fin Nuevo Acordion --%>
                             </div>
                         </asp:Panel>
                         <%-- fin Lista Pedido Unitario --%>
@@ -608,6 +686,7 @@
                         <%-- ################################ abm ARTICULOS ################################ --%>
                         <%-- Lista Articulos y Filtros --%>
                         <div class="row">
+                            <h1 class="text-light text-center bg-dark border border-light rounded-2 p-2" style="margin-top: 100px;" id="lblAdministracionArticulos" visible="false" runat="server"><strong>Administración de Articulos</strong></h1>
                             <%--FILTROS AUTOMÁTICOS--%>
                             <div id="FiltrosArticulos" class="col-3 p-5" runat="server" visible="false">
                                 <h5>Filtro automático</h5>

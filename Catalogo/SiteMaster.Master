@@ -41,7 +41,7 @@
                             <a class="nav-link fs-5 fw-bold" aria-current="page" href="Productos.aspx"><i>Productos</i></a>
                         </li>
                         <li class="nav-item me-2 ">
-                            <a type="button" class="btn  fs-5 position-relative" href="Admin.aspx">👨‍💻</a>
+                            <a type="button" class="btn fs-5 position-relative" id="btnIrAdmin" href="Admin.aspx" runat="server" visible="false">👨‍💻</a> <!-- ir a admin -->
                         </li>
                         <li class="nav-item me-2 ">
                             <button type="button" class="btn fs-5" data-bs-toggle="modal" data-bs-target="#modalBusqueda"><i class="bi bi-search fw-bold"> Buscar</i></button>
@@ -225,6 +225,7 @@
         <script src="scripts/bootstrap.min.js"></script>
         <script src="fonts/Profile-Card-Slider---Slick-Slider-slick.js"></script>
         <script src="fonts/script.js"></script>
+        <script type="text/javascript" src="scripts/OpenCloseAcordion.js"></script>
     </form>
 </body>
 </html>

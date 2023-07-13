@@ -43,11 +43,17 @@ namespace Catalogo
                     Flag = false;
                 }
 
-                // usuario logueado
+                // usuario logueado y nivel
                 if (Session["usuarioActual"] != null)
                 {
                     btnLoggin.Visible = false;
                     btnDisloggin.Visible = true;
+
+                    var user = (Usuario)Session["usuarioActual"];
+                    if(user.Nivel.ToUpperInvariant() == "A")
+                        btnIrAdmin.Visible = true;
+                    else
+                        btnIrAdmin.Visible = false;
                 }
                 else
                 {
@@ -135,6 +141,13 @@ namespace Catalogo
                     {
                         Session.Add("usuarioActual", userControl);
                         Session.Add("mensajeEnMaster", $"Bienvenido {userControl.Nombre}!");
+
+                        if(userControl.Nivel.ToUpperInvariant() == "A")
+                        {
+                            Response.Redirect("Admin.aspx", false);
+                            return;
+                        }
+
                         Response.Redirect(paginaActual, false);
                         btnLoggin.Visible = false;
                         btnDisloggin.Visible = true;

@@ -15,24 +15,6 @@ namespace Catalogo
     {
 
         /// <summary>
-        /// btnPedidosPendientes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnPedidosPendientes;
-
-        /// <summary>
-        /// btnPedidosCancelados control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnPedidosCancelados;
-
-        /// <summary>
         /// btnCrearNuevoPedidoMenu control.
         /// </summary>
         /// <remarks>
@@ -220,6 +202,69 @@ namespace Catalogo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel sectionDgvAdminPedidos;
+
+        /// <summary>
+        /// lblAdministracionPedidos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblAdministracionPedidos;
+
+        /// <summary>
+        /// filtrosPedidos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl filtrosPedidos;
+
+        /// <summary>
+        /// txtFiltroIdUser_Pedido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroIdUser_Pedido;
+
+        /// <summary>
+        /// txtFiltroIdPedido_Pedido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroIdPedido_Pedido;
+
+        /// <summary>
+        /// txtFiltroNombreUsuario_Pedido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFiltroNombreUsuario_Pedido;
+
+        /// <summary>
+        /// btnFiltrarPedidos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltrarPedidos;
+
+        /// <summary>
+        /// btnLimpiarFiltrosPedidos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLimpiarFiltrosPedidos;
 
         /// <summary>
         /// dgvAdminPedidos control.
@@ -490,6 +535,15 @@ namespace Catalogo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnVolverListaPedidos;
+
+        /// <summary>
+        /// lblAdministracionArticulos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblAdministracionArticulos;
 
         /// <summary>
         /// FiltrosArticulos control.

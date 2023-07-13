@@ -2087,6 +2087,7 @@
     <Content Include="scripts\bootstrap.esm.min.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="scripts\OpenCloseAcordion.js" />
     <Content Include="scripts\validaciones.js" />
     <Content Include="test.aspx" />
     <Content Include="Web.config" />
