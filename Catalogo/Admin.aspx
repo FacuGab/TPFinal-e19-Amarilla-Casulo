@@ -924,25 +924,25 @@
                                                 </div>
                                                 <div class="col-6 mt-3">
                                                     <label for="txtEstadoEditarPedido" class="form-label">Estado <span class="text-danger">*</span></label>
-                                                    <asp:TextBox CssClass="form-control" ID="txtEstadoEditarPedido" placeholder="Pendiente" runat="server" />
+                                                    <asp:TextBox CssClass="form-control" ID="txtEstadoEditarPedido" placeholder="Pendiente" runat="server" required/>
                                                 </div>
                                                 <div class="col-6 mt-3">
                                                     <div class="col">
                                                         <label for="txtCantidadTotalEditarPedido" class="form-label">Cantidad total</label>
-                                                        <asp:TextBox CssClass="form-control" ID="txtCantidadTotalEditarPedido" placeholder="Cantidad Total" runat="server" />
+                                                        <asp:TextBox CssClass="form-control" ID="txtCantidadTotalEditarPedido" placeholder="Cantidad Total" runat="server" required/>
                                                     </div>
                                                 </div>
                                                 <div class="col-6 mt-3">
                                                     <label for="txtDirEditarPedido" class="form-label">Direccion de Entrega</label>
-                                                    <asp:TextBox CssClass="form-control" ID="txtDirEditarPedido" placeholder="Dir de Entrega" runat="server" />
+                                                    <asp:TextBox CssClass="form-control" ID="txtDirEditarPedido" placeholder="Dir de Entrega" runat="server" required/>
                                                 </div>
                                                 <div class="col-6 mt-3">
                                                     <label for="txtFechaEditarPedido" class="form-label">Fecha de Inicio</label>
-                                                    <asp:TextBox CssClass="form-control" TextMode="DateTime" ID="txtFechaEditarPedido" placeholder="Fecha de Inicio" runat="server" />
+                                                    <asp:TextBox CssClass="form-control" TextMode="DateTime" ID="txtFechaEditarPedido" placeholder="Fecha de Inicio" runat="server" required/>
                                                 </div>
                                                 <div class="col-6 mt-3">
-                                                    <label for="txtDescuentoEditarPedido" class="form-label">Descuento</label>
-                                                    <asp:TextBox CssClass="form-control" ID="txtDescuentoEditarPedido" placeholder="Descuento" runat="server" />
+                                                    <label for="txtDescuentoEditarPedido" class="form-label" >Descuento</label>
+                                                    <asp:TextBox CssClass="form-control" ID="txtDescuentoEditarPedido" placeholder="Descuento" runat="server" required/>
                                                 </div>
                                                 <div class="col-6 mt-3">
                                                     <label for="txtTotalEditarPedido" class="form-label">Total</label>
