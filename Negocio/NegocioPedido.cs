@@ -457,7 +457,7 @@ namespace Negocio
                 pedido.IdUsuario = usuarioActual.Id;
                 pedido.Usuario = usuarioActual.Nombre + usuarioActual.Apellido;
                 pedido.fecha = DateTime.Now;
-                pedido.Estado = "Pendiente";
+                pedido.Estado = "INICIADO";
                 pedido.DireccionEntrega = dirEntrega ?? usuarioActual.Direccion;
                 pedido.totalItems = new List<CarritoItem>(lista);
                 pedido.Cantidad = lista.Sum(itm => itm.Cantidad); // cantidad de articulos distintos, no de unidades totales
