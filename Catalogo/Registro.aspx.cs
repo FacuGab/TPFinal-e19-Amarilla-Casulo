@@ -2,6 +2,7 @@
 using Helper;
 using Negocio;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 
@@ -37,7 +38,18 @@ namespace Catalogo
                 //si es valido los imputs
                 if(Page.IsValid)
                 {
-                    if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApellido.Text) || string.IsNullOrEmpty(txtDni.Text) || string.IsNullOrEmpty(txtMail.Text) || string.IsNullOrEmpty(txtPassword.Text) || string.IsNullOrEmpty(txtDomicilio.Text))
+                    if (string.IsNullOrEmpty(txtNombre.Text) || 
+                        string.IsNullOrEmpty(txtApellido.Text) ||
+                        string.IsNullOrEmpty(txtDni.Text) || 
+                        string.IsNullOrEmpty(txtMail.Text) || 
+                        string.IsNullOrEmpty(txtPassword.Text) || 
+                        string.IsNullOrEmpty(txtDomicilio.Text) ||
+                        !txtDni.Text.All(char.IsDigit) && !txtDni.Text.All(char.IsNumber) ||
+                        !txtNombre.Text.All(char.IsLetter) ||
+                        !txtApellido.Text.All(char.IsLetter) ||
+                        !txtMail.Text.Contains("@") ||
+                        !txtMail.Text.Contains("."))
+                        
                     {
                         HelperUsuario.MensajePopUp(this, "Hay campos erróneos o vacíos");
                         return;
@@ -69,9 +81,16 @@ namespace Catalogo
                         if (res > 0)
                         {
                             HelperUsuario.MensajePopUp(this, "Usuario Registrado Exitosamente, debes iniciar sesión.");
-                            EmailService emailService = new EmailService(); // eviar mail de bienvenida
-                            emailService.ArmarCorreo(usuario.Mail, "Bienvenido a HardFish", "Gracias por registrarte en HardFish Store, esperamos que disfrutes de nuestros productos. Saludos!");
-                            emailService.EnviarCorreo();
+                            try
+                            {
+                                EmailService emailService = new EmailService(); // eviar mail de bienvenida
+                                emailService.ArmarCorreo(usuario.Mail, "Bienvenido a HardFish", "Gracias por registrarte en HardFish Store, esperamos que disfrutes de nuestros productos. Saludos!");
+                                emailService.EnviarCorreo();
+                            }
+                            catch (Exception)
+                            {
+                                HelperUsuario.MensajePopUp(this, "Error al enviar mail de registro");
+                            }
                             Session["MensajeExito"] = "Usuario Registrado Exitosamente, debes iniciar sesión.";
                             Response.Redirect("Default.aspx", false);
 
@@ -79,13 +98,14 @@ namespace Catalogo
                         }
                         else
                         {
-                            HelperUsuario.MensajePopUp(this, "No se pudo crear el usurio");
+                            HelperUsuario.MensajePopUp(this, "No se pudo crear el usuario");
                         }
                     }  
                 }
                 else
                 {
                     HelperUsuario.MensajePopUp(this, "Hubo error en una validación");
+                    return;
                 } 
             }
             catch (Exception ex)

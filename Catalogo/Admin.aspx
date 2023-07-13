@@ -179,7 +179,7 @@
                                                         </div>
                                                         <div class="mb-0 badge bg-light fs-6">
                                                             <asp:Label ID="Label3" runat="server" />
-                                                            <span class="text-muted">Respecto al mes pasado</span>
+                                                            <span class="text-muted">Historial</span>
                                                         </div>
                                                     </div>
                                                 </div>
