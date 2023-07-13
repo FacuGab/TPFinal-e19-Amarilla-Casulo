@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Web.DynamicData;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -87,6 +88,7 @@ namespace Catalogo
                                 lblAdministracionArticulos.Visible = true;
                                 lblAdministracionUsuarios.Visible = false;
                                 btnAgregar.Text = "Crear Articulo";
+                                btnEliminarArticulo.Visible = false;
                                 break;
                             case 8:
                                 cargarNuevaCategoria();
@@ -1424,7 +1426,7 @@ namespace Catalogo
                 dgvAdmin.Visible = true;
                 dgvAdminArtUnitario.Visible = false;
                 FiltrosArticulos.Visible = true;
-                lblAdministracionUsuarios.Visible = true;
+                lblAdministracionArticulos.Visible = true;
             }
         }
 
@@ -1518,7 +1520,15 @@ namespace Catalogo
         //TODO: Boton Eliminar Articulo
         protected void btnEliminarArticulo_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                int idMatch = int.Parse(tbIdArt.Text);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
         }
         #endregion//FIN LOGICA ARTÍCULOS
 
