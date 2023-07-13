@@ -661,7 +661,7 @@ namespace Negocio
             try
             {
                 datos.AbrirConexion();
-                datos.SetQuery("select count(*) from USUARIOS", "query");
+                datos.SetQuery("select count(*) from USUARIOS where Activo = 1 ", "query");
                 var result = datos.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
 
                 if (result != null && result != DBNull.Value)
@@ -685,7 +685,7 @@ namespace Negocio
             try
             {
                 datos.AbrirConexion();
-                datos.SetQuery("select count(*) from ARTICULOS;", "query");
+                datos.SetQuery("select count(*) from ARTICULOS where ESTADO = 1;", "query");
                 var result = datos.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
 
                 if (result != null && result != DBNull.Value)

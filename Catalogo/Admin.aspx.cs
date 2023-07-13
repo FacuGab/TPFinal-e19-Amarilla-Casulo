@@ -42,9 +42,6 @@ namespace Catalogo
             {
                 if (!IsPostBack)
                 {
-                    //Cargamos los datos de Resumen
-                    CargarListaPanelAdmin();
-
                     //Damos mensaje si es que hay alguno
                     mensajes();
 
@@ -98,6 +95,10 @@ namespace Catalogo
                                 cargarNuevaMarca();
                                 break;
                         }
+                    }
+                    else
+                    {
+                        CargarListaPanelAdmin();
                     }
                 }
                 
@@ -403,6 +404,7 @@ namespace Catalogo
         // TODO: Cargar Categorias en Admin
         private void CargarCategorias()
         {
+            divEstadisticas.Visible = false;
             dgvAdminCrearCate.Visible = true;
             NegocioCategoria = new NegocioCategoria();
             categoriaList = NegocioCategoria.ListarCategorias();
@@ -413,6 +415,7 @@ namespace Catalogo
         // TODO: Cargar Marcas en Admin
         private void CargarMarcas()
         {
+            divEstadisticas.Visible = false;
             NegocioMarca = new NegocioMarca();
             MarcaList = NegocioMarca.ListarMarcas();
             dgvAdminMarca.DataSource = MarcaList;
@@ -426,7 +429,7 @@ namespace Catalogo
         // TODO: Cargar Pedidos en Admin
         private void CargarPedidos()
         {
-
+            divEstadisticas.Visible = false;
             NegocioPedido = new NegocioPedido();
             PedidoList = NegocioPedido.ListarPedidos();
             dgvAdminPedidos.DataSource = PedidoList;
