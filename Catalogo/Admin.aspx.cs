@@ -6,11 +6,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using static System.Net.Mime.MediaTypeNames;
 
 
 namespace Catalogo
@@ -44,6 +42,10 @@ namespace Catalogo
             {
                 if (!IsPostBack)
                 {
+                    CargarListaPanelAdmin();
+                    
+                    //Label lblCantPedidos = (Label)divEstadisticas.FindControl("lblCantPedidos");
+                    //lblCantPedidos.Text = NegocioPedido.CantidadPedidos().ToString();
                     //Damos mensaje si es que hay alguno
                     mensajes();
 
@@ -558,6 +560,42 @@ namespace Catalogo
                 //NegocioArticulo.DarAltaBajaUsuario(idMatch, true);
                 //dgvAdmin.DataSource = NegocioArticulo.ListarArticulos();
                 //dgvAdmin.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //TODO: Cargar panel de pedidos solicitados del panel principal al entrar como admin
+        protected void CargarListaPanelAdmin()
+        {
+            try
+            {
+                NegocioPedido = new NegocioPedido();
+                rptListaPedidosPanel.DataSource = NegocioPedido.ListarPedidos();
+                rptListaPedidosPanel.DataBind();
+
+                // Cambiar el estilo del panel según el estado del pedido
+                foreach (RepeaterItem item in rptListaPedidosPanel.Items)
+                {
+                    Label lblEstadoPedidoPanel = (Label)item.FindControl("lblEstadoPedidoPanel");
+                    lblEstadoPedidoPanel.Text = lblEstadoPedidoPanel.Text.ToUpper();
+                    if (lblEstadoPedidoPanel.Text == "INICIADO")
+                    {
+                        lblEstadoPedidoPanel.CssClass = "badge bg-warning"; 
+                    }
+                    else if (lblEstadoPedidoPanel.Text == "TERMINADO")
+                    {
+                        lblEstadoPedidoPanel.CssClass = "badge bg-success"; 
+                    }
+                    else if (lblEstadoPedidoPanel.Text == "CANCELADO")
+                    {
+                        lblEstadoPedidoPanel.CssClass = "badge bg-danger"; 
+                    }
+                }
+                lblCantPedidos.Text = NegocioPedido.CantidadPedidos().ToString();
             }
             catch (Exception ex)
             {

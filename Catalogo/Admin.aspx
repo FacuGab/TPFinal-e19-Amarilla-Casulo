@@ -97,6 +97,232 @@
                 <asp:UpdatePanel runat="server">
                     <ContentTemplate>
 
+                        <%--Panel principal del administrador con estadisticas --%>
+                        <div class="container-fluid p-0" runat="server" id="divEstadisticas">
+
+                            <h1 class="h3 mb-3 mt-5"><strong>Estadísticas generales</strong></h1>
+
+                            <div class="row">
+                                <div class="col-xl-6 col-xxl-5 d-flex">
+                                    <div class="w-100">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="card col">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col mt-0">
+                                                                <h5 class="card-title">Pedidos realizados</h5>
+                                                            </div>
+
+                                                            <div class="col-auto">
+                                                                <div class="stat text-primary">
+                                                                    <i class="align-middle" data-feather="truck"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <asp:Label ID="lblCantPedidos" CssClass="fs-1" runat="server" />
+                                                        <div class="mb-0">
+                                                            <span class="text-danger"><i class="mdi mdi-arrow-bottom-right"></i>-3.65% </span>
+                                                            <span class="text-muted">El ultimo mes</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col mt-0">
+                                                                <h5 class="card-title">Pedidos entregados</h5>
+                                                            </div>
+
+                                                            <div class="col-auto">
+                                                                <div class="stat text-primary">
+                                                                    <i class="align-middle" data-feather="users"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h1 class="mt-1 mb-3">14.212</h1>
+                                                        <div class="mb-0">
+                                                            <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>5.25% </span>
+                                                            <span class="text-muted">Since last week</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col mt-0">
+                                                                <h5 class="card-title">Pedidos pendientes</h5>
+                                                            </div>
+
+                                                            <div class="col-auto">
+                                                                <div class="stat text-primary">
+                                                                    <i class="align-middle" data-feather="dollar-sign"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h1 class="mt-1 mb-3">$21.300</h1>
+                                                        <div class="mb-0">
+                                                            <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>6.65% </span>
+                                                            <span class="text-muted">Since last week</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col mt-0">
+                                                                <h5 class="card-title">Recaudación total</h5> <%--solo pedidos completados--%>
+                                                            </div>
+
+                                                            <div class="col-auto">
+                                                                <div class="stat text-primary">
+                                                                    <i class="align-middle" data-feather="shopping-cart"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h1 class="mt-1 mb-3">64</h1>
+                                                        <div class="mb-0">
+                                                            <span class="text-danger"><i class="mdi mdi-arrow-bottom-right"></i>-2.25% </span>
+                                                            <span class="text-muted">Since last week</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-xxl-5 d-flex">
+                                    <div class="w-100">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col mt-0">
+                                                                <h5 class="card-title">Recaudación promedio</h5>
+                                                            </div>
+
+                                                            <div class="col-auto">
+                                                                <div class="stat text-primary">
+                                                                    <i class="align-middle" data-feather="truck"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h1 class="mt-1 mb-3">2.382</h1>
+                                                        <div class="mb-0">
+                                                            <span class="text-danger"><i class="mdi mdi-arrow-bottom-right"></i>-3.65% </span>
+                                                            <span class="text-muted">Solo pedidos completados</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col mt-0">
+                                                                <h5 class="card-title">Usuarios registrados</h5>
+                                                            </div>
+
+                                                            <div class="col-auto">
+                                                                <div class="stat text-primary">
+                                                                    <i class="align-middle" data-feather="users"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h1 class="mt-1 mb-3">14.212</h1>
+                                                        <div class="mb-0">
+                                                            <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>5.25% </span>
+                                                            <span class="text-muted">Since last week</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col mt-0">
+                                                                <h5 class="card-title">Articulos registrados</h5>
+                                                            </div>
+
+                                                            <div class="col-auto">
+                                                                <div class="stat text-primary">
+                                                                    <i class="align-middle" data-feather="dollar-sign"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h1 class="mt-1 mb-3">$21.300</h1>
+                                                        <div class="mb-0">
+                                                            <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>6.65% </span>
+                                                            <span class="text-muted">Since last week</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col mt-0">
+                                                                <h5 class="card-title">Marcas</h5>
+                                                            </div>
+
+                                                            <div class="col-auto">
+                                                                <div class="stat text-primary">
+                                                                    <i class="align-middle" data-feather="shopping-cart"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h1 class="mt-1 mb-3">64</h1>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 d-flex mt-5">
+                                    <div class="card flex-fill">
+                                        <div class="card-header bg-warning text-center">
+                                            <h5 class="card-title mb-0 fs-3 fw-bold pb-2 pt-2">Pedidos Realizados</h5>
+                                        </div>
+                                        <table class="table table-hover border-warning my-0 text-center">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>ID Pedido</th>
+                                                    <th>ID Cliente</th>
+                                                    <th>Nombre</th>
+                                                    <th>Fecha de compra</th>
+                                                    <th>Domicilio de entrega</th>
+                                                    <th>Estado</th>
+                                                    <th>Precio Facturado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="rptListaPedidosPanel" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td class="d-none d-md-table-cell"><%# Eval("IdPedido") %></td>
+                                                            <td class="d-none d-md-table-cell"><%# Eval("IdUsuario") %></td>
+                                                            <td class="d-none d-xl-table-cell"><%# Eval("Usuario") %></td>
+                                                            <td class="d-none d-md-table-cell"><%# Eval("Fecha") %></td>
+                                                            <td class="d-none d-xl-table-cell"><%# Eval("DireccionEntrega") %></td>
+                                                            <td><asp:Label ID="lblEstadoPedidoPanel" Text='<%# Eval("Estado") %>' runat="server" /></td>
+                                                            <td class="d-none d-md-table-cell"><%# string.Format("{0:C2}", Eval("precioTotal")) %></td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        <%--FIN tabla panel principal con lista de pedidos--%>
+
+                        <%--FIN Panel principal del administrador con estadisticas y graficos--%>
+
                         <%-- ################################ abm USUARIOS ################################ --%>
                         <%-- Listar Usuarios --%>
                         <asp:GridView ID="dgvAdminUsuario" runat="server" CssClass="table table-striped mt-5 " AutoGenerateColumns="False">
@@ -951,6 +1177,8 @@
                             </div>
                         </div>
                         </div>
+
+
                         <%--fin registro categoria--%>
 
 
