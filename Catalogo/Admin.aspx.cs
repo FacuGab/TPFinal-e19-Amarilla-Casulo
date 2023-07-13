@@ -3,6 +3,7 @@ using Helper;
 using Negocio;
 using System;
 using System.Collections.Generic;
+using System.EnterpriseServices.CompensatingResourceManager;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -475,7 +476,7 @@ namespace Catalogo
         }
 
         // TODO: Cargar Pedido del Form en Objeto
-        private void CargarPedidoDelForm(Pedido pedido)
+        private void CargarPedidoDelForm(Pedido pedido, bool check = true)
         {
             if (pedido == null) return;
             pedido.IdPedido = !string.IsNullOrWhiteSpace(txtIdPedidoEditar.Text)? int.Parse(txtIdPedidoEditar.Text) : -1;
@@ -489,6 +490,7 @@ namespace Catalogo
             
             if(!string.IsNullOrWhiteSpace(txtTotalEditarPedido.Text))
                 pedido.precioTotal = decimal.Parse(txtTotalEditarPedido.Text, NumberStyles.Currency);
+            txtIdUsuarioEditarPedido.Enabled = false;
         }
 
         // TODO: Cargar Pedido_Articulos en Admin
@@ -672,6 +674,7 @@ namespace Catalogo
                 ddlAgregarArticuloPedido_Articulos.Visible = true;
                 btnAgregarArticuloPedido_ArticulosFinal.Visible = true;
                 lblArticulosXidPedido_Articulos.Visible = true;
+                txtTotalEditarPedido.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -737,6 +740,62 @@ namespace Catalogo
                 // Cargamos variables e instanciamos objetos
                 NegocioPedido = new NegocioPedido();
                 Pedido pedido = new Pedido();
+                //validamos
+                if (string.IsNullOrWhiteSpace(txtIdPedidoEditar.Text))
+                {
+                    lblErrorPedidos.Visible = true;
+                    lblErrorPedidosText.Text = "Id pedido no puede estar vacio";
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(txtIdUsuarioEditarPedido.Text))
+                {
+                    lblErrorPedidos.Visible = true;
+                    lblErrorPedidosText.Text = "Id usuario no puede estar vacio";
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(txtNombreUsuarioEditarPedido.Text))
+                {
+                    lblErrorPedidos.Visible = true;
+                    lblErrorPedidosText.Text = "Nombre usuario no puede estar vacio";
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(txtEstadoEditarPedido.Text))
+                {
+                    lblErrorPedidos.Visible = true;
+                    lblErrorPedidosText.Text = "Estado no puede estar vacio";
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(txtDirEditarPedido.Text))
+                {
+                    lblErrorPedidos.Visible = true;
+                    lblErrorPedidosText.Text = "Direccion no puede estar vacio";
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(txtFechaEditarPedido.Text))
+                {
+                    lblErrorPedidos.Visible = true;
+                    lblErrorPedidosText.Text = "Fecha no puede estar vacio";
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(txtDescuentoEditarPedido.Text) || !txtDescuentoEditarPedido.Text.All(c => char.IsDigit(c) || char.IsNumber(c)))
+                {
+                    lblErrorPedidos.Visible = true;
+                    lblErrorPedidosText.Text = "Descuento no puede estar vacio y tiene que ser un numero";
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(txtCantidadTotalEditarPedido.Text) || !txtCantidadTotalEditarPedido.Text.All(c => char.IsDigit(c) || char.IsNumber(c)))
+                {
+                    lblErrorPedidos.Visible = true;
+                    lblErrorPedidosText.Text = "Cantidad no puede estar vacio y tiene que ser un numero";
+                    return;
+                }
+
+                //if (string.IsNullOrWhiteSpace(txtTotalEditarPedido.Text) || !txtTotalEditarPedido.Text.All(c => char.IsDigit(c) || char.IsNumber(c)))
+                //{
+                //    lblErrorPedidos.Visible = true;
+                //    lblErrorPedidosText.Text = "Total no puede estar vacio y tiene que ser un numero";
+                //    return;
+                //}
                 CargarPedidoDelForm(pedido);
                 int res = 0;
 

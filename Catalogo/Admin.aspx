@@ -967,6 +967,13 @@
                                                     <div class="d-flex justify-content-center">
                                                         <asp:LinkButton Text="Volver a Lista Pedidos" CssClass="link-body-emphasis" ID="btnVolverListaPedidos" CommandName="btnVolverListaPedidos" OnClick="btnVolverListaPedidos_Click" runat="server" />
                                                     </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <p id="lblErrorPedidos" visible="false" runat="server">
+                                                            <span class="badge text-bg-danger text-light me-2">
+                                                                <asp:Label ID="lblErrorPedidosText" runat="server" />
+                                                            </span>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
