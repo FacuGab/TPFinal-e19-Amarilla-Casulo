@@ -87,7 +87,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="d-flex justify-content-center ">
-                                                        <asp:Button Text="Registrarse" runat="server" AutoPostback="true" ID="btnRegistroUsu" OnClick="btnRegistroUsu_Click"  CssClass="btn btn-warning btn-lg flex-fill" ValidationGroup="GuardarUsuario"/>
+                                                        <asp:Button Text="Registrarse" runat="server" ID="btnRegistroUsu" OnClick="btnRegistroUsu_Click"  CssClass="btn btn-warning btn-lg flex-fill" ValidationGroup="GuardarUsuario"/>
                                                     </div>
                                                     <%--validaciones--%>
                                                     <asp:UpdatePanel runat="server">

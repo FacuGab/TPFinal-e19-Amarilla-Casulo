@@ -17,16 +17,17 @@ namespace Catalogo
         {
             if (!IsPostBack)
             {
-                if(Request.QueryString["text"] == "registroCompra")
-                {
-                    btnRegistroUsu.Visible = false;
-                    //btnRegistroParaCompra.Visible= true;
-                }
-                else
-                {
-                    btnRegistroUsu.Visible = true;
-                    //btnRegistroParaCompra.Visible = false;
-                }
+                btnRegistroUsu.Enabled = true;
+                //if(Request.QueryString["text"] == "registroCompra")
+                //{
+                //    btnRegistroUsu.Visible = false;
+                //    //btnRegistroParaCompra.Visible= true;
+                //}
+                //else
+                //{
+                //    btnRegistroUsu.Visible = true;
+                //    //btnRegistroParaCompra.Visible = false;
+                //}
             }
         }
 
