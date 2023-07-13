@@ -89,9 +89,11 @@ namespace Catalogo
                                 btnAgregar.Text = "Crear Articulo";
                                 break;
                             case 8:
+                                divEstadisticas.Visible = false;
                                 cargarNuevaCategoria();
                                 break;
                             case 9:
+                                divEstadisticas.Visible = false;
                                 cargarNuevaMarca();
                                 break;
                         }
@@ -1213,7 +1215,7 @@ namespace Catalogo
                     int res = 0;
                     if (btnGuardarUsuario.Text == "Agregar Usuario")
                     {
-                        //btnGuardarUsuario.Text = "Guardar Cambios";
+                        btnGuardarUsuario.Text = "Guardar Cambios";
                         //si usuario ya existe, cortamos la carga, sino cargamos
                         if (!HelperUsuario.ExistUser(usuario))
                         {
