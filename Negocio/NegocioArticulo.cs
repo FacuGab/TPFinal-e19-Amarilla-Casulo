@@ -198,6 +198,7 @@ namespace Negocio
             {
                 datos.AbrirConexion();
                 datos.SetQuery("UPDATE ARTICULOS SET Nombre = @nombre, Descripcion = @descripcion, IdMarca = @idMarca, IdCategoria = @idCategoria, Precio = @precio, Estado = @estado, Stock = @stock, ImagenUrl = @imagenUrl WHERE Id = @id", "query");
+                datos.SetParameters("@id", articulo.Id);
                 datos.SetParameters("@nombre", articulo.Nombre);
                 datos.SetParameters("@descripcion", articulo.Descripcion);
                 datos.SetParameters("@idMarca", articulo.Marca.Id);
@@ -206,7 +207,6 @@ namespace Negocio
                 datos.SetParameters("@estado", articulo.Estado);
                 datos.SetParameters("@stock", articulo.Stock);
                 datos.SetParameters("@imagenUrl", articulo.ImagenUrl);
-                datos.SetParameters("@id", articulo.Id);
                 return datos.ExecuteQuery();
             }
             catch (Exception ex)

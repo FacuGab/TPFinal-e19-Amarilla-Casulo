@@ -25,12 +25,6 @@
                                 <li class="w-100 ">
                                     <asp:LinkButton Text="Todos los Pedidos" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" CommandName="btnPedidosTodos" OnClick="btnPedidosMenu_Click" runat="server" />
                                 </li>
-<%--                                <li>
-                                    <asp:LinkButton ID="btnPedidosPendientes" Text="Pedidos Pendientes" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" CommandName="btnPedidosPendientes" OnClick="btnPedidosMenu_Click" runat="server"/>
-                                </li>
-                                <li>
-                                    <asp:LinkButton ID="btnPedidosCancelados" Text="Pedidos Cancelados" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" CommandName="btnPedidosCancelados" OnClick="btnPedidosMenu_Click" runat="server"/>
-                                </li>--%>
                                 <li>
                                     <asp:Button ID="btnCrearNuevoPedidoMenu" Text="Crear Nuevo Pedido" CssClass="nav-link px-0 d-none d-sm-inline text-light ms-4" OnClick="btnCrearNuevoPedidoMenu_Click" runat="server" />
                                 </li>
@@ -97,8 +91,305 @@
                 <asp:UpdatePanel runat="server">
                     <ContentTemplate>
 
+                        <%-- Panel principal del administrador con ESTADISTICAS y graficos --%>
+                        <div class="container-fluid p-0" runat="server" id="divEstadisticas">
+                            <h1 class="h3 mb-3 mt-5"><strong>Estadísticas generales</strong></h1>
+                            <%-- Cards Estadisticas --%>
+                            <div class="row">
+                                    <div class="col-xl-6 col-xxl-5 d-flex">
+                                        <div class="w-100">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="card col">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col mt-0">
+                                                                    <h5 class="card-title">Pedidos realizados</h5>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="stat text-primary">
+                                                                        <i class="align-middle" data-feather="truck"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <asp:Label ID="lblCantPedidos" CssClass="fs-1" runat="server" />
+                                                            <div class="mb-0">
+                                                                <span class="text-danger"><i class="mdi mdi-arrow-bottom-right"></i>-3.65% </span>
+                                                                <span class="text-muted">El ultimo mes</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col mt-0">
+                                                                    <h5 class="card-title">Pedidos entregados</h5>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="stat text-primary">
+                                                                        <i class="align-middle" data-feather="users"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <h1 class="mt-1 mb-3">14.212</h1>
+                                                            <div class="mb-0">
+                                                                <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>5.25% </span>
+                                                                <span class="text-muted">Since last week</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col mt-0">
+                                                                    <h5 class="card-title">Pedidos pendientes</h5>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="stat text-primary">
+                                                                        <i class="align-middle" data-feather="dollar-sign"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <h1 class="mt-1 mb-3">$21.300</h1>
+                                                            <div class="mb-0">
+                                                                <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>6.65% </span>
+                                                                <span class="text-muted">Since last week</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col mt-0">
+                                                                    <h5 class="card-title">Recaudación total</h5> <%--solo pedidos completados--%>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="stat text-primary">
+                                                                        <i class="align-middle" data-feather="shopping-cart"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <h1 class="mt-1 mb-3">64</h1>
+                                                            <div class="mb-0">
+                                                                <span class="text-danger"><i class="mdi mdi-arrow-bottom-right"></i>-2.25% </span>
+                                                                <span class="text-muted">Since last week</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-xxl-5 d-flex">
+                                        <div class="w-100">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col mt-0">
+                                                                    <h5 class="card-title">Recaudación promedio</h5>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="stat text-primary">
+                                                                        <i class="align-middle" data-feather="truck"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <h1 class="mt-1 mb-3">2.382</h1>
+                                                            <div class="mb-0">
+                                                                <span class="text-danger"><i class="mdi mdi-arrow-bottom-right"></i>-3.65% </span>
+                                                                <span class="text-muted">Solo pedidos completados</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col mt-0">
+                                                                    <h5 class="card-title">Usuarios registrados</h5>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="stat text-primary">
+                                                                        <i class="align-middle" data-feather="users"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <h1 class="mt-1 mb-3">14.212</h1>
+                                                            <div class="mb-0">
+                                                                <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>5.25% </span>
+                                                                <span class="text-muted">Since last week</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col mt-0">
+                                                                    <h5 class="card-title">Articulos registrados</h5>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="stat text-primary">
+                                                                        <i class="align-middle" data-feather="dollar-sign"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <h1 class="mt-1 mb-3">$21.300</h1>
+                                                            <div class="mb-0">
+                                                                <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>6.65% </span>
+                                                                <span class="text-muted">Since last week</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col mt-0">
+                                                                    <h5 class="card-title">Marcas</h5>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="stat text-primary">
+                                                                        <i class="align-middle" data-feather="shopping-cart"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <h1 class="mt-1 mb-3">64</h1>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <%-- Fin Cards Estadisticas --%>
+                            <%-- Tabla panel principal con lista de pedidos --%>
+                            <div class="row">
+                                <div class="col-12 d-flex mt-5">
+                                    <div class="card flex-fill">
+                                        <div class="card-header bg-warning text-center">
+                                            <h5 class="card-title mb-0 fs-3 fw-bold pb-2 pt-2">Pedidos Realizados</h5>
+                                        </div>
+                                        <table class="table table-hover border-warning my-0 text-center">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>ID Pedido</th>
+                                                    <th>ID Cliente</th>
+                                                    <th>Nombre</th>
+                                                    <th>Fecha de compra</th>
+                                                    <th>Domicilio de entrega</th>
+                                                    <th>Estado</th>
+                                                    <th>Precio Facturado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <asp:Repeater ID="rptListaPedidosPanel" runat="server">
+                                                    <ItemTemplate>
+                                                        <tr>
+                                                            <td class="d-none d-md-table-cell"><%# Eval("IdPedido") %></td>
+                                                            <td class="d-none d-md-table-cell"><%# Eval("IdUsuario") %></td>
+                                                            <td class="d-none d-xl-table-cell"><%# Eval("Usuario") %></td>
+                                                            <td class="d-none d-md-table-cell"><%# Eval("Fecha") %></td>
+                                                            <td class="d-none d-xl-table-cell"><%# Eval("DireccionEntrega") %></td>
+                                                            <td><asp:Label ID="lblEstadoPedidoPanel" Text='<%# Eval("Estado") %>' runat="server" /></td>
+                                                            <td class="d-none d-md-table-cell"><%# string.Format("{0:C2}", Eval("precioTotal")) %></td>
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                </asp:Repeater>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <%-- FIN tabla panel principal con lista de pedidos --%>
+                        </div>
+                        <%--FIN Panel principal del administrador con ESTADISTICAS y graficos--%>
+
+
                         <%-- ################################ abm USUARIOS ################################ --%>
                         <%-- Listar Usuarios --%>
+                        <h1 class="text-light text-center bg-dark border border-light rounded-2 p-2" style="margin-top: 100px;" id="lblAdministracionUsuarios" visible="false" runat="server"><strong>Administración de Usuarios</strong></h1>
+                        <div class="row d-flex justify-content-center align-items-center bg-warning pb-2 pt-1"  id="filtrosUsuarios" visible="false" runat="server">
+                            <div class="col-2">
+                                <h2>Filtros:</h2>
+                            </div>
+                            <div class="col-2">
+                                    <div class="dropend">
+                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Ordenar
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <asp:UpdatePanel runat="server">
+                                                <ContentTemplate>
+                                                    <li>
+                                                        <asp:Button CssClass="btn" Text="Mayor precio" runat="server" />
+                                                    </li>
+                                                    <li>
+                                                        <asp:Button CssClass="btn" Text="Menor precio" runat="server" />
+                                                    </li>
+                                                    </ItemTemplate>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                        </ul>
+                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Estado
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <asp:UpdatePanel runat="server">
+                                                <ContentTemplate>
+                                                    <li>
+                                                        <asp:Button CssClass="btn" Text="Pendiente" runat="server" />
+                                                    </li>
+                                                    <li>
+                                                        <asp:Button CssClass="btn" Text="Terminado" runat="server" />
+                                                    </li>
+                                                    <li>
+                                                        <asp:Button CssClass="btn" Text="Cancelado" runat="server" />
+                                                    </li>
+                                                    </ItemTemplate>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                        </ul>
+                                    </div>
+                                </div>
+                            <div class="col-1">
+                                <label for="txtFiltroIdUser_Pedido" class="form-label">Id Usuario</label>
+                                <asp:TextBox ID="txtIdFiltro_Usuario" TextMode="Number" CssClass="form-control" runat="server"/>
+                            </div>
+                            <div class="col-1">
+                                <label for="txtFiltroIdPedido_Pedido" class="form-label">DNI</label>
+                                <asp:TextBox ID="txtDNIFiltro_Usuario" Text="Id Pedido" TextMode="Number" CssClass="form-control" runat="server" />
+                            </div>
+                            <div class="col-1">
+                                <label for="txtFiltroNombreUsuario_Pedido" class="form-label">Usuario</label>
+                                <asp:TextBox ID="txtNombreFiltro_Usuario" placeholder="Nombre" CssClass="form-control" runat="server" />
+                            </div>
+                            <div class="col-1">
+                                <label for="txtFiltro"></label>
+                            </div>
+                            <div class="col-2">
+                                <div class="row">
+                                    <div class="col">
+                                        <asp:Button ID="Button1" Text="Filtrar" CssClass="btn btn-dark" runat="server" />
+                                    </div>
+                                    <div class="col">
+                                        <asp:Button ID="Button2" Text="Limpiar Filtros" CssClass="btn btn-dark" runat="server" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <asp:GridView ID="dgvAdminUsuario" runat="server" CssClass="table table-striped mt-5 " AutoGenerateColumns="False">
                             <Columns>
                                 <asp:TemplateField HeaderText="ID">
@@ -240,52 +531,52 @@
 
 
                         <!-- ################################ abm PEDIDOS ################################ -->
-                        <%-- Lista Pedidos Todos --%>
+                        <%-- Lista Pedidos Todos + FILTROS --%>
                         <asp:Panel ID="sectionDgvAdminPedidos" runat="server">
-                            <h1 class="text-light text-center bg-dark border border-light rounded-2 p-2" style="margin-top: 100px;" id="lblAdministracionPedidos" visible="false" runat="server"><strong>Administración de Pedidos</strong></h1>
                             
                             <%-- filtros --%>
-                            <div class="row d-flex justify-content-center align-items-center bg-warning pb-2 pt-1"  id="filtrosPedidos" runat="server">
+                            <h1 class="text-light text-center bg-dark border border-light rounded-2 p-2" style="margin-top: 100px;" id="lblAdministracionPedidos" visible="false" runat="server"><strong>Administración de Pedidos</strong></h1>
+                            <div class="row d-flex justify-content-center align-items-center bg-warning pb-2 pt-1"  id="filtrosPedidos" visible="false" runat="server">
                                 <div class="col-2">
                                     <h2>Filtros:</h2>
                                 </div>
                                 <div class="col-2">
                                     <div class="dropend">
-                                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Ordenar
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <asp:UpdatePanel runat="server">
-                                                    <ContentTemplate>
-                                                        <li>
-                                                            <asp:Button CssClass="btn" Text="Mayor precio" runat="server" />
-                                                        </li>
-                                                        <li>
-                                                            <asp:Button CssClass="btn" Text="Menor precio" runat="server" />
-                                                        </li>
-                                                        </ItemTemplate>
-                                                    </ContentTemplate>
-                                                </asp:UpdatePanel>
-                                            </ul>
-                                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Estado
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <asp:UpdatePanel runat="server">
-                                                    <ContentTemplate>
-                                                        <li>
-                                                            <asp:Button CssClass="btn" Text="Pendiente" runat="server" />
-                                                        </li>
-                                                        <li>
-                                                            <asp:Button CssClass="btn" Text="Terminado" runat="server" />
-                                                        </li>
-                                                        <li>
-                                                            <asp:Button CssClass="btn" Text="Cancelado" runat="server" />
-                                                        </li>
-                                                        </ItemTemplate>
-                                                    </ContentTemplate>
-                                                </asp:UpdatePanel>
-                                            </ul>
+                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Ordenar
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <asp:UpdatePanel runat="server">
+                                                <ContentTemplate>
+                                                    <li>
+                                                        <asp:Button CssClass="btn" Text="Mayor precio" runat="server" />
+                                                    </li>
+                                                    <li>
+                                                        <asp:Button CssClass="btn" Text="Menor precio" runat="server" />
+                                                    </li>
+                                                    </ItemTemplate>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                        </ul>
+                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Estado
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <asp:UpdatePanel runat="server">
+                                                <ContentTemplate>
+                                                    <li>
+                                                        <asp:Button CssClass="btn" Text="Pendiente" runat="server" />
+                                                    </li>
+                                                    <li>
+                                                        <asp:Button CssClass="btn" Text="Terminado" runat="server" />
+                                                    </li>
+                                                    <li>
+                                                        <asp:Button CssClass="btn" Text="Cancelado" runat="server" />
+                                                    </li>
+                                                    </ItemTemplate>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="col-1">
@@ -298,10 +589,11 @@
                                 </div>
                                 <div class="col-1">
                                     <label for="txtFiltroNombreUsuario_Pedido" class="form-label">Usuario</label>
-                                    <asp:TextBox ID="txtFiltroNombreUsuario_Pedido" Text="Nombre" CssClass="form-control" runat="server" />
+                                    <asp:TextBox ID="txtFiltroNombreUsuario_Pedido" placeholder="Nombre" CssClass="form-control" runat="server" />
                                 </div>
                                 <div class="col-1">
-                                    <label for="txtFiltro"></label>
+                                    <label for="txtFiltroFecha" class="form-label">Fecha</label>
+                                    <asp:TextBox ID="txtFiltroFecha" CssClass="form-control" placeholder="" runat="server" />
                                 </div>
                                 <div class="col-2">
                                     <div class="row">
@@ -313,10 +605,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <%--<div class="col-2">
-                                </div>
-                                <div class="col-2">
-                                </div>--%>
                             </div>
                             <%-- fin filtros --%>
 
@@ -445,99 +733,101 @@
                             </asp:UpdatePanel>
 
                             <%-- botones y accordion items --%>
-                            <div class="col-10 mt-5">
-                                <%-- Nuevo Acordion --%>
-                                <div class="accordion mt-5" id="accordionPedidoArticulos" runat="server" visible="false">
-                                   <!-- Item -->
-                                   <div class="accordion-item "> 
-                                       <h2 class="accordion-header">
-                                           <button id="btnAgregarArtAcordion" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                               <p class="fw-bold">➕ Agregar nuevo Articulo</p>
-                                           </button>
-                                       </h2>
-                                       <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionPedidoArticulos">
-                                           <div class="accordion-body text-center">
-                                               <div class="row gy-3 justify-content-center">
-                                                    <div class="col-6 mt-5">
-                                                        <h4><asp:Label runat="server" ID="lblArticulosXidPedido_Articulos" Text="Articulos por Id" CssClass="badge rounded-pill text-bg-warning mt-3" Visible="false"></asp:Label>
-                                                        <asp:DropDownList runat="server" ID="ddlAgregarArticuloPedido_Articulos" CssClass="form-control m-3" Visible="false"></asp:DropDownList>
-                                                        <asp:Button runat="server" Text="Agregar" ID="btnAgregarArticuloPedido_ArticulosFinal" CssClass="m-3 btn btn-primary btn-lg m-3" OnClick="btnAgregarArticuloPedido_ArticulosFinal_Click" Visible="false"/>
-                                                    </div>
+                            <div class="row justify-content-center">
+                                <div class="col-10 mt-5">
+                                    <%-- Nuevo Acordion --%>
+                                    <div class="accordion mt-5" id="accordionPedidoArticulos" runat="server" visible="false">
+                                       <!-- Item -->
+                                       <div class="accordion-item "> 
+                                           <h2 class="accordion-header">
+                                               <button id="btnAgregarArtAcordion" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                   <p class="fw-bold">➕ Agregar nuevo Articulo</p>
+                                               </button>
+                                           </h2>
+                                           <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionPedidoArticulos">
+                                               <div class="accordion-body text-center">
+                                                   <div class="row gy-3 justify-content-center">
+                                                        <div class="col-6 mt-5">
+                                                            <h4><asp:Label runat="server" ID="lblArticulosXidPedido_Articulos" Text="Articulos por Id" CssClass="badge rounded-pill text-bg-warning mt-3" Visible="false"></asp:Label>
+                                                            <asp:DropDownList runat="server" ID="ddlAgregarArticuloPedido_Articulos" CssClass="form-control m-3" Visible="false"></asp:DropDownList>
+                                                            <asp:Button runat="server" Text="Agregar" ID="btnAgregarArticuloPedido_ArticulosFinal" CssClass="m-3 btn btn-primary btn-lg m-3" OnClick="btnAgregarArticuloPedido_ArticulosFinal_Click" Visible="false"/>
+                                                        </div>
+                                                   </div>
                                                </div>
                                            </div>
                                        </div>
-                                   </div>
-                                   <!-- Item -->
-                                    <asp:UpdatePanel UpdateMode="Conditional" runat="server">
-                                     <ContentTemplate>
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                   <i class="bi bi-search fw-bold"> Buscar Articulo por id</i>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionPedidoArticulos">
-                                                <div class="accordion-body">
-                                                    <div class="row gy-3">
-                                                        <div class="col-3">
-                                                            <label for="txtIdArticuloAbuscar_Pedido_Articulos" class="form-label">ID Articulo</label>
+                                       <!-- Item -->
+                                        <asp:UpdatePanel UpdateMode="Conditional" runat="server">
+                                         <ContentTemplate>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                       <i class="bi bi-search fw-bold"> Buscar Articulo por id</i>
+                                                    </button>
+                                                </h2>
+                                                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionPedidoArticulos">
+                                                    <div class="accordion-body">
+                                                        <div class="row gy-3">
+                                                            <div class="col-3">
+                                                                <label for="txtIdArticuloAbuscar_Pedido_Articulos" class="form-label">ID Articulo</label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                 <asp:TextBox runat="server" ID="txtIdArticuloAbuscar_Pedido_Articulos" TextMode="Search" CssClass="form-control"/>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                 <asp:Button Text="Buscar" runat="server" ID="btnBuscarArticuloXid_Pedido_Articulos" class="w-100 btn btn-warning btn-lg"
+                                                                     OnClick="btnBuscarArticuloXid_Pedido_Articulos_Click"/>
+                                                            </div>
+                                                            <hr class="my-4">
+                                                            <%-- Grid de Articulo a Buscar --%>
+                                                            <asp:GridView runat="server" ID="dgvArticuloBuscado_Pedido_Articulos" AutoGenerateColumns="false" CssClass="table table-striped table-bordered mt-5">
+                                                                <Columns>
+                                                                             <asp:TemplateField HeaderText="ID Articulo">
+                                                                        <ItemTemplate>
+                                                                             <asp:Label runat="server" Text='<%# Eval("Id") %>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                      </asp:TemplateField>
+                                                                             <asp:TemplateField HeaderText="Nombre">
+                                                                        <ItemTemplate>
+                                                                             <asp:Label runat="server" Text='<%# Eval("Nombre") %>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                      </asp:TemplateField>
+                                                                             <asp:TemplateField HeaderText="Descripcion">
+                                                                        <ItemTemplate>
+                                                                             <asp:Label runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                      </asp:TemplateField>
+                                                                             <asp:TemplateField HeaderText="Precio">
+                                                                        <ItemTemplate>
+                                                                             <asp:Label runat="server" Text='<%# string.Format("{0:C2}", Eval("Precio")) %>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                      </asp:TemplateField>
+                                                                             <asp:TemplateField HeaderText="Stock">
+                                                                        <ItemTemplate>
+                                                                             <asp:Label runat="server" Text='<%# Eval("Stock") %>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                      </asp:TemplateField>
+                                                                             <asp:TemplateField HeaderText="Categoria">
+                                                                        <ItemTemplate>
+                                                                             <asp:Label runat="server" Text='<%# Eval("Categoria") %>'></asp:Label>
+                                                                        </ItemTemplate>
+                                                                      </asp:TemplateField>
+                                                                             <asp:TemplateField HeaderText="Imagen">
+                                                                        <ItemTemplate>
+                                                                             <asp:Image runat="server" ImageUrl='<%# Eval("ImagenUrl") %>' Width="250px" Height="250px"></asp:Image>
+                                                                        </ItemTemplate>
+                                                                      </asp:TemplateField>
+                                                                        </Columns>
+                                                            </asp:GridView>    
                                                         </div>
-                                                        <div class="col-md-3">
-                                                             <asp:TextBox runat="server" ID="txtIdArticuloAbuscar_Pedido_Articulos" TextMode="Search" CssClass="form-control"/>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                             <asp:Button Text="Buscar" runat="server" ID="btnBuscarArticuloXid_Pedido_Articulos" class="w-100 btn btn-warning btn-lg"
-                                                                 OnClick="btnBuscarArticuloXid_Pedido_Articulos_Click"/>
-                                                        </div>
-                                                        <hr class="my-4">
-                                                        <%-- Grid de Articulo a Buscar --%>
-                                                        <asp:GridView runat="server" ID="dgvArticuloBuscado_Pedido_Articulos" AutoGenerateColumns="false" CssClass="table table-striped table-bordered mt-5">
-                                                            <Columns>
-                                                                         <asp:TemplateField HeaderText="ID Articulo">
-                                                                    <ItemTemplate>
-                                                                         <asp:Label runat="server" Text='<%# Eval("Id") %>'></asp:Label>
-                                                                    </ItemTemplate>
-                                                                  </asp:TemplateField>
-                                                                         <asp:TemplateField HeaderText="Nombre">
-                                                                    <ItemTemplate>
-                                                                         <asp:Label runat="server" Text='<%# Eval("Nombre") %>'></asp:Label>
-                                                                    </ItemTemplate>
-                                                                  </asp:TemplateField>
-                                                                         <asp:TemplateField HeaderText="Descripcion">
-                                                                    <ItemTemplate>
-                                                                         <asp:Label runat="server" Text='<%# Eval("Descripcion") %>'></asp:Label>
-                                                                    </ItemTemplate>
-                                                                  </asp:TemplateField>
-                                                                         <asp:TemplateField HeaderText="Precio">
-                                                                    <ItemTemplate>
-                                                                         <asp:Label runat="server" Text='<%# string.Format("{0:C2}", Eval("Precio")) %>'></asp:Label>
-                                                                    </ItemTemplate>
-                                                                  </asp:TemplateField>
-                                                                         <asp:TemplateField HeaderText="Stock">
-                                                                    <ItemTemplate>
-                                                                         <asp:Label runat="server" Text='<%# Eval("Stock") %>'></asp:Label>
-                                                                    </ItemTemplate>
-                                                                  </asp:TemplateField>
-                                                                         <asp:TemplateField HeaderText="Categoria">
-                                                                    <ItemTemplate>
-                                                                         <asp:Label runat="server" Text='<%# Eval("Categoria") %>'></asp:Label>
-                                                                    </ItemTemplate>
-                                                                  </asp:TemplateField>
-                                                                         <asp:TemplateField HeaderText="Imagen">
-                                                                    <ItemTemplate>
-                                                                         <asp:Image runat="server" ImageUrl='<%# Eval("ImagenUrl") %>' Width="250px" Height="250px"></asp:Image>
-                                                                    </ItemTemplate>
-                                                                  </asp:TemplateField>
-                                                                    </Columns>
-                                                        </asp:GridView>    
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                     </ContentTemplate>
-                                    </asp:UpdatePanel>
+                                         </ContentTemplate>
+                                        </asp:UpdatePanel>
+                                    </div>
+                                    <%-- fin Nuevo Acordion --%>
                                 </div>
-                                <%-- fin Nuevo Acordion --%>
                             </div>
                         </asp:Panel>
                         <%-- fin Lista Pedido Unitario --%>
@@ -872,10 +1162,9 @@
                                 <asp:BoundField HeaderText="Estado" DataField="EstadoStr"/>
                             </Columns>
                         </asp:GridView>
-                            
                         <%-- fin Lista Articulo (unitario) --%>
 
-                        <%-- Registrar nuevos Artículos --%>
+                        <%-- Registrar/Modificar nuevos Artículos --%>
                         <div class="row d-flex justify-content-center align-items-center">
                             <div class="card rounded-4 col-10 bg-warning ms-5" style="margin-top: 100px; margin-bottom: 100px;" id="SectionCrearArt" runat="server">
                                 <div class=" card-header text-center">
@@ -891,13 +1180,15 @@
                                         <label for="Nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
                                         <asp:TextBox CssClass="form-control" ID="tbNombreArt" runat="server" />
                                     </div>
-                                    <div class="col-4 mt-3">
-                                        <label for="Marca" class="form-label">Marca<span class="text-danger">*</span></label>
-                                        <asp:DropDownList runat="server" ID="ddlMarca" CssClass="btn btn-light dropdown-toggle" Width="280px"></asp:DropDownList>
-                                    </div>
-                                    <div class="col-4 mt-3">
-                                        <label for="Categoria" class="form-label">Categoría <span class="text-danger">*</span></label>
-                                        <asp:DropDownList runat="server" ID="ddlCategoria" CssClass="btn btn-light dropdown-toggle" Width="280px"></asp:DropDownList>
+                                    <div class="row justify-content-center">
+                                        <div class="col-4 mt-3">
+                                            <label for="ddlMarca" class="form-label">Marca<span class="text-danger">*</span></label>
+                                            <asp:DropDownList runat="server" ID="ddlMarca" CssClass="btn btn-light dropdown-toggle" Width="280px"></asp:DropDownList>
+                                        </div>
+                                        <div class="col-4 mt-3">
+                                            <label for="ddlCategoria" class="form-label">Categoría <span class="text-danger">*</span></label>
+                                            <asp:DropDownList runat="server" ID="ddlCategoria" CssClass="btn btn-light dropdown-toggle" Width="280px"></asp:DropDownList>
+                                        </div>
                                     </div>
                                     <div class="col-4 mt-3">
                                         <label for="Stock" class="form-label">Stock <span class="text-danger">*</span></label>
@@ -911,23 +1202,29 @@
                                         <label for="img" class="form-label">URL imágen <span class="text-danger">*</span></label>
                                         <asp:TextBox CssClass="form-control" ID="tbImgArt" runat="server" AutoPostBack="true" OnTextChanged="tbImgArt_TextChanged" />
                                     </div>
-                                    <div class="col-4 mt-3">
-                                        <asp:UpdatePanel runat="server">
-                                            <ContentTemplate>
-                                                <asp:Image ID="imgNuevoArt" runat="server" ImageUrl="~/recursos/img/agregar-img.png" Width="200px" CssClass="mt-3 ms-5" />
-                                            </ContentTemplate>
-                                        </asp:UpdatePanel>
-                                    </div>
                                     <div class="col-12 mt-3">
                                         <label for="Descripcion" class="form-label">Descripcion <span class="text-danger">*</span></label>
                                         <asp:TextBox CssClass="form-control pb-4" ID="tbDescripArt" runat="server" />
                                     </div>
+                                    <div class="row justify-content-center aling-items-center">
+                                        <div class="col-4 mt-3 text-center">
+                                            <asp:Button Text="Agregar Imagen desde archivo" ID="btnAgregarImagenArticulo" CssClass="btn btn-secondary" runat="server" />
+                                        </div>
+                                        <div class="col-4 mt-3">
+                                            <asp:UpdatePanel runat="server">
+                                                <ContentTemplate>
+                                                    <asp:Image ID="imgNuevoArt" runat="server" ImageUrl="~/recursos/img/agregar-img.png" Width="200px" CssClass="mt-3 ms-5" />
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                        </div>
+                                        <hr />
+                                    </div>
                                     <div class="col-12 mt-3">
                                         <div class="d-flex justify-content-center align-items-center">
-                                            <asp:Button Text="Guardar artículo" ID="btnAgregar" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" runat="server" OnClick="btnAgregar_Click" />
+                                            <asp:Button Text="Guardar Cambios" ID="btnAgregar" CssClass="btn btn-dark text-light mb-3 ps-5 pe-5 fs-4" runat="server" OnClick="btnAgregar_Click" OnClientClick="return confirm('¿Seguro de Continuar?');" />
                                         </div>
                                         <div class="d-flex justify-content-center align-items-center">
-                                            <asp:Button Text="Eliminar" CssClass="btn btn-danger mb-3 ps-5 pe-5 fs-4" runat="server" />
+                                            <asp:Button Text="Eliminar" ID="btnEliminarArticulo" CssClass="btn btn-danger mb-3 ps-5 pe-5 fs-4" OnClick="btnEliminarArticulo_Click" OnClientClick="return confirm('¿Seguro de Eliminar?');" runat="server" />
                                         </div>
                                         <div class="d-flex justify-content-center">
                                             <asp:LinkButton Text="Volver a Lista Articulos" CssClass="link-body-emphasis mt-5" ID="linkButtonVolverListaArticulos" OnClick="btnLinkVolverListaArticulos_Click"  runat="server" />
@@ -1029,8 +1326,8 @@
                                 </div>
                             </div>
                         </div>
-                        </div>
-                        <%--fin registro categoria--%>
+                        </div> <!-- ¿div perdido? -->
+                        <%-- Fin Resumen Principal (estadisticas) --%>
 
 
                         <%-- ################################ ABM MARCAS ################################ --%>
@@ -1131,7 +1428,6 @@
             </div>
             <!-- Fin Cuerpo Principal -->
             <div class="col py-3"></div>
-
         </div>
     </div>
     <!-- fin -->

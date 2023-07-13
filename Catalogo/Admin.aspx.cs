@@ -6,11 +6,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using static System.Net.Mime.MediaTypeNames;
 
 
 namespace Catalogo
@@ -44,9 +42,8 @@ namespace Catalogo
             {
                 if (!IsPostBack)
                 {
-
-                    string script = "document.getElementById('btnAgregarArtAcordion').onclick(function () {       localStorage.setItem('collapse_One', $(this).attr('collapseOne'));        console.log('collapse_One');    });    // Obtener el id del elemento colapsable    var collapseItem = localStorage.getItem('collapse_One');    if (collapseItem) {       // Abrir el elemento colapsable        $(collapseItem).collapse('show')    }";
-                    ClientScript.RegisterStartupScript(GetType(), "saludo", script, true);
+                    //Cargamos los datos de Resumen
+                    CargarListaPanelAdmin();
 
                     //Damos mensaje si es que hay alguno
                     mensajes();
@@ -60,7 +57,7 @@ namespace Catalogo
                         return;
                     }
 
-                    //Validamos si hay un id en la url para renderear la pagina
+                    //Validamos si hay un id en la url para renderear la pagina (no usar asi de ser posible)
                     if (Request.QueryString["id"] != null)
                     {
                         switch (int.Parse(Request.QueryString["id"]))
@@ -89,6 +86,10 @@ namespace Catalogo
                                 CargaDdl();
                                 SectionCrearArt.Visible = true;
                                 tituloEditarArticulo.Visible = false;
+                                divEstadisticas.Visible = false;
+                                lblAdministracionArticulos.Visible = true;
+                                lblAdministracionUsuarios.Visible = false;
+                                btnAgregar.Text = "Crear Articulo";
                                 break;
                             case 8:
                                 cargarNuevaCategoria();
@@ -132,14 +133,14 @@ namespace Catalogo
             dgvAdminUsuario.DataSource = usuarioList;
             dgvAdminUsuario.DataBind();
             ddlAgregarArticuloPedido_Articulos.Visible = false;
+            divEstadisticas.Visible = false;
+            lblAdministracionUsuarios.Visible = true;
+            filtrosUsuarios.Visible = true;
         }
 
         // TODO: Cargar Usuario para Editar en Admin
         private void CargarUsuarioParaEditar(int idMatch)
         {
-            // Manu, ojo con los new a obj que nunca se van a usar, instancias objetos que ya son traidos por el metodo de Negocio en este caso; se puede perder o pisar data.
-            // Aca particularmente solo asigna memoria a un obj, que nunca va a usar al cambiar el puntero, si hacemos new Usuario() y despues asignamos a otro obj Usuario con el metodo de negocio.
-            //usuario = new Usuario();
             NegocioUsuario = new NegocioUsuario();
             usuario = NegocioUsuario.BuscarUsuarioPorId(idMatch);
             txtNombre.Text = usuario.Nombre;
@@ -160,6 +161,8 @@ namespace Catalogo
             try
             {
                 FiltrosArticulos.Visible = true;
+                divEstadisticas.Visible = false;
+
                 //Cargar filtros
                 NegocioMarca = new NegocioMarca();
                 NegocioCategoria = new NegocioCategoria();
@@ -178,7 +181,6 @@ namespace Catalogo
                 rptMarcas.DataBind();
                 rptCategorias.DataSource = NegocioCategoria.ListarCategorias();
                 rptCategorias.DataBind();
-                //fin carga filtros
 
                 //Cargar Articulos
                 NegocioArticulo = new NegocioArticulo();
@@ -345,29 +347,6 @@ namespace Catalogo
         {
             try
             {
-                //if (Request.Params["text"] != null)
-                //{
-                //    List<Articulo> listaArticulos;
-                //    listaArticulos = (List<Articulo>)Session["listaFiltrada"];
-
-                //    //List<Articulo> listaFiltrada = new List<Articulo>();
-                //    //listaFiltrada = listaArticulos.OrderByDescending(producto => producto.precio).ToList();
-
-                //    dgvAdmin.DataSource = listaArticulos.OrderByDescending(producto => producto.precio).ToList();
-                //    dgvAdmin.DataBind();
-                //}
-                //else
-                //{
-                //    List<Articulo> listaArticulos;
-                //    listaArticulos = (List<Articulo>)Session["listaPrincipal"];
-
-                //    //List<Articulo> listaFiltrada = new List<Articulo>();
-                //    //listaFiltrada = listaArticulos.OrderByDescending(producto => producto.precio).ToList();
-
-                //    dgvAdmin.DataSource = listaArticulos.OrderByDescending(producto => producto.precio).ToList();
-                //    dgvAdmin.DataBind();
-                //}
-
                 //cargamos lista de articulos
                 List<Articulo> listaArticulos;
                 if (Session["listaFiltrada"] == null)
@@ -455,7 +434,8 @@ namespace Catalogo
             dgvAdminPedidos.Visible = true;
             dgvAdminUsuario.Visible = false;
             lblAdministracionPedidos.Visible = true;
-
+            filtrosPedidos.Visible = true;
+            divEstadisticas.Visible = false;
         }
 
         // TODO: Cargar Pedidos en Admin con Filtro
@@ -467,6 +447,8 @@ namespace Catalogo
             dgvAdminPedidos.DataBind();
             dgvAdminPedidos.Visible = true;
             lblAdministracionPedidos.Visible = true;
+            filtrosPedidos.Visible = true;
+            divEstadisticas.Visible = false;
         }
 
         // TODO: Cargar Pedido en form de actualizacion
@@ -567,6 +549,42 @@ namespace Catalogo
                 //NegocioArticulo.DarAltaBajaUsuario(idMatch, true);
                 //dgvAdmin.DataSource = NegocioArticulo.ListarArticulos();
                 //dgvAdmin.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //TODO: Cargar panel de pedidos solicitados del panel principal al entrar como admin
+        protected void CargarListaPanelAdmin()
+        {
+            try
+            {
+                NegocioPedido = new NegocioPedido();
+                rptListaPedidosPanel.DataSource = NegocioPedido.ListarPedidos();
+                rptListaPedidosPanel.DataBind();
+
+                // Cambiar el estilo del panel según el estado del pedido
+                foreach (RepeaterItem item in rptListaPedidosPanel.Items)
+                {
+                    Label lblEstadoPedidoPanel = (Label)item.FindControl("lblEstadoPedidoPanel");
+                    lblEstadoPedidoPanel.Text = lblEstadoPedidoPanel.Text.ToUpper();
+                    if (lblEstadoPedidoPanel.Text == "INICIADO")
+                    {
+                        lblEstadoPedidoPanel.CssClass = "badge bg-warning"; 
+                    }
+                    else if (lblEstadoPedidoPanel.Text == "TERMINADO")
+                    {
+                        lblEstadoPedidoPanel.CssClass = "badge bg-success"; 
+                    }
+                    else if (lblEstadoPedidoPanel.Text == "CANCELADO")
+                    {
+                        lblEstadoPedidoPanel.CssClass = "badge bg-danger"; 
+                    }
+                }
+                lblCantPedidos.Text = NegocioPedido.CantidadPedidos().ToString();
             }
             catch (Exception ex)
             {
@@ -974,6 +992,12 @@ namespace Catalogo
                 txtFechaEditarPedido.Text = DateTime.Now.ToString("yyyy-MM-dd");
                 btnAgregarPedido.Visible = true;
                 btnModificarAgregarPedido.Visible = false;
+                filtrosPedidos.Visible = false;
+                divEstadisticas.Visible = false;
+                lblAdministracionArticulos.Visible = false;
+                FiltrosArticulos.Visible = false;
+                dgvAdmin.Visible = false;
+                lblAdministracionPedidos.Visible = true;
             }
             catch (Exception ex)
             {
@@ -1136,7 +1160,7 @@ namespace Catalogo
             btnEliminarUsuario.Visible = true;
         }
 
-        // TODO: BOTON ACTUALIZAR/CREAR USUARIO
+        // TODO: BOTON ACTUALIZAR/CREAR USUARIO (Importante)
         protected void btnGuardarUsuario_Click(object sender, EventArgs e)
         {
             try
@@ -1149,6 +1173,7 @@ namespace Catalogo
                         HelperUsuario.MensajePopUp(this, "Hay campos erróneos o vacíos");
                         return;
                     }
+
                     // cargamos los datos
                     usuario = new Usuario();
                     usuario.Nombre = txtNombre.Text;
@@ -1161,7 +1186,7 @@ namespace Catalogo
                     usuario.Nivel = ddlTipoUsuario.SelectedValue.ToString();
                     usuario.Activo = true;
                     NegocioUsuario = new NegocioUsuario();
-                    //int res = 0;
+
                     // si es modo agregar
                     int res = 0;
                     if (btnGuardarUsuario.Text == "Agregar Usuario")
@@ -1267,6 +1292,9 @@ namespace Catalogo
             btnBajaUsuario.Visible = false;
             btnEliminarUsuario.Visible = false;
             sectionModificarUsuario.Visible = true;
+            lblAdministracionUsuarios.Visible = true;
+            divEstadisticas.Visible = false;
+            filtrosUsuarios.Visible = false;
         }
         
         // TODO: Link Volver a Lista Aneterior (Depende del CommandName del btn)
@@ -1287,12 +1315,15 @@ namespace Catalogo
         //Metodo para agregar articulo
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
+            string tipo = ((Button)sender).Text; // Usar luego
             marca = new Marca();
             marca.Id = Convert.ToInt32(ddlMarca.SelectedValue);
-            marca.ObtenerMarca(marca.Id);
+            marca.Descripcion = ddlMarca.SelectedItem.ToString();
+            //marca.ObtenerMarca(marca.Id);
             categoria = new Categoria();
             categoria.Id = Convert.ToInt32(ddlCategoria.SelectedValue);
-            categoria.ObtenerCategoria(categoria.Id);
+            categoria.Descripcion = ddlCategoria.SelectedItem.ToString();
+            //categoria.ObtenerCategoria(categoria.Id);
 
             NegocioArticulo = new NegocioArticulo();
             articulo = new Articulo();
@@ -1305,9 +1336,29 @@ namespace Catalogo
             articulo.Categoria = categoria;
             articulo.Estado = true;
             articulo.Stock = int.Parse(tbStockArt.Text);
-            NegocioArticulo.crearArticulo(articulo);
-            //CargarArticulos();
-            Response.Redirect("Admin.aspx?id=5");
+
+            //Editamos o Creamos un nuevo articulo
+            if(btnAgregar.Text == "Crear Articulo")
+            {
+                if (NegocioArticulo.crearArticulo(articulo) == 1)
+                {
+                    Session["MensajeExito"] = "Articulo Creado Exitosamente";
+                    Response.Redirect("Admin.aspx?id=5", false);
+                }
+            }
+            else if (btnAgregar.Text == "Guardar Cambios")
+            {
+                if(NegocioArticulo.editarArticulo(articulo) == 1)
+                {
+                    Session["MensajeExito"] = "Articulo Modificado Exitosamente";
+                    Response.Redirect("Admin.aspx?id=5", false);
+                }
+            }
+            else
+            {
+                HelperUsuario.MensajePopUp(this, "Hubo un error en la creacion/modificacion del articulo");
+            }
+
         } // Verificar luego 
 
         //TODO: CARGAR DDL EN AGREGAR ART (Marca y Categoria)
@@ -1351,6 +1402,7 @@ namespace Catalogo
                 dgvAdmin.Visible = true;
                 dgvAdminArtUnitario.Visible = false;
                 FiltrosArticulos.Visible = true;
+                lblAdministracionUsuarios.Visible = true;
             }
         }
 
@@ -1439,6 +1491,12 @@ namespace Catalogo
         {
             dgvAdmin.PageIndex = e.NewPageIndex;
             CargarArticulos();
+        }
+
+        //TODO: Boton Eliminar Articulo
+        protected void btnEliminarArticulo_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion//FIN LOGICA ARTÍCULOS
 
@@ -1796,9 +1854,9 @@ namespace Catalogo
         }
 
 
+
         //FIN LOGICA MARCAS
         #endregion MARCAS
-
 
     }//END CLASS
 }//END

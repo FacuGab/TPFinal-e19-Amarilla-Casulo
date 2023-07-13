@@ -508,5 +508,56 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+
+        //todo: mostrar cantidad de pedidos realizados
+        public int CantidadPedidos()
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("SELECT COUNT(*) FROM PEDIDOS", "query");
+                var result = datos.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
+
+                if (result != null && result != DBNull.Value)
+                {
+                    return Convert.ToInt32(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+            return 0; // Si no se encuentra ningún resultado, devolver 0
+        }
+        //todo: mostrar cantidad de pedidos realizados
+        public decimal RecaudacionTotal()
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("SELECT SUM(PrecioTotal) FROM PEDIDOS", "query");
+                var result = datos.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
+
+                if (result != null && result != DBNull.Value)
+                {
+                    return Convert.ToInt32(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+            return 0; // Si no se encuentra ningún resultado, devolver 0
+        }
     }
 }

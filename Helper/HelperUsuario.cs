@@ -108,6 +108,5 @@ namespace Helper
             string script = $"if (confirm('{mensaje}')) {{ {funcionConfirmacion} }}";
             ScriptManager.RegisterStartupScript(page, page.GetType(), "confirmDialog", script, true);
         }
-
     }
 }
