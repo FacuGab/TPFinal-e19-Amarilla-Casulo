@@ -92,181 +92,94 @@
                     <ContentTemplate>
 
                         <%-- Panel principal del administrador con ESTADISTICAS y graficos --%>
-                        <div class="container-fluid p-0" runat="server" id="divEstadisticas">
-                            <h1 class="h3 mb-3 mt-5"><strong>Estadísticas generales</strong></h1>
+                        <div class="container-fluid p-0" style="margin-top:100px;" runat="server" id="divEstadisticas">
+                            <h1 class="h3 rounded-3 mb-5 pt-3 pb-3 mt-5 fs-1 text-center text-bg-dark text-light" ><strong >Estadísticas generales (Solo informativos)</strong></h1>
                             <%-- Cards Estadisticas --%>
                             <div class="row">
-                                    <div class="col-xl-6 col-xxl-5 d-flex">
-                                        <div class="w-100">
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="card col">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col mt-0">
-                                                                    <h5 class="card-title">Pedidos realizados</h5>
-                                                                </div>
-
-                                                                <div class="col-auto">
-                                                                    <div class="stat text-primary">
-                                                                        <i class="align-middle" data-feather="truck"></i>
-                                                                    </div>
+                                <div class="col-12 d-flex mt-5" >
+                                    <div class="w-100">
+                                        <div class="row">
+                                            <div class="col-3 ">
+                                                <div class="card col bg-primary text-light mb-5">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col mt-0">
+                                                                <h5 class="card-title fw-bold">Pedidos realizados</h5>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="stat text-primary">
+                                                                    <i class="align-middle" data-feather="truck"></i>
                                                                 </div>
                                                             </div>
-                                                            <asp:Label ID="lblCantPedidos" CssClass="fs-1" runat="server" />
-                                                            <div class="mb-0">
-                                                                <span class="text-danger"><i class="mdi mdi-arrow-bottom-right"></i>-3.65% </span>
-                                                                <span class="text-muted">El ultimo mes</span>
-                                                            </div>
+                                                            <asp:Label ID="lblCantPedidos" CssClass="fs-1 mb-2" runat="server" />
+                                                        </div>
+                                                        <div class="mb-0 badge bg-light fs-6">
+                                                            <asp:Label ID="lblCantPedidosMesAnterior" runat="server" />
+                                                            <span class="text-muted">Respecto al mes pasado</span>
                                                         </div>
                                                     </div>
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col mt-0">
-                                                                    <h5 class="card-title">Pedidos entregados</h5>
-                                                                </div>
-
-                                                                <div class="col-auto">
-                                                                    <div class="stat text-primary">
-                                                                        <i class="align-middle" data-feather="users"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <h1 class="mt-1 mb-3">14.212</h1>
-                                                            <div class="mb-0">
-                                                                <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>5.25% </span>
-                                                                <span class="text-muted">Since last week</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col mt-0">
-                                                                    <h5 class="card-title">Pedidos pendientes</h5>
-                                                                </div>
-
-                                                                <div class="col-auto">
-                                                                    <div class="stat text-primary">
-                                                                        <i class="align-middle" data-feather="dollar-sign"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <h1 class="mt-1 mb-3">$21.300</h1>
-                                                            <div class="mb-0">
-                                                                <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>6.65% </span>
-                                                                <span class="text-muted">Since last week</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col mt-0">
-                                                                    <h5 class="card-title">Recaudación total</h5> <%--solo pedidos completados--%>
-                                                                </div>
-
-                                                                <div class="col-auto">
-                                                                    <div class="stat text-primary">
-                                                                        <i class="align-middle" data-feather="shopping-cart"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <h1 class="mt-1 mb-3">64</h1>
-                                                            <div class="mb-0">
-                                                                <span class="text-danger"><i class="mdi mdi-arrow-bottom-right"></i>-2.25% </span>
-                                                                <span class="text-muted">Since last week</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6 col-xxl-5 d-flex">
-                                        <div class="w-100">
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col mt-0">
-                                                                    <h5 class="card-title">Recaudación promedio</h5>
-                                                                </div>
-
-                                                                <div class="col-auto">
-                                                                    <div class="stat text-primary">
-                                                                        <i class="align-middle" data-feather="truck"></i>
-                                                                    </div>
+                                            <div class="col-3">
+                                                <div class="card col bg-primary text-light mb-5">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col mt-0">
+                                                                <h5 class="card-title fw-bold">Pedidos completados</h5>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="stat text-primary">
+                                                                    <i class="align-middle" data-feather="users"></i>
                                                                 </div>
                                                             </div>
-                                                            <h1 class="mt-1 mb-3">2.382</h1>
-                                                            <div class="mb-0">
-                                                                <span class="text-danger"><i class="mdi mdi-arrow-bottom-right"></i>-3.65% </span>
-                                                                <span class="text-muted">Solo pedidos completados</span>
-                                                            </div>
+                                                            <asp:Label ID="lblPedidosCompletados" CssClass="fs-1" runat="server" />
                                                         </div>
-                                                    </div>
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col mt-0">
-                                                                    <h5 class="card-title">Usuarios registrados</h5>
-                                                                </div>
-
-                                                                <div class="col-auto">
-                                                                    <div class="stat text-primary">
-                                                                        <i class="align-middle" data-feather="users"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <h1 class="mt-1 mb-3">14.212</h1>
-                                                            <div class="mb-0">
-                                                                <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>5.25% </span>
-                                                                <span class="text-muted">Since last week</span>
-                                                            </div>
+                                                        <div class="mb-0 badge bg-light fs-6">
+                                                            <asp:Label ID="Label1" runat="server" />
+                                                            <span class="text-muted">Historial</span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col mt-0">
-                                                                    <h5 class="card-title">Articulos registrados</h5>
-                                                                </div>
-
-                                                                <div class="col-auto">
-                                                                    <div class="stat text-primary">
-                                                                        <i class="align-middle" data-feather="dollar-sign"></i>
-                                                                    </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="card col bg-primary text-light mb-5">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col mt-0">
+                                                                <h5 class="card-title fw-bold">Pedidos pendientes</h5>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="stat text-primary">
+                                                                    <i class="align-middle" data-feather="dollar-sign"></i>
                                                                 </div>
                                                             </div>
-                                                            <h1 class="mt-1 mb-3">$21.300</h1>
-                                                            <div class="mb-0">
-                                                                <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>6.65% </span>
-                                                                <span class="text-muted">Since last week</span>
-                                                            </div>
+                                                            <asp:Label ID="lblPedidosPendientes" CssClass="fs-1" runat="server" />
+                                                        </div>
+                                                        <div class="mb-0 badge bg-light fs-6">
+                                                            <asp:Label ID="Label2" runat="server" />
+                                                            <span class="text-muted">Historial</span>
                                                         </div>
                                                     </div>
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col mt-0">
-                                                                    <h5 class="card-title">Marcas</h5>
-                                                                </div>
-
-                                                                <div class="col-auto">
-                                                                    <div class="stat text-primary">
-                                                                        <i class="align-middle" data-feather="shopping-cart"></i>
-                                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="card col bg-primary text-light mb-5">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col mt-0">
+                                                                <h5 class="card-title fw-bold">Recaudación total</h5>
+                                                                <%--solo pedidos completados--%>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="stat text-primary">
+                                                                    <i class="align-middle" data-feather="shopping-cart"></i>
                                                                 </div>
                                                             </div>
-                                                            <h1 class="mt-1 mb-3">64</h1>
+                                                            <asp:Label ID="lblRecaudacionPedidos" CssClass="fs-1 mt-1 mb-3" runat="server" />
+                                                        </div>
+                                                        <div class="mb-0 badge bg-light fs-6">
+                                                            <asp:Label ID="Label3" runat="server" />
+                                                            <span class="text-muted">Respecto al mes pasado</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -274,10 +187,101 @@
                                         </div>
                                     </div>
                                 </div>
-                            <%-- Fin Cards Estadisticas --%>
+                                <div class="w-100 mb-5">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="card col bg-primary text-light mb-5">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col mt-0">
+                                                            <h5 class="card-title fw-bold">Recaudación promedio</h5>
+                                                        </div>
+
+                                                        <div class="col-auto">
+                                                            <div class="stat text-primary">
+                                                                <i class="align-middle" data-feather="truck"></i>
+                                                            </div>
+                                                        </div>
+                                                        <asp:Label ID="lblRecaudacionProm" CssClass="fs-1 mt-1 mb-3" runat="server" />
+                                                    </div>
+                                                    <div class="mb-0 badge bg-light fs-6">
+                                                        <asp:Label ID="Label4" runat="server" />
+                                                        <span class="text-muted">Por pedidos</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="card col bg-primary text-light mb-5">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col mt-0">
+                                                            <h5 class="card-title fw-bold">Usuarios registrados</h5>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <div class="stat text-primary">
+                                                                <i class="align-middle" data-feather="users"></i>
+                                                            </div>
+                                                        </div>
+                                                        <asp:Label ID="lblCantidadUsuarios" CssClass="fs-1 mt-1 mb-3" runat="server" />
+                                                    </div>
+                                                    <div class="mb-0 badge bg-light fs-6">
+                                                        <asp:Label ID="Label5" runat="server" />
+                                                        <span class="text-muted">Solo activos</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="card col bg-primary text-light mb-5">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col mt-0">
+                                                            <h5 class="card-title fw-bold">Artículos registrados</h5>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <div class="stat text-primary">
+                                                                <i class="align-middle" data-feather="dollar-sign"></i>
+                                                            </div>
+                                                        </div>
+                                                        <asp:Label ID="lblArtRegistrados" CssClass="fs-1 mt-1 mb-3" runat="server" />
+                                                    </div>
+                                                    <div class="mb-0 badge bg-light fs-6">
+                                                        <asp:Label ID="Label6" runat="server" />
+                                                        <span class="text-muted">Solo activos</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="card col bg-primary text-light mb-5">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col mt-0">
+                                                            <h5 class="card-title fw-bold">Marcas registradas</h5>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <div class="stat text-primary">
+                                                                <i class="align-middle" data-feather="shopping-cart"></i>
+                                                            </div>
+                                                        </div>
+                                                        <asp:Label ID="lblCantMarcas" CssClass="fs-1 mt-1 mb-3" runat="server" />
+                                                    </div>
+                                                    <div class="mb-0 badge bg-light fs-6">
+                                                        <asp:Label ID="Label7" runat="server" />
+                                                        <span class="text-muted">Todas</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <%-- Fin Cards Estadisticas --%>
                             <%-- Tabla panel principal con lista de pedidos --%>
                             <div class="row">
-                                <div class="col-12 d-flex mt-5">
+                                <div class="col-12 d-flex">
                                     <div class="card flex-fill">
                                         <div class="card-header bg-warning text-center">
                                             <h5 class="card-title mb-0 fs-3 fw-bold pb-2 pt-2">Pedidos Realizados</h5>

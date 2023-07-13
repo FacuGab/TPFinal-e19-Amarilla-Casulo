@@ -585,6 +585,25 @@ namespace Catalogo
                     }
                 }
                 lblCantPedidos.Text = NegocioPedido.CantidadPedidos().ToString();
+                lblRecaudacionPedidos.Text = string.Format("{0:C2}", NegocioPedido.RecaudacionTotal());
+                lblRecaudacionProm.Text = string.Format("{0:C2}", NegocioPedido.RecaudacionPromedio());
+                lblPedidosCompletados.Text = NegocioPedido.PedidosCompletados().ToString();
+                lblPedidosPendientes.Text = NegocioPedido.PedidosPendientes().ToString();
+                lblCantidadUsuarios.Text = NegocioPedido.CantidadUsuarios().ToString();
+                lblArtRegistrados.Text = NegocioPedido.CantidadArticulos().ToString();
+                lblCantMarcas.Text = NegocioPedido.CantidadMarcas().ToString();
+                lblCantPedidosMesAnterior.Text = new NegocioPedido().CantPedidosMesAnterior().ToString();
+
+                //validaciones para colores segun el resultado de la query
+                if (NegocioPedido.CantPedidosMesAnterior() > 0)
+                {
+                    lblCantPedidosMesAnterior.CssClass = "mdi mdi-arrow-bottom-right fw-bold text-success";
+                }
+                else
+                {
+                    lblCantPedidosMesAnterior.CssClass = "mdi mdi-arrow-bottom-right fw-bold text-danger";
+                }
+                //fin validaciones
             }
             catch (Exception ex)
             {

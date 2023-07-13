@@ -516,7 +516,31 @@ namespace Negocio
             try
             {
                 datos.AbrirConexion();
-                datos.SetQuery("SELECT COUNT(*) FROM PEDIDOS", "query");
+                datos.SetQuery("SELECT COUNT(*) FROM PEDIDOS WHERE ESTADO='Terminado' OR ESTADO='INICIADO'", "query");
+                var result = datos.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
+
+                if (result != null && result != DBNull.Value)
+                {
+                    return Convert.ToInt32(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+            return 0; // Si no se encuentra ningún resultado, devolver 0
+        }
+        public int CantPedidosMesAnterior()
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("SELECT COUNT(*) - (SELECT COUNT(*) FROM PEDIDOS WHERE MONTH(Fecha) = MONTH(GETDATE())- 1 AND Estado = 'terminado' OR Estado='iniciado' ) AS DiferenciaPedidos FROM PEDIDOS WHERE MONTH(Fecha) = MONTH(GETDATE()) AND Estado = 'terminado' OR Estado='iniciado';", "query");
                 var result = datos.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
 
                 if (result != null && result != DBNull.Value)
@@ -546,7 +570,151 @@ namespace Negocio
 
                 if (result != null && result != DBNull.Value)
                 {
-                    return Convert.ToInt32(result);
+                    return Convert.ToDecimal(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+            return 0; // Si no se encuentra ningún resultado, devolver 0
+        }
+        public decimal RecaudacionPromedio()
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("SELECT AVG(PrecioTotal) FROM PEDIDOS", "query");
+                var result = datos.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
+
+                if (result != null && result != DBNull.Value)
+                {
+                    return Convert.ToDecimal(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+            return 0; // Si no se encuentra ningún resultado, devolver 0
+        }
+        public decimal PedidosCompletados()
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("select count(*) from PEDIDOS where Estado ='terminado'", "query");
+                var result = datos.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
+
+                if (result != null && result != DBNull.Value)
+                {
+                    return Convert.ToDecimal(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+            return 0; // Si no se encuentra ningún resultado, devolver 0
+        }
+        public decimal PedidosPendientes()
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("select count(*) from pedidos where Estado='iniciado'", "query");
+                var result = datos.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
+
+                if (result != null && result != DBNull.Value)
+                {
+                    return Convert.ToDecimal(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+            return 0; // Si no se encuentra ningún resultado, devolver 0
+        }
+        public decimal CantidadUsuarios()
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("select count(*) from USUARIOS", "query");
+                var result = datos.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
+
+                if (result != null && result != DBNull.Value)
+                {
+                    return Convert.ToDecimal(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+            return 0; // Si no se encuentra ningún resultado, devolver 0
+        }
+        public decimal CantidadArticulos()
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("select count(*) from ARTICULOS;", "query");
+                var result = datos.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
+
+                if (result != null && result != DBNull.Value)
+                {
+                    return Convert.ToDecimal(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+            return 0; // Si no se encuentra ningún resultado, devolver 0
+        }
+        public decimal CantidadMarcas()
+        {
+            datos = new DataAccess();
+            try
+            {
+                datos.AbrirConexion();
+                datos.SetQuery("select count(*) from MARCAS;", "query");
+                var result = datos.ExecuteScalar(); // Ejecutar la consulta y obtener el resultado
+
+                if (result != null && result != DBNull.Value)
+                {
+                    return Convert.ToDecimal(result);
                 }
             }
             catch (Exception ex)
