@@ -65,7 +65,7 @@
                     </ul>
                     <hr>
                     <!-- Menu Usuario Session (el que tiene foto) -->
-                    <div class="dropdown pb-4">
+                    <%--<div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
                             <span class="d-none d-sm-inline mx-1" id="btnUserMenu">User</span>
@@ -80,7 +80,7 @@
                                 <asp:Button Text="Sing Out" ID="btnSingOutMenuAdmin" OnClick="btnSingOutMenuAdmin_Click" CssClass="dropdown-item" runat="server" />
                             </li>
                         </ul>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
             <!-- Fin MENU DE OPCIONES -->
@@ -511,10 +511,10 @@
                                                             <!-- Botones -->
                                                             <div class="row">
                                                                 <div class="d-flex justify-content-end">
-                                                                    <asp:Button Text="Dar de alta" runat="server" ID="btnAltaUsuario" OnClick="btnAltaUsuario_Click" CssClass="btn btn-outline-success mt-3 me-3" />
-                                                                    <asp:Button Text="Dar de baja" runat="server" ID="btnBajaUsuario" OnClick="btnBajaUsuario_Click" CssClass="btn btn-outline-danger mt-3 me-3" />
-                                                                    <asp:Button Text="Eliminar" runat="server" ID="btnEliminarUsuario" OnClick="btnEliminarUsuario_Click" CssClass="btn btn-danger mt-3 me-3" />
-                                                                    <asp:Button Text="Guardar Cambios" runat="server" ID="btnGuardarUsuario" OnClick="btnGuardarUsuario_Click" CssClass="btn btn-dark mt-3" />
+                                                                    <asp:Button Text="Dar de alta" runat="server" ID="btnAltaUsuario" OnClientClick="return confirm('¿Desea dar del alta al usuario seleccionado?');" OnClick="btnAltaUsuario_Click" CssClass="btn btn-outline-success mt-3 me-3" />
+                                                                    <asp:Button Text="Dar de baja" runat="server" ID="btnBajaUsuario" OnClientClick="return confirm('¿Desea bar de baja al usuario seleccionado?');" OnClick="btnBajaUsuario_Click" CssClass="btn btn-outline-danger mt-3 me-3" />
+                                                                    <asp:Button Text="Eliminar" runat="server" ID="btnEliminarUsuario" OnClientClick="return confirm('¿Desea eliminar definitivamente el usuario seleccionado?');" OnClick="btnEliminarUsuario_Click" CssClass="btn btn-danger mt-3 me-3" />
+                                                                    <asp:Button Text="Guardar Cambios" runat="server" ID="btnGuardarUsuario" OnClientClick="return confirm('¿Confirma modificación del usuario?');" OnClick="btnGuardarUsuario_Click" CssClass="btn btn-dark mt-3" />
                                                                 </div>
                                                                 <!-- Link Volver a Lista Usuarios (TEST) -->
                                                                 <div class="d-flex justify-content-center">
@@ -612,7 +612,7 @@
                             </div>
                             <%-- fin filtros --%>
 
-                            <asp:GridView ID="dgvAdminPedidos" runat="server" CssClass="table table-striped table-bordered mt-5" AutoGenerateColumns="False">
+                            <asp:GridView ID="dgvAdminPedidos" runat="server" CssClass="table table-striped table-bordered mt-5 text-center" AutoGenerateColumns="False">
                                 <Columns>
                                 <asp:TemplateField HeaderText="ID Pedido">
                                     <ItemTemplate>
@@ -656,18 +656,17 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Monto Total">
                                     <ItemTemplate>
-                                        <span>$</span>
                                         <asp:Label runat="server" Text='<%# string.Format("{0:C2}", Eval("precioTotal")) %>'  CssClass="mt-3"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Cancelar">
                                     <ItemTemplate>
-                                        <asp:Button Text="Cancelar" CssClass="btn btn-outline-danger mt-3" ID="btnCancelarPedido" CommandName="Cancelar" CommandArgument='<%#Eval("IdPedido") %>' OnClick="btnCancelarTerminarPedido" runat="server" />
+                                        <asp:Button Text="Cancelar" CssClass="btn btn-outline-danger mt-3" ID="btnCancelarPedido" CommandName="Cancelar" CommandArgument='<%#Eval("IdPedido") %>' OnClick="btnCancelarTerminarPedido" runat="server" OnClientClick="return confirm('¿Desea cancelar el pedido seleccionado?');" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Terminar">
                                     <ItemTemplate>
-                                        <asp:Button Text="Terminar" CssClass="btn btn-outline-success mt-3" ID="btnTerminarPedido" CommandName="Terminar" CommandArgument='<%#Eval("IdPedido") %>' OnClick="btnCancelarTerminarPedido" runat="server" />
+                                        <asp:Button Text="Terminar" CssClass="btn btn-outline-success mt-3" ID="btnTerminarPedido" CommandName="Terminar" CommandArgument='<%#Eval("IdPedido") %>' OnClick="btnCancelarTerminarPedido" runat="server" OnClientClick="return confirm('¿Desea finalizar el pedido seleccionado?');"/>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Editar">
@@ -925,25 +924,25 @@
                                                 </div>
                                                 <div class="col-6 mt-3">
                                                     <label for="txtEstadoEditarPedido" class="form-label">Estado <span class="text-danger">*</span></label>
-                                                    <asp:TextBox CssClass="form-control" ID="txtEstadoEditarPedido" placeholder="Pendiente" runat="server" />
+                                                    <asp:TextBox CssClass="form-control" ID="txtEstadoEditarPedido" placeholder="Pendiente" runat="server" required/>
                                                 </div>
                                                 <div class="col-6 mt-3">
                                                     <div class="col">
                                                         <label for="txtCantidadTotalEditarPedido" class="form-label">Cantidad total</label>
-                                                        <asp:TextBox CssClass="form-control" ID="txtCantidadTotalEditarPedido" placeholder="Cantidad Total" runat="server" />
+                                                        <asp:TextBox CssClass="form-control" ID="txtCantidadTotalEditarPedido" placeholder="Cantidad Total" runat="server" required/>
                                                     </div>
                                                 </div>
                                                 <div class="col-6 mt-3">
                                                     <label for="txtDirEditarPedido" class="form-label">Direccion de Entrega</label>
-                                                    <asp:TextBox CssClass="form-control" ID="txtDirEditarPedido" placeholder="Dir de Entrega" runat="server" />
+                                                    <asp:TextBox CssClass="form-control" ID="txtDirEditarPedido" placeholder="Dir de Entrega" runat="server" required/>
                                                 </div>
                                                 <div class="col-6 mt-3">
                                                     <label for="txtFechaEditarPedido" class="form-label">Fecha de Inicio</label>
-                                                    <asp:TextBox CssClass="form-control" TextMode="DateTime" ID="txtFechaEditarPedido" placeholder="Fecha de Inicio" runat="server" />
+                                                    <asp:TextBox CssClass="form-control" TextMode="DateTime" ID="txtFechaEditarPedido" placeholder="Fecha de Inicio" runat="server" required/>
                                                 </div>
                                                 <div class="col-6 mt-3">
-                                                    <label for="txtDescuentoEditarPedido" class="form-label">Descuento</label>
-                                                    <asp:TextBox CssClass="form-control" ID="txtDescuentoEditarPedido" placeholder="Descuento" runat="server" />
+                                                    <label for="txtDescuentoEditarPedido" class="form-label" >Descuento</label>
+                                                    <asp:TextBox CssClass="form-control" ID="txtDescuentoEditarPedido" placeholder="Descuento" runat="server" required/>
                                                 </div>
                                                 <div class="col-6 mt-3">
                                                     <label for="txtTotalEditarPedido" class="form-label">Total</label>
