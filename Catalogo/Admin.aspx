@@ -1160,7 +1160,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Precio">
                                     <ItemTemplate>
-                                        <asp:Label runat="server" Text='<%# Eval("Precio") %>' CssClass="mt-3"></asp:Label>
+                                        <asp:Label runat="server" Text='<%# string.Format("{0:C2}", Eval("precio")) %>' CssClass="mt-3"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField HeaderText="Estado" DataField="EstadoStr"/>
@@ -1212,7 +1212,7 @@
                                     </div>
                                     <div class="row justify-content-center aling-items-center">
                                         <div class="col-4 mt-3 text-center">
-                                            <asp:Button Text="Agregar Imagen desde archivo" ID="btnAgregarImagenArticulo" CssClass="btn btn-secondary" runat="server" />
+                                            <%--<asp:Button Text="Agregar Imagen desde archivo" ID="btnAgregarImagenArticulo" CssClass="btn btn-secondary" runat="server" />--%>
                                         </div>
                                         <div class="col-4 mt-3">
                                             <asp:UpdatePanel runat="server">
@@ -1232,6 +1232,13 @@
                                         </div>
                                         <div class="d-flex justify-content-center">
                                             <asp:LinkButton Text="Volver a Lista Articulos" CssClass="link-body-emphasis mt-5" ID="linkButtonVolverListaArticulos" OnClick="btnLinkVolverListaArticulos_Click"  runat="server" />
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <p id="lblErrorArticulos" visible="false" runat="server">
+                                                <span class="badge text-bg-danger text-light me-2">
+                                                    <asp:Label ID="lblRespuestaError" runat="server" />
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

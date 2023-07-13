@@ -1182,6 +1182,7 @@ namespace Catalogo
             btnAltaUsuario.Visible = true;
             btnBajaUsuario.Visible = true;
             btnEliminarUsuario.Visible = true;
+            filtrosUsuarios.Visible = false;
         }
 
         // TODO: BOTON ACTUALIZAR/CREAR USUARIO (Importante)
@@ -1339,48 +1340,119 @@ namespace Catalogo
         //Metodo para agregar articulo
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            string tipo = ((Button)sender).Text; // Usar luego
-            marca = new Marca();
-            marca.Id = Convert.ToInt32(ddlMarca.SelectedValue);
-            marca.Descripcion = ddlMarca.SelectedItem.ToString();
-            //marca.ObtenerMarca(marca.Id);
-            categoria = new Categoria();
-            categoria.Id = Convert.ToInt32(ddlCategoria.SelectedValue);
-            categoria.Descripcion = ddlCategoria.SelectedItem.ToString();
-            //categoria.ObtenerCategoria(categoria.Id);
-
-            NegocioArticulo = new NegocioArticulo();
-            articulo = new Articulo();
-            articulo.Id = Convert.ToInt32(tbIdArt.Text);
-            articulo.Nombre = tbNombreArt.Text;
-            articulo.Descripcion = tbDescripArt.Text;
-            articulo.ImagenUrl = tbImgArt.Text;
-            articulo.precio = Convert.ToDecimal(tbPrecioArt.Text);
-            articulo.Marca = marca;
-            articulo.Categoria = categoria;
-            articulo.Estado = true;
-            articulo.Stock = int.Parse(tbStockArt.Text);
-
-            //Editamos o Creamos un nuevo articulo
-            if(btnAgregar.Text == "Crear Articulo")
+            try
             {
-                if (NegocioArticulo.crearArticulo(articulo) == 1)
+                bool validacion = true;
+                string tipo = ((Button)sender).Text; // Usar luego
+                marca = new Marca();
+                marca.Id = Convert.ToInt32(ddlMarca.SelectedValue);
+                marca.Descripcion = ddlMarca.SelectedItem.ToString();
+                //marca.ObtenerMarca(marca.Id);
+                categoria = new Categoria();
+                categoria.Id = Convert.ToInt32(ddlCategoria.SelectedValue);
+                categoria.Descripcion = ddlCategoria.SelectedItem.ToString();
+                //categoria.ObtenerCategoria(categoria.Id);
+
+                NegocioArticulo = new NegocioArticulo();
+                articulo = new Articulo();
+
+                //Validamos los campos
+                if(string.IsNullOrWhiteSpace(tbIdArt.Text) || !tbIdArt.Text.All(c => char.IsNumber(c)))
                 {
-                    Session["MensajeExito"] = "Articulo Creado Exitosamente";
-                    Response.Redirect("Admin.aspx?id=5", false);
+                    lblRespuestaError.Text = "Debe ingresar un ID y tiene que ser un numero";
+                    lblErrorArticulos.Visible = true;
+                    SectionCrearArt.Visible = true;
+                    return;
+                }
+                if(string.IsNullOrWhiteSpace(tbNombreArt.Text))
+                {
+                    lblRespuestaError.Text = "Debe Ingresar un Nombre";
+                    lblErrorArticulos.Visible = true;
+                    SectionCrearArt.Visible = true;
+                    return;
+                }
+                if(string.IsNullOrWhiteSpace(tbPrecioArt.Text))
+                {
+                    lblRespuestaError.Text = "Debe ingresar un Precio";
+                    lblErrorArticulos.Visible = true;
+                    SectionCrearArt.Visible = true;
+                    return;
+                }
+                string valor = tbPrecioArt.Text;
+                var regexValor = new Regex(@"[\d.,]+");
+                if (!regexValor.IsMatch(valor))
+                {
+                    lblRespuestaError.Text = "El Precio esta mal Ingresado";
+                    lblErrorArticulos.Visible = true;
+                    SectionCrearArt.Visible = true;
+                    return;
+                }
+                if(string.IsNullOrWhiteSpace(tbStockArt.Text))
+                {
+                    lblRespuestaError.Text = "Debe ingresar un stock";
+                    lblErrorArticulos.Visible = true;
+                    SectionCrearArt.Visible = true;
+                    return;
+                }
+                if(!tbStockArt.Text.All(c => char.IsDigit(c) || char.IsNumber(c)))
+                {
+                    lblRespuestaError.Text = "El Stock esta mal Ingresado";
+                    lblErrorArticulos.Visible = true;
+                    SectionCrearArt.Visible = true;
+                    return;
+                }
+                //fin validaciones
+                 
+                //cargamos los datos del articulo
+                string str = tbPrecioArt.Text;
+                var regex = new Regex(@"[\d.,]+");
+                var match = regex.Match(str);
+                decimal result = Convert.ToDecimal(match.Value);
+
+                //validamos que no tengamos stock y precio negativo
+                if (result < 0 || int.Parse(tbStockArt.Text) < 0)
+                {
+                    lblRespuestaError.Text = "El Precio/Stock no puede ser negativo";
+                    lblErrorArticulos.Visible = true;
+                    SectionCrearArt.Visible = true;
+                    return;
+                }
+                articulo.Id = Convert.ToInt32(tbIdArt.Text);
+                articulo.Nombre = tbNombreArt.Text;
+                articulo.Descripcion = tbDescripArt.Text;
+                articulo.ImagenUrl = tbImgArt.Text;
+                articulo.precio = result;
+                articulo.Marca = marca;
+                articulo.Categoria = categoria;
+                articulo.Estado = true;
+                articulo.Stock = int.Parse(tbStockArt.Text);
+
+                //Editamos o Creamos un nuevo articulo
+                if(btnAgregar.Text == "Crear Articulo")
+                {
+                    if (NegocioArticulo.crearArticulo(articulo) == 1)
+                    {
+                        Session["MensajeExito"] = "Articulo Creado Exitosamente";
+                        Response.Redirect("Admin.aspx?id=5", false);
+                    }
+                }
+                else if (btnAgregar.Text == "Guardar Cambios")
+                {
+                    if(NegocioArticulo.editarArticulo(articulo) == 1)
+                    {
+                        Session["MensajeExito"] = "Articulo Modificado Exitosamente";
+                        Response.Redirect("Admin.aspx?id=5", false);
+                    }
+                }
+                else
+                {
+                    HelperUsuario.MensajePopUp(this, "Hubo un error en la creacion/modificacion del articulo");
                 }
             }
-            else if (btnAgregar.Text == "Guardar Cambios")
+            catch (Exception ex)
             {
-                if(NegocioArticulo.editarArticulo(articulo) == 1)
-                {
-                    Session["MensajeExito"] = "Articulo Modificado Exitosamente";
-                    Response.Redirect("Admin.aspx?id=5", false);
-                }
-            }
-            else
-            {
-                HelperUsuario.MensajePopUp(this, "Hubo un error en la creacion/modificacion del articulo");
+                Session.Add("Error", ex);
+                Response.Redirect("Error.aspx", false);
             }
 
         } // Verificar luego 
@@ -1523,6 +1595,18 @@ namespace Catalogo
             try
             {
                 int idMatch = int.Parse(tbIdArt.Text);
+                NegocioArticulo = new NegocioArticulo();
+                if (NegocioArticulo.eliminarArticulo(idMatch) > 0)
+                {
+
+                    Session["MensajeExito"] = "Articulo Eliminado";
+                    Response.Redirect("Admin.aspx?id=5", false);
+                }
+                else
+                {
+                    HelperUsuario.MensajePopUp(this, "Hubo un error en la eliminacion del articulo");
+                }
+
             }
             catch (Exception ex)
             {
