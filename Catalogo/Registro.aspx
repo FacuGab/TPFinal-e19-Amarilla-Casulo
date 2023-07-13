@@ -87,17 +87,21 @@
                                                         </div>
                                                     </div>
                                                     <div class="d-flex justify-content-center ">
-                                                        <asp:Button Text="Registrarse" runat="server" ID="btnRegistroUsu" OnClick="btnRegistroUsu_Click"  CssClass="btn btn-warning btn-lg flex-fill" ValidationGroup="GuardarUsuario"/>
+                                                        <asp:Button Text="Registrarse" runat="server" AutoPostback="true" ID="btnRegistroUsu" OnClick="btnRegistroUsu_Click"  CssClass="btn btn-warning btn-lg flex-fill" ValidationGroup="GuardarUsuario"/>
                                                     </div>
                                                     <%--validaciones--%>
+                                                    <asp:UpdatePanel runat="server">
+                                                        <ContentTemplate>
                                                             <asp:ValidationSummary runat="server" ID="validationSummary" ValidationGroup="GuardarUsuario" CssClass="validation-summary fw-bold text-danger mt-5 col-form-label bg-light border rounded-3 " />
                                                             <asp:CustomValidator runat="server" ID="customValidatorNombre" ControlToValidate="txtNombre" OnServerValidate="customValidatorNombre_ServerValidate" ValidationGroup="GuardarUsuario" ErrorMessage="El nombre es inválido" />
                                                             <asp:CustomValidator runat="server" ID="customValidatorApellido" ControlToValidate="txtApellido" OnServerValidate="customValidatorApellido_ServerValidate" ValidationGroup="GuardarUsuario" ErrorMessage="El apellido es inválido" />
                                                             <asp:CustomValidator runat="server" ID="customValidatorDocumento" ControlToValidate="txtDni" OnServerValidate="customValidatorDocumento_ServerValidate" ValidationGroup="GuardarUsuario" ErrorMessage="El número de documento es inválido" />
                                                             <asp:CustomValidator runat="server" ID="customValidatorMail" ControlToValidate="txtMail" OnServerValidate="customValidatorMail_ServerValidate" ValidationGroup="GuardarUsuario" ErrorMessage="El correo electrónico es inválido" />
                                                             <asp:CustomValidator runat="server" ID="customValidatorDomicilio" ControlToValidate="txtDomicilio" OnServerValidate="customValidatorDomicilio_ServerValidate" ValidationGroup="GuardarUsuario" ErrorMessage="El domicilio es inválido" />
-                                                            <%--<asp:CustomValidator runat="server" ID="customValidatorTipoUsuario" ControlToValidate="txtTipoUsuario" OnServerValidate="customValidatorTipoUsuario_ServerValidate" ValidationGroup="GuardarUsuario" ErrorMessage="El tipo de usuario es inválido" />--%>
                                                             <asp:CustomValidator runat="server" ID="customValidatorPassword" ControlToValidate="txtPassword" OnServerValidate="customValidatorPassword_ServerValidate" ValidationGroup="GuardarUsuario" ErrorMessage="La contraseña es inválida" />
+
+                                                        </ContentTemplate>
+                                                    </asp:UpdatePanel>
                                                     <%--validaciones--%>
                                                 </div>
                                             </div>
