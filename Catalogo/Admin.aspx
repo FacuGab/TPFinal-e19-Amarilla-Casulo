@@ -93,12 +93,14 @@
 
                         <%-- Panel principal del administrador con ESTADISTICAS y graficos --%>
                         <div class="container-fluid p-0" style="margin-top:100px;" runat="server" id="divEstadisticas">
-                            <h1 class="h3 rounded-3 mb-5 pt-3 pb-3 mt-5 fs-1 text-center text-bg-dark text-light" ><strong >Estadísticas generales (Solo informativos)</strong></h1>
+                            <h1 class="h3 rounded-3 mb-5 pt-3 pb-3 mt-5 fs-1 text-center text-bg-dark text-light" ><strong >Estadísticas generales</strong></h1>
                             <%-- Cards Estadisticas --%>
                             <div class="row">
+                                <!-- Primera fila de cards -->
                                 <div class="col-12 d-flex mt-5" >
                                     <div class="w-100">
                                         <div class="row">
+                                            <!-- Pedidos Realizados -->
                                             <div class="col-3 ">
                                                 <div class="card col bg-primary text-light mb-5">
                                                     <div class="card-body">
@@ -120,6 +122,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- Pedidos Completados -->
                                             <div class="col-3">
                                                 <div class="card col bg-primary text-light mb-5">
                                                     <div class="card-body">
@@ -141,6 +144,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- Pedidos Pendientes -->
                                             <div class="col-3">
                                                 <div class="card col bg-primary text-light mb-5">
                                                     <div class="card-body">
@@ -162,6 +166,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- Recaudacion total -->
                                             <div class="col-3">
                                                 <div class="card col bg-primary text-light mb-5">
                                                     <div class="card-body">
@@ -187,8 +192,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- Segunda fila de cards -->
                                 <div class="w-100 mb-5">
                                     <div class="row">
+                                        <!-- Recaudacion Promedio -->
                                         <div class="col-3">
                                             <div class="card col bg-primary text-light mb-5">
                                                 <div class="card-body">
@@ -211,6 +218,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Usuarios Registrados -->
                                         <div class="col-3">
                                             <div class="card col bg-primary text-light mb-5">
                                                 <div class="card-body">
@@ -232,6 +240,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Articulos Registrados -->
                                         <div class="col-3">
                                             <div class="card col bg-primary text-light mb-5">
                                                 <div class="card-body">
@@ -253,6 +262,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Marcas Registradas -->
                                         <div class="col-3">
                                             <div class="card col bg-primary text-light mb-5">
                                                 <div class="card-body">
@@ -277,8 +287,8 @@
                                     </div>
                                 </div>
                             </div>
+                            <%-- Fin Cards Estadisticas --%>
 
-                        <%-- Fin Cards Estadisticas --%>
                             <%-- Tabla panel principal con lista de pedidos --%>
                             <div class="row">
                                 <div class="col-12 d-flex">
@@ -296,6 +306,7 @@
                                                     <th>Domicilio de entrega</th>
                                                     <th>Estado</th>
                                                     <th>Precio Facturado</th>
+                                                    <th>Ir</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -309,6 +320,9 @@
                                                             <td class="d-none d-xl-table-cell"><%# Eval("DireccionEntrega") %></td>
                                                             <td><asp:Label ID="lblEstadoPedidoPanel" Text='<%# Eval("Estado") %>' runat="server" /></td>
                                                             <td class="d-none d-md-table-cell"><%# string.Format("{0:C2}", Eval("precioTotal")) %></td>
+                                                            <td class="text-center">
+                                                                <asp:Button ID="btnVerDetallePedido" CssClass="btn btn-secondary" Text="Ver detalle" OnClick="btnVerDetallePedido_Click" CommandArgument='<%# Eval("IdPedido") %>' runat="server" />
+                                                            </td>
                                                         </tr>
                                                     </ItemTemplate>
                                                 </asp:Repeater>
@@ -323,7 +337,7 @@
 
 
                         <%-- ################################ abm USUARIOS ################################ --%>
-                        <%-- Listar Usuarios --%>
+                        <%-- Listar Usuarios + filtros --%>
                         <h1 class="text-light text-center bg-dark border border-light rounded-2 p-2" style="margin-top: 100px;" id="lblAdministracionUsuarios" visible="false" runat="server"><strong>Administración de Usuarios</strong></h1>
                         <div class="row d-flex justify-content-center align-items-center bg-warning pb-2 pt-1"  id="filtrosUsuarios" visible="false" runat="server">
                             <div class="col-2">
@@ -544,6 +558,7 @@
                                 <div class="col-2">
                                     <h2>Filtros:</h2>
                                 </div>
+                                <!-- Filtros Rapidos -->
                                 <div class="col-2">
                                     <div class="dropend">
                                         <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -553,10 +568,10 @@
                                             <asp:UpdatePanel runat="server">
                                                 <ContentTemplate>
                                                     <li>
-                                                        <asp:Button CssClass="btn" Text="Mayor precio" runat="server" />
+                                                        <asp:Button ID="btnMayorPrecioFiltroPedidos" OnClick="btnMayorMenorPrecioFiltroPedidos_Click" CommandName="MAYOR" CssClass="btn" Text="Mayor precio" runat="server" />
                                                     </li>
                                                     <li>
-                                                        <asp:Button CssClass="btn" Text="Menor precio" runat="server" />
+                                                        <asp:Button ID="btnMenorPrecioFiltroPedidos" OnClick="btnMayorMenorPrecioFiltroPedidos_Click" CommandName="MENOR" CssClass="btn" Text="Menor precio" runat="server" />
                                                     </li>
                                                     </ItemTemplate>
                                                 </ContentTemplate>
@@ -569,13 +584,13 @@
                                             <asp:UpdatePanel runat="server">
                                                 <ContentTemplate>
                                                     <li>
-                                                        <asp:Button CssClass="btn" Text="Pendiente" runat="server" />
+                                                        <asp:Button OnClick="btnEstadosPedidosFiltros_Click" CssClass="btn" Text="Iniciado" CommandName="btnIniciado" runat="server" />
                                                     </li>
                                                     <li>
-                                                        <asp:Button CssClass="btn" Text="Terminado" runat="server" />
+                                                        <asp:Button OnClick="btnEstadosPedidosFiltros_Click" CssClass="btn" Text="Terminado" CommandName="btnTerminado" runat="server" />
                                                     </li>
                                                     <li>
-                                                        <asp:Button CssClass="btn" Text="Cancelado" runat="server" />
+                                                        <asp:Button OnClick="btnEstadosPedidosFiltros_Click" CssClass="btn" Text="Cancelado" CommandName="btnCancelado" runat="server" />
                                                     </li>
                                                     </ItemTemplate>
                                                 </ContentTemplate>
@@ -583,6 +598,7 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <!-- Drops y Botones -->
                                 <div class="col-1">
                                     <label for="txtFiltroIdUser_Pedido" class="form-label">Id Usuario</label>
                                     <asp:TextBox ID="txtFiltroIdUser_Pedido" TextMode="Number" CssClass="form-control" runat="server"/>
@@ -597,15 +613,15 @@
                                 </div>
                                 <div class="col-1">
                                     <label for="txtFiltroFecha" class="form-label">Fecha</label>
-                                    <asp:TextBox ID="txtFiltroFecha" CssClass="form-control" placeholder="" runat="server" />
+                                    <asp:TextBox ID="txtFiltroFecha" TextMode="DateTimeLocal" CssClass="form-control" placeholder="" runat="server" />
                                 </div>
                                 <div class="col-2">
                                     <div class="row">
                                         <div class="col">
-                                            <asp:Button ID="btnFiltrarPedidos" Text="Filtrar" CssClass="btn btn-dark" runat="server" />
+                                            <asp:Button ID="btnFiltrarPedidos" OnClick="btnFiltrosPersonalizados_Click" Text="Filtrar" CssClass="btn btn-dark" runat="server" />
                                         </div>
                                         <div class="col">
-                                            <asp:Button ID="btnLimpiarFiltrosPedidos" Text="Limpiar Filtros" CssClass="btn btn-dark" runat="server" />
+                                            <asp:Button ID="btnLimpiarFiltrosPedidos" OnClick="btnLimpiarFiltrosPedidos_Click" Text="Limpiar Filtros" CssClass="btn btn-dark" runat="server" />
                                         </div>
                                     </div>
                                 </div>
