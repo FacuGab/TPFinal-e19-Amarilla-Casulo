@@ -3,11 +3,9 @@ using Helper;
 using Negocio;
 using System;
 using System.Collections.Generic;
-using System.EnterpriseServices.CompensatingResourceManager;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web.DynamicData;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -32,7 +30,6 @@ namespace Catalogo
         Articulo articulo;
         Categoria categoria;
         Marca marca;
-        private int numPedido = 0;
 
         // LOAD
         protected void Page_Load(object sender, EventArgs e)
@@ -130,6 +127,7 @@ namespace Catalogo
 
 
         //############################## METODOS ##############################
+        #region METODOS
         // METODOS USUARIO
         // TODO: Cargar Usuario en Admin
         private void CargarUsuario()
@@ -509,6 +507,7 @@ namespace Catalogo
             }
         }
 
+        // Mensajes
         private void mensajes()
         {
             try
@@ -528,10 +527,10 @@ namespace Catalogo
                 Response.Redirect("Error.aspx", false);
             }
         }
+        #endregion METODOS
 
         //############################## EVENTOS ##############################
         // Eventos de la pagina:
-        // TODO: Boton Sing Out en MENU no ABM  (TEST Para cerrar la sesion)
         protected void btnSingOutMenuAdmin_Click(object sender, EventArgs e)
         {
             try
@@ -2035,6 +2034,8 @@ namespace Catalogo
         //FIN LOGICA MARCAS
         #endregion MARCAS
 
+
+        #region OTROS
         // BOTON DETALLE EN PANEL ESTADISITICAS
         protected void btnVerDetallePedido_Click(object sender, EventArgs e)
         {
@@ -2184,6 +2185,7 @@ namespace Catalogo
             }
         }
 
+        //Boton Limpiar Filtros Pedidos
         protected void btnLimpiarFiltrosPedidos_Click(object sender, EventArgs e)
         {
             try
@@ -2196,5 +2198,77 @@ namespace Catalogo
                 Response.Redirect("Error.aspx", false);
             }
         }
+
+        // Boton Filtrar Estado Usuarios
+        protected void btnFiltrarEstadoUsuarios_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                NegocioUsuario = new NegocioUsuario();
+                usuarioList = NegocioUsuario.ListarUsuarios();
+
+                string estado = ((Button)sender).CommandName;
+                if (estado == "ACTIVO")
+                    usuarioList = usuarioList.Where(itm => itm.Activo).ToList();
+                else if (estado == "INACTIVO")
+                    usuarioList = usuarioList.Where(itm => !itm.Activo).ToList();
+
+                dgvAdminUsuario.DataSource = usuarioList;
+                dgvAdminUsuario.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //Boton Limpiar Filtros Usuarios
+        protected void btnLimpiarFiltrosUsuarios_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CargarUsuario();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //Boton Filtrar Usuarios
+        protected void btnFiltrarUsuarios_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                NegocioUsuario = new NegocioUsuario();
+                usuarioList = NegocioUsuario.ListarUsuarios();
+
+                int idUsuario = string.IsNullOrWhiteSpace(txtIdFiltro_Usuario.Text) ? 0 : Convert.ToInt32(txtIdFiltro_Usuario.Text);
+                int dni = string.IsNullOrWhiteSpace(txtDNIFiltro_Usuario.Text) ? 0 : Convert.ToInt32(txtDNIFiltro_Usuario.Text);
+                string nombre = string.IsNullOrWhiteSpace(txtNombreFiltro_Usuario.Text) ? string.Empty : txtNombreFiltro_Usuario.Text;
+                string apellido = string.IsNullOrWhiteSpace(txtApellidoFiltro_Usuario.Text) ? string.Empty : txtApellidoFiltro_Usuario.Text;
+
+                if(idUsuario != 0)
+                    usuarioList.RemoveAll(itm => itm.Id != idUsuario);
+                if(dni != 0)
+                    usuarioList.RemoveAll(itm => itm.Dni != dni);
+                if (nombre != string.Empty)
+                    usuarioList.RemoveAll(itm => itm.Nombre != nombre);
+                if(apellido != string.Empty)
+                    usuarioList.RemoveAll(itm => itm.Apellido != apellido);
+
+                dgvAdminUsuario.DataSource = usuarioList;
+                dgvAdminUsuario.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+        #endregion OTROS
+
     }//END CLASS
 }//END

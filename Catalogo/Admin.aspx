@@ -339,49 +339,31 @@
                         <%-- ################################ abm USUARIOS ################################ --%>
                         <%-- Listar Usuarios + filtros --%>
                         <h1 class="text-light text-center bg-dark border border-light rounded-2 p-2" style="margin-top: 100px;" id="lblAdministracionUsuarios" visible="false" runat="server"><strong>Administración de Usuarios</strong></h1>
+                        <!-- Filtros -->
                         <div class="row d-flex justify-content-center align-items-center bg-warning pb-2 pt-1"  id="filtrosUsuarios" visible="false" runat="server">
                             <div class="col-2">
                                 <h2>Filtros:</h2>
                             </div>
                             <div class="col-2">
-                                    <div class="dropend">
-                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Ordenar
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <asp:UpdatePanel runat="server">
-                                                <ContentTemplate>
-                                                    <li>
-                                                        <asp:Button CssClass="btn" Text="Mayor precio" runat="server" />
-                                                    </li>
-                                                    <li>
-                                                        <asp:Button CssClass="btn" Text="Menor precio" runat="server" />
-                                                    </li>
-                                                    </ItemTemplate>
-                                                </ContentTemplate>
-                                            </asp:UpdatePanel>
-                                        </ul>
-                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Estado
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <asp:UpdatePanel runat="server">
-                                                <ContentTemplate>
-                                                    <li>
-                                                        <asp:Button CssClass="btn" Text="Pendiente" runat="server" />
-                                                    </li>
-                                                    <li>
-                                                        <asp:Button CssClass="btn" Text="Terminado" runat="server" />
-                                                    </li>
-                                                    <li>
-                                                        <asp:Button CssClass="btn" Text="Cancelado" runat="server" />
-                                                    </li>
-                                                    </ItemTemplate>
-                                                </ContentTemplate>
-                                            </asp:UpdatePanel>
-                                        </ul>
-                                    </div>
+                                <div class="dropend">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Estado
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <asp:UpdatePanel runat="server">
+                                            <ContentTemplate>
+                                                <li>
+                                                    <asp:Button CssClass="btn" Text="ACTIVO" CommandName="ACTIVO" OnClick="btnFiltrarEstadoUsuarios_Click" runat="server" />
+                                                </li>
+                                                <li>
+                                                    <asp:Button CssClass="btn" Text="INACTIVO" CommandName="INACTIVO" OnClick="btnFiltrarEstadoUsuarios_Click" runat="server" />
+                                                </li>
+                                                </ItemTemplate>
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
+                                    </ul>
                                 </div>
+                            </div>
                             <div class="col-1">
                                 <label for="txtFiltroIdUser_Pedido" class="form-label">Id Usuario</label>
                                 <asp:TextBox ID="txtIdFiltro_Usuario" TextMode="Number" CssClass="form-control" runat="server"/>
@@ -391,23 +373,25 @@
                                 <asp:TextBox ID="txtDNIFiltro_Usuario" Text="Id Pedido" TextMode="Number" CssClass="form-control" runat="server" />
                             </div>
                             <div class="col-1">
-                                <label for="txtFiltroNombreUsuario_Pedido" class="form-label">Usuario</label>
+                                <label for="txtFiltroNombreUsuario_Pedido" class="form-label">Nombre</label>
                                 <asp:TextBox ID="txtNombreFiltro_Usuario" placeholder="Nombre" CssClass="form-control" runat="server" />
                             </div>
                             <div class="col-1">
-                                <label for="txtFiltro"></label>
+                                <label for="txtApellidoFiltro_Usuario" class="form-label">Apellido</label>
+                                <asp:TextBox ID="txtApellidoFiltro_Usuario" placeholder="Apellido" CssClass="form-control" runat="server" />
                             </div>
                             <div class="col-2">
                                 <div class="row">
                                     <div class="col">
-                                        <asp:Button ID="Button1" Text="Filtrar" CssClass="btn btn-dark" runat="server" />
+                                        <asp:Button ID="btnFiltrarUsuarios" Text="Filtrar" CssClass="btn btn-dark" OnClick="btnFiltrarUsuarios_Click" runat="server" />
                                     </div>
                                     <div class="col">
-                                        <asp:Button ID="Button2" Text="Limpiar Filtros" CssClass="btn btn-dark" runat="server" />
+                                        <asp:Button ID="btnLimpiarFiltrosUsuarios" Text="Limpiar Filtros" CssClass="btn btn-dark" OnClick="btnLimpiarFiltrosUsuarios_Click" runat="server" />
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- Lista -->
                         <asp:GridView ID="dgvAdminUsuario" runat="server" CssClass="table table-striped mt-5 " AutoGenerateColumns="False">
                             <Columns>
                                 <asp:TemplateField HeaderText="ID">
