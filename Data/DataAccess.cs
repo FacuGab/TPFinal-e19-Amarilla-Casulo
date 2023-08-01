@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
-using System.Reflection.Emit;
 using System.Configuration;
 
 namespace Data
@@ -20,11 +15,11 @@ namespace Data
         //TODO: Abrir Conexion
         public void AbrirConexion(string server = ".") // "Manulo-PC\\SQLLABO"
         {
-            string path = $"server={server}; database = CATALOGO_E19; integrated security = true";
-            //string pathProp = ConfigurationManager.ConnectionStrings["stringConnectionDefault"].ToString();
+            //string path = $"server={server}; database = CATALOGO_E19; integrated security = true";
+            string pathProp = ConfigurationManager.ConnectionStrings["stringConnectionDefault"].ToString();
             try
             {
-                connection = new SqlConnection(path);
+                connection = new SqlConnection(pathProp);
                 connection.Open();
             }
             catch (SqlException ex)
