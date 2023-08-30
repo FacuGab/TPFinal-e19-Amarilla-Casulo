@@ -4,8 +4,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <main style="background-image:url(https://img3.wallspic.com/previews/9/2/0/5/6/165029/165029-imac_color_matching_wallpaper_in_dark_purple_for_ipad_or_desktop-x750.jpg);background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;">
+         background-attachment: fixed;
+         background-size: cover;">
          <%-- CAROUSEL BANNER--%>
          <div id="carousel-1" class="carousel slide mt-5" data-bs-ride="false">
              <div class="carousel-inner">
@@ -101,7 +101,7 @@
                      </div>
                      <div class="col">
                          <div class="card-body text-center d-flex flex-column align-items-center p-0">
-                             <img class="rounded-circle mb-3 fit-cover" width="130" height="130" src="https://pps.whatsapp.net/v/t61.24694-24/300220495_1109287563010387_3814727986638712940_n.jpg?ccb=11-4&oh=01_AdQyeAMz4KwSQXik5DwmhrGrIr_Me_Lr_R-f9DH3AQBgEg&oe=64B416A0" />
+                             <img class="rounded-circle mb-3 fit-cover" width="130" height="130" src="https://avatars.githubusercontent.com/u/76824041?v=4" />
                              <h5 class="fw-bold text-warning card-title mb-0"><strong>Facundo Amarilla</strong></h5>
                              <p class="text-light card-text mb-2">Legajo:</p>
                              <ul class="list-inline fs-6 text-muted w-100 mb-0">
@@ -116,7 +116,5 @@
                  </div>
              </div>
          <%--fin sección nuestro equipo--%>
-         
-
     </main>
 </asp:Content>

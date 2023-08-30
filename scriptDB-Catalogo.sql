@@ -140,9 +140,4 @@ SELECT  P.IdPedido as 'ID_Pedido',
 		P.PrecioTotal as 'Precio_Total_Articulo'
 FROM PEDIDOS P INNER JOIN USUARIOS U ON P.IdUsuarios = U.Id
 END
-
-
-
-
-
 --

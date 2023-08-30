@@ -240,22 +240,31 @@ namespace Catalogo
         protected global::System.Web.UI.WebControls.TextBox txtNombreFiltro_Usuario;
 
         /// <summary>
-        /// Button1 control.
+        /// txtApellidoFiltro_Usuario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.TextBox txtApellidoFiltro_Usuario;
 
         /// <summary>
-        /// Button2 control.
+        /// btnFiltrarUsuarios control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button btnFiltrarUsuarios;
+
+        /// <summary>
+        /// btnLimpiarFiltrosUsuarios control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLimpiarFiltrosUsuarios;
 
         /// <summary>
         /// dgvAdminUsuario control.
@@ -436,6 +445,24 @@ namespace Catalogo
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl filtrosPedidos;
+
+        /// <summary>
+        /// btnMayorPrecioFiltroPedidos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnMayorPrecioFiltroPedidos;
+
+        /// <summary>
+        /// btnMenorPrecioFiltroPedidos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnMenorPrecioFiltroPedidos;
 
         /// <summary>
         /// txtFiltroIdUser_Pedido control.

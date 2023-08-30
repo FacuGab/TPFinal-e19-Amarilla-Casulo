@@ -5,8 +5,12 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="container mt-5 pt-5 min-vh-100">
-        <h4 class="mb-5 text-center fs-3">Filtro Seleccionado: <%:Filtro%></h4>
+    <div style="background-image:url(https://img3.wallspic.com/previews/9/2/0/5/6/165029/165029-imac_color_matching_wallpaper_in_dark_purple_for_ipad_or_desktop-x750.jpg);
+         background-repeat: no-repeat;
+         background-attachment: fixed;
+         background-size: cover;">
+    <div class="container mt-5 pt-5 min-vh-100" >
+        <h4 class="mb-5 text-center fs-3 text-bg-dark">Catalogo</h4>
         <div class="row g-0">
 
             <div class="col-md-3 bg-light border mb-3 p-1">
@@ -113,16 +117,17 @@
         </div>
     </div>
     <div class="container text-center bg-white border rounded-3 p-3">
-            <div class="row aling-items-center">
-                <div class="col">
-                    <div>
-                        <%-- En teoria un link asi vuelve al link anterior si existe --%>
-                        <p><a href='<%:Request.UrlReferrer != null? Request.UrlReferrer.ToString() : "#" %>' class="link-dark">Volver</a></p>
-                    </div>
-                    <div>
-                        <p><a href="Default.aspx" class="link-dark">Volver al inicio</a></p>
-                    </div>
+        <div class="row aling-items-center">
+            <div class="col">
+                <div>
+                    <%-- En teoria un link asi vuelve al link anterior si existe --%>
+                    <p><a href='<%:Request.UrlReferrer != null? Request.UrlReferrer.ToString() : "#" %>' class="link-dark">Volver</a></p>
+                </div>
+                <div>
+                    <p><a href="Default.aspx" class="link-dark">Volver al inicio</a></p>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
 </asp:Content>

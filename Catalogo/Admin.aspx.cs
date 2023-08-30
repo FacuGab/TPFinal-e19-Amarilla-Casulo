@@ -3,11 +3,9 @@ using Helper;
 using Negocio;
 using System;
 using System.Collections.Generic;
-using System.EnterpriseServices.CompensatingResourceManager;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web.DynamicData;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -32,7 +30,6 @@ namespace Catalogo
         Articulo articulo;
         Categoria categoria;
         Marca marca;
-        private int numPedido = 0;
 
         // LOAD
         protected void Page_Load(object sender, EventArgs e)
@@ -106,7 +103,7 @@ namespace Catalogo
                         CargarListaPanelAdmin();
                     }
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -127,9 +124,10 @@ namespace Catalogo
                 Session.Remove("MensajeExito");
             }
         }
-        
+
 
         //############################## METODOS ##############################
+        #region METODOS
         // METODOS USUARIO
         // TODO: Cargar Usuario en Admin
         private void CargarUsuario()
@@ -190,7 +188,7 @@ namespace Catalogo
 
                 //Cargar Articulos
                 NegocioArticulo = new NegocioArticulo();
-                Session.Add("listaPrincipal", NegocioArticulo.ListarArticulos() ); //guardamos/pisamos lista principal para su uso en filtro
+                Session.Add("listaPrincipal", NegocioArticulo.ListarArticulos()); //guardamos/pisamos lista principal para su uso en filtro
 
                 lblAdministracionArticulos.Visible = true;
                 articuloList = NegocioArticulo.ListarArticulos();
@@ -213,7 +211,7 @@ namespace Catalogo
                 if (Session["listaPrincipal"] == null)
                     return null;
                 if (Session["listaFiltrada"] == null)
-                    Session.Add("listaFiltrada", new List<Articulo>() );
+                    Session.Add("listaFiltrada", new List<Articulo>());
 
                 //Asingnamos listas a variables
                 List<Articulo> listaPrincipal = (List<Articulo>)Session["listaPrincipal"];
@@ -224,7 +222,7 @@ namespace Catalogo
                 {
                     string match = param as string;
 
-                    if(tipoParam == "estado")
+                    if (tipoParam == "estado")
                     {
                         if (match == "Activo")
                             listaFiltrada = listaPrincipal.FindAll(art => art.Estado == true);
@@ -295,7 +293,7 @@ namespace Catalogo
         {
             try
             {
-                dgvAdmin.DataSource = filtrarLista( ((Button)sender).CommandArgument, "estado");
+                dgvAdmin.DataSource = filtrarLista(((Button)sender).CommandArgument, "estado");
                 dgvAdmin.DataBind();
             }
             catch (Exception ex)
@@ -310,7 +308,7 @@ namespace Catalogo
         {
             try
             {
-                dgvAdmin.DataSource = filtrarLista( ((Button)sender).CommandArgument, "estado");
+                dgvAdmin.DataSource = filtrarLista(((Button)sender).CommandArgument, "estado");
                 dgvAdmin.DataBind();
             }
             catch (Exception ex)
@@ -426,7 +424,7 @@ namespace Catalogo
             dgvAdminMarca.DataSource = MarcaList;
             dgvAdminMarca.DataBind();
             titleMarcas.Visible = true;
-            sectionAgregarMarca.Visible=true;
+            sectionAgregarMarca.Visible = true;
         }
 
 
@@ -479,7 +477,7 @@ namespace Catalogo
         private void CargarPedidoDelForm(Pedido pedido, bool check = true)
         {
             if (pedido == null) return;
-            pedido.IdPedido = !string.IsNullOrWhiteSpace(txtIdPedidoEditar.Text)? int.Parse(txtIdPedidoEditar.Text) : -1;
+            pedido.IdPedido = !string.IsNullOrWhiteSpace(txtIdPedidoEditar.Text) ? int.Parse(txtIdPedidoEditar.Text) : -1;
             pedido.IdUsuario = int.Parse(txtIdUsuarioEditarPedido.Text);
             pedido.Usuario = txtNombreUsuarioEditarPedido.Text;
             pedido.Estado = txtEstadoEditarPedido.Text;
@@ -487,8 +485,8 @@ namespace Catalogo
             pedido.fecha = DateTime.Parse(txtFechaEditarPedido.Text);
             pedido.Descuento = int.Parse(txtDescuentoEditarPedido.Text);
             pedido.Cantidad = int.Parse(txtCantidadTotalEditarPedido.Text);
-            
-            if(!string.IsNullOrWhiteSpace(txtTotalEditarPedido.Text))
+
+            if (!string.IsNullOrWhiteSpace(txtTotalEditarPedido.Text))
                 pedido.precioTotal = decimal.Parse(txtTotalEditarPedido.Text, NumberStyles.Currency);
             txtIdUsuarioEditarPedido.Enabled = false;
         }
@@ -509,6 +507,7 @@ namespace Catalogo
             }
         }
 
+        // Mensajes
         private void mensajes()
         {
             try
@@ -528,10 +527,10 @@ namespace Catalogo
                 Response.Redirect("Error.aspx", false);
             }
         }
+        #endregion METODOS
 
         //############################## EVENTOS ##############################
         // Eventos de la pagina:
-        // TODO: Boton Sing Out en MENU no ABM  (TEST Para cerrar la sesion)
         protected void btnSingOutMenuAdmin_Click(object sender, EventArgs e)
         {
             try
@@ -553,7 +552,7 @@ namespace Catalogo
             try
             {
                 int idMatch = int.Parse(((Button)sender).CommandArgument);
-                
+
                 //NegocioArticulo = new NegocioArticulo();
                 //NegocioArticulo.DarAltaBajaUsuario(idMatch, true);
                 //dgvAdmin.DataSource = NegocioArticulo.ListarArticulos();
@@ -582,15 +581,15 @@ namespace Catalogo
                     lblEstadoPedidoPanel.Text = lblEstadoPedidoPanel.Text.ToUpper();
                     if (lblEstadoPedidoPanel.Text == "INICIADO")
                     {
-                        lblEstadoPedidoPanel.CssClass = "badge bg-warning"; 
+                        lblEstadoPedidoPanel.CssClass = "badge bg-warning";
                     }
                     else if (lblEstadoPedidoPanel.Text == "TERMINADO")
                     {
-                        lblEstadoPedidoPanel.CssClass = "badge bg-success"; 
+                        lblEstadoPedidoPanel.CssClass = "badge bg-success";
                     }
                     else if (lblEstadoPedidoPanel.Text == "CANCELADO")
                     {
-                        lblEstadoPedidoPanel.CssClass = "badge bg-danger"; 
+                        lblEstadoPedidoPanel.CssClass = "badge bg-danger";
                     }
                 }
                 lblCantPedidos.Text = NegocioPedido.CantidadPedidos().ToString();
@@ -623,7 +622,7 @@ namespace Catalogo
 
         // TODO: BOTON ir Editar/Detalle Pedido en Grid (IMPORTANTE)
         protected void ibtEditarPedido_Click(object sender, ImageClickEventArgs e)
-         {
+        {
             try
             {
                 //cargamos variables
@@ -814,7 +813,7 @@ namespace Catalogo
 
                 // editamos pedido y buscamos lista Pedido_Articulos en Session
                 List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
-                
+
                 // Si lista_pedido_articulos es null, es porque no se agrego ningun articulo al pedido, cortamos modificacion
                 if (listaPedido_Articulo == null)
                 {
@@ -823,7 +822,7 @@ namespace Catalogo
                 }
                 //calculamos nuevo total
                 int resTotal = listaPedido_Articulo.Sum(x => x.Cantidad);
-                if(resTotal != pedido.Cantidad)
+                if (resTotal != pedido.Cantidad)
                 {
                     HelperUsuario.MensajePopUp(this, "Cantidades distintas, verificar");
                 }
@@ -839,15 +838,15 @@ namespace Catalogo
 
                 // Agregamos los articulos nuevos Pedido_Articulo en DB segun el estado del pedido y la cantidad en lista Pedido_Articulos
                 res += NegocioPedido.AgregarPedido_articulo(listaPedido_Articulo);
-                
+
                 // Mensaje de exito o error
-                if(res >= 1)
+                if (res >= 1)
                 {
                     HelperUsuario.MensajePopUp(this, "Pedido editado con exito");
                     dgvAdminPedido.DataSource = new NegocioPedido().ListarPedidos(pedido.IdPedido, "IdPedido");
                     dgvAdminPedido.DataBind();
                 }
-                else if(res == 0)
+                else if (res == 0)
                     HelperUsuario.MensajePopUp(this, "Ocurrio un error al intentar guardar los cambios");
             }
             catch (Exception ex)
@@ -867,7 +866,7 @@ namespace Catalogo
                 List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
                 decimal nuevoTotal = 0;
                 int nuevaCantidad = 0;
-                
+
                 //calculamos el nuevo total y acumulamos items
                 listaPedido_Articulo.Find(itm => itm.Id == idArticulo).Cantidad += 1;
                 foreach (CarritoItem item in listaPedido_Articulo)
@@ -897,7 +896,7 @@ namespace Catalogo
             // Cargamos variables e instanciamos objetos
             int idArticulo = int.Parse(((ImageButton)sender).CommandArgument);
             List<CarritoItem> listaPedido_Articulo = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
-            decimal nuevoTotal = 0; 
+            decimal nuevoTotal = 0;
             int nuevaCantidad = 0;
 
             //calculamos nuevo total y restamos items
@@ -906,8 +905,8 @@ namespace Catalogo
             {
                 listaPedido_Articulo.RemoveAll(itm => itm.Id == idArticulo);
             }
-            listaPedido_Articulo.ForEach(itm => { 
-                nuevoTotal += itm.Cantidad * itm.precio; 
+            listaPedido_Articulo.ForEach(itm => {
+                nuevoTotal += itm.Cantidad * itm.precio;
                 nuevaCantidad += itm.Cantidad;
             });
 
@@ -936,7 +935,7 @@ namespace Catalogo
                 listaPedido_Articulo.ForEach(itm => {
                     nuevoTotal += itm.Cantidad * itm.precio;
                     nuevaCantidad += itm.Cantidad;
-                    });
+                });
                 if (nuevoTotal < 0) nuevoTotal = 0;
 
                 //rendereamos otra vez
@@ -969,7 +968,7 @@ namespace Catalogo
             int nuevaCantidad = 0;
 
             //Si no hay obj en session, lo agregamos
-            if(listaPedido_Articulo == null)
+            if (listaPedido_Articulo == null)
             {
                 listaPedido_Articulo = new List<CarritoItem>();
                 Session.Add("PedidoArticulosListaEdit", listaPedido_Articulo);
@@ -979,7 +978,7 @@ namespace Catalogo
             if (listaPedido_Articulo.Find(itm => itm.Id == idArticulo) != null)
             {
                 listaPedido_Articulo.Find(itm => itm.Id == idArticulo).Cantidad += 1;
-                listaPedido_Articulo.ForEach(itm => { 
+                listaPedido_Articulo.ForEach(itm => {
                     nuevoTotal += itm.Cantidad * itm.precio;
                     nuevaCantidad += itm.Cantidad;
                 });
@@ -1097,7 +1096,7 @@ namespace Catalogo
         {
             int idPedido = int.Parse(((Button)sender).CommandArgument);
             string tipo = ((Button)sender).CommandName;
-            if(tipo == "Cancelar")
+            if (tipo == "Cancelar")
             {
                 try
                 {
@@ -1199,7 +1198,7 @@ namespace Catalogo
                 iDpedidoRes = NegocioPedido.AgregarPedido(pedido, "sp");
 
                 // Si se creo el pedido, creamos los articulos del pedido
-                if(iDpedidoRes <= 0)
+                if (iDpedidoRes <= 0)
                 {
                     HelperUsuario.MensajePopUp(this, "Ocurrio un Error al agregar el pedido");
                     return;
@@ -1210,9 +1209,9 @@ namespace Catalogo
                     NegocioPedido.CargarIdPedido(listaPedido_Articulo, iDpedidoRes);
                     resAgregarArticulos = NegocioPedido.AgregarPedido_articulo(listaPedido_Articulo);
                 }
-                
+
                 //confirmamos carga
-                if(resAgregarArticulos > 0)
+                if (resAgregarArticulos > 0)
                 {
                     Session["MensajeExito"] = "Pedido Cargado Correcatamente";
                     Response.Redirect("Admin.aspx?id=2", false);
@@ -1383,7 +1382,7 @@ namespace Catalogo
             divEstadisticas.Visible = false;
             filtrosUsuarios.Visible = false;
         }
-        
+
         // TODO: Link Volver a Lista Aneterior (Depende del CommandName del btn)
         protected void lnkVolverListaUsuarios_Click(object sender, EventArgs e)
         {
@@ -1419,21 +1418,21 @@ namespace Catalogo
                 articulo = new Articulo();
 
                 //Validamos los campos
-                if(string.IsNullOrWhiteSpace(tbIdArt.Text) || !tbIdArt.Text.All(c => char.IsNumber(c)))
+                if (string.IsNullOrWhiteSpace(tbIdArt.Text) || !tbIdArt.Text.All(c => char.IsNumber(c)))
                 {
                     lblRespuestaError.Text = "Debe ingresar un ID y tiene que ser un numero";
                     lblErrorArticulos.Visible = true;
                     SectionCrearArt.Visible = true;
                     return;
                 }
-                if(string.IsNullOrWhiteSpace(tbNombreArt.Text))
+                if (string.IsNullOrWhiteSpace(tbNombreArt.Text))
                 {
                     lblRespuestaError.Text = "Debe Ingresar un Nombre";
                     lblErrorArticulos.Visible = true;
                     SectionCrearArt.Visible = true;
                     return;
                 }
-                if(string.IsNullOrWhiteSpace(tbPrecioArt.Text))
+                if (string.IsNullOrWhiteSpace(tbPrecioArt.Text))
                 {
                     lblRespuestaError.Text = "Debe ingresar un Precio";
                     lblErrorArticulos.Visible = true;
@@ -1449,14 +1448,14 @@ namespace Catalogo
                     SectionCrearArt.Visible = true;
                     return;
                 }
-                if(string.IsNullOrWhiteSpace(tbStockArt.Text))
+                if (string.IsNullOrWhiteSpace(tbStockArt.Text))
                 {
                     lblRespuestaError.Text = "Debe ingresar un stock";
                     lblErrorArticulos.Visible = true;
                     SectionCrearArt.Visible = true;
                     return;
                 }
-                if(!tbStockArt.Text.All(c => char.IsDigit(c) || char.IsNumber(c)))
+                if (!tbStockArt.Text.All(c => char.IsDigit(c) || char.IsNumber(c)))
                 {
                     lblRespuestaError.Text = "El Stock esta mal Ingresado";
                     lblErrorArticulos.Visible = true;
@@ -1464,7 +1463,7 @@ namespace Catalogo
                     return;
                 }
                 //fin validaciones
-                 
+
                 //cargamos los datos del articulo
                 string str = tbPrecioArt.Text;
                 var regex = new Regex(@"[\d.,]+");
@@ -1490,7 +1489,7 @@ namespace Catalogo
                 articulo.Stock = int.Parse(tbStockArt.Text);
 
                 //Editamos o Creamos un nuevo articulo
-                if(btnAgregar.Text == "Crear Articulo")
+                if (btnAgregar.Text == "Crear Articulo")
                 {
                     if (NegocioArticulo.crearArticulo(articulo) == 1)
                     {
@@ -1500,7 +1499,7 @@ namespace Catalogo
                 }
                 else if (btnAgregar.Text == "Guardar Cambios")
                 {
-                    if(NegocioArticulo.editarArticulo(articulo) == 1)
+                    if (NegocioArticulo.editarArticulo(articulo) == 1)
                     {
                         Session["MensajeExito"] = "Articulo Modificado Exitosamente";
                         Response.Redirect("Admin.aspx?id=5", false);
@@ -1546,11 +1545,11 @@ namespace Catalogo
         {
             imgNuevoArt.ImageUrl = tbImgArt.Text;
         }
-        
+
         // TODO: BOTON Volver Lista Articulos (en form de nuevo Articulo/Modifcar articulo)
         protected void btnLinkVolverListaArticulos_Click(object sender, EventArgs e)
         {
-            if(dgvAdmin.DataSource != null)
+            if (dgvAdmin.DataSource != null)
                 dgvAdmin.Visible = true;
             else
             {
@@ -1572,7 +1571,7 @@ namespace Catalogo
                 int idMatch = int.Parse(((Button)sender).CommandArgument);
                 NegocioArticulo = new NegocioArticulo();
                 NegocioArticulo.DarAltaBajaUsuario(idMatch, true);
-                dgvAdmin.DataSource = NegocioArticulo.ListarArticulos(); 
+                dgvAdmin.DataSource = NegocioArticulo.ListarArticulos();
                 dgvAdmin.DataBind();
             }
             catch (Exception ex)
@@ -1737,9 +1736,9 @@ namespace Catalogo
                     //guardar categoria
                     NegocioCategoria.editarCategoria(categoria);
                     HelperUsuario.MensajePopUp(this, "Categoría modificada con exito!");
-                    
+
                 }
-            }  
+            }
 
             // Mostrar el Label y ocultar el TextBox
             lblCategoria.Visible = true;
@@ -1828,7 +1827,7 @@ namespace Catalogo
         {
             categoria = new Categoria();
             NegocioCategoria = new NegocioCategoria();
-            
+
             categoria.Id = int.Parse(tbIdCate.Text);
             categoria.Descripcion = tbNombreCate.Text;
             categoria.UrlImagen = tbUrlImgCate.Text;
@@ -1851,7 +1850,7 @@ namespace Catalogo
         //TODO: Evento cambio de ImgUrl Categoria
         protected void tbUrlImgCate_TextChanged(object sender, EventArgs e)
         {
-            imgNuevaCate.ImageUrl= tbUrlImgCate.Text;
+            imgNuevaCate.ImageUrl = tbUrlImgCate.Text;
         }
 
         //TODO: Boton Volver a Categorias (Ver)
@@ -1890,9 +1889,9 @@ namespace Catalogo
             marca.Descripcion = tbNombreMarca.Text;
             marca.UrlImagen = tbUrlImgNuevaMarca.Text;
 
-            if(HelperUsuario.ExistMarca(marca.Id))
+            if (HelperUsuario.ExistMarca(marca.Id))
             {
-                HelperUsuario.MensajePopUp(this,"Ya existe una marca con ese ID");
+                HelperUsuario.MensajePopUp(this, "Ya existe una marca con ese ID");
             }
             else
             {
@@ -1904,7 +1903,7 @@ namespace Catalogo
             }
         }
 
-       
+
         //TODO: Boton Volver a Lista Marcas (ver)
         protected void btnVolverMarca_Click(object sender, EventArgs e)
         {
@@ -2035,6 +2034,242 @@ namespace Catalogo
 
         //FIN LOGICA MARCAS
         #endregion MARCAS
+
+
+        #region OTROS
+        // BOTON DETALLE EN PANEL ESTADISITICAS
+        protected void btnVerDetallePedido_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //cargamos variables
+                int idMatch = Convert.ToInt32(((Button)sender).CommandArgument);
+                Session.Add("idPedidoEditar", idMatch);
+                NegocioPedido = new NegocioPedido();
+
+                //buscamos el pedido
+                PedidoList = NegocioPedido.ListarPedidos(idMatch, "IdPedido");
+                dgvAdminPedido.DataSource = PedidoList;
+                dgvAdminPedido.DataBind();
+
+                //buscamos los articulos del pedido
+                Session.Add("PedidoArticulosListaEdit", NegocioPedido.ListarPedido_articulo(idMatch));
+                Pedido_articulos = Session["PedidoArticulosListaEdit"] as List<CarritoItem>;
+
+                dgvPedido_Articulos.DataSource = Pedido_articulos;
+                dgvPedido_Articulos.DataBind();
+
+                //Cargamos pedido en form
+                int cantTotal = 0;
+                Pedido_articulos.ForEach(x => cantTotal += x.Cantidad);
+                PedidoList[0].CantidadTotal = cantTotal;
+
+                CargarPedidoEnForm(PedidoList[0]);
+                sectionAdminPedidoUnitario.Visible = true;
+
+                //cargamos los id de los articulos que hay en BD
+                ddlAgregarArticuloPedido_Articulos.DataSource = new NegocioArticulo().ListarArticulos();
+                ddlAgregarArticuloPedido_Articulos.DataTextField = "Id";
+                ddlAgregarArticuloPedido_Articulos.DataValueField = "Id";
+                ddlAgregarArticuloPedido_Articulos.DataBind();
+
+                //quitamos/mostramos
+                dgvAdminPedido.Visible = true;
+                dgvAdminPedidos.Visible = false;
+                dgvPedido_Articulos.Visible = true;
+                upadetePanelPedidosEditar.Visible = true;
+                lblNuevoPedido.Visible = false;
+                lblEditarPedido.Visible = true;
+                btnEliminarPedido_Articulos.Visible = true;
+                accordionPedidoArticulos.Visible = true;
+
+                lblArticulosXidPedido_Articulos.Visible = false;
+                ddlAgregarArticuloPedido_Articulos.Visible = false;
+                btnAgregarArticuloPedido_ArticulosFinal.Visible = false;
+
+                ddlAgregarArticuloPedido_Articulos.Visible = true;
+                btnAgregarArticuloPedido_ArticulosFinal.Visible = true;
+                lblArticulosXidPedido_Articulos.Visible = true;
+                txtTotalEditarPedido.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        // FILTROS
+        //Boton Mayor precio filtros
+        protected void btnMayorMenorPrecioFiltroPedidos_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                divEstadisticas.Visible = false;
+                NegocioPedido = new NegocioPedido();
+                PedidoList = NegocioPedido.ListarPedidos();
+
+                if (((Button)sender).CommandName == "MAYOR")
+                    PedidoList = PedidoList.OrderByDescending(itm => itm.precioTotal).ToList();
+                else if (((Button)sender).CommandName == "MENOR")
+                    PedidoList = PedidoList.OrderBy(itm => itm.precioTotal).ToList();
+
+                dgvAdminPedidos.DataSource = PedidoList;
+                dgvAdminPedidos.DataBind();
+
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //Boton Estado Pedidos filtros
+        protected void btnEstadosPedidosFiltros_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                divEstadisticas.Visible = false;
+                NegocioPedido = new NegocioPedido();
+                PedidoList = NegocioPedido.ListarPedidos();
+
+                string estado = ((Button)sender).CommandName;
+                if(estado == "btnIniciado")
+                    PedidoList = PedidoList.Where(itm => itm.Estado == "INICIADO").ToList();
+                else if (estado == "btnTerminado")
+                    PedidoList = PedidoList.Where(itm => itm.Estado == "TERMINADO").ToList();
+                else if (estado == "btnCancelado")
+                    PedidoList = PedidoList.Where(itm => itm.Estado == "CANCELADO").ToList();
+
+                dgvAdminPedidos.DataSource = PedidoList;
+                dgvAdminPedidos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //Boton Filtros Personalizados Pedidos
+        protected void btnFiltrosPersonalizados_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                divEstadisticas.Visible = false;
+                NegocioPedido = new NegocioPedido();
+                PedidoList = NegocioPedido.ListarPedidos();
+                
+                int idPedidoUser = string.IsNullOrWhiteSpace(txtFiltroIdUser_Pedido.Text)? 0 : Convert.ToInt32(txtFiltroIdUser_Pedido.Text);
+                int idPedido = string.IsNullOrWhiteSpace(txtFiltroIdPedido_Pedido.Text)? 0 : Convert.ToInt32(txtFiltroIdPedido_Pedido.Text);
+                string nombreUser = string.IsNullOrWhiteSpace(txtFiltroNombreUsuario_Pedido.Text)? string.Empty : txtFiltroNombreUsuario_Pedido.Text;
+                DateTime fechaDesde = string.IsNullOrWhiteSpace(txtFiltroFecha.Text)? DateTime.MinValue : Convert.ToDateTime(txtFiltroFecha.Text);
+
+                if(idPedidoUser != 0)
+                    PedidoList.RemoveAll(itm => itm.IdUsuario != idPedidoUser);
+                if(idPedido != 0)
+                    PedidoList.RemoveAll(itm => itm.IdPedido != idPedido);
+                if (nombreUser != string.Empty)
+                    PedidoList.RemoveAll(itm => itm.Usuario != nombreUser);
+                if(fechaDesde != DateTime.MinValue)
+                    PedidoList.RemoveAll(itm => itm.fecha.Date != fechaDesde.Date);
+
+                //rendereamos la lista filtrada
+                dgvAdminPedidos.DataSource = PedidoList;
+                dgvAdminPedidos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //Boton Limpiar Filtros Pedidos
+        protected void btnLimpiarFiltrosPedidos_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CargarPedidos();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        // Boton Filtrar Estado Usuarios
+        protected void btnFiltrarEstadoUsuarios_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                NegocioUsuario = new NegocioUsuario();
+                usuarioList = NegocioUsuario.ListarUsuarios();
+
+                string estado = ((Button)sender).CommandName;
+                if (estado == "ACTIVO")
+                    usuarioList = usuarioList.Where(itm => itm.Activo).ToList();
+                else if (estado == "INACTIVO")
+                    usuarioList = usuarioList.Where(itm => !itm.Activo).ToList();
+
+                dgvAdminUsuario.DataSource = usuarioList;
+                dgvAdminUsuario.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //Boton Limpiar Filtros Usuarios
+        protected void btnLimpiarFiltrosUsuarios_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CargarUsuario();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        //Boton Filtrar Usuarios
+        protected void btnFiltrarUsuarios_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                NegocioUsuario = new NegocioUsuario();
+                usuarioList = NegocioUsuario.ListarUsuarios();
+
+                int idUsuario = string.IsNullOrWhiteSpace(txtIdFiltro_Usuario.Text) ? 0 : Convert.ToInt32(txtIdFiltro_Usuario.Text);
+                int dni = string.IsNullOrWhiteSpace(txtDNIFiltro_Usuario.Text) ? 0 : Convert.ToInt32(txtDNIFiltro_Usuario.Text);
+                string nombre = string.IsNullOrWhiteSpace(txtNombreFiltro_Usuario.Text) ? string.Empty : txtNombreFiltro_Usuario.Text;
+                string apellido = string.IsNullOrWhiteSpace(txtApellidoFiltro_Usuario.Text) ? string.Empty : txtApellidoFiltro_Usuario.Text;
+
+                if(idUsuario != 0)
+                    usuarioList.RemoveAll(itm => itm.Id != idUsuario);
+                if(dni != 0)
+                    usuarioList.RemoveAll(itm => itm.Dni != dni);
+                if (nombre != string.Empty)
+                    usuarioList.RemoveAll(itm => itm.Nombre != nombre);
+                if(apellido != string.Empty)
+                    usuarioList.RemoveAll(itm => itm.Apellido != apellido);
+
+                dgvAdminUsuario.DataSource = usuarioList;
+                dgvAdminUsuario.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+        #endregion OTROS
 
     }//END CLASS
 }//END

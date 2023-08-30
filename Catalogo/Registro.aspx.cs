@@ -18,16 +18,6 @@ namespace Catalogo
             if (!IsPostBack)
             {
                 btnRegistroUsu.Enabled = true;
-                //if(Request.QueryString["text"] == "registroCompra")
-                //{
-                //    btnRegistroUsu.Visible = false;
-                //    //btnRegistroParaCompra.Visible= true;
-                //}
-                //else
-                //{
-                //    btnRegistroUsu.Visible = true;
-                //    //btnRegistroParaCompra.Visible = false;
-                //}
             }
         }
 

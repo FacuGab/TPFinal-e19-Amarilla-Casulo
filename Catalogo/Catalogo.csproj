@@ -2089,7 +2089,6 @@
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="scripts\OpenCloseAcordion.js" />
     <Content Include="scripts\validaciones.js" />
-    <Content Include="test.aspx" />
     <Content Include="Web.config" />
     <Content Include="Registro.aspx" />
     <Content Include="ListaCarrito.aspx" />
@@ -2162,13 +2161,6 @@
     </Compile>
     <Compile Include="ListaCarrito.aspx.designer.cs">
       <DependentUpon>ListaCarrito.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="test.aspx.cs">
-      <DependentUpon>test.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="test.aspx.designer.cs">
-      <DependentUpon>test.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin.aspx.cs">
       <DependentUpon>Admin.aspx</DependentUpon>

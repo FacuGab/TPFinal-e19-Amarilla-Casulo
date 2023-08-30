@@ -55,8 +55,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DBscript\DB_ArticuloFinal.sql" />
-    <Content Include="DBscript\scriptDB-Catalogo.sql" />
     <Content Include="iconoPP.ico" />
   </ItemGroup>
   <ItemGroup>
