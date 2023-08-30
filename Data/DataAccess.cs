@@ -18,7 +18,7 @@ namespace Data
         public SqlDataReader Lector { get { return reader; } }
 
         //TODO: Abrir Conexion
-        public void AbrirConexion(string server = ".") // "Manulo-PC\\SQLLABO"
+        public void AbrirConexion(string server = "Manulo-PC\\SQLLABO") // "Manulo-PC\\SQLLABO"
         {
             string path = $"server={server}; database = CATALOGO_E19; integrated security = true";
             //string pathProp = ConfigurationManager.ConnectionStrings["stringConnectionDefault"].ToString();

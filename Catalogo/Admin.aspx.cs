@@ -675,6 +675,7 @@ namespace Catalogo
                 btnAgregarArticuloPedido_ArticulosFinal.Visible = true;
                 lblArticulosXidPedido_Articulos.Visible = true;
                 txtTotalEditarPedido.Enabled = false;
+                txtNombreUsuarioEditarPedido.Enabled = false;
             }
             catch (Exception ex)
             {
